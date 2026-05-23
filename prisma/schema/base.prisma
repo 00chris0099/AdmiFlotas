@@ -1,0 +1,68 @@
+// ============================================================
+// SAF - Sistema de Administración de Flotas
+// Manual F1T02 — Procedimientos Básicos de Operación y Control
+// Archivo: base.prisma — Generadores, fuente de datos y configuración
+// ============================================================
+
+generator client {
+  provider = "prisma-client"
+  output   = "../../generated/prisma"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../../ERD.svg"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ────────────────────────────────────────────────────────────
+// Configuración General del Sistema de Flotas
+// Parámetros operativos y de referencia del sistema SAF
+// ────────────────────────────────────────────────────────────
+/// Parámetros generales del sistema SAF (nombre de la unidad, metas de km, etc.)
+model ConfiguracionFlota {
+  id            String   @id @default(uuid())
+  clave         String   @unique @db.VarChar(100)
+  valor         String
+  descripcion   String?
+  grupo         String   @default("general") @db.VarChar(50)
+  creadoEn      DateTime @default(now()) @map("creado_en")
+  actualizadoEn DateTime @updatedAt @map("actualizado_en")
+
+  @@map("configuracion_flota")
+}
+
+// ────────────────────────────────────────────────────────────
+// Costos Fijos Prorrateables — Soporte para cálculo CKV
+// Registra los costos fijos del área (personal administrativo,
+// oficina, comunicaciones) que se prorratean entre los vehículos
+// para obtener el Costo por Kilómetro (CKV) total.
+// ────────────────────────────────────────────────────────────
+/// Costos fijos del área que se prorratean en el CKV (personal, oficina, etc.)
+model CostoFijoProrrateable {
+  id            String        @id @default(uuid())
+  periodo       String        @db.VarChar(7)
+  tipo          TipoCostoFijo
+  descripcion   String        @db.VarChar(255)
+  montoMensual  Decimal       @map("monto_mensual") @db.Decimal(12, 2)
+  activo        Boolean       @default(true)
+  creadoEn      DateTime      @default(now()) @map("creado_en")
+  actualizadoEn DateTime      @updatedAt @map("actualizado_en")
+
+  @@index([periodo])
+  @@index([tipo])
+  @@map("costos_fijos_prorrateables")
+}
+
+/// Tipos de costos fijos prorrateables para el cálculo CKV
+enum TipoCostoFijo {
+  PERSONAL_ADMINISTRATIVO
+  OFICINA
+  COMUNICACIONES
+  SEGUROS_GENERALES
+  LICENCIAS_SOFTWARE
+  OTROS
+}

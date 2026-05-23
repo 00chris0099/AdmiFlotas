@@ -1,0 +1,44 @@
+{
+  "name": "saf-flotas",
+  "version": "1.0.0",
+  "description": "SAF - Sistema de Administración de Flotas | Digitalización del manual F1T02 con PostgreSQL y Prisma ORM",
+  "main": "index.js",
+  "scripts": {
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:migrate:prod": "npx prisma migrate deploy",
+    "db:push": "npx prisma db push",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "db:studio": "npx prisma studio",
+    "db:reset": "npx prisma migrate reset",
+    "db:format": "npx prisma format",
+    "db:validate": "npx prisma validate",
+    "postinstall": "npx prisma generate",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "saf",
+    "flotas",
+    "fleet-management",
+    "f1t02",
+    "prisma",
+    "postgresql",
+    "supabase"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "dotenv": "^16.4.7",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.15.0",
+    "prisma": "^7.8.0",
+    "prisma-erd-generator": "^2.4.2",
+    "puppeteer": "^24.43.1",
+    "tsx": "^4.22.0"
+  }
+}
