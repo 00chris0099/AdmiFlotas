@@ -117,10 +117,11 @@ model Vehiculo {
   actualizadoEn DateTime       @updatedAt @map("actualizado_en")
 
   // ── Relaciones ──
-  movimientosDiarios   MovimientoDiario[]
-  ordenesCombustible   OrdenCombustible[]
-  ordenesMantenimiento OrdenMantenimiento[]
-  controlLlantas       ControlLlanta[]
+  movimientosDiarios     MovimientoDiario[]
+  ordenesCombustible     OrdenCombustible[]
+  ordenesMantenimiento   OrdenMantenimiento[]
+  controlLlantas         ControlLlanta[]
+  reportesMensualesCostos ReporteMensualCostos[]
 
   @@index([placa])
   @@index([estado])
