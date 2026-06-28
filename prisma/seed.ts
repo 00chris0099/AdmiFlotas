@@ -8,6 +8,10 @@ import "dotenv/config";
 import { PrismaClient } from "../generated/prisma/client.ts";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+import bcrypt from "bcryptjs";
+
+const MASTER_PASSWORD = "saf123";
+const hashedPassword = await bcrypt.hash(MASTER_PASSWORD, 10);
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
@@ -53,14 +57,14 @@ async function main() {
       nombre:    "Escriba",
       apellido:  "Matto",
       email:     "escriba.matto@flota.gob",
-      password:  "$2b$10$saf_hash_escriba_placeholder",
+      password:  hashedPassword,
       rol:       "JEFE_PROCESO",
       telefono:  "+51 999 000 001",
       especialidad: "Gestión de Flotas y Logística",
     },
   });
 
-  // Equipo de Operación — Conductor / Inspector
+  // Equipo de Operación — Conductores
   const leon = await prisma.usuario.upsert({
     where: { email: "leon.mejia@flota.gob" },
     update: {},
@@ -68,12 +72,28 @@ async function main() {
       nombre:             "Leon",
       apellido:           "Mejia",
       email:              "leon.mejia@flota.gob",
-      password:           "$2b$10$saf_hash_leon_placeholder",
+      password:           hashedPassword,
       rol:                "CONDUCTOR",
       telefono:           "+51 999 000 002",
       licenciaConducir:   "Q23456789",
       categoriaLicencia:  "AIIB",
       vencimientoLicencia: new Date("2027-06-15"),
+    },
+  });
+
+  const gomez = await prisma.usuario.upsert({
+    where: { email: "gomez.sanchez@flota.gob" },
+    update: {},
+    create: {
+      nombre:             "Gomez",
+      apellido:           "Sanchez",
+      email:              "gomez.sanchez@flota.gob",
+      password:           hashedPassword,
+      rol:                "CONDUCTOR",
+      telefono:           "+51 999 000 006",
+      licenciaConducir:   "Q98765432",
+      categoriaLicencia:  "AIII",
+      vencimientoLicencia: new Date("2028-11-20"),
     },
   });
 
@@ -84,14 +104,14 @@ async function main() {
       nombre:   "Montero",
       apellido: "Salazar",
       email:    "montero.salazar@flota.gob",
-      password: "$2b$10$saf_hash_montero_placeholder",
+      password: hashedPassword,
       rol:      "INSPECTOR",
       telefono: "+51 999 000 003",
       especialidad: "Control e Inspección Vehicular",
     },
   });
 
-  // Equipo de Mantenimiento — Mecánico
+  // Equipo de Mantenimiento — Mecánicos
   const polanco = await prisma.usuario.upsert({
     where: { email: "polanco.jimenez@flota.gob" },
     update: {},
@@ -99,10 +119,24 @@ async function main() {
       nombre:      "Polanco",
       apellido:    "Jimenez",
       email:       "polanco.jimenez@flota.gob",
-      password:    "$2b$10$saf_hash_polanco_placeholder",
+      password:    hashedPassword,
       rol:         "MECANICO",
       telefono:    "+51 999 000 004",
       especialidad: "Mecánica Automotriz y Diesel",
+    },
+  });
+
+  const guerra = await prisma.usuario.upsert({
+    where: { email: "guerra.salas@flota.gob" },
+    update: {},
+    create: {
+      nombre:      "Guerra",
+      apellido:    "Salas",
+      email:       "guerra.salas@flota.gob",
+      password:    hashedPassword,
+      rol:         "MECANICO",
+      telefono:    "+51 999 000 007",
+      especialidad: "Sistemas Hidráulicos y Frenos",
     },
   });
 
@@ -114,18 +148,34 @@ async function main() {
       nombre:   "Ventura",
       apellido: "Chipana",
       email:    "ventura.chipana@flota.gob",
-      password: "$2b$10$saf_hash_ventura_placeholder",
+      password: hashedPassword,
       rol:      "ADMINISTRATIVO",
       telefono: "+51 999 000 005",
     },
   });
 
-  console.log("   ✅ 5 integrantes creados:");
+  const quiroz = await prisma.usuario.upsert({
+    where: { email: "quiroz.torres@flota.gob" },
+    update: {},
+    create: {
+      nombre:   "Quiroz",
+      apellido: "Torres",
+      email:    "quiroz.torres@flota.gob",
+      password: hashedPassword,
+      rol:      "ADMINISTRATIVO",
+      telefono: "+51 999 000 008",
+    },
+  });
+
+  console.log("   ✅ Integrantes creados:");
   console.log("      • Escriba Matto      → JEFE_PROCESO");
   console.log("      • Leon Mejia         → CONDUCTOR");
+  console.log("      • Gomez Sanchez      → CONDUCTOR");
   console.log("      • Montero Salazar    → INSPECTOR");
   console.log("      • Polanco Jimenez    → MECANICO");
+  console.log("      • Guerra Salas       → MECANICO");
   console.log("      • Ventura Chipana    → ADMINISTRATIVO");
+  console.log("      • Quiroz Torres      → ADMINISTRATIVO");
 
   // 2.2 Permisos por módulo del sistema SAF
   console.log("   🔑 Creando permisos del sistema SAF...");
@@ -156,17 +206,19 @@ async function main() {
     });
   }
 
-  // Conductor: leer vehículos + crear/leer movimiento_diario y combustible
-  const permisosConducotr = permisos.filter(p =>
+  // Conductores: leer vehículos + crear/leer movimiento_diario y combustible
+  const permisosConductor = permisos.filter(p =>
     (p.modulo === "vehiculos" && p.accion === "leer") ||
     (p.modulo === "movimiento_diario" && ["crear", "leer"].includes(p.accion)) ||
     (p.modulo === "combustible" && ["crear", "leer"].includes(p.accion))
   );
-  for (const p of permisosConducotr) {
-    await prisma.permisoUsuario.upsert({
-      where:  { usuarioId_permisoId: { usuarioId: leon.id, permisoId: p.id } },
-      update: {}, create: { usuarioId: leon.id, permisoId: p.id },
-    });
+  for (const cond of [leon, gomez]) {
+    for (const p of permisosConductor) {
+      await prisma.permisoUsuario.upsert({
+        where:  { usuarioId_permisoId: { usuarioId: cond.id, permisoId: p.id } },
+        update: {}, create: { usuarioId: cond.id, permisoId: p.id },
+      });
+    }
   }
 
   // Inspector: leer/actualizar movimiento_diario + leer vehículos/llantas
@@ -182,32 +234,36 @@ async function main() {
     });
   }
 
-  // Mecánico: crear/leer/actualizar mantenimiento
+  // Mecánicos: crear/leer/actualizar mantenimiento
   const permisosMecanico = permisos.filter(p =>
     (p.modulo === "mantenimiento" && ["crear", "leer", "actualizar"].includes(p.accion)) ||
     (p.modulo === "vehiculos" && p.accion === "leer")
   );
-  for (const p of permisosMecanico) {
-    await prisma.permisoUsuario.upsert({
-      where:  { usuarioId_permisoId: { usuarioId: polanco.id, permisoId: p.id } },
-      update: {}, create: { usuarioId: polanco.id, permisoId: p.id },
-    });
+  for (const mec of [polanco, guerra]) {
+    for (const p of permisosMecanico) {
+      await prisma.permisoUsuario.upsert({
+        where:  { usuarioId_permisoId: { usuarioId: mec.id, permisoId: p.id } },
+        update: {}, create: { usuarioId: mec.id, permisoId: p.id },
+      });
+    }
   }
 
-  // Administrativo: leer todos + crear/actualizar costos y configuración
+  // Administrativos: leer todos + crear/actualizar costos y configuración
   const permisosAdmin = permisos.filter(p =>
     p.accion === "leer" ||
     (p.modulo === "costos" && ["crear", "actualizar"].includes(p.accion)) ||
     (p.modulo === "reportes" && ["crear", "leer"].includes(p.accion))
   );
-  for (const p of permisosAdmin) {
-    await prisma.permisoUsuario.upsert({
-      where:  { usuarioId_permisoId: { usuarioId: ventura.id, permisoId: p.id } },
-      update: {}, create: { usuarioId: ventura.id, permisoId: p.id },
-    });
+  for (const adm of [ventura, quiroz]) {
+    for (const p of permisosAdmin) {
+      await prisma.permisoUsuario.upsert({
+        where:  { usuarioId_permisoId: { usuarioId: adm.id, permisoId: p.id } },
+        update: {}, create: { usuarioId: adm.id, permisoId: p.id },
+      });
+    }
   }
 
-  console.log("   ✅ Permisos asignados por rol (Jefe: todo | Conductor/Inspector/Mecánico/Admin: granular)");
+  console.log("   ✅ Permisos asignados por rol (Jefe: todo | Conductores/Inspector/Mecánicos/Admins: granular)");
 
   // ══════════════════════════════════════════
   // BLOQUE 3: COSTOS FIJOS PRORRATEABLES (CKV)
@@ -530,7 +586,7 @@ async function main() {
       plumillas:          "OK",
       llantas:            "OBSERVADO",
       observLlantas:      "Desgaste en llanta posición 6 (trasera der. exterior), presión baja 5 PSI",
-      espejos:            "REGULAR",
+      espejos:            "OBSERVADO",
       observEspejos:      "Espejo retrovisor derecho con vibración leve",
       herramientas:       "OK",
       extintorBotiquin:   "OK",
