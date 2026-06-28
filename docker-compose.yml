@@ -2,20 +2,17 @@ services:
   saf-app:
     build:
       context: .
-      dockerfile: frontend/Dockerfile
-      args:
-        - DATABASE_URL=postgresql://flotas:Mineria99*@187.77.57.116:5441/flotas
-        - JWT_SECRET=saf-f1t02-jwt-secret-2026-secure-token-key-anchillo
+      dockerfile: Dockerfile
     container_name: saf_erp_app
     restart: always
     ports:
-      - "3003:3003"
+      - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://flotas:Mineria99*@187.77.57.116:5441/flotas
-      - JWT_SECRET=saf-f1t02-jwt-secret-2026-secure-token-key-anchillo
-      - SMTP_HOST=smtp.gmail.com
-      - SMTP_PORT=587
-      - SMTP_USER=pedroanchillo185@gmail.com
-      - SMTP_PASS=klhg uvpb pfir wvyu
-      - SMTP_FROM=SAF Flotas <pedroanchillo185@gmail.com>
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_FROM=${SMTP_FROM}
       - NODE_ENV=production
