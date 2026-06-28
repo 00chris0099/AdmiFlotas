@@ -4,7 +4,9 @@ import { PrismaClient, MovimientoDiario, Prisma } from '../../../../generated/pr
 
 @Injectable()
 export class MovimientoDiarioRepository {
-  private prisma = new PrismaClient();
+  private prisma = new PrismaClient({
+    datasourceUrl: process.env.DATABASE_URL,
+  });
 
   /**
    * Crea un nuevo registro de movimiento diario utilizando transacciones

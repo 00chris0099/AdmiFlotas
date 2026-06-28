@@ -1,0 +1,69 @@
+// ============================================================
+// SAF - Sistema de AdministraciÃ³n de Flotas
+// Archivo: control_llantas.prisma â€” Esquema de Control de Llantas
+// ============================================================
+
+/// Control individualizado de llantas: cÃ³digo EPS, posiciÃ³n, kilometraje acumulado
+model ControlLlanta {
+  id                     String       @id @default(uuid())
+  /// CÃ³digo Ãºnico de la llanta (NÃºmero EPS del fabricante)
+  codigoEps              String       @unique @map("codigo_eps") @db.VarChar(50)
+  vehiculoId             String       @map("vehiculo_id")
+  fabricante             String       @db.VarChar(80)
+  dimension              String       @db.VarChar(30)
+  modeloLlanta           String       @map("modelo_llanta") @db.VarChar(80)
+  /// PosiciÃ³n en el vehÃ­culo segÃºn diagrama del manual (1â€“7)
+  posicionVehiculo       Int          @map("posicion_vehiculo")
+  /// DescripciÃ³n textual de la posiciÃ³n (ej. "Delantera Izquierda")
+  descripcionPosicion    String?      @map("descripcion_posicion") @db.VarChar(50)
+  estado                 EstadoLlanta @default(EN_USO)
+  fechaInstalacion       DateTime     @map("fecha_instalacion")
+  fechaRetiro            DateTime?    @map("fecha_retiro")
+  /// Kilometraje del vehÃ­culo al momento de instalar la llanta
+  kilometrajeInstalacion Int          @map("kilometraje_instalacion")
+  /// Kilometraje del vehÃ­culo al momento de retirar la llanta
+  kilometrajeRetiro      Int?         @map("kilometraje_retiro")
+  /// Km recorridos con esta llanta = kmRetiro - kmInstalacion
+  kilometrajeAcumulado   Int          @default(0) @map("kilometraje_acumulado")
+  /// NÃºmero de veces que ha sido reencauchada
+  vecesReencauchada       Int          @default(0) @map("veces_reencauchada")
+  /// Costo de adquisiciÃ³n de la llanta
+  costoAdquisicion       Decimal?     @map("costo_adquisicion") @db.Decimal(10, 2)
+  observaciones          String?
+  creadoEn               DateTime     @default(now()) @map("creado_en")
+  actualizadoEn          DateTime     @updatedAt @map("actualizado_en")
+  vehiculo               Vehiculo     @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+
+  @@index([vehiculoId])
+  @@index([estado])
+  @@index([codigoEps])
+  @@index([fechaInstalacion])
+  @@index([posicionVehiculo])
+  @@map("control_llantas")
+  }
+
+/// Estado de una llanta segÃºn su ciclo de vida
+enum EstadoLlanta {
+  EN_USO
+  EN_ALMACEN
+  REENCAUCHADA
+  EN_REENCAUCHE
+  DADA_DE_BAJA
+
+  }
+
+/// Vista analÃ­tica de desempeÃ±o y coste por kilÃ³metro de neumÃ¡ticos
+view DesempenoLlantas {
+  id                     String   @unique
+  codigoEps              String   @map("codigo_eps")
+  vehiculoId             String   @map("vehiculo_id")
+  fabricante             String
+  kilometrajeAcumulado   Int      @map("kilometraje_acumulado")
+  vecesReencauchada      Int      @map("veces_reencauchada")
+  costoAdquisicion       Decimal? @map("costo_adquisicion") @db.Decimal(10, 2)
+  costoPorKm             Decimal? @map("costo_por_km") @db.Decimal(10, 4)
+
+  vehiculo               Vehiculo @relation(fields: [vehiculoId], references: [id])
+
+  @@map("v_desempeno_llantas")
+  }

@@ -1,59 +1,13 @@
 // ============================================================
-// SAF - Sistema de Administración de Flotas
-// Manual F1T02 — Procedimientos Básicos de Operación y Control
-// Archivo: seguridad.prisma — Personal, Roles y Seguridad del Sistema
-// Organigrama: Jefe de Proceso → Operación / Mantenimiento / Administrativo
+// SAF - Sistema de AdministraciÃ³n de Flotas
+// Manual F1T02 â€” Procedimientos BÃ¡sicos de OperaciÃ³n y Control
+// Archivo: seguridad.prisma â€” Seguridad y AuditorÃ­a del Sistema
 // ============================================================
 
-// ────────────────────────────────────────────────────────────
-// MODELO: Usuario
-// Integrantes del equipo según el organigrama F1T02.
-// Roles jerárquicos: Jefe de Proceso, Equipo de Operación
-// (Conductores, Inspectores, Analistas), Equipo de Mantenimiento
-// (Mecánicos, Electricistas) y Apoyo Administrativo.
-// Usuarios iniciales: Escriba Matto, Leon Mejia, Montero Salazar,
-//                     Polanco Jimenez, Ventura Chipana
-// ────────────────────────────────────────────────────────────
-/// Personal del sistema de flotas F1T02 con roles jerárquicos según organigrama
-model Usuario {
-  id                  String     @id @default(uuid())
-  nombre              String     @db.VarChar(100)
-  apellido            String     @db.VarChar(100)
-  email               String     @unique @db.VarChar(150)
-  password            String     @db.VarChar(255)
-  rol                 RolUsuario @default(ADMINISTRATIVO)
-  activo              Boolean    @default(true)
-  telefono            String?    @db.VarChar(20)
-  /// Número de licencia de conducir (requerido para conductores)
-  licenciaConducir    String?    @map("licencia_conducir") @db.VarChar(30)
-  /// Categoría de licencia (A, B, C, D — requerida para conductores)
-  categoriaLicencia   String?    @map("categoria_licencia") @db.VarChar(5)
-  /// Fecha de vencimiento de la licencia
-  vencimientoLicencia DateTime?  @map("vencimiento_licencia")
-  /// Especialidad técnica (para mecánicos y electricistas)
-  especialidad        String?    @db.VarChar(100)
-  ultimoAcceso        DateTime?  @map("ultimo_acceso")
-  creadoEn            DateTime   @default(now()) @map("creado_en")
-  actualizadoEn       DateTime   @updatedAt @map("actualizado_en")
-  bloqueadoHasta      DateTime?  @map("bloqueado_hasta")
-  intentosFallidos    Int        @default(0) @map("intentos_fallidos")
-
-  // Relaciones
-  permisos             PermisoUsuario[]
-  sesionesAuth         SesionAuth[]
-  auditoria            Auditoria[]
-  movimientosDiarios   MovimientoDiario[]   @relation("ConductorMovimiento")
-  revisionesChecklist  MovimientoDiario[]   @relation("InspectorMovimiento")
-  ordenesCombustible   OrdenCombustible[]
-  ordenesMantenimiento OrdenMantenimiento[]
-
-  @@map("usuarios")
-}
-
-// ────────────────────────────────────────────────────────────
-// MODELO: Permiso — Control granular por módulo y acción
-// ────────────────────────────────────────────────────────────
-/// Permisos granulares del sistema SAF (módulo + acción)
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// MODELO: Permiso â€” Control granular por mÃ³dulo y acciÃ³n
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/// Permisos granulares del sistema SAF (mÃ³dulo + acciÃ³n)
 model Permiso {
   id          String           @id @default(uuid())
   modulo      String           @db.VarChar(50)
@@ -64,9 +18,9 @@ model Permiso {
 
   @@unique([modulo, accion])
   @@map("permisos")
-}
+  }
 
-/// Tabla pivote: asignación de permisos a usuarios
+/// Tabla pivote: asignaciÃ³n de permisos a usuarios
 model PermisoUsuario {
   id         String   @id @default(uuid())
   usuarioId  String   @map("usuario_id")
@@ -76,15 +30,15 @@ model PermisoUsuario {
   usuario    Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 
   @@unique([usuarioId, permisoId])
+  @@map("permisos_usuario")
   @@index([usuarioId])
   @@index([permisoId])
-  @@map("permisos_usuario")
-}
+  }
 
-// ────────────────────────────────────────────────────────────
-// MODELO: SesionAuth — Sesiones de autenticación activas
-// ────────────────────────────────────────────────────────────
-/// Sesiones de autenticación activas en el sistema SAF
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// MODELO: SesionAuth â€” Sesiones de autenticaciÃ³n activas
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/// Sesiones de autenticaciÃ³n activas en el sistema SAF
 model SesionAuth {
   id         String           @id @default(uuid())
   usuarioId  String           @map("usuario_id")
@@ -101,12 +55,12 @@ model SesionAuth {
   @@index([token])
   @@index([estado])
   @@map("sesiones_auth")
-}
+  }
 
-// ────────────────────────────────────────────────────────────
-// MODELO: Auditoria — Trazabilidad de acciones críticas
-// ────────────────────────────────────────────────────────────
-/// Registro de auditoría: toda acción crítica del sistema SAF
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// MODELO: Auditoria â€” Trazabilidad de acciones crÃ­ticas
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/// Registro de auditorÃ­a: toda acciÃ³n crÃ­tica del sistema SAF
 model Auditoria {
   id           String              @id @default(uuid())
   usuarioId    String?             @map("usuario_id")
@@ -119,43 +73,29 @@ model Auditoria {
   ipAddress    String?             @map("ip_address") @db.VarChar(45)
   descripcion  String?
   creadoEn     DateTime            @default(now()) @map("creado_en")
-  usuario      Usuario?            @relation(fields: [usuarioId], references: [id])
+  usuario      Usuario?            @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
 
   @@index([usuarioId])
   @@index([accion])
   @@index([modulo])
   @@index([creadoEn])
   @@map("auditoria")
-}
+  }
 
-// ────────────────────────────────────────────────────────────
-// ENUMs de Seguridad y Personal
-// ────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ENUMs de Seguridad
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-/// Roles jerárquicos del organigrama F1T02
-/// JEFE_PROCESO: máxima autoridad del proceso de gestión de flotas
-/// CONDUCTOR / INSPECTOR / ANALISTA: Equipo de Operación
-/// MECANICO / ELECTRICISTA: Equipo de Mantenimiento
-/// ADMINISTRATIVO: Apoyo Administrativo
-enum RolUsuario {
-  JEFE_PROCESO
-  CONDUCTOR
-  INSPECTOR
-  ANALISTA
-  MECANICO
-  ELECTRICISTA
-  ADMINISTRATIVO
-}
-
-/// Estados de una sesión de autenticación
+/// Estados de una sesiÃ³n de autenticaciÃ³n
 enum EstadoSesionAuth {
   ACTIVA
   EXPIRADA
   CERRADA
   BLOQUEADA
-}
 
-/// Tipos de acción para auditoría del sistema
+  }
+
+/// Tipos de acciÃ³n para auditorÃ­a del sistema
 enum TipoAccionAuditoria {
   LOGIN
   LOGOUT
@@ -166,4 +106,31 @@ enum TipoAccionAuditoria {
   EXPORTAR
   CONFIGURAR
   ALERTA_MANTENIMIENTO
-}
+
+  }
+
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// MODELO: TokenConfirmacion â€” Tokens para creaciÃ³n/cambio de contraseÃ±a
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/// Tokens de un solo uso para confirmar usuario o cambiar contraseÃ±a
+model TokenConfirmacion {
+  id         String    @id @default(uuid())
+  usuarioId  String    @map("usuario_id")
+  token      String    @unique @db.VarChar(255)
+  tipo       TipoToken
+  expiraEn   DateTime  @map("expira_en")
+  usadoEn    DateTime? @map("usado_en")
+  creadoEn   DateTime  @default(now()) @map("creado_en")
+  usuario    Usuario   @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([usuarioId])
+  @@map("tokens_confirmacion")
+  }
+
+/// Tipos de token de confirmaciÃ³n
+enum TipoToken {
+  CONFIRMACION_USUARIO
+  CAMBIO_PASSWORD
+
+  }

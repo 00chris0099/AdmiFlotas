@@ -12,9 +12,7 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    // Usa la URL directa (puerto 5432) para que los comandos CLI
-    // (db push, migrate, etc.) funcionen correctamente sin PgBouncer.
-    // La app en runtime debe usar DATABASE_URL (pooled, puerto 6543).
-    url: process.env["DIRECT_URL"],
+    // Usa DATABASE_URL (pooled) para comandos CLI.
+    url: process.env["DATABASE_URL"],
   },
 });

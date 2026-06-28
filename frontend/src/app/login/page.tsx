@@ -86,6 +86,14 @@ export default function LoginPage() {
           </p>
           <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto pr-1 custom-scrollbar">
             <button
+              onClick={() => handleQuickLogin("anchillo00@gmail.com")}
+              className="px-3 py-2 bg-slate-950 hover:bg-slate-850 border border-amber-500/30 hover:border-amber-500/50 rounded-xl text-left text-xs transition duration-150 cursor-pointer"
+            >
+              <div className="font-bold text-amber-400 text-[10px] truncate">Anchillo Admin</div>
+              <div className="text-[8px] text-amber-400 font-extrabold uppercase tracking-widest">SUPERADMIN</div>
+            </button>
+
+            <button
               onClick={() => handleQuickLogin("escriba.matto@flota.gob")}
               className="px-3 py-2 bg-slate-950 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 rounded-xl text-left text-xs transition duration-150 cursor-pointer"
             >

@@ -1,0 +1,66 @@
+// ============================================================
+// SAF - Sistema de AdministraciÃ³n de Flotas
+// Archivo: control_costos.prisma â€” Esquema de Control de Costos (Fijos y Consolidado)
+// ============================================================
+
+/// Costos fijos del Ã¡rea que se prorratean en el CKV (personal, oficina, etc.)
+model CostoFijoProrrateable {
+  id            String        @id @default(uuid())
+  periodo       String        @db.VarChar(7)
+  tipo          TipoCostoFijo
+  descripcion   String        @db.VarChar(255)
+  montoMensual  Decimal       @map("monto_mensual") @db.Decimal(12, 2)
+  activo        Boolean       @default(true)
+  creadoEn      DateTime      @default(now()) @map("creado_en")
+  actualizadoEn DateTime      @updatedAt @map("actualizado_en")
+
+  @@index([periodo])
+  @@index([tipo])
+  @@map("costos_fijos_prorrateables")
+  }
+
+/// Tipos de costos fijos prorrateables para el cÃ¡lculo CKV
+enum TipoCostoFijo {
+  PERSONAL_ADMINISTRATIVO
+  OFICINA
+  COMUNICACIONES
+  SEGUROS_GENERALES
+  LICENCIAS_SOFTWARE
+  OTROS
+
+  }
+
+/// Vista de base de datos para el reporte consolidado de costos operacionales mensuales por vehÃ­culo
+view ReporteMensualCostos {
+  /// Identificador Ãºnico (ficticio o real) requerido para Prisma Client
+  id                  String   @unique
+  vehiculoId          String   @map("vehiculo_id")
+  periodo             String   @db.VarChar(7) // Formato: YYYY-MM
+  costoCombustible    Decimal  @map("costo_combustible") @db.Decimal(12, 2)
+  costoMantenimiento  Decimal  @map("costo_mantenimiento") @db.Decimal(12, 2)
+  costoFijoProrrateado Decimal @map("costo_fijo_prorrateado") @db.Decimal(12, 2)
+  costoTotal          Decimal  @map("costo_total") @db.Decimal(12, 2)
+
+  vehiculo            Vehiculo @relation(fields: [vehiculoId], references: [id])
+
+  @@map("v_reporte_mensual_costos")
+  }
+
+/// Vista analÃ­tica consolidada de KPIs de rendimiento y coste por vehÃ­culo
+view ResumenKpisVehiculo {
+  id                  String   @unique
+  vehiculoId          String   @map("vehiculo_id")
+  marca               String
+  modelo              String
+  placa               String
+  kilometrajeTotal    Int      @map("kilometraje_total")
+  horasUtilizacion    Decimal  @map("horas_utilizacion") @db.Decimal(10, 2)
+  galonesCombustible  Decimal  @map("galones_combustible") @db.Decimal(10, 2)
+  costoCombustible    Decimal  @map("costo_combustible") @db.Decimal(12, 2)
+  costoMantenimiento  Decimal  @map("costo_mantenimiento") @db.Decimal(12, 2)
+  viajesRealizados    Int      @map("viajes_realizados")
+  
+  vehiculo            Vehiculo @relation(fields: [vehiculoId], references: [id])
+
+  @@map("v_resumen_kpis_vehiculo")
+  }

@@ -4,6 +4,11 @@ import { withAuth } from "@/lib/withAuth";
 
 export const dynamic = "force-dynamic";
 
+function statusCheck(value: string | undefined | null): "OK" | "OBSERVADO" | "FALLADO" {
+  if (value === "OBSERVADO" || value === "FALLADO") return value;
+  return "OK";
+}
+
 // GET: Listar todos los movimientos con sus relaciones reales de base de datos
 export const GET = withAuth(async (request: NextRequest, { user }) => {
   try {
@@ -210,6 +215,15 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 });
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, kilometrajeLlegada, horaLlegada, horasUtilizacion } = body;
+
+    if (!id || !kilometrajeLlegada || !horaLlegada || !horasUtilizacion) {
+      return NextResponse.json({ error: "Faltan campos requeridos" }, { status: 400 });
+    }
 
     const prisma = getPrisma();
 

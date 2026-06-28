@@ -1,0 +1,78 @@
+// ============================================================
+// SAF - Sistema de AdministraciÃ³n de Flotas
+// Archivo: control_combustible.prisma â€” Esquema de Control de Combustible
+// ============================================================
+
+/// Orden de abastecimiento de combustible y lubricantes â€” MA 122 01 02
+model OrdenCombustible {
+  id                String               @id @default(uuid())
+  /// NÃºmero de orden correlativo
+  numeroOrden       String               @unique @map("numero_orden") @db.VarChar(20)
+  fecha             DateTime             @db.Date
+  vehiculoId        String               @map("vehiculo_id")
+  conductorId       String               @map("conductor_id")
+  sectorSolicitante String               @map("sector_solicitante") @db.VarChar(150)
+  tipoCombustible   TipoCombustibleOrden @map("tipo_combustible")
+
+  // â”€â”€ Combustible â”€â”€
+  cantidadGalones  Decimal? @map("cantidad_galones") @db.Decimal(8, 2)
+  costoGalon       Decimal? @map("costo_galon") @db.Decimal(8, 3)
+  costoCombustible Decimal? @map("costo_combustible") @db.Decimal(10, 2)
+
+  // â”€â”€ Lubricante â€” Aceite de Motor (registrado por separado) â”€â”€
+  /// Indica si esta orden incluye cambio/adiciÃ³n de aceite de motor
+  incluyeAceiteMotor    Boolean  @default(false) @map("incluye_aceite_motor")
+  cantidadAceiteMotorLt Decimal? @map("cantidad_aceite_motor_lt") @db.Decimal(6, 2)
+  marcaAceiteMotor      String?  @map("marca_aceite_motor") @db.VarChar(80)
+  viscosidadAceiteMotor String?  @map("viscosidad_aceite_motor") @db.VarChar(20)
+  costoAceiteMotor      Decimal? @map("costo_aceite_motor") @db.Decimal(10, 2)
+
+  // â”€â”€ Lubricante â€” Aceite de Caja/TransmisiÃ³n (registrado por separado) â”€â”€
+  /// Indica si esta orden incluye cambio de aceite de caja
+  incluyeAceiteCaja    Boolean  @default(false) @map("incluye_aceite_caja")
+  cantidadAceiteCajaLt Decimal? @map("cantidad_aceite_caja_lt") @db.Decimal(6, 2)
+  marcaAceiteCaja      String?  @map("marca_aceite_caja") @db.VarChar(80)
+  viscosidadAceiteCaja String?  @map("viscosidad_aceite_caja") @db.VarChar(20)
+  costoAceiteCaja      Decimal? @map("costo_aceite_caja") @db.Decimal(10, 2)
+
+  // â”€â”€ Costo Total de la Orden â”€â”€
+  costoTotal Decimal @default(0) @map("costo_total") @db.Decimal(12, 2)
+
+  // â”€â”€ OdÃ³metro al momento del abastecimiento â”€â”€
+  kilometrajeActual Int @map("kilometraje_actual")
+
+  // â”€â”€ Datos del Servicentro Acreditado â”€â”€
+  nombreServiccentro       String? @map("nombre_serviccentro") @db.VarChar(150)
+  direccionServiccentro    String? @map("direccion_serviccentro")
+  /// NÃºmero de ticket o factura del servicentro
+  numeroTicketServiccentro String? @map("numero_ticket_serviccentro") @db.VarChar(50)
+  /// Nombre del responsable que firma/sella en el servicentro
+  responsableServiccentro  String? @map("responsable_serviccentro") @db.VarChar(100)
+  /// Indica si se recibiÃ³ el sello del servicentro
+  selloServiccentro         Boolean @default(false) @map("sello_serviccentro")
+
+  observaciones String?
+  creadoEn      DateTime @default(now()) @map("creado_en")
+  actualizadoEn DateTime @updatedAt @map("actualizado_en")
+
+  vehiculo  Vehiculo @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  conductor Usuario  @relation(fields: [conductorId], references: [id], onDelete: Restrict)
+
+  @@index([vehiculoId])
+  @@index([vehiculoId, fecha])
+  @@index([conductorId])
+  @@index([fecha])
+  @@index([numeroOrden])
+  @@map("ordenes_combustible")
+  }
+
+/// Tipo de combustible o lubricante en la orden de abastecimiento
+enum TipoCombustibleOrden {
+  GASOLINA
+  DIESEL
+  GLP
+  ACEITE_MOTOR
+  ACEITE_CAJA
+  MIXTO
+
+  }

@@ -11,13 +11,15 @@ import pg from "pg";
 import bcrypt from "bcryptjs";
 
 const MASTER_PASSWORD = "saf123";
-const hashedPassword = await bcrypt.hash(MASTER_PASSWORD, 10);
 
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  const hashedPassword = await bcrypt.hash(MASTER_PASSWORD, 10);
   console.log("🚛 Iniciando seed del Sistema de Administración de Flotas (SAF)...\n");
 
   // ══════════════════════════════════════════
@@ -48,6 +50,22 @@ async function main() {
 
   // 2.1 Usuarios del sistema (5 integrantes del equipo)
   console.log("   👤 Creando integrantes del equipo...");
+
+  // Superadmin del sistema
+  const superadmin = await prisma.usuario.upsert({
+    where: { email: "anchillo00@gmail.com" },
+    update: {},
+    create: {
+      nombre:    "Anchillo",
+      apellido:  "Admin",
+      email:     "anchillo00@gmail.com",
+      password:  hashedPassword,
+      rol:       "JEFE_PROCESO",
+      telefono:  "+51 999 000 000",
+      especialidad: "Superadmin del Sistema",
+    },
+  });
+  console.log(`   ✅ Superadmin creado: anchillo00@gmail.com (rol: JEFE_PROCESO)`);
 
   // Jefe del Proceso (responsable de actualización de procedimientos F1T02)
   const escriba = await prisma.usuario.upsert({

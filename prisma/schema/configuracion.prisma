@@ -1,0 +1,17 @@
+// ============================================================
+// SAF - Sistema de AdministraciÃ³n de Flotas
+// Archivo: configuracion.prisma â€” Esquema de ConfiguraciÃ³n General
+// ============================================================
+
+/// ParÃ¡metros generales del sistema SAF (nombre de la unidad, metas de km, etc.)
+model ConfiguracionFlota {
+  id            String   @id @default(uuid())
+  clave         String   @unique @db.VarChar(100)
+  valor         String
+  descripcion   String?
+  grupo         String   @default("general") @db.VarChar(50)
+  creadoEn      DateTime @default(now()) @map("creado_en")
+  actualizadoEn DateTime @updatedAt @map("actualizado_en")
+
+  @@map("configuracion_flota")
+  }
