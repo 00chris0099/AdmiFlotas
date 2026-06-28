@@ -32,12 +32,18 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Prisma runtime needs these at runtime
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+# Copy Prisma schema + config BEFORE npm install (postinstall needs them)
+COPY prisma.config.ts ./
+COPY prisma/ ./prisma/
 
-# Generated Prisma client (needed at runtime by frontend)
+# Install production deps (--ignore-scripts skips prisma generate, already done in builder)
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts
+
+# Generated Prisma client (already built in builder stage)
 COPY --from=builder /app/generated ./generated/
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma/
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma/
 
 # Frontend production files
 COPY --from=builder /app/frontend/.next ./.next/
