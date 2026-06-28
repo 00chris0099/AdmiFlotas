@@ -7,9 +7,12 @@ WORKDIR /app
 COPY prisma.config.ts ./
 COPY prisma/ ./prisma/
 
-# Root dependencies (Prisma) — postinstall runs prisma generate
+# Root dependencies — skip postinstall (ERD generator needs Chrome which we don't have)
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
+
+# Generate only Prisma client (skip ERD generator - no Chrome in Docker)
+RUN npx prisma generate --generator client
 
 # Frontend dependencies
 COPY frontend/package.json frontend/package-lock.json ./frontend/
