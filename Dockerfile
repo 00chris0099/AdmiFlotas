@@ -34,7 +34,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Install frontend production deps (not root - root has no "next")
 COPY frontend/package.json frontend/package-lock.json ./
-RUN npm ci --omit=dev --ignore-scripts
+RUN npm install --omit=dev --ignore-scripts
 
 # Generated Prisma client (already built in builder stage)
 COPY --from=builder /app/generated ./generated/
