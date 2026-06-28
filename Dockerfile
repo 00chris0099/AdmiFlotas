@@ -3,16 +3,13 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Root dependencies (Prisma)
-COPY package.json package-lock.json ./
-RUN npm ci
-
-# Prisma schema + config
+# Prisma schema + config (needed BEFORE npm ci for postinstall)
 COPY prisma.config.ts ./
 COPY prisma/ ./prisma/
 
-# Generate Prisma client
-RUN npx prisma generate
+# Root dependencies (Prisma) — postinstall runs prisma generate
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Frontend dependencies
 COPY frontend/package.json frontend/package-lock.json ./frontend/
