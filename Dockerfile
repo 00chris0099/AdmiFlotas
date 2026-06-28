@@ -16,7 +16,7 @@ RUN npx prisma generate --generator client
 
 # Frontend dependencies
 COPY frontend/package.json frontend/package-lock.json ./frontend/
-RUN cd frontend && npm ci
+RUN cd frontend && npm install
 
 # Frontend source
 COPY frontend/ ./frontend/
