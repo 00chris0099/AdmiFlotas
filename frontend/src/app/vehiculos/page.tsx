@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { exportToExcel } from "@/utils/exportUtils";
 
 interface Vehiculo {
   id: string;
@@ -200,12 +201,20 @@ export default function VehiculosPage() {
           <h2 className="text-2xl font-bold text-white mt-1">Inventario de Flota</h2>
           <p className="text-xs text-slate-400 mt-1">Ficha técnica patrimonial completa — Diagrama 3 F1T02</p>
         </div>
-        <button
-          onClick={() => { resetForm(); setModalOpen(true); }}
-          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
-        >
-          + Registrar Vehículo
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => exportToExcel(vehiculos, "vehiculos_saf.xlsx")}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
+          >
+            Exportar Excel
+          </button>
+          <button
+            onClick={() => { resetForm(); setModalOpen(true); }}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
+          >
+            + Registrar Vehículo
+          </button>
+        </div>
       </div>
 
       <DataTable columns={columns} data={vehiculos} />

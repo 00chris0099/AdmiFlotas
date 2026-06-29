@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
+import { exportToExcel } from "@/utils/exportUtils";
 
 interface OrdenCombustible {
   id: string;
@@ -280,19 +281,27 @@ export default function CombustiblePage() {
           <h2 className="text-2xl font-bold text-white">Control de Combustible y Lubricantes</h2>
           <p className="text-xs text-slate-400">Órdenes de abastecimiento — Formulario MA 122 01 02 (F1T02)</p>
         </div>
-        <button
-          onClick={() => {
-            setNumeroOrden(`OC-${Date.now().toString().slice(-6)}`);
-            resetForm();
-            if (conductores.length > 0) {
-              setFirmaConductor(`${conductores[0].nombre} ${conductores[0].apellido}`);
-            }
-            setModalOpen(true);
-          }}
-          className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
-        >
-          + Nueva Orden de Abastecimiento
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => exportToExcel(ordenes, "control_combustible.xlsx")}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
+          >
+            Exportar Excel
+          </button>
+          <button
+            onClick={() => {
+              setNumeroOrden(`OC-${Date.now().toString().slice(-6)}`);
+              resetForm();
+              if (conductores.length > 0) {
+                setFirmaConductor(`${conductores[0].nombre} ${conductores[0].apellido}`);
+              }
+              setModalOpen(true);
+            }}
+            className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
+          >
+            + Nueva Orden de Abastecimiento
+          </button>
+        </div>
       </div>
 
       {/* KPIs */}

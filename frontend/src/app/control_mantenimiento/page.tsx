@@ -6,6 +6,7 @@ import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
+import { exportToExcel } from "@/utils/exportUtils";
 
 interface DetalleManoObra {
   id: string;
@@ -319,15 +320,23 @@ export default function OrdenesMantenimientoPage() {
           <p className="text-xs text-slate-400">Control de órdenes de servicio preventivas y correctivas (MA 122 02 01)</p>
         </div>
 
-        <button
-          onClick={() => {
-            setNumeroOrden(`OM-${Date.now().toString().slice(-6)}`);
-            setModalOpen(true);
-          }}
-          className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
-        >
-          + Crear Orden de Servicio
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => exportToExcel(ordenes, "control_mantenimiento.xlsx")}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
+          >
+            Exportar Excel
+          </button>
+          <button
+            onClick={() => {
+              setNumeroOrden(`OM-${Date.now().toString().slice(-6)}`);
+              setModalOpen(true);
+            }}
+            className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
+          >
+            + Crear Orden de Servicio
+          </button>
+        </div>
       </div>
 
       {/* ALERTAS PREVENTIVAS POR ODÓMETRO */}

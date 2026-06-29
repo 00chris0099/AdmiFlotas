@@ -6,6 +6,7 @@ import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
+import { exportToExcel } from "@/utils/exportUtils";
 
 interface MovimientoDiario {
   id: string;
@@ -341,11 +342,19 @@ export default function MovimientosPage() {
         </Link>
       </div>
 
-      <div>
-        <h2 className="text-2xl font-bold text-white">Movimientos Diarios</h2>
-        <p className="text-xs text-slate-450">
-          Registro diario de odómetro, checklist pre-operacional e indicadores de HUV (MA 122 01 01)
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Movimientos Diarios</h2>
+          <p className="text-xs text-slate-450">
+            Registro diario de odómetro, checklist pre-operacional e indicadores de HUV (MA 122 01 01)
+          </p>
+        </div>
+        <button
+          onClick={() => exportToExcel(movimientos, "movimientos_diarios.xlsx")}
+          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
+        >
+          Exportar Excel
+        </button>
       </div>
 
       {isLoading ? (

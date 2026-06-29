@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { exportToExcel } from "@/utils/exportUtils";
 
 interface CostoItem {
   id: string;
@@ -190,12 +191,20 @@ export default function CostosPage() {
           <p className="text-xs text-slate-400">Prorrateo de costos fijos generales (Oficina, personal, comunicaciones) para el cálculo del CKV (F1T02)</p>
         </div>
 
-        <button
-          onClick={() => setShowModal(true)}
-          className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
-        >
-          + Registrar Costo Fijo
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => exportToExcel(costos, "costos_fijos_variables.xlsx")}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm transition"
+          >
+            Exportar Excel
+          </button>
+          <button
+            onClick={() => setShowModal(true)}
+            className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
+          >
+            + Registrar Costo Fijo
+          </button>
+        </div>
       </div>
 
       {loading ? (
