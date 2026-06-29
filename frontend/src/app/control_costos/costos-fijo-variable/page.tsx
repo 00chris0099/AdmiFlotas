@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface CostoItem {
   id: string;
@@ -33,7 +34,7 @@ export default function CostosPage() {
   const [submitting, setSubmitting] = useState(false);
 
   const loadData = () => {
-    fetch("/api/control_costos/costos-fijo-variable")
+    fetchWithAuth("/api/control_costos/costos-fijo-variable")
       .then((res) => res.json())
       .then((data) => {
         setCostos(data.costosFijos || []);
@@ -56,9 +57,8 @@ export default function CostosPage() {
     
     setSubmitting(true);
     try {
-      const res = await fetch("/api/control_costos/costos-fijo-variable", {
+      const res = await fetchWithAuth("/api/control_costos/costos-fijo-variable", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           periodo,
           tipo,

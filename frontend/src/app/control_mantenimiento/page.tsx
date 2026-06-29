@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface DetalleManoObra {
   id: string;
@@ -63,7 +64,7 @@ export default function OrdenesMantenimientoPage() {
 
   const cargarCatalogos = async () => {
     try {
-      const res = await fetch("/api/vehiculos");
+      const res = await fetchWithAuth("/api/vehiculos");
       const data = await res.json();
       if (Array.isArray(data)) {
         setVehiculos(data);
@@ -77,7 +78,7 @@ export default function OrdenesMantenimientoPage() {
   const cargarOrdenes = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/control_mantenimiento");
+      const res = await fetchWithAuth("/api/control_mantenimiento");
       const data = await res.json();
       if (Array.isArray(data)) {
         setOrdenes(data);
@@ -99,9 +100,8 @@ export default function OrdenesMantenimientoPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/control_mantenimiento", {
+      const res = await fetchWithAuth("/api/control_mantenimiento", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           numeroOrden,
           vehiculoId,
@@ -140,9 +140,8 @@ export default function OrdenesMantenimientoPage() {
 
     setSavingLabor(true);
     try {
-      const res = await fetch("/api/control_mantenimiento/mano-obra", {
+      const res = await fetchWithAuth("/api/control_mantenimiento/mano-obra", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ordenMantenimientoId: selectedOrderId,
           descripcionTarea,

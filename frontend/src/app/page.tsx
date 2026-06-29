@@ -25,6 +25,24 @@ interface ModuleData {
 
 const MODULES: ModuleData[] = [
   {
+    id: "flota",
+    title: "Módulo Flota",
+    description: "Inventario de vehículos con ficha técnica patrimonial completa (Diagrama 3 F1T02).",
+    icon: "🚛",
+    gradient: "from-cyan-500/10 to-sky-500/5 hover:border-cyan-500/40 hover:from-cyan-500/20",
+    hoverGradient: "border-cyan-500/30",
+    roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
+    tasks: [
+      {
+        name: "Inventario de Flota",
+        href: "/vehiculos",
+        icon: "🚛",
+        description: "Ficha técnica patrimonial y estado de cada vehículo",
+        roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
+      },
+    ],
+  },
+  {
     id: "operaciones",
     title: "Módulo Operaciones",
     description: "Registro de movimientos diarios (MA 122 01 01), combustibles (MA 122 01 02) y conductores.",

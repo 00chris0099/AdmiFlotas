@@ -216,7 +216,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
   }
 });
 
-export async function PATCH(request: NextRequest) {
+export const PATCH = withAuth(async (request: NextRequest, { user }) => {
   try {
     const body = await request.json();
     const { id, kilometrajeLlegada, horaLlegada, horasUtilizacion } = body;
@@ -319,4 +319,4 @@ export async function PATCH(request: NextRequest) {
     console.error("Error en PATCH movimientos:", error);
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
-}
+});

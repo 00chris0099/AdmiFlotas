@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface Conductor {
   id: string;
@@ -34,7 +35,7 @@ export default function ConductoresPage() {
   const cargarConductores = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/conductores");
+      const res = await fetchWithAuth("/api/conductores");
       const data = await res.json();
       if (Array.isArray(data)) {
         // Formatear las fechas antes de almacenarlas en el estado
@@ -66,9 +67,8 @@ export default function ConductoresPage() {
 
     try {
       setIsSubmitting(true);
-      const res = await fetch("/api/conductores", {
+      const res = await fetchWithAuth("/api/conductores", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nombre,
           apellido,

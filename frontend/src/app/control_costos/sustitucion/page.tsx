@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { exportToPDF, exportToExcel } from "@/utils/exportUtils";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface CurvaPunto {
   anio: number;
@@ -33,7 +34,7 @@ export default function SustitucionPage() {
   const [showExportModal, setShowExportModal] = useState(false);
 
   useEffect(() => {
-    fetch("/api/control_costos/sustitucion")
+    fetchWithAuth("/api/control_costos/sustitucion")
       .then((res) => res.json())
       .then((data) => {
         setVehiculosBajas(data || []);

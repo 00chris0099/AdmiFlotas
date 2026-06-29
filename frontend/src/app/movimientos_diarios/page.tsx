@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface MovimientoDiario {
   id: string;
@@ -76,8 +77,8 @@ export default function MovimientosPage() {
   const cargarCatalogos = async () => {
     try {
       const [resVeh, resCond] = await Promise.all([
-        fetch("/api/vehiculos"),
-        fetch("/api/conductores")
+        fetchWithAuth("/api/vehiculos"),
+        fetchWithAuth("/api/conductores")
       ]);
       const dataVeh = await resVeh.json();
       const dataCond = await resCond.json();
@@ -98,7 +99,7 @@ export default function MovimientosPage() {
   const cargarMovimientos = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/movimientos_diarios");
+      const res = await fetchWithAuth("/api/movimientos_diarios");
       const data = await res.json();
       if (Array.isArray(data)) {
         setMovimientos(data);
@@ -121,9 +122,8 @@ export default function MovimientosPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/movimientos_diarios", {
+      const res = await fetchWithAuth("/api/movimientos_diarios", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           vehiculoId,
           conductorId,

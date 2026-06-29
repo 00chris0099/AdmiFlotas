@@ -14,13 +14,28 @@ type RouteHandler = (
   context: { user: AuthUser }
 ) => Promise<NextResponse> | NextResponse;
 
+function extractToken(request: NextRequest): string | null {
+  // 1. Try Authorization header (Bearer token)
+  const authHeader = request.headers.get("authorization");
+  if (authHeader?.startsWith("Bearer ")) {
+    return authHeader.replace("Bearer ", "");
+  }
+
+  // 2. Try cookie (saf_token)
+  const cookieToken = request.cookies.get("saf_token")?.value;
+  if (cookieToken) {
+    return cookieToken;
+  }
+
+  return null;
+}
+
 export function withAuth(
   handler: RouteHandler,
   options?: { requiredRoles?: string[] }
 ) {
   return async (request: NextRequest) => {
-    const authHeader = request.headers.get("authorization");
-    const token = authHeader?.replace("Bearer ", "");
+    const token = extractToken(request);
 
     if (!token) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });

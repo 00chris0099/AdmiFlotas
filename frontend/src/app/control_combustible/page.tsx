@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface OrdenCombustible {
   id: string;
@@ -54,8 +55,8 @@ export default function CombustiblePage() {
   const cargarCatalogos = async () => {
     try {
       const [resVeh, resCond] = await Promise.all([
-        fetch("/api/vehiculos"),
-        fetch("/api/conductores")
+        fetchWithAuth("/api/vehiculos"),
+        fetchWithAuth("/api/conductores")
       ]);
       const dataVeh = await resVeh.json();
       const dataCond = await resCond.json();
@@ -76,7 +77,7 @@ export default function CombustiblePage() {
   const cargarOrdenes = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/control_combustible");
+      const res = await fetchWithAuth("/api/control_combustible");
       const data = await res.json();
       if (Array.isArray(data)) {
         setOrdenes(data);
@@ -98,9 +99,8 @@ export default function CombustiblePage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/control_combustible", {
+      const res = await fetchWithAuth("/api/control_combustible", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           numeroOrden,
           vehiculoId,

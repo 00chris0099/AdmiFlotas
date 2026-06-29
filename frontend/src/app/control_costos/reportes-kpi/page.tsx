@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { exportToPDF, exportToExcel } from "@/utils/exportUtils";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface KPIReport {
   id: string;
@@ -35,7 +36,7 @@ export default function KPIPage() {
   const [showExportModal, setShowExportModal] = useState(false);
 
   useEffect(() => {
-    fetch("/api/control_costos/reportes-kpi")
+    fetchWithAuth("/api/control_costos/reportes-kpi")
       .then((res) => res.json())
       .then((data) => {
         setReportes(data.reportes || []);

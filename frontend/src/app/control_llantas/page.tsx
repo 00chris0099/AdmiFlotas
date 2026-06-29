@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface Llanta {
   id: string;
@@ -50,7 +51,7 @@ export default function LlantasPage() {
 
   const cargarVehiculos = async () => {
     try {
-      const res = await fetch("/api/vehiculos");
+      const res = await fetchWithAuth("/api/vehiculos");
       const data = await res.json();
       if (Array.isArray(data)) {
         setVehiculos(data);
@@ -67,7 +68,7 @@ export default function LlantasPage() {
     if (!selectedVehiculoId) return;
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/control_llantas?vehiculoId=${selectedVehiculoId}`);
+      const res = await fetchWithAuth(`/api/control_llantas?vehiculoId=${selectedVehiculoId}`);
       const data = await res.json();
       if (Array.isArray(data)) {
         setLlantas(data);
@@ -94,9 +95,8 @@ export default function LlantasPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/control_llantas", {
+      const res = await fetchWithAuth("/api/control_llantas", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           codigoEps,
           vehiculoId: selectedVehiculoId,
@@ -138,9 +138,8 @@ export default function LlantasPage() {
 
     setRotating(true);
     try {
-      const res = await fetch("/api/control_llantas", {
+      const res = await fetchWithAuth("/api/control_llantas", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "ROTAR",
           llantaId1: origenLlanta.id,
@@ -168,9 +167,8 @@ export default function LlantasPage() {
   const handleReencauchar = async (llantaId: string) => {
     setUpdatingLifecycle(true);
     try {
-      const res = await fetch("/api/control_llantas", {
+      const res = await fetchWithAuth("/api/control_llantas", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "REENCAUCHAR",
           llantaId,
@@ -196,9 +194,8 @@ export default function LlantasPage() {
     if (!confirm("¿Está seguro de retirar y dar de baja esta llanta permanentemente?")) return;
     setUpdatingLifecycle(true);
     try {
-      const res = await fetch("/api/control_llantas", {
+      const res = await fetchWithAuth("/api/control_llantas", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "DAR_DE_BAJA",
           llantaId,

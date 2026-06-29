@@ -19,6 +19,17 @@ interface MenuSection {
 
 const MENU_SECTIONS: MenuSection[] = [
   {
+    title: "Módulo Flota",
+    items: [
+      {
+        name: "Inventario de Flota",
+        href: "/vehiculos",
+        icon: "🚛",
+        roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
+      },
+    ],
+  },
+  {
     title: "Módulo Operaciones",
     items: [
       {

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 export default function ConfiguracionPage() {
   const { token, user } = useAuth();
@@ -17,7 +18,7 @@ export default function ConfiguracionPage() {
   const [passwordMessage, setPasswordMessage] = useState("");
 
   useEffect(() => {
-    fetch("/api/configuracion")
+    fetchWithAuth("/api/configuracion")
       .then((res) => res.json())
       .then((data) => {
         if (data.configMap) {
@@ -39,9 +40,8 @@ export default function ConfiguracionPage() {
     setSaving(true);
 
     try {
-      const res = await fetch("/api/configuracion", {
+      const res = await fetchWithAuth("/api/configuracion", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           CKV_META: ckvMeta,
           KRP_DIARIO: krpDiario,
@@ -68,9 +68,8 @@ export default function ConfiguracionPage() {
     setRequestingPasswordChange(true);
     setPasswordMessage("");
     try {
-      const res = await fetch("/api/auth/solicitar-cambio-password", {
+      const res = await fetchWithAuth("/api/auth/solicitar-cambio-password", {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       setPasswordMessage(data.message);

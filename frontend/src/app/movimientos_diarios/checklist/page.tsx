@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 interface ChecklistItem {
   id: string;
@@ -23,7 +24,7 @@ export default function ChecklistPage() {
   const cargarChecklists = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/movimientos_diarios/checklist");
+      const res = await fetchWithAuth("/api/movimientos_diarios/checklist");
       const data = await res.json();
       if (Array.isArray(data)) {
         setChecklists(data);
