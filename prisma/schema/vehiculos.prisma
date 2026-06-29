@@ -109,6 +109,7 @@ model Vehiculo {
   desempenoLlantas       DesempenoLlantas[]
   resumenKpisVehiculo    ResumenKpisVehiculo[]
   asignaciones           AsignacionVehiculo[]
+  documentos             DocumentoVehiculo[]
 
   @@index([placa])
   @@index([estado])

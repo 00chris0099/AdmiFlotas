@@ -288,6 +288,18 @@ exports.Prisma.AsignacionVehiculoScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.DocumentoVehiculoScalarFieldEnum = {
+  id: 'id',
+  vehiculoId: 'vehiculoId',
+  tipoDocumento: 'tipoDocumento',
+  numeroDocumento: 'numeroDocumento',
+  fechaEmision: 'fechaEmision',
+  fechaVencimiento: 'fechaVencimiento',
+  entidadEmisora: 'entidadEmisora',
+  observaciones: 'observaciones',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.MovimientoDiarioScalarFieldEnum = {
   id: 'id',
   vehiculoId: 'vehiculoId',
@@ -564,6 +576,15 @@ exports.EstadoMantenimiento = exports.$Enums.EstadoMantenimiento = {
   CANCELADO: 'CANCELADO'
 };
 
+exports.TipoDocumento = exports.$Enums.TipoDocumento = {
+  LICENCIA: 'LICENCIA',
+  SOAT: 'SOAT',
+  REVISION_TECNICA: 'REVISION_TECNICA',
+  SEGURO: 'SEGURO',
+  TARJETA_PROPIEDAD: 'TARJETA_PROPIEDAD',
+  OTRO: 'OTRO'
+};
+
 exports.EstadoMovimiento = exports.$Enums.EstadoMovimiento = {
   PROGRAMADO: 'PROGRAMADO',
   EN_RUTA: 'EN_RUTA',
@@ -638,6 +659,7 @@ exports.Prisma.ModelName = {
   DetalleRepuesto: 'DetalleRepuesto',
   DetalleManoObra: 'DetalleManoObra',
   AsignacionVehiculo: 'AsignacionVehiculo',
+  DocumentoVehiculo: 'DocumentoVehiculo',
   MovimientoDiario: 'MovimientoDiario',
   ChecklistVerificacion: 'ChecklistVerificacion',
   Permiso: 'Permiso',

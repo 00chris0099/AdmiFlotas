@@ -17,3 +17,31 @@ model AsignacionVehiculo {
   @@index([activa])
   @@map("asignaciones_vehiculos")
 }
+
+model DocumentoVehiculo {
+  id               String        @id @default(uuid())
+  vehiculoId       String        @map("vehiculo_id")
+  tipoDocumento    TipoDocumento @map("tipo_documento")
+  numeroDocumento  String        @map("numero_documento") @db.VarChar(50)
+  fechaEmision     DateTime      @map("fecha_emision")
+  fechaVencimiento DateTime?     @map("fecha_vencimiento")
+  entidadEmisora   String?       @map("entidad_emisora") @db.VarChar(150)
+  observaciones    String?
+  creadoEn         DateTime      @default(now()) @map("creado_en")
+
+  vehiculo Vehiculo @relation(fields: [vehiculoId], references: [id])
+
+  @@index([vehiculoId])
+  @@index([tipoDocumento])
+  @@index([fechaVencimiento])
+  @@map("documentos_vehiculo")
+}
+
+enum TipoDocumento {
+  LICENCIA
+  SOAT
+  REVISION_TECNICA
+  SEGURO
+  TARJETA_PROPIEDAD
+  OTRO
+}

@@ -59,6 +59,11 @@ export type DetalleManoObra = $Result.DefaultSelection<Prisma.$DetalleManoObraPa
  */
 export type AsignacionVehiculo = $Result.DefaultSelection<Prisma.$AsignacionVehiculoPayload>
 /**
+ * Model DocumentoVehiculo
+ * 
+ */
+export type DocumentoVehiculo = $Result.DefaultSelection<Prisma.$DocumentoVehiculoPayload>
+/**
  * Model MovimientoDiario
  * Registro de uso diario del vehÃ­culo â€” Formulario MA 122 01 01
  */
@@ -199,6 +204,18 @@ export const EstadoMantenimiento: {
 export type EstadoMantenimiento = (typeof EstadoMantenimiento)[keyof typeof EstadoMantenimiento]
 
 
+export const TipoDocumento: {
+  LICENCIA: 'LICENCIA',
+  SOAT: 'SOAT',
+  REVISION_TECNICA: 'REVISION_TECNICA',
+  SEGURO: 'SEGURO',
+  TARJETA_PROPIEDAD: 'TARJETA_PROPIEDAD',
+  OTRO: 'OTRO'
+};
+
+export type TipoDocumento = (typeof TipoDocumento)[keyof typeof TipoDocumento]
+
+
 export const EstadoMovimiento: {
   PROGRAMADO: 'PROGRAMADO',
   EN_RUTA: 'EN_RUTA',
@@ -318,6 +335,10 @@ export const TipoTaller: typeof $Enums.TipoTaller
 export type EstadoMantenimiento = $Enums.EstadoMantenimiento
 
 export const EstadoMantenimiento: typeof $Enums.EstadoMantenimiento
+
+export type TipoDocumento = $Enums.TipoDocumento
+
+export const TipoDocumento: typeof $Enums.TipoDocumento
 
 export type EstadoMovimiento = $Enums.EstadoMovimiento
 
@@ -565,6 +586,16 @@ export class PrismaClient<
     * ```
     */
   get asignacionVehiculo(): Prisma.AsignacionVehiculoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.documentoVehiculo`: Exposes CRUD operations for the **DocumentoVehiculo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DocumentoVehiculos
+    * const documentoVehiculos = await prisma.documentoVehiculo.findMany()
+    * ```
+    */
+  get documentoVehiculo(): Prisma.DocumentoVehiculoDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.movimientoDiario`: Exposes CRUD operations for the **MovimientoDiario** model.
@@ -1118,6 +1149,7 @@ export namespace Prisma {
     DetalleRepuesto: 'DetalleRepuesto',
     DetalleManoObra: 'DetalleManoObra',
     AsignacionVehiculo: 'AsignacionVehiculo',
+    DocumentoVehiculo: 'DocumentoVehiculo',
     MovimientoDiario: 'MovimientoDiario',
     ChecklistVerificacion: 'ChecklistVerificacion',
     Permiso: 'Permiso',
@@ -1144,7 +1176,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "movimientoDiario" | "checklistVerificacion" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
+      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "movimientoDiario" | "checklistVerificacion" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1811,6 +1843,80 @@ export namespace Prisma {
           count: {
             args: Prisma.AsignacionVehiculoCountArgs<ExtArgs>
             result: $Utils.Optional<AsignacionVehiculoCountAggregateOutputType> | number
+          }
+        }
+      }
+      DocumentoVehiculo: {
+        payload: Prisma.$DocumentoVehiculoPayload<ExtArgs>
+        fields: Prisma.DocumentoVehiculoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DocumentoVehiculoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DocumentoVehiculoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>
+          }
+          findFirst: {
+            args: Prisma.DocumentoVehiculoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DocumentoVehiculoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>
+          }
+          findMany: {
+            args: Prisma.DocumentoVehiculoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>[]
+          }
+          create: {
+            args: Prisma.DocumentoVehiculoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>
+          }
+          createMany: {
+            args: Prisma.DocumentoVehiculoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DocumentoVehiculoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>[]
+          }
+          delete: {
+            args: Prisma.DocumentoVehiculoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>
+          }
+          update: {
+            args: Prisma.DocumentoVehiculoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>
+          }
+          deleteMany: {
+            args: Prisma.DocumentoVehiculoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DocumentoVehiculoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DocumentoVehiculoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>[]
+          }
+          upsert: {
+            args: Prisma.DocumentoVehiculoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentoVehiculoPayload>
+          }
+          aggregate: {
+            args: Prisma.DocumentoVehiculoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDocumentoVehiculo>
+          }
+          groupBy: {
+            args: Prisma.DocumentoVehiculoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DocumentoVehiculoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DocumentoVehiculoCountArgs<ExtArgs>
+            result: $Utils.Optional<DocumentoVehiculoCountAggregateOutputType> | number
           }
         }
       }
@@ -2637,6 +2743,7 @@ export namespace Prisma {
     detalleRepuesto?: DetalleRepuestoOmit
     detalleManoObra?: DetalleManoObraOmit
     asignacionVehiculo?: AsignacionVehiculoOmit
+    documentoVehiculo?: DocumentoVehiculoOmit
     movimientoDiario?: MovimientoDiarioOmit
     checklistVerificacion?: ChecklistVerificacionOmit
     permiso?: PermisoOmit
@@ -2910,6 +3017,7 @@ export namespace Prisma {
     desempenoLlantas: number
     resumenKpisVehiculo: number
     asignaciones: number
+    documentos: number
   }
 
   export type VehiculoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2921,6 +3029,7 @@ export namespace Prisma {
     desempenoLlantas?: boolean | VehiculoCountOutputTypeCountDesempenoLlantasArgs
     resumenKpisVehiculo?: boolean | VehiculoCountOutputTypeCountResumenKpisVehiculoArgs
     asignaciones?: boolean | VehiculoCountOutputTypeCountAsignacionesArgs
+    documentos?: boolean | VehiculoCountOutputTypeCountDocumentosArgs
   }
 
   // Custom InputTypes
@@ -2988,6 +3097,13 @@ export namespace Prisma {
    */
   export type VehiculoCountOutputTypeCountAsignacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AsignacionVehiculoWhereInput
+  }
+
+  /**
+   * VehiculoCountOutputType without action
+   */
+  export type VehiculoCountOutputTypeCountDocumentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentoVehiculoWhereInput
   }
 
 
@@ -14464,6 +14580,1121 @@ export namespace Prisma {
 
 
   /**
+   * Model DocumentoVehiculo
+   */
+
+  export type AggregateDocumentoVehiculo = {
+    _count: DocumentoVehiculoCountAggregateOutputType | null
+    _min: DocumentoVehiculoMinAggregateOutputType | null
+    _max: DocumentoVehiculoMaxAggregateOutputType | null
+  }
+
+  export type DocumentoVehiculoMinAggregateOutputType = {
+    id: string | null
+    vehiculoId: string | null
+    tipoDocumento: $Enums.TipoDocumento | null
+    numeroDocumento: string | null
+    fechaEmision: Date | null
+    fechaVencimiento: Date | null
+    entidadEmisora: string | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type DocumentoVehiculoMaxAggregateOutputType = {
+    id: string | null
+    vehiculoId: string | null
+    tipoDocumento: $Enums.TipoDocumento | null
+    numeroDocumento: string | null
+    fechaEmision: Date | null
+    fechaVencimiento: Date | null
+    entidadEmisora: string | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type DocumentoVehiculoCountAggregateOutputType = {
+    id: number
+    vehiculoId: number
+    tipoDocumento: number
+    numeroDocumento: number
+    fechaEmision: number
+    fechaVencimiento: number
+    entidadEmisora: number
+    observaciones: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type DocumentoVehiculoMinAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    tipoDocumento?: true
+    numeroDocumento?: true
+    fechaEmision?: true
+    fechaVencimiento?: true
+    entidadEmisora?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type DocumentoVehiculoMaxAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    tipoDocumento?: true
+    numeroDocumento?: true
+    fechaEmision?: true
+    fechaVencimiento?: true
+    entidadEmisora?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type DocumentoVehiculoCountAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    tipoDocumento?: true
+    numeroDocumento?: true
+    fechaEmision?: true
+    fechaVencimiento?: true
+    entidadEmisora?: true
+    observaciones?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type DocumentoVehiculoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DocumentoVehiculo to aggregate.
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentoVehiculos to fetch.
+     */
+    orderBy?: DocumentoVehiculoOrderByWithRelationInput | DocumentoVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DocumentoVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentoVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentoVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DocumentoVehiculos
+    **/
+    _count?: true | DocumentoVehiculoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DocumentoVehiculoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DocumentoVehiculoMaxAggregateInputType
+  }
+
+  export type GetDocumentoVehiculoAggregateType<T extends DocumentoVehiculoAggregateArgs> = {
+        [P in keyof T & keyof AggregateDocumentoVehiculo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDocumentoVehiculo[P]>
+      : GetScalarType<T[P], AggregateDocumentoVehiculo[P]>
+  }
+
+
+
+
+  export type DocumentoVehiculoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentoVehiculoWhereInput
+    orderBy?: DocumentoVehiculoOrderByWithAggregationInput | DocumentoVehiculoOrderByWithAggregationInput[]
+    by: DocumentoVehiculoScalarFieldEnum[] | DocumentoVehiculoScalarFieldEnum
+    having?: DocumentoVehiculoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DocumentoVehiculoCountAggregateInputType | true
+    _min?: DocumentoVehiculoMinAggregateInputType
+    _max?: DocumentoVehiculoMaxAggregateInputType
+  }
+
+  export type DocumentoVehiculoGroupByOutputType = {
+    id: string
+    vehiculoId: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date
+    fechaVencimiento: Date | null
+    entidadEmisora: string | null
+    observaciones: string | null
+    creadoEn: Date
+    _count: DocumentoVehiculoCountAggregateOutputType | null
+    _min: DocumentoVehiculoMinAggregateOutputType | null
+    _max: DocumentoVehiculoMaxAggregateOutputType | null
+  }
+
+  type GetDocumentoVehiculoGroupByPayload<T extends DocumentoVehiculoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DocumentoVehiculoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DocumentoVehiculoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DocumentoVehiculoGroupByOutputType[P]>
+            : GetScalarType<T[P], DocumentoVehiculoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DocumentoVehiculoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    tipoDocumento?: boolean
+    numeroDocumento?: boolean
+    fechaEmision?: boolean
+    fechaVencimiento?: boolean
+    entidadEmisora?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["documentoVehiculo"]>
+
+  export type DocumentoVehiculoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    tipoDocumento?: boolean
+    numeroDocumento?: boolean
+    fechaEmision?: boolean
+    fechaVencimiento?: boolean
+    entidadEmisora?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["documentoVehiculo"]>
+
+  export type DocumentoVehiculoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    tipoDocumento?: boolean
+    numeroDocumento?: boolean
+    fechaEmision?: boolean
+    fechaVencimiento?: boolean
+    entidadEmisora?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["documentoVehiculo"]>
+
+  export type DocumentoVehiculoSelectScalar = {
+    id?: boolean
+    vehiculoId?: boolean
+    tipoDocumento?: boolean
+    numeroDocumento?: boolean
+    fechaEmision?: boolean
+    fechaVencimiento?: boolean
+    entidadEmisora?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+  }
+
+  export type DocumentoVehiculoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vehiculoId" | "tipoDocumento" | "numeroDocumento" | "fechaEmision" | "fechaVencimiento" | "entidadEmisora" | "observaciones" | "creadoEn", ExtArgs["result"]["documentoVehiculo"]>
+  export type DocumentoVehiculoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+  export type DocumentoVehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+  export type DocumentoVehiculoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+
+  export type $DocumentoVehiculoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DocumentoVehiculo"
+    objects: {
+      vehiculo: Prisma.$VehiculoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      vehiculoId: string
+      tipoDocumento: $Enums.TipoDocumento
+      numeroDocumento: string
+      fechaEmision: Date
+      fechaVencimiento: Date | null
+      entidadEmisora: string | null
+      observaciones: string | null
+      creadoEn: Date
+    }, ExtArgs["result"]["documentoVehiculo"]>
+    composites: {}
+  }
+
+  type DocumentoVehiculoGetPayload<S extends boolean | null | undefined | DocumentoVehiculoDefaultArgs> = $Result.GetResult<Prisma.$DocumentoVehiculoPayload, S>
+
+  type DocumentoVehiculoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DocumentoVehiculoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DocumentoVehiculoCountAggregateInputType | true
+    }
+
+  export interface DocumentoVehiculoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DocumentoVehiculo'], meta: { name: 'DocumentoVehiculo' } }
+    /**
+     * Find zero or one DocumentoVehiculo that matches the filter.
+     * @param {DocumentoVehiculoFindUniqueArgs} args - Arguments to find a DocumentoVehiculo
+     * @example
+     * // Get one DocumentoVehiculo
+     * const documentoVehiculo = await prisma.documentoVehiculo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DocumentoVehiculoFindUniqueArgs>(args: SelectSubset<T, DocumentoVehiculoFindUniqueArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DocumentoVehiculo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DocumentoVehiculoFindUniqueOrThrowArgs} args - Arguments to find a DocumentoVehiculo
+     * @example
+     * // Get one DocumentoVehiculo
+     * const documentoVehiculo = await prisma.documentoVehiculo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DocumentoVehiculoFindUniqueOrThrowArgs>(args: SelectSubset<T, DocumentoVehiculoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DocumentoVehiculo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoFindFirstArgs} args - Arguments to find a DocumentoVehiculo
+     * @example
+     * // Get one DocumentoVehiculo
+     * const documentoVehiculo = await prisma.documentoVehiculo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DocumentoVehiculoFindFirstArgs>(args?: SelectSubset<T, DocumentoVehiculoFindFirstArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DocumentoVehiculo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoFindFirstOrThrowArgs} args - Arguments to find a DocumentoVehiculo
+     * @example
+     * // Get one DocumentoVehiculo
+     * const documentoVehiculo = await prisma.documentoVehiculo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DocumentoVehiculoFindFirstOrThrowArgs>(args?: SelectSubset<T, DocumentoVehiculoFindFirstOrThrowArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DocumentoVehiculos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DocumentoVehiculos
+     * const documentoVehiculos = await prisma.documentoVehiculo.findMany()
+     * 
+     * // Get first 10 DocumentoVehiculos
+     * const documentoVehiculos = await prisma.documentoVehiculo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const documentoVehiculoWithIdOnly = await prisma.documentoVehiculo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DocumentoVehiculoFindManyArgs>(args?: SelectSubset<T, DocumentoVehiculoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DocumentoVehiculo.
+     * @param {DocumentoVehiculoCreateArgs} args - Arguments to create a DocumentoVehiculo.
+     * @example
+     * // Create one DocumentoVehiculo
+     * const DocumentoVehiculo = await prisma.documentoVehiculo.create({
+     *   data: {
+     *     // ... data to create a DocumentoVehiculo
+     *   }
+     * })
+     * 
+     */
+    create<T extends DocumentoVehiculoCreateArgs>(args: SelectSubset<T, DocumentoVehiculoCreateArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DocumentoVehiculos.
+     * @param {DocumentoVehiculoCreateManyArgs} args - Arguments to create many DocumentoVehiculos.
+     * @example
+     * // Create many DocumentoVehiculos
+     * const documentoVehiculo = await prisma.documentoVehiculo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DocumentoVehiculoCreateManyArgs>(args?: SelectSubset<T, DocumentoVehiculoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DocumentoVehiculos and returns the data saved in the database.
+     * @param {DocumentoVehiculoCreateManyAndReturnArgs} args - Arguments to create many DocumentoVehiculos.
+     * @example
+     * // Create many DocumentoVehiculos
+     * const documentoVehiculo = await prisma.documentoVehiculo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DocumentoVehiculos and only return the `id`
+     * const documentoVehiculoWithIdOnly = await prisma.documentoVehiculo.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DocumentoVehiculoCreateManyAndReturnArgs>(args?: SelectSubset<T, DocumentoVehiculoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DocumentoVehiculo.
+     * @param {DocumentoVehiculoDeleteArgs} args - Arguments to delete one DocumentoVehiculo.
+     * @example
+     * // Delete one DocumentoVehiculo
+     * const DocumentoVehiculo = await prisma.documentoVehiculo.delete({
+     *   where: {
+     *     // ... filter to delete one DocumentoVehiculo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DocumentoVehiculoDeleteArgs>(args: SelectSubset<T, DocumentoVehiculoDeleteArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DocumentoVehiculo.
+     * @param {DocumentoVehiculoUpdateArgs} args - Arguments to update one DocumentoVehiculo.
+     * @example
+     * // Update one DocumentoVehiculo
+     * const documentoVehiculo = await prisma.documentoVehiculo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DocumentoVehiculoUpdateArgs>(args: SelectSubset<T, DocumentoVehiculoUpdateArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DocumentoVehiculos.
+     * @param {DocumentoVehiculoDeleteManyArgs} args - Arguments to filter DocumentoVehiculos to delete.
+     * @example
+     * // Delete a few DocumentoVehiculos
+     * const { count } = await prisma.documentoVehiculo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DocumentoVehiculoDeleteManyArgs>(args?: SelectSubset<T, DocumentoVehiculoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DocumentoVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DocumentoVehiculos
+     * const documentoVehiculo = await prisma.documentoVehiculo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DocumentoVehiculoUpdateManyArgs>(args: SelectSubset<T, DocumentoVehiculoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DocumentoVehiculos and returns the data updated in the database.
+     * @param {DocumentoVehiculoUpdateManyAndReturnArgs} args - Arguments to update many DocumentoVehiculos.
+     * @example
+     * // Update many DocumentoVehiculos
+     * const documentoVehiculo = await prisma.documentoVehiculo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DocumentoVehiculos and only return the `id`
+     * const documentoVehiculoWithIdOnly = await prisma.documentoVehiculo.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DocumentoVehiculoUpdateManyAndReturnArgs>(args: SelectSubset<T, DocumentoVehiculoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DocumentoVehiculo.
+     * @param {DocumentoVehiculoUpsertArgs} args - Arguments to update or create a DocumentoVehiculo.
+     * @example
+     * // Update or create a DocumentoVehiculo
+     * const documentoVehiculo = await prisma.documentoVehiculo.upsert({
+     *   create: {
+     *     // ... data to create a DocumentoVehiculo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DocumentoVehiculo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DocumentoVehiculoUpsertArgs>(args: SelectSubset<T, DocumentoVehiculoUpsertArgs<ExtArgs>>): Prisma__DocumentoVehiculoClient<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DocumentoVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoCountArgs} args - Arguments to filter DocumentoVehiculos to count.
+     * @example
+     * // Count the number of DocumentoVehiculos
+     * const count = await prisma.documentoVehiculo.count({
+     *   where: {
+     *     // ... the filter for the DocumentoVehiculos we want to count
+     *   }
+     * })
+    **/
+    count<T extends DocumentoVehiculoCountArgs>(
+      args?: Subset<T, DocumentoVehiculoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DocumentoVehiculoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DocumentoVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DocumentoVehiculoAggregateArgs>(args: Subset<T, DocumentoVehiculoAggregateArgs>): Prisma.PrismaPromise<GetDocumentoVehiculoAggregateType<T>>
+
+    /**
+     * Group by DocumentoVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentoVehiculoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DocumentoVehiculoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DocumentoVehiculoGroupByArgs['orderBy'] }
+        : { orderBy?: DocumentoVehiculoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DocumentoVehiculoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDocumentoVehiculoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DocumentoVehiculo model
+   */
+  readonly fields: DocumentoVehiculoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DocumentoVehiculo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DocumentoVehiculoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    vehiculo<T extends VehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehiculoDefaultArgs<ExtArgs>>): Prisma__VehiculoClient<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DocumentoVehiculo model
+   */
+  interface DocumentoVehiculoFieldRefs {
+    readonly id: FieldRef<"DocumentoVehiculo", 'String'>
+    readonly vehiculoId: FieldRef<"DocumentoVehiculo", 'String'>
+    readonly tipoDocumento: FieldRef<"DocumentoVehiculo", 'TipoDocumento'>
+    readonly numeroDocumento: FieldRef<"DocumentoVehiculo", 'String'>
+    readonly fechaEmision: FieldRef<"DocumentoVehiculo", 'DateTime'>
+    readonly fechaVencimiento: FieldRef<"DocumentoVehiculo", 'DateTime'>
+    readonly entidadEmisora: FieldRef<"DocumentoVehiculo", 'String'>
+    readonly observaciones: FieldRef<"DocumentoVehiculo", 'String'>
+    readonly creadoEn: FieldRef<"DocumentoVehiculo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DocumentoVehiculo findUnique
+   */
+  export type DocumentoVehiculoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which DocumentoVehiculo to fetch.
+     */
+    where: DocumentoVehiculoWhereUniqueInput
+  }
+
+  /**
+   * DocumentoVehiculo findUniqueOrThrow
+   */
+  export type DocumentoVehiculoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which DocumentoVehiculo to fetch.
+     */
+    where: DocumentoVehiculoWhereUniqueInput
+  }
+
+  /**
+   * DocumentoVehiculo findFirst
+   */
+  export type DocumentoVehiculoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which DocumentoVehiculo to fetch.
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentoVehiculos to fetch.
+     */
+    orderBy?: DocumentoVehiculoOrderByWithRelationInput | DocumentoVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DocumentoVehiculos.
+     */
+    cursor?: DocumentoVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentoVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentoVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DocumentoVehiculos.
+     */
+    distinct?: DocumentoVehiculoScalarFieldEnum | DocumentoVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * DocumentoVehiculo findFirstOrThrow
+   */
+  export type DocumentoVehiculoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which DocumentoVehiculo to fetch.
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentoVehiculos to fetch.
+     */
+    orderBy?: DocumentoVehiculoOrderByWithRelationInput | DocumentoVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DocumentoVehiculos.
+     */
+    cursor?: DocumentoVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentoVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentoVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DocumentoVehiculos.
+     */
+    distinct?: DocumentoVehiculoScalarFieldEnum | DocumentoVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * DocumentoVehiculo findMany
+   */
+  export type DocumentoVehiculoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which DocumentoVehiculos to fetch.
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentoVehiculos to fetch.
+     */
+    orderBy?: DocumentoVehiculoOrderByWithRelationInput | DocumentoVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DocumentoVehiculos.
+     */
+    cursor?: DocumentoVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentoVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentoVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DocumentoVehiculos.
+     */
+    distinct?: DocumentoVehiculoScalarFieldEnum | DocumentoVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * DocumentoVehiculo create
+   */
+  export type DocumentoVehiculoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DocumentoVehiculo.
+     */
+    data: XOR<DocumentoVehiculoCreateInput, DocumentoVehiculoUncheckedCreateInput>
+  }
+
+  /**
+   * DocumentoVehiculo createMany
+   */
+  export type DocumentoVehiculoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DocumentoVehiculos.
+     */
+    data: DocumentoVehiculoCreateManyInput | DocumentoVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DocumentoVehiculo createManyAndReturn
+   */
+  export type DocumentoVehiculoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * The data used to create many DocumentoVehiculos.
+     */
+    data: DocumentoVehiculoCreateManyInput | DocumentoVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DocumentoVehiculo update
+   */
+  export type DocumentoVehiculoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DocumentoVehiculo.
+     */
+    data: XOR<DocumentoVehiculoUpdateInput, DocumentoVehiculoUncheckedUpdateInput>
+    /**
+     * Choose, which DocumentoVehiculo to update.
+     */
+    where: DocumentoVehiculoWhereUniqueInput
+  }
+
+  /**
+   * DocumentoVehiculo updateMany
+   */
+  export type DocumentoVehiculoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DocumentoVehiculos.
+     */
+    data: XOR<DocumentoVehiculoUpdateManyMutationInput, DocumentoVehiculoUncheckedUpdateManyInput>
+    /**
+     * Filter which DocumentoVehiculos to update
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * Limit how many DocumentoVehiculos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DocumentoVehiculo updateManyAndReturn
+   */
+  export type DocumentoVehiculoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * The data used to update DocumentoVehiculos.
+     */
+    data: XOR<DocumentoVehiculoUpdateManyMutationInput, DocumentoVehiculoUncheckedUpdateManyInput>
+    /**
+     * Filter which DocumentoVehiculos to update
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * Limit how many DocumentoVehiculos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DocumentoVehiculo upsert
+   */
+  export type DocumentoVehiculoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DocumentoVehiculo to update in case it exists.
+     */
+    where: DocumentoVehiculoWhereUniqueInput
+    /**
+     * In case the DocumentoVehiculo found by the `where` argument doesn't exist, create a new DocumentoVehiculo with this data.
+     */
+    create: XOR<DocumentoVehiculoCreateInput, DocumentoVehiculoUncheckedCreateInput>
+    /**
+     * In case the DocumentoVehiculo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DocumentoVehiculoUpdateInput, DocumentoVehiculoUncheckedUpdateInput>
+  }
+
+  /**
+   * DocumentoVehiculo delete
+   */
+  export type DocumentoVehiculoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter which DocumentoVehiculo to delete.
+     */
+    where: DocumentoVehiculoWhereUniqueInput
+  }
+
+  /**
+   * DocumentoVehiculo deleteMany
+   */
+  export type DocumentoVehiculoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DocumentoVehiculos to delete
+     */
+    where?: DocumentoVehiculoWhereInput
+    /**
+     * Limit how many DocumentoVehiculos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DocumentoVehiculo without action
+   */
+  export type DocumentoVehiculoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model MovimientoDiario
    */
 
@@ -23464,6 +24695,7 @@ export namespace Prisma {
     desempenoLlantas?: boolean | Vehiculo$desempenoLlantasArgs<ExtArgs>
     resumenKpisVehiculo?: boolean | Vehiculo$resumenKpisVehiculoArgs<ExtArgs>
     asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
+    documentos?: boolean | Vehiculo$documentosArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vehiculo"]>
 
@@ -23642,6 +24874,7 @@ export namespace Prisma {
     desempenoLlantas?: boolean | Vehiculo$desempenoLlantasArgs<ExtArgs>
     resumenKpisVehiculo?: boolean | Vehiculo$resumenKpisVehiculoArgs<ExtArgs>
     asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
+    documentos?: boolean | Vehiculo$documentosArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -23658,6 +24891,7 @@ export namespace Prisma {
       desempenoLlantas: Prisma.$DesempenoLlantasPayload<ExtArgs>[]
       resumenKpisVehiculo: Prisma.$ResumenKpisVehiculoPayload<ExtArgs>[]
       asignaciones: Prisma.$AsignacionVehiculoPayload<ExtArgs>[]
+      documentos: Prisma.$DocumentoVehiculoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -24186,6 +25420,7 @@ export namespace Prisma {
     desempenoLlantas<T extends Vehiculo$desempenoLlantasArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$desempenoLlantasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DesempenoLlantasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resumenKpisVehiculo<T extends Vehiculo$resumenKpisVehiculoArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$resumenKpisVehiculoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumenKpisVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     asignaciones<T extends Vehiculo$asignacionesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    documentos<T extends Vehiculo$documentosArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$documentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24849,6 +26084,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Vehiculo.documentos
+   */
+  export type Vehiculo$documentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentoVehiculo
+     */
+    select?: DocumentoVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentoVehiculo
+     */
+    omit?: DocumentoVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentoVehiculoInclude<ExtArgs> | null
+    where?: DocumentoVehiculoWhereInput
+    orderBy?: DocumentoVehiculoOrderByWithRelationInput | DocumentoVehiculoOrderByWithRelationInput[]
+    cursor?: DocumentoVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DocumentoVehiculoScalarFieldEnum | DocumentoVehiculoScalarFieldEnum[]
   }
 
   /**
@@ -27389,6 +28648,21 @@ export namespace Prisma {
   export type AsignacionVehiculoScalarFieldEnum = (typeof AsignacionVehiculoScalarFieldEnum)[keyof typeof AsignacionVehiculoScalarFieldEnum]
 
 
+  export const DocumentoVehiculoScalarFieldEnum: {
+    id: 'id',
+    vehiculoId: 'vehiculoId',
+    tipoDocumento: 'tipoDocumento',
+    numeroDocumento: 'numeroDocumento',
+    fechaEmision: 'fechaEmision',
+    fechaVencimiento: 'fechaVencimiento',
+    entidadEmisora: 'entidadEmisora',
+    observaciones: 'observaciones',
+    creadoEn: 'creadoEn'
+  };
+
+  export type DocumentoVehiculoScalarFieldEnum = (typeof DocumentoVehiculoScalarFieldEnum)[keyof typeof DocumentoVehiculoScalarFieldEnum]
+
+
   export const MovimientoDiarioScalarFieldEnum: {
     id: 'id',
     vehiculoId: 'vehiculoId',
@@ -27811,6 +29085,20 @@ export namespace Prisma {
    * Reference to a field of type 'EstadoMantenimiento[]'
    */
   export type ListEnumEstadoMantenimientoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoMantenimiento[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoDocumento'
+   */
+  export type EnumTipoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDocumento'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoDocumento[]'
+   */
+  export type ListEnumTipoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDocumento[]'>
     
 
 
@@ -28979,6 +30267,81 @@ export namespace Prisma {
     creadoEn?: DateTimeWithAggregatesFilter<"AsignacionVehiculo"> | Date | string
   }
 
+  export type DocumentoVehiculoWhereInput = {
+    AND?: DocumentoVehiculoWhereInput | DocumentoVehiculoWhereInput[]
+    OR?: DocumentoVehiculoWhereInput[]
+    NOT?: DocumentoVehiculoWhereInput | DocumentoVehiculoWhereInput[]
+    id?: StringFilter<"DocumentoVehiculo"> | string
+    vehiculoId?: StringFilter<"DocumentoVehiculo"> | string
+    tipoDocumento?: EnumTipoDocumentoFilter<"DocumentoVehiculo"> | $Enums.TipoDocumento
+    numeroDocumento?: StringFilter<"DocumentoVehiculo"> | string
+    fechaEmision?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
+    fechaVencimiento?: DateTimeNullableFilter<"DocumentoVehiculo"> | Date | string | null
+    entidadEmisora?: StringNullableFilter<"DocumentoVehiculo"> | string | null
+    observaciones?: StringNullableFilter<"DocumentoVehiculo"> | string | null
+    creadoEn?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+  }
+
+  export type DocumentoVehiculoOrderByWithRelationInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    tipoDocumento?: SortOrder
+    numeroDocumento?: SortOrder
+    fechaEmision?: SortOrder
+    fechaVencimiento?: SortOrderInput | SortOrder
+    entidadEmisora?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    vehiculo?: VehiculoOrderByWithRelationInput
+  }
+
+  export type DocumentoVehiculoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DocumentoVehiculoWhereInput | DocumentoVehiculoWhereInput[]
+    OR?: DocumentoVehiculoWhereInput[]
+    NOT?: DocumentoVehiculoWhereInput | DocumentoVehiculoWhereInput[]
+    vehiculoId?: StringFilter<"DocumentoVehiculo"> | string
+    tipoDocumento?: EnumTipoDocumentoFilter<"DocumentoVehiculo"> | $Enums.TipoDocumento
+    numeroDocumento?: StringFilter<"DocumentoVehiculo"> | string
+    fechaEmision?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
+    fechaVencimiento?: DateTimeNullableFilter<"DocumentoVehiculo"> | Date | string | null
+    entidadEmisora?: StringNullableFilter<"DocumentoVehiculo"> | string | null
+    observaciones?: StringNullableFilter<"DocumentoVehiculo"> | string | null
+    creadoEn?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+  }, "id">
+
+  export type DocumentoVehiculoOrderByWithAggregationInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    tipoDocumento?: SortOrder
+    numeroDocumento?: SortOrder
+    fechaEmision?: SortOrder
+    fechaVencimiento?: SortOrderInput | SortOrder
+    entidadEmisora?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    _count?: DocumentoVehiculoCountOrderByAggregateInput
+    _max?: DocumentoVehiculoMaxOrderByAggregateInput
+    _min?: DocumentoVehiculoMinOrderByAggregateInput
+  }
+
+  export type DocumentoVehiculoScalarWhereWithAggregatesInput = {
+    AND?: DocumentoVehiculoScalarWhereWithAggregatesInput | DocumentoVehiculoScalarWhereWithAggregatesInput[]
+    OR?: DocumentoVehiculoScalarWhereWithAggregatesInput[]
+    NOT?: DocumentoVehiculoScalarWhereWithAggregatesInput | DocumentoVehiculoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DocumentoVehiculo"> | string
+    vehiculoId?: StringWithAggregatesFilter<"DocumentoVehiculo"> | string
+    tipoDocumento?: EnumTipoDocumentoWithAggregatesFilter<"DocumentoVehiculo"> | $Enums.TipoDocumento
+    numeroDocumento?: StringWithAggregatesFilter<"DocumentoVehiculo"> | string
+    fechaEmision?: DateTimeWithAggregatesFilter<"DocumentoVehiculo"> | Date | string
+    fechaVencimiento?: DateTimeNullableWithAggregatesFilter<"DocumentoVehiculo"> | Date | string | null
+    entidadEmisora?: StringNullableWithAggregatesFilter<"DocumentoVehiculo"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"DocumentoVehiculo"> | string | null
+    creadoEn?: DateTimeWithAggregatesFilter<"DocumentoVehiculo"> | Date | string
+  }
+
   export type MovimientoDiarioWhereInput = {
     AND?: MovimientoDiarioWhereInput | MovimientoDiarioWhereInput[]
     OR?: MovimientoDiarioWhereInput[]
@@ -29724,6 +31087,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasListRelationFilter
     resumenKpisVehiculo?: ResumenKpisVehiculoListRelationFilter
     asignaciones?: AsignacionVehiculoListRelationFilter
+    documentos?: DocumentoVehiculoListRelationFilter
   }
 
   export type VehiculoOrderByWithRelationInput = {
@@ -29787,6 +31151,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasOrderByRelationAggregateInput
     resumenKpisVehiculo?: ResumenKpisVehiculoOrderByRelationAggregateInput
     asignaciones?: AsignacionVehiculoOrderByRelationAggregateInput
+    documentos?: DocumentoVehiculoOrderByRelationAggregateInput
   }
 
   export type VehiculoWhereUniqueInput = Prisma.AtLeast<{
@@ -29853,6 +31218,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasListRelationFilter
     resumenKpisVehiculo?: ResumenKpisVehiculoListRelationFilter
     asignaciones?: AsignacionVehiculoListRelationFilter
+    documentos?: DocumentoVehiculoListRelationFilter
   }, "id" | "codigoPatrimonial" | "placa" | "numeroMotor" | "numeroChasis">
 
   export type VehiculoOrderByWithAggregationInput = {
@@ -31410,6 +32776,89 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DocumentoVehiculoCreateInput = {
+    id?: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date | string
+    fechaVencimiento?: Date | string | null
+    entidadEmisora?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+    vehiculo: VehiculoCreateNestedOneWithoutDocumentosInput
+  }
+
+  export type DocumentoVehiculoUncheckedCreateInput = {
+    id?: string
+    vehiculoId: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date | string
+    fechaVencimiento?: Date | string | null
+    entidadEmisora?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type DocumentoVehiculoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculo?: VehiculoUpdateOneRequiredWithoutDocumentosNestedInput
+  }
+
+  export type DocumentoVehiculoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentoVehiculoCreateManyInput = {
+    id?: string
+    vehiculoId: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date | string
+    fechaVencimiento?: Date | string | null
+    entidadEmisora?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type DocumentoVehiculoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentoVehiculoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MovimientoDiarioCreateInput = {
     id?: string
     fecha: Date | string
@@ -32254,6 +33703,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateInput = {
@@ -32317,6 +33767,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUpdateInput = {
@@ -32380,6 +33831,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateInput = {
@@ -32443,6 +33895,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateManyInput = {
@@ -33697,6 +35150,59 @@ export namespace Prisma {
     creadoEn?: SortOrder
   }
 
+  export type EnumTipoDocumentoFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoDocumento | EnumTipoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoDocumentoFilter<$PrismaModel> | $Enums.TipoDocumento
+  }
+
+  export type DocumentoVehiculoCountOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    tipoDocumento?: SortOrder
+    numeroDocumento?: SortOrder
+    fechaEmision?: SortOrder
+    fechaVencimiento?: SortOrder
+    entidadEmisora?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type DocumentoVehiculoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    tipoDocumento?: SortOrder
+    numeroDocumento?: SortOrder
+    fechaEmision?: SortOrder
+    fechaVencimiento?: SortOrder
+    entidadEmisora?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type DocumentoVehiculoMinOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    tipoDocumento?: SortOrder
+    numeroDocumento?: SortOrder
+    fechaEmision?: SortOrder
+    fechaVencimiento?: SortOrder
+    entidadEmisora?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type EnumTipoDocumentoWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoDocumento | EnumTipoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoDocumentoWithAggregatesFilter<$PrismaModel> | $Enums.TipoDocumento
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoDocumentoFilter<$PrismaModel>
+    _max?: NestedEnumTipoDocumentoFilter<$PrismaModel>
+  }
+
   export type EnumEstadoMovimientoFilter<$PrismaModel = never> = {
     equals?: $Enums.EstadoMovimiento | EnumEstadoMovimientoFieldRefInput<$PrismaModel>
     in?: $Enums.EstadoMovimiento[] | ListEnumEstadoMovimientoFieldRefInput<$PrismaModel>
@@ -34209,6 +35715,12 @@ export namespace Prisma {
     none?: ResumenKpisVehiculoWhereInput
   }
 
+  export type DocumentoVehiculoListRelationFilter = {
+    every?: DocumentoVehiculoWhereInput
+    some?: DocumentoVehiculoWhereInput
+    none?: DocumentoVehiculoWhereInput
+  }
+
   export type ControlLlantaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -34222,6 +35734,10 @@ export namespace Prisma {
   }
 
   export type ResumenKpisVehiculoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DocumentoVehiculoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35305,6 +36821,24 @@ export namespace Prisma {
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAsignacionesInput, UsuarioUpdateWithoutAsignacionesInput>, UsuarioUncheckedUpdateWithoutAsignacionesInput>
   }
 
+  export type VehiculoCreateNestedOneWithoutDocumentosInput = {
+    create?: XOR<VehiculoCreateWithoutDocumentosInput, VehiculoUncheckedCreateWithoutDocumentosInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutDocumentosInput
+    connect?: VehiculoWhereUniqueInput
+  }
+
+  export type EnumTipoDocumentoFieldUpdateOperationsInput = {
+    set?: $Enums.TipoDocumento
+  }
+
+  export type VehiculoUpdateOneRequiredWithoutDocumentosNestedInput = {
+    create?: XOR<VehiculoCreateWithoutDocumentosInput, VehiculoUncheckedCreateWithoutDocumentosInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutDocumentosInput
+    upsert?: VehiculoUpsertWithoutDocumentosInput
+    connect?: VehiculoWhereUniqueInput
+    update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutDocumentosInput, VehiculoUpdateWithoutDocumentosInput>, VehiculoUncheckedUpdateWithoutDocumentosInput>
+  }
+
   export type VehiculoCreateNestedOneWithoutMovimientosDiariosInput = {
     create?: XOR<VehiculoCreateWithoutMovimientosDiariosInput, VehiculoUncheckedCreateWithoutMovimientosDiariosInput>
     connectOrCreate?: VehiculoCreateOrConnectWithoutMovimientosDiariosInput
@@ -35576,6 +37110,13 @@ export namespace Prisma {
     connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
   }
 
+  export type DocumentoVehiculoCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<DocumentoVehiculoCreateWithoutVehiculoInput, DocumentoVehiculoUncheckedCreateWithoutVehiculoInput> | DocumentoVehiculoCreateWithoutVehiculoInput[] | DocumentoVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: DocumentoVehiculoCreateOrConnectWithoutVehiculoInput | DocumentoVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: DocumentoVehiculoCreateManyVehiculoInputEnvelope
+    connect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+  }
+
   export type MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -35621,6 +37162,13 @@ export namespace Prisma {
     connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutVehiculoInput | AsignacionVehiculoCreateOrConnectWithoutVehiculoInput[]
     createMany?: AsignacionVehiculoCreateManyVehiculoInputEnvelope
     connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+  }
+
+  export type DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<DocumentoVehiculoCreateWithoutVehiculoInput, DocumentoVehiculoUncheckedCreateWithoutVehiculoInput> | DocumentoVehiculoCreateWithoutVehiculoInput[] | DocumentoVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: DocumentoVehiculoCreateOrConnectWithoutVehiculoInput | DocumentoVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: DocumentoVehiculoCreateManyVehiculoInputEnvelope
+    connect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
   }
 
   export type EnumCategoriaVehiculoFieldUpdateOperationsInput = {
@@ -35739,6 +37287,20 @@ export namespace Prisma {
     deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
   }
 
+  export type DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<DocumentoVehiculoCreateWithoutVehiculoInput, DocumentoVehiculoUncheckedCreateWithoutVehiculoInput> | DocumentoVehiculoCreateWithoutVehiculoInput[] | DocumentoVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: DocumentoVehiculoCreateOrConnectWithoutVehiculoInput | DocumentoVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: DocumentoVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | DocumentoVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: DocumentoVehiculoCreateManyVehiculoInputEnvelope
+    set?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    disconnect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    delete?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    connect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    update?: DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput | DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: DocumentoVehiculoScalarWhereInput | DocumentoVehiculoScalarWhereInput[]
+  }
+
   export type MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -35837,6 +37399,20 @@ export namespace Prisma {
     update?: AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
     updateMany?: AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput | AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
     deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
+  }
+
+  export type DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<DocumentoVehiculoCreateWithoutVehiculoInput, DocumentoVehiculoUncheckedCreateWithoutVehiculoInput> | DocumentoVehiculoCreateWithoutVehiculoInput[] | DocumentoVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: DocumentoVehiculoCreateOrConnectWithoutVehiculoInput | DocumentoVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: DocumentoVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | DocumentoVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: DocumentoVehiculoCreateManyVehiculoInputEnvelope
+    set?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    disconnect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    delete?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    connect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+    update?: DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput | DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: DocumentoVehiculoScalarWhereInput | DocumentoVehiculoScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -36211,6 +37787,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumEstadoMantenimientoFilter<$PrismaModel>
     _max?: NestedEnumEstadoMantenimientoFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTipoDocumentoFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoDocumento | EnumTipoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoDocumentoFilter<$PrismaModel> | $Enums.TipoDocumento
+  }
+
+  export type NestedEnumTipoDocumentoWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoDocumento | EnumTipoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoDocumento[] | ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoDocumentoWithAggregatesFilter<$PrismaModel> | $Enums.TipoDocumento
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoDocumentoFilter<$PrismaModel>
+    _max?: NestedEnumTipoDocumentoFilter<$PrismaModel>
   }
 
   export type NestedEnumEstadoMovimientoFilter<$PrismaModel = never> = {
@@ -37148,6 +38741,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesCombustibleInput = {
@@ -37210,6 +38804,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesCombustibleInput = {
@@ -37349,6 +38944,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesCombustibleInput = {
@@ -37411,6 +39007,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesCombustibleInput = {
@@ -37540,6 +39137,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutControlLlantasInput = {
@@ -37602,6 +39200,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutControlLlantasInput = {
@@ -37680,6 +39279,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutControlLlantasInput = {
@@ -37742,6 +39342,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateWithoutOrdenesMantenimientoInput = {
@@ -37804,6 +39405,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesMantenimientoInput = {
@@ -37866,6 +39468,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesMantenimientoInput = {
@@ -38071,6 +39674,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesMantenimientoInput = {
@@ -38133,6 +39737,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesMantenimientoInput = {
@@ -38613,6 +40218,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutAsignacionesInput = {
@@ -38675,6 +40281,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutAsignacionesInput = {
@@ -38814,6 +40421,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutAsignacionesInput = {
@@ -38876,6 +40484,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutAsignacionesInput = {
@@ -38945,6 +40554,274 @@ export namespace Prisma {
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
   }
 
+  export type VehiculoCreateWithoutDocumentosInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoUncheckedCreateWithoutDocumentosInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaUncheckedCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoCreateOrConnectWithoutDocumentosInput = {
+    where: VehiculoWhereUniqueInput
+    create: XOR<VehiculoCreateWithoutDocumentosInput, VehiculoUncheckedCreateWithoutDocumentosInput>
+  }
+
+  export type VehiculoUpsertWithoutDocumentosInput = {
+    update: XOR<VehiculoUpdateWithoutDocumentosInput, VehiculoUncheckedUpdateWithoutDocumentosInput>
+    create: XOR<VehiculoCreateWithoutDocumentosInput, VehiculoUncheckedCreateWithoutDocumentosInput>
+    where?: VehiculoWhereInput
+  }
+
+  export type VehiculoUpdateToOneWithWhereWithoutDocumentosInput = {
+    where?: VehiculoWhereInput
+    data: XOR<VehiculoUpdateWithoutDocumentosInput, VehiculoUncheckedUpdateWithoutDocumentosInput>
+  }
+
+  export type VehiculoUpdateWithoutDocumentosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type VehiculoUncheckedUpdateWithoutDocumentosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUncheckedUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+  }
+
   export type VehiculoCreateWithoutMovimientosDiariosInput = {
     id?: string
     clasePatrimonial: string
@@ -39005,6 +40882,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutMovimientosDiariosInput = {
@@ -39067,6 +40945,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutMovimientosDiariosInput = {
@@ -39350,6 +41229,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutMovimientosDiariosInput = {
@@ -39412,6 +41292,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutMovimientosDiariosInput = {
@@ -40627,6 +42508,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DocumentoVehiculoCreateWithoutVehiculoInput = {
+    id?: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date | string
+    fechaVencimiento?: Date | string | null
+    entidadEmisora?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type DocumentoVehiculoUncheckedCreateWithoutVehiculoInput = {
+    id?: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date | string
+    fechaVencimiento?: Date | string | null
+    entidadEmisora?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type DocumentoVehiculoCreateOrConnectWithoutVehiculoInput = {
+    where: DocumentoVehiculoWhereUniqueInput
+    create: XOR<DocumentoVehiculoCreateWithoutVehiculoInput, DocumentoVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type DocumentoVehiculoCreateManyVehiculoInputEnvelope = {
+    data: DocumentoVehiculoCreateManyVehiculoInput | DocumentoVehiculoCreateManyVehiculoInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MovimientoDiarioUpsertWithWhereUniqueWithoutVehiculoInput = {
     where: MovimientoDiarioWhereUniqueInput
     update: XOR<MovimientoDiarioUpdateWithoutVehiculoInput, MovimientoDiarioUncheckedUpdateWithoutVehiculoInput>
@@ -40804,6 +42717,37 @@ export namespace Prisma {
   export type AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput = {
     where: AsignacionVehiculoScalarWhereInput
     data: XOR<AsignacionVehiculoUpdateManyMutationInput, AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
+  export type DocumentoVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
+    where: DocumentoVehiculoWhereUniqueInput
+    update: XOR<DocumentoVehiculoUpdateWithoutVehiculoInput, DocumentoVehiculoUncheckedUpdateWithoutVehiculoInput>
+    create: XOR<DocumentoVehiculoCreateWithoutVehiculoInput, DocumentoVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput = {
+    where: DocumentoVehiculoWhereUniqueInput
+    data: XOR<DocumentoVehiculoUpdateWithoutVehiculoInput, DocumentoVehiculoUncheckedUpdateWithoutVehiculoInput>
+  }
+
+  export type DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput = {
+    where: DocumentoVehiculoScalarWhereInput
+    data: XOR<DocumentoVehiculoUpdateManyMutationInput, DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
+  export type DocumentoVehiculoScalarWhereInput = {
+    AND?: DocumentoVehiculoScalarWhereInput | DocumentoVehiculoScalarWhereInput[]
+    OR?: DocumentoVehiculoScalarWhereInput[]
+    NOT?: DocumentoVehiculoScalarWhereInput | DocumentoVehiculoScalarWhereInput[]
+    id?: StringFilter<"DocumentoVehiculo"> | string
+    vehiculoId?: StringFilter<"DocumentoVehiculo"> | string
+    tipoDocumento?: EnumTipoDocumentoFilter<"DocumentoVehiculo"> | $Enums.TipoDocumento
+    numeroDocumento?: StringFilter<"DocumentoVehiculo"> | string
+    fechaEmision?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
+    fechaVencimiento?: DateTimeNullableFilter<"DocumentoVehiculo"> | Date | string | null
+    entidadEmisora?: StringNullableFilter<"DocumentoVehiculo"> | string | null
+    observaciones?: StringNullableFilter<"DocumentoVehiculo"> | string | null
+    creadoEn?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
   }
 
   export type PermisoUsuarioCreateManyUsuarioInput = {
@@ -41672,6 +43616,17 @@ export namespace Prisma {
     creadoEn?: Date | string
   }
 
+  export type DocumentoVehiculoCreateManyVehiculoInput = {
+    id?: string
+    tipoDocumento: $Enums.TipoDocumento
+    numeroDocumento: string
+    fechaEmision: Date | string
+    fechaVencimiento?: Date | string | null
+    entidadEmisora?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
   export type MovimientoDiarioUpdateWithoutVehiculoInput = {
     id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42156,6 +44111,39 @@ export namespace Prisma {
     fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentoVehiculoUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentoVehiculoUncheckedUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
+    numeroDocumento?: StringFieldUpdateOperationsInput | string
+    fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
