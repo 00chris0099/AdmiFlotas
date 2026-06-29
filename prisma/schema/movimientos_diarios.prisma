@@ -39,6 +39,7 @@ model MovimientoDiario {
   // â”€â”€ Estado â”€â”€
   estado        EstadoMovimiento @default(EN_RUTA)
   observaciones String?
+  rutaId        String?          @map("ruta_id")
   creadoEn      DateTime         @default(now()) @map("creado_en")
   actualizadoEn DateTime         @updatedAt @map("actualizado_en")
 
@@ -47,6 +48,7 @@ model MovimientoDiario {
   conductor Usuario                @relation("ConductorMovimiento", fields: [conductorId], references: [id], onDelete: Restrict)
   inspector Usuario?               @relation("InspectorMovimiento", fields: [inspectorId], references: [id], onDelete: Restrict)
   checklist ChecklistVerificacion?
+  ruta      Ruta?                  @relation(fields: [rutaId], references: [id], onDelete: SetNull)
 
   @@index([vehiculoId])
   @@index([vehiculoId, fecha])

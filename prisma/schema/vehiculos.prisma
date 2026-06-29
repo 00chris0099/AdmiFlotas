@@ -110,6 +110,7 @@ model Vehiculo {
   resumenKpisVehiculo    ResumenKpisVehiculo[]
   asignaciones           AsignacionVehiculo[]
   documentos             DocumentoVehiculo[]
+  programaciones         ProgramacionRuta[]
 
   @@index([placa])
   @@index([estado])

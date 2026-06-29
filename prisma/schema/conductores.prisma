@@ -37,6 +37,7 @@ model Usuario {
   ordenesCombustible   OrdenCombustible[]
   ordenesMantenimiento OrdenMantenimiento[]
   asignaciones         AsignacionVehiculo[]
+  programaciones       ProgramacionRuta[]
 
   @@map("usuarios")
   @@index([rol])

@@ -1,1 +1,44 @@
-// File removed: content migrated to separate schema files
+// ============================================================
+// SAF - Sistema de Administración de Flotas
+// Archivo: operacion.prisma — Esquema de Rutas y Programación
+// ============================================================
+
+/// Ruta predefinida del sistema de transporte — Origen/Destino
+model Ruta {
+  id              String   @id @default(uuid())
+  nombre          String   @db.VarChar(150)
+  origen          String   @db.VarChar(200)
+  destino         String   @db.VarChar(200)
+  distanciaKm     Decimal? @map("distancia_km") @db.Decimal(8, 2)
+  tiempoEstimado  String?  @map("tiempo_estimado") @db.VarChar(20)
+  activa          Boolean  @default(true)
+  creadoEn        DateTime @default(now()) @map("creado_en")
+
+  movimientos     MovimientoDiario[]
+  programaciones  ProgramacionRuta[]
+
+  @@map("rutas")
+}
+
+/// Programación de viajes: asigna un vehículo y conductor a una ruta en una fecha/hora
+model ProgramacionRuta {
+  id              String   @id @default(uuid())
+  rutaId          String   @map("ruta_id")
+  vehiculoId      String   @map("vehiculo_id")
+  conductorId     String   @map("conductor_id")
+  fecha           DateTime @db.Date
+  horaSalida      String   @map("hora_salida") @db.VarChar(5)
+  horaLlegada     String?  @map("hora_llegada") @db.VarChar(5)
+  estado          String   @default("PROGRAMADO")
+  observaciones   String?
+  creadoEn        DateTime @default(now()) @map("creado_en")
+
+  ruta     Ruta     @relation(fields: [rutaId], references: [id], onDelete: Restrict)
+  vehiculo Vehiculo @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  conductor Usuario @relation(fields: [conductorId], references: [id], onDelete: Restrict)
+
+  @@index([fecha])
+  @@index([vehiculoId])
+  @@index([conductorId])
+  @@map("programacion_rutas")
+}
