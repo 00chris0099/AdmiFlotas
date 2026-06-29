@@ -12,27 +12,42 @@ interface Usuario {
   rol: string;
   activo: boolean;
   telefono: string | null;
+  especialidad: string | null;
   ultimoAcceso: string | null;
   creadoEn: string;
 }
 
 const ROLES = [
-  { value: "JEFE_PROCESO", label: "Jefe de Proceso", color: "indigo" },
+  { value: "JEFE_PROCESO", label: "Jefe del Proceso", color: "indigo" },
+  { value: "JEFE_OPERACION", label: "Jefe de Operación", color: "blue" },
+  { value: "ENCARGADO_GARAJE", label: "Encargado de Garaje", color: "cyan" },
+  { value: "INSPECTOR", label: "Inspector de Flota", color: "teal" },
+  { value: "CONTROLADOR_TRANSITO", label: "Controlador de Tráfico", color: "sky" },
+  { value: "ANALISTA", label: "Analista de Costos", color: "violet" },
   { value: "CONDUCTOR", label: "Conductor", color: "amber" },
-  { value: "INSPECTOR", label: "Inspector", color: "cyan" },
-  { value: "ANALISTA", label: "Analista", color: "blue" },
+  { value: "JEFE_MANTENIMIENTO", label: "Jefe de Mantenimiento", color: "blue" },
+  { value: "ENCARGADO_TALLER", label: "Encargado de Taller", color: "indigo" },
   { value: "MECANICO", label: "Mecánico", color: "pink" },
-  { value: "ELECTRICISTA", label: "Eléctrico", color: "violet" },
+  { value: "ELECTRICISTA", label: "Eléctrico", color: "purple" },
+  { value: "REENCAUCHADOR", label: "Reencauchador", color: "orange" },
+  { value: "LAVADOR", label: "Lavador", color: "lime" },
   { value: "ADMINISTRATIVO", label: "Administrativo", color: "emerald" },
 ];
 
 const ROLE_COLORS: Record<string, string> = {
   JEFE_PROCESO: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+  JEFE_OPERACION: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  ENCARGADO_GARAJE: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+  INSPECTOR: "bg-teal-500/10 text-teal-400 border-teal-500/20",
+  CONTROLADOR_TRANSITO: "bg-sky-500/10 text-sky-400 border-sky-500/20",
+  ANALISTA: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   CONDUCTOR: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  INSPECTOR: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-  ANALISTA: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  JEFE_MANTENIMIENTO: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  ENCARGADO_TALLER: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
   MECANICO: "bg-pink-500/10 text-pink-400 border-pink-500/20",
-  ELECTRICISTA: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+  ELECTRICISTA: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  REENCAUCHADOR: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+  LAVADOR: "bg-lime-500/10 text-lime-400 border-lime-500/20",
   ADMINISTRATIVO: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
 };
 
@@ -51,6 +66,7 @@ export default function GestionUsuariosPage() {
     email: "",
     rol: "CONDUCTOR",
     telefono: "",
+    especialidad: "",
   });
 
   useEffect(() => {
@@ -96,7 +112,7 @@ export default function GestionUsuariosPage() {
         if (data.token) {
           setTokenResult(data.token);
         }
-        setForm({ nombre: "", apellido: "", email: "", rol: "CONDUCTOR", telefono: "" });
+        setForm({ nombre: "", apellido: "", email: "", rol: "CONDUCTOR", telefono: "", especialidad: "" });
         setShowForm(false);
         fetchUsuarios();
       } else {
@@ -225,6 +241,16 @@ export default function GestionUsuariosPage() {
                   value={form.telefono}
                   onChange={(e) => setForm({ ...form, telefono: e.target.value })}
                   placeholder="+51 999 000 000"
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none transition"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">Especialidad</label>
+                <input
+                  type="text"
+                  value={form.especialidad}
+                  onChange={(e) => setForm({ ...form, especialidad: e.target.value })}
+                  placeholder="Ej: Mecánica diesel, Eléctrico automotriz"
                   className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none transition"
                 />
               </div>

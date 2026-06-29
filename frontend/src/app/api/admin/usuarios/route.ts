@@ -18,6 +18,7 @@ export const GET = withAuth(async (request: NextRequest) => {
         rol: true,
         activo: true,
         telefono: true,
+        especialidad: true,
         ultimoAcceso: true,
         creadoEn: true,
       },
@@ -33,7 +34,7 @@ export const GET = withAuth(async (request: NextRequest) => {
 
 export const POST = withAuth(async (request: NextRequest) => {
   try {
-    const { nombre, apellido, email, rol, telefono } = await request.json();
+    const { nombre, apellido, email, rol, telefono, especialidad } = await request.json();
 
     if (!nombre || !apellido || !email || !rol) {
       return NextResponse.json(
@@ -59,6 +60,7 @@ export const POST = withAuth(async (request: NextRequest) => {
         email,
         rol,
         telefono: telefono || null,
+        especialidad: especialidad || null,
         activo: false,
         password: null,
       },
