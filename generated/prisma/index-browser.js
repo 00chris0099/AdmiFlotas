@@ -178,6 +178,10 @@ exports.Prisma.OrdenCombustibleScalarFieldEnum = {
   numeroTicketServiccentro: 'numeroTicketServiccentro',
   responsableServiccentro: 'responsableServiccentro',
   selloServiccentro: 'selloServiccentro',
+  localidadSolicitante: 'localidadSolicitante',
+  firmaEncargadoGaraje: 'firmaEncargadoGaraje',
+  firmaConductor: 'firmaConductor',
+  firmaServicentro: 'firmaServicentro',
   observaciones: 'observaciones',
   creadoEn: 'creadoEn',
   actualizadoEn: 'actualizadoEn'

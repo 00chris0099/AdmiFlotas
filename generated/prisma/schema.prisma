@@ -146,6 +146,18 @@ model OrdenCombustible {
   /// Indica si se recibiÃ³ el sello del servicentro
   selloServiccentro        Boolean @default(false) @map("sello_serviccentro")
 
+  // â"€â"€ Solicitante â"€â"€
+  /// Localidad donde estÃ¡ ubicado el sector del solicitante
+  localidadSolicitante String? @map("localidad_solicitante") @db.VarChar(150)
+
+  // â"€â"€ Firmas (MA 122 01 02 - F1T02) â"€â"€
+  /// Firma del Encargado del Garaje
+  firmaEncargadoGaraje String? @map("firma_encargado_garaje") @db.VarChar(100)
+  /// Firma del Conductor del vehÃ­culo
+  firmaConductor       String? @map("firma_conductor") @db.VarChar(100)
+  /// Firma del Representante del Servicentro
+  firmaServicentro     String? @map("firma_servicentro") @db.VarChar(100)
+
   observaciones String?
   creadoEn      DateTime @default(now()) @map("creado_en")
   actualizadoEn DateTime @updatedAt @map("actualizado_en")

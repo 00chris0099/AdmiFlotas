@@ -5442,6 +5442,10 @@ export namespace Prisma {
     numeroTicketServiccentro: string | null
     responsableServiccentro: string | null
     selloServiccentro: boolean | null
+    localidadSolicitante: string | null
+    firmaEncargadoGaraje: string | null
+    firmaConductor: string | null
+    firmaServicentro: string | null
     observaciones: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
@@ -5475,6 +5479,10 @@ export namespace Prisma {
     numeroTicketServiccentro: string | null
     responsableServiccentro: string | null
     selloServiccentro: boolean | null
+    localidadSolicitante: string | null
+    firmaEncargadoGaraje: string | null
+    firmaConductor: string | null
+    firmaServicentro: string | null
     observaciones: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
@@ -5508,6 +5516,10 @@ export namespace Prisma {
     numeroTicketServiccentro: number
     responsableServiccentro: number
     selloServiccentro: number
+    localidadSolicitante: number
+    firmaEncargadoGaraje: number
+    firmaConductor: number
+    firmaServicentro: number
     observaciones: number
     creadoEn: number
     actualizadoEn: number
@@ -5567,6 +5579,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: true
     responsableServiccentro?: true
     selloServiccentro?: true
+    localidadSolicitante?: true
+    firmaEncargadoGaraje?: true
+    firmaConductor?: true
+    firmaServicentro?: true
     observaciones?: true
     creadoEn?: true
     actualizadoEn?: true
@@ -5600,6 +5616,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: true
     responsableServiccentro?: true
     selloServiccentro?: true
+    localidadSolicitante?: true
+    firmaEncargadoGaraje?: true
+    firmaConductor?: true
+    firmaServicentro?: true
     observaciones?: true
     creadoEn?: true
     actualizadoEn?: true
@@ -5633,6 +5653,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: true
     responsableServiccentro?: true
     selloServiccentro?: true
+    localidadSolicitante?: true
+    firmaEncargadoGaraje?: true
+    firmaConductor?: true
+    firmaServicentro?: true
     observaciones?: true
     creadoEn?: true
     actualizadoEn?: true
@@ -5753,6 +5777,10 @@ export namespace Prisma {
     numeroTicketServiccentro: string | null
     responsableServiccentro: string | null
     selloServiccentro: boolean
+    localidadSolicitante: string | null
+    firmaEncargadoGaraje: string | null
+    firmaConductor: string | null
+    firmaServicentro: string | null
     observaciones: string | null
     creadoEn: Date
     actualizadoEn: Date
@@ -5805,6 +5833,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: boolean
     responsableServiccentro?: boolean
     selloServiccentro?: boolean
+    localidadSolicitante?: boolean
+    firmaEncargadoGaraje?: boolean
+    firmaConductor?: boolean
+    firmaServicentro?: boolean
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
@@ -5840,6 +5872,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: boolean
     responsableServiccentro?: boolean
     selloServiccentro?: boolean
+    localidadSolicitante?: boolean
+    firmaEncargadoGaraje?: boolean
+    firmaConductor?: boolean
+    firmaServicentro?: boolean
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
@@ -5875,6 +5911,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: boolean
     responsableServiccentro?: boolean
     selloServiccentro?: boolean
+    localidadSolicitante?: boolean
+    firmaEncargadoGaraje?: boolean
+    firmaConductor?: boolean
+    firmaServicentro?: boolean
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
@@ -5910,12 +5950,16 @@ export namespace Prisma {
     numeroTicketServiccentro?: boolean
     responsableServiccentro?: boolean
     selloServiccentro?: boolean
+    localidadSolicitante?: boolean
+    firmaEncargadoGaraje?: boolean
+    firmaConductor?: boolean
+    firmaServicentro?: boolean
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
   }
 
-  export type OrdenCombustibleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroOrden" | "fecha" | "vehiculoId" | "conductorId" | "sectorSolicitante" | "tipoCombustible" | "cantidadGalones" | "costoGalon" | "costoCombustible" | "incluyeAceiteMotor" | "cantidadAceiteMotorLt" | "marcaAceiteMotor" | "viscosidadAceiteMotor" | "costoAceiteMotor" | "incluyeAceiteCaja" | "cantidadAceiteCajaLt" | "marcaAceiteCaja" | "viscosidadAceiteCaja" | "costoAceiteCaja" | "costoTotal" | "kilometrajeActual" | "nombreServiccentro" | "direccionServiccentro" | "numeroTicketServiccentro" | "responsableServiccentro" | "selloServiccentro" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["ordenCombustible"]>
+  export type OrdenCombustibleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroOrden" | "fecha" | "vehiculoId" | "conductorId" | "sectorSolicitante" | "tipoCombustible" | "cantidadGalones" | "costoGalon" | "costoCombustible" | "incluyeAceiteMotor" | "cantidadAceiteMotorLt" | "marcaAceiteMotor" | "viscosidadAceiteMotor" | "costoAceiteMotor" | "incluyeAceiteCaja" | "cantidadAceiteCajaLt" | "marcaAceiteCaja" | "viscosidadAceiteCaja" | "costoAceiteCaja" | "costoTotal" | "kilometrajeActual" | "nombreServiccentro" | "direccionServiccentro" | "numeroTicketServiccentro" | "responsableServiccentro" | "selloServiccentro" | "localidadSolicitante" | "firmaEncargadoGaraje" | "firmaConductor" | "firmaServicentro" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["ordenCombustible"]>
   export type OrdenCombustibleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
@@ -5981,6 +6025,22 @@ export namespace Prisma {
        * Indica si se recibiÃ³ el sello del servicentro
        */
       selloServiccentro: boolean
+      /**
+       * Localidad donde estÃ¡ ubicado el sector del solicitante
+       */
+      localidadSolicitante: string | null
+      /**
+       * Firma del Encargado del Garaje
+       */
+      firmaEncargadoGaraje: string | null
+      /**
+       * Firma del Conductor del vehÃ­culo
+       */
+      firmaConductor: string | null
+      /**
+       * Firma del Representante del Servicentro
+       */
+      firmaServicentro: string | null
       observaciones: string | null
       creadoEn: Date
       actualizadoEn: Date
@@ -6436,6 +6496,10 @@ export namespace Prisma {
     readonly numeroTicketServiccentro: FieldRef<"OrdenCombustible", 'String'>
     readonly responsableServiccentro: FieldRef<"OrdenCombustible", 'String'>
     readonly selloServiccentro: FieldRef<"OrdenCombustible", 'Boolean'>
+    readonly localidadSolicitante: FieldRef<"OrdenCombustible", 'String'>
+    readonly firmaEncargadoGaraje: FieldRef<"OrdenCombustible", 'String'>
+    readonly firmaConductor: FieldRef<"OrdenCombustible", 'String'>
+    readonly firmaServicentro: FieldRef<"OrdenCombustible", 'String'>
     readonly observaciones: FieldRef<"OrdenCombustible", 'String'>
     readonly creadoEn: FieldRef<"OrdenCombustible", 'DateTime'>
     readonly actualizadoEn: FieldRef<"OrdenCombustible", 'DateTime'>
@@ -25899,6 +25963,10 @@ export namespace Prisma {
     numeroTicketServiccentro: 'numeroTicketServiccentro',
     responsableServiccentro: 'responsableServiccentro',
     selloServiccentro: 'selloServiccentro',
+    localidadSolicitante: 'localidadSolicitante',
+    firmaEncargadoGaraje: 'firmaEncargadoGaraje',
+    firmaConductor: 'firmaConductor',
+    firmaServicentro: 'firmaServicentro',
     observaciones: 'observaciones',
     creadoEn: 'creadoEn',
     actualizadoEn: 'actualizadoEn'
@@ -26810,6 +26878,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     responsableServiccentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     selloServiccentro?: BoolFilter<"OrdenCombustible"> | boolean
+    localidadSolicitante?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaEncargadoGaraje?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaConductor?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaServicentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     observaciones?: StringNullableFilter<"OrdenCombustible"> | string | null
     creadoEn?: DateTimeFilter<"OrdenCombustible"> | Date | string
     actualizadoEn?: DateTimeFilter<"OrdenCombustible"> | Date | string
@@ -26845,6 +26917,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: SortOrderInput | SortOrder
     responsableServiccentro?: SortOrderInput | SortOrder
     selloServiccentro?: SortOrder
+    localidadSolicitante?: SortOrderInput | SortOrder
+    firmaEncargadoGaraje?: SortOrderInput | SortOrder
+    firmaConductor?: SortOrderInput | SortOrder
+    firmaServicentro?: SortOrderInput | SortOrder
     observaciones?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
@@ -26883,6 +26959,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     responsableServiccentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     selloServiccentro?: BoolFilter<"OrdenCombustible"> | boolean
+    localidadSolicitante?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaEncargadoGaraje?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaConductor?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaServicentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     observaciones?: StringNullableFilter<"OrdenCombustible"> | string | null
     creadoEn?: DateTimeFilter<"OrdenCombustible"> | Date | string
     actualizadoEn?: DateTimeFilter<"OrdenCombustible"> | Date | string
@@ -26918,6 +26998,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: SortOrderInput | SortOrder
     responsableServiccentro?: SortOrderInput | SortOrder
     selloServiccentro?: SortOrder
+    localidadSolicitante?: SortOrderInput | SortOrder
+    firmaEncargadoGaraje?: SortOrderInput | SortOrder
+    firmaConductor?: SortOrderInput | SortOrder
+    firmaServicentro?: SortOrderInput | SortOrder
     observaciones?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
@@ -26959,6 +27043,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
     responsableServiccentro?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
     selloServiccentro?: BoolWithAggregatesFilter<"OrdenCombustible"> | boolean
+    localidadSolicitante?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
+    firmaEncargadoGaraje?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
+    firmaConductor?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
+    firmaServicentro?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
     observaciones?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
     creadoEn?: DateTimeWithAggregatesFilter<"OrdenCombustible"> | Date | string
     actualizadoEn?: DateTimeWithAggregatesFilter<"OrdenCombustible"> | Date | string
@@ -28985,6 +29073,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -29020,6 +29112,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -29051,6 +29147,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29086,6 +29186,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29119,6 +29223,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -29150,6 +29258,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29183,6 +29295,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31423,6 +31539,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: SortOrder
     responsableServiccentro?: SortOrder
     selloServiccentro?: SortOrder
+    localidadSolicitante?: SortOrder
+    firmaEncargadoGaraje?: SortOrder
+    firmaConductor?: SortOrder
+    firmaServicentro?: SortOrder
     observaciones?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
@@ -31468,6 +31588,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: SortOrder
     responsableServiccentro?: SortOrder
     selloServiccentro?: SortOrder
+    localidadSolicitante?: SortOrder
+    firmaEncargadoGaraje?: SortOrder
+    firmaConductor?: SortOrder
+    firmaServicentro?: SortOrder
     observaciones?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
@@ -31501,6 +31625,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: SortOrder
     responsableServiccentro?: SortOrder
     selloServiccentro?: SortOrder
+    localidadSolicitante?: SortOrder
+    firmaEncargadoGaraje?: SortOrder
+    firmaConductor?: SortOrder
+    firmaServicentro?: SortOrder
     observaciones?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
@@ -34844,6 +34972,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -34877,6 +35009,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -35188,6 +35324,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     responsableServiccentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     selloServiccentro?: BoolFilter<"OrdenCombustible"> | boolean
+    localidadSolicitante?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaEncargadoGaraje?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaConductor?: StringNullableFilter<"OrdenCombustible"> | string | null
+    firmaServicentro?: StringNullableFilter<"OrdenCombustible"> | string | null
     observaciones?: StringNullableFilter<"OrdenCombustible"> | string | null
     creadoEn?: DateTimeFilter<"OrdenCombustible"> | Date | string
     actualizadoEn?: DateTimeFilter<"OrdenCombustible"> | Date | string
@@ -38128,6 +38268,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -38161,6 +38305,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -38571,6 +38719,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -38873,6 +39025,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38906,6 +39062,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38938,6 +39098,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39200,6 +39364,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: string | null
     responsableServiccentro?: string | null
     selloServiccentro?: boolean
+    localidadSolicitante?: string | null
+    firmaEncargadoGaraje?: string | null
+    firmaConductor?: string | null
+    firmaServicentro?: string | null
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
@@ -39344,6 +39512,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39377,6 +39549,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39409,6 +39585,10 @@ export namespace Prisma {
     numeroTicketServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     responsableServiccentro?: NullableStringFieldUpdateOperationsInput | string | null
     selloServiccentro?: BoolFieldUpdateOperationsInput | boolean
+    localidadSolicitante?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaServicentro?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
