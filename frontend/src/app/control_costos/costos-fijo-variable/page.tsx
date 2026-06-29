@@ -51,6 +51,25 @@ export default function CostosPage() {
     loadData();
   }, []);
 
+  const handleDelete = async (id: string) => {
+    if (!confirm("¿Estás seguro de eliminar este costo fijo?")) return;
+    try {
+      const res = await fetchWithAuth("/api/control_costos/costos-fijo-variable", {
+        method: "DELETE",
+        body: JSON.stringify({ id }),
+      });
+      if (res.ok) {
+        loadData();
+      } else {
+        const data = await res.json();
+        alert(data.error || "Error al eliminar costo");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error de conexión");
+    }
+  };
+
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!descripcion || !montoMensual) return;
@@ -99,6 +118,18 @@ export default function CostosPage() {
         }`}>
           {row.activo ? "ACTIVO" : "INACTIVO"}
         </span>
+      ),
+    },
+    {
+      header: "Acciones",
+      className: "text-right",
+      accessorKey: (row) => (
+        <button
+          onClick={() => handleDelete(row.id)}
+          className="px-2.5 py-1 bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 border border-red-500/20 rounded-lg text-[10px] font-bold transition duration-150"
+        >
+          Eliminar
+        </button>
       ),
     },
   ];

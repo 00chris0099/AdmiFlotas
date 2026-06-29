@@ -63,3 +63,14 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 });
+
+export const DELETE = withAuth(async (request: NextRequest, { user }) => {
+  try {
+    const { id } = await request.json();
+    const prisma = getPrisma();
+    await prisma.costoFijoProrrateable.delete({ where: { id } });
+    return NextResponse.json({ message: "Costo eliminado" });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+}, { requiredRoles: ["JEFE_PROCESO", "ADMINISTRATIVO"] });
