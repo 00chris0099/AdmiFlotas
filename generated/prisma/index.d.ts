@@ -64,6 +64,16 @@ export type AsignacionVehiculo = $Result.DefaultSelection<Prisma.$AsignacionVehi
  */
 export type DocumentoVehiculo = $Result.DefaultSelection<Prisma.$DocumentoVehiculoPayload>
 /**
+ * Model Repuesto
+ * Repuesto del Almacén de Mantenimiento — MA 122 02 01
+ */
+export type Repuesto = $Result.DefaultSelection<Prisma.$RepuestoPayload>
+/**
+ * Model MovimientoAlmacen
+ * Movimiento de entrada/salida en el Almacén de Mantenimiento
+ */
+export type MovimientoAlmacen = $Result.DefaultSelection<Prisma.$MovimientoAlmacenPayload>
+/**
  * Model MovimientoDiario
  * Registro de uso diario del vehÃ­culo â€” Formulario MA 122 01 01
  */
@@ -606,6 +616,26 @@ export class PrismaClient<
     * ```
     */
   get documentoVehiculo(): Prisma.DocumentoVehiculoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.repuesto`: Exposes CRUD operations for the **Repuesto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Repuestos
+    * const repuestos = await prisma.repuesto.findMany()
+    * ```
+    */
+  get repuesto(): Prisma.RepuestoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.movimientoAlmacen`: Exposes CRUD operations for the **MovimientoAlmacen** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MovimientoAlmacens
+    * const movimientoAlmacens = await prisma.movimientoAlmacen.findMany()
+    * ```
+    */
+  get movimientoAlmacen(): Prisma.MovimientoAlmacenDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.movimientoDiario`: Exposes CRUD operations for the **MovimientoDiario** model.
@@ -1180,6 +1210,8 @@ export namespace Prisma {
     DetalleManoObra: 'DetalleManoObra',
     AsignacionVehiculo: 'AsignacionVehiculo',
     DocumentoVehiculo: 'DocumentoVehiculo',
+    Repuesto: 'Repuesto',
+    MovimientoAlmacen: 'MovimientoAlmacen',
     MovimientoDiario: 'MovimientoDiario',
     ChecklistVerificacion: 'ChecklistVerificacion',
     Ruta: 'Ruta',
@@ -1208,7 +1240,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "movimientoDiario" | "checklistVerificacion" | "ruta" | "programacionRuta" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
+      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "repuesto" | "movimientoAlmacen" | "movimientoDiario" | "checklistVerificacion" | "ruta" | "programacionRuta" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1949,6 +1981,154 @@ export namespace Prisma {
           count: {
             args: Prisma.DocumentoVehiculoCountArgs<ExtArgs>
             result: $Utils.Optional<DocumentoVehiculoCountAggregateOutputType> | number
+          }
+        }
+      }
+      Repuesto: {
+        payload: Prisma.$RepuestoPayload<ExtArgs>
+        fields: Prisma.RepuestoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RepuestoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RepuestoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>
+          }
+          findFirst: {
+            args: Prisma.RepuestoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RepuestoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>
+          }
+          findMany: {
+            args: Prisma.RepuestoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>[]
+          }
+          create: {
+            args: Prisma.RepuestoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>
+          }
+          createMany: {
+            args: Prisma.RepuestoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RepuestoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>[]
+          }
+          delete: {
+            args: Prisma.RepuestoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>
+          }
+          update: {
+            args: Prisma.RepuestoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>
+          }
+          deleteMany: {
+            args: Prisma.RepuestoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RepuestoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RepuestoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>[]
+          }
+          upsert: {
+            args: Prisma.RepuestoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepuestoPayload>
+          }
+          aggregate: {
+            args: Prisma.RepuestoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRepuesto>
+          }
+          groupBy: {
+            args: Prisma.RepuestoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RepuestoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RepuestoCountArgs<ExtArgs>
+            result: $Utils.Optional<RepuestoCountAggregateOutputType> | number
+          }
+        }
+      }
+      MovimientoAlmacen: {
+        payload: Prisma.$MovimientoAlmacenPayload<ExtArgs>
+        fields: Prisma.MovimientoAlmacenFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MovimientoAlmacenFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MovimientoAlmacenFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>
+          }
+          findFirst: {
+            args: Prisma.MovimientoAlmacenFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MovimientoAlmacenFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>
+          }
+          findMany: {
+            args: Prisma.MovimientoAlmacenFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>[]
+          }
+          create: {
+            args: Prisma.MovimientoAlmacenCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>
+          }
+          createMany: {
+            args: Prisma.MovimientoAlmacenCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MovimientoAlmacenCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>[]
+          }
+          delete: {
+            args: Prisma.MovimientoAlmacenDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>
+          }
+          update: {
+            args: Prisma.MovimientoAlmacenUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>
+          }
+          deleteMany: {
+            args: Prisma.MovimientoAlmacenDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MovimientoAlmacenUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MovimientoAlmacenUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>[]
+          }
+          upsert: {
+            args: Prisma.MovimientoAlmacenUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovimientoAlmacenPayload>
+          }
+          aggregate: {
+            args: Prisma.MovimientoAlmacenAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMovimientoAlmacen>
+          }
+          groupBy: {
+            args: Prisma.MovimientoAlmacenGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MovimientoAlmacenGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MovimientoAlmacenCountArgs<ExtArgs>
+            result: $Utils.Optional<MovimientoAlmacenCountAggregateOutputType> | number
           }
         }
       }
@@ -2924,6 +3104,8 @@ export namespace Prisma {
     detalleManoObra?: DetalleManoObraOmit
     asignacionVehiculo?: AsignacionVehiculoOmit
     documentoVehiculo?: DocumentoVehiculoOmit
+    repuesto?: RepuestoOmit
+    movimientoAlmacen?: MovimientoAlmacenOmit
     movimientoDiario?: MovimientoDiarioOmit
     checklistVerificacion?: ChecklistVerificacionOmit
     ruta?: RutaOmit
@@ -3161,6 +3343,37 @@ export namespace Prisma {
    */
   export type OrdenMantenimientoCountOutputTypeCountManoDeObraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DetalleManoObraWhereInput
+  }
+
+
+  /**
+   * Count Type RepuestoCountOutputType
+   */
+
+  export type RepuestoCountOutputType = {
+    movimientos: number
+  }
+
+  export type RepuestoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movimientos?: boolean | RepuestoCountOutputTypeCountMovimientosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RepuestoCountOutputType without action
+   */
+  export type RepuestoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepuestoCountOutputType
+     */
+    select?: RepuestoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RepuestoCountOutputType without action
+   */
+  export type RepuestoCountOutputTypeCountMovimientosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovimientoAlmacenWhereInput
   }
 
 
@@ -16011,6 +16224,2314 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DocumentoVehiculoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Repuesto
+   */
+
+  export type AggregateRepuesto = {
+    _count: RepuestoCountAggregateOutputType | null
+    _avg: RepuestoAvgAggregateOutputType | null
+    _sum: RepuestoSumAggregateOutputType | null
+    _min: RepuestoMinAggregateOutputType | null
+    _max: RepuestoMaxAggregateOutputType | null
+  }
+
+  export type RepuestoAvgAggregateOutputType = {
+    stockActual: number | null
+    stockMinimo: number | null
+    precioUnitario: Decimal | null
+  }
+
+  export type RepuestoSumAggregateOutputType = {
+    stockActual: number | null
+    stockMinimo: number | null
+    precioUnitario: Decimal | null
+  }
+
+  export type RepuestoMinAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    descripcion: string | null
+    categoria: string | null
+    unidadMedida: string | null
+    stockActual: number | null
+    stockMinimo: number | null
+    precioUnitario: Decimal | null
+    creadoEn: Date | null
+  }
+
+  export type RepuestoMaxAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    descripcion: string | null
+    categoria: string | null
+    unidadMedida: string | null
+    stockActual: number | null
+    stockMinimo: number | null
+    precioUnitario: Decimal | null
+    creadoEn: Date | null
+  }
+
+  export type RepuestoCountAggregateOutputType = {
+    id: number
+    codigo: number
+    descripcion: number
+    categoria: number
+    unidadMedida: number
+    stockActual: number
+    stockMinimo: number
+    precioUnitario: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type RepuestoAvgAggregateInputType = {
+    stockActual?: true
+    stockMinimo?: true
+    precioUnitario?: true
+  }
+
+  export type RepuestoSumAggregateInputType = {
+    stockActual?: true
+    stockMinimo?: true
+    precioUnitario?: true
+  }
+
+  export type RepuestoMinAggregateInputType = {
+    id?: true
+    codigo?: true
+    descripcion?: true
+    categoria?: true
+    unidadMedida?: true
+    stockActual?: true
+    stockMinimo?: true
+    precioUnitario?: true
+    creadoEn?: true
+  }
+
+  export type RepuestoMaxAggregateInputType = {
+    id?: true
+    codigo?: true
+    descripcion?: true
+    categoria?: true
+    unidadMedida?: true
+    stockActual?: true
+    stockMinimo?: true
+    precioUnitario?: true
+    creadoEn?: true
+  }
+
+  export type RepuestoCountAggregateInputType = {
+    id?: true
+    codigo?: true
+    descripcion?: true
+    categoria?: true
+    unidadMedida?: true
+    stockActual?: true
+    stockMinimo?: true
+    precioUnitario?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type RepuestoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Repuesto to aggregate.
+     */
+    where?: RepuestoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Repuestos to fetch.
+     */
+    orderBy?: RepuestoOrderByWithRelationInput | RepuestoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RepuestoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Repuestos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Repuestos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Repuestos
+    **/
+    _count?: true | RepuestoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RepuestoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RepuestoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RepuestoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RepuestoMaxAggregateInputType
+  }
+
+  export type GetRepuestoAggregateType<T extends RepuestoAggregateArgs> = {
+        [P in keyof T & keyof AggregateRepuesto]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRepuesto[P]>
+      : GetScalarType<T[P], AggregateRepuesto[P]>
+  }
+
+
+
+
+  export type RepuestoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RepuestoWhereInput
+    orderBy?: RepuestoOrderByWithAggregationInput | RepuestoOrderByWithAggregationInput[]
+    by: RepuestoScalarFieldEnum[] | RepuestoScalarFieldEnum
+    having?: RepuestoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RepuestoCountAggregateInputType | true
+    _avg?: RepuestoAvgAggregateInputType
+    _sum?: RepuestoSumAggregateInputType
+    _min?: RepuestoMinAggregateInputType
+    _max?: RepuestoMaxAggregateInputType
+  }
+
+  export type RepuestoGroupByOutputType = {
+    id: string
+    codigo: string
+    descripcion: string
+    categoria: string
+    unidadMedida: string
+    stockActual: number
+    stockMinimo: number
+    precioUnitario: Decimal | null
+    creadoEn: Date
+    _count: RepuestoCountAggregateOutputType | null
+    _avg: RepuestoAvgAggregateOutputType | null
+    _sum: RepuestoSumAggregateOutputType | null
+    _min: RepuestoMinAggregateOutputType | null
+    _max: RepuestoMaxAggregateOutputType | null
+  }
+
+  type GetRepuestoGroupByPayload<T extends RepuestoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RepuestoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RepuestoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RepuestoGroupByOutputType[P]>
+            : GetScalarType<T[P], RepuestoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RepuestoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    descripcion?: boolean
+    categoria?: boolean
+    unidadMedida?: boolean
+    stockActual?: boolean
+    stockMinimo?: boolean
+    precioUnitario?: boolean
+    creadoEn?: boolean
+    movimientos?: boolean | Repuesto$movimientosArgs<ExtArgs>
+    _count?: boolean | RepuestoCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["repuesto"]>
+
+  export type RepuestoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    descripcion?: boolean
+    categoria?: boolean
+    unidadMedida?: boolean
+    stockActual?: boolean
+    stockMinimo?: boolean
+    precioUnitario?: boolean
+    creadoEn?: boolean
+  }, ExtArgs["result"]["repuesto"]>
+
+  export type RepuestoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    descripcion?: boolean
+    categoria?: boolean
+    unidadMedida?: boolean
+    stockActual?: boolean
+    stockMinimo?: boolean
+    precioUnitario?: boolean
+    creadoEn?: boolean
+  }, ExtArgs["result"]["repuesto"]>
+
+  export type RepuestoSelectScalar = {
+    id?: boolean
+    codigo?: boolean
+    descripcion?: boolean
+    categoria?: boolean
+    unidadMedida?: boolean
+    stockActual?: boolean
+    stockMinimo?: boolean
+    precioUnitario?: boolean
+    creadoEn?: boolean
+  }
+
+  export type RepuestoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "codigo" | "descripcion" | "categoria" | "unidadMedida" | "stockActual" | "stockMinimo" | "precioUnitario" | "creadoEn", ExtArgs["result"]["repuesto"]>
+  export type RepuestoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movimientos?: boolean | Repuesto$movimientosArgs<ExtArgs>
+    _count?: boolean | RepuestoCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RepuestoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type RepuestoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RepuestoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Repuesto"
+    objects: {
+      movimientos: Prisma.$MovimientoAlmacenPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      /**
+       * Código único del repuesto en el almacén
+       */
+      codigo: string
+      descripcion: string
+      categoria: string
+      unidadMedida: string
+      stockActual: number
+      stockMinimo: number
+      precioUnitario: Prisma.Decimal | null
+      creadoEn: Date
+    }, ExtArgs["result"]["repuesto"]>
+    composites: {}
+  }
+
+  type RepuestoGetPayload<S extends boolean | null | undefined | RepuestoDefaultArgs> = $Result.GetResult<Prisma.$RepuestoPayload, S>
+
+  type RepuestoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RepuestoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RepuestoCountAggregateInputType | true
+    }
+
+  export interface RepuestoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Repuesto'], meta: { name: 'Repuesto' } }
+    /**
+     * Find zero or one Repuesto that matches the filter.
+     * @param {RepuestoFindUniqueArgs} args - Arguments to find a Repuesto
+     * @example
+     * // Get one Repuesto
+     * const repuesto = await prisma.repuesto.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RepuestoFindUniqueArgs>(args: SelectSubset<T, RepuestoFindUniqueArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Repuesto that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RepuestoFindUniqueOrThrowArgs} args - Arguments to find a Repuesto
+     * @example
+     * // Get one Repuesto
+     * const repuesto = await prisma.repuesto.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RepuestoFindUniqueOrThrowArgs>(args: SelectSubset<T, RepuestoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Repuesto that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoFindFirstArgs} args - Arguments to find a Repuesto
+     * @example
+     * // Get one Repuesto
+     * const repuesto = await prisma.repuesto.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RepuestoFindFirstArgs>(args?: SelectSubset<T, RepuestoFindFirstArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Repuesto that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoFindFirstOrThrowArgs} args - Arguments to find a Repuesto
+     * @example
+     * // Get one Repuesto
+     * const repuesto = await prisma.repuesto.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RepuestoFindFirstOrThrowArgs>(args?: SelectSubset<T, RepuestoFindFirstOrThrowArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Repuestos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Repuestos
+     * const repuestos = await prisma.repuesto.findMany()
+     * 
+     * // Get first 10 Repuestos
+     * const repuestos = await prisma.repuesto.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const repuestoWithIdOnly = await prisma.repuesto.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RepuestoFindManyArgs>(args?: SelectSubset<T, RepuestoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Repuesto.
+     * @param {RepuestoCreateArgs} args - Arguments to create a Repuesto.
+     * @example
+     * // Create one Repuesto
+     * const Repuesto = await prisma.repuesto.create({
+     *   data: {
+     *     // ... data to create a Repuesto
+     *   }
+     * })
+     * 
+     */
+    create<T extends RepuestoCreateArgs>(args: SelectSubset<T, RepuestoCreateArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Repuestos.
+     * @param {RepuestoCreateManyArgs} args - Arguments to create many Repuestos.
+     * @example
+     * // Create many Repuestos
+     * const repuesto = await prisma.repuesto.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RepuestoCreateManyArgs>(args?: SelectSubset<T, RepuestoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Repuestos and returns the data saved in the database.
+     * @param {RepuestoCreateManyAndReturnArgs} args - Arguments to create many Repuestos.
+     * @example
+     * // Create many Repuestos
+     * const repuesto = await prisma.repuesto.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Repuestos and only return the `id`
+     * const repuestoWithIdOnly = await prisma.repuesto.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RepuestoCreateManyAndReturnArgs>(args?: SelectSubset<T, RepuestoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Repuesto.
+     * @param {RepuestoDeleteArgs} args - Arguments to delete one Repuesto.
+     * @example
+     * // Delete one Repuesto
+     * const Repuesto = await prisma.repuesto.delete({
+     *   where: {
+     *     // ... filter to delete one Repuesto
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RepuestoDeleteArgs>(args: SelectSubset<T, RepuestoDeleteArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Repuesto.
+     * @param {RepuestoUpdateArgs} args - Arguments to update one Repuesto.
+     * @example
+     * // Update one Repuesto
+     * const repuesto = await prisma.repuesto.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RepuestoUpdateArgs>(args: SelectSubset<T, RepuestoUpdateArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Repuestos.
+     * @param {RepuestoDeleteManyArgs} args - Arguments to filter Repuestos to delete.
+     * @example
+     * // Delete a few Repuestos
+     * const { count } = await prisma.repuesto.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RepuestoDeleteManyArgs>(args?: SelectSubset<T, RepuestoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Repuestos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Repuestos
+     * const repuesto = await prisma.repuesto.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RepuestoUpdateManyArgs>(args: SelectSubset<T, RepuestoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Repuestos and returns the data updated in the database.
+     * @param {RepuestoUpdateManyAndReturnArgs} args - Arguments to update many Repuestos.
+     * @example
+     * // Update many Repuestos
+     * const repuesto = await prisma.repuesto.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Repuestos and only return the `id`
+     * const repuestoWithIdOnly = await prisma.repuesto.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RepuestoUpdateManyAndReturnArgs>(args: SelectSubset<T, RepuestoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Repuesto.
+     * @param {RepuestoUpsertArgs} args - Arguments to update or create a Repuesto.
+     * @example
+     * // Update or create a Repuesto
+     * const repuesto = await prisma.repuesto.upsert({
+     *   create: {
+     *     // ... data to create a Repuesto
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Repuesto we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RepuestoUpsertArgs>(args: SelectSubset<T, RepuestoUpsertArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Repuestos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoCountArgs} args - Arguments to filter Repuestos to count.
+     * @example
+     * // Count the number of Repuestos
+     * const count = await prisma.repuesto.count({
+     *   where: {
+     *     // ... the filter for the Repuestos we want to count
+     *   }
+     * })
+    **/
+    count<T extends RepuestoCountArgs>(
+      args?: Subset<T, RepuestoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RepuestoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Repuesto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RepuestoAggregateArgs>(args: Subset<T, RepuestoAggregateArgs>): Prisma.PrismaPromise<GetRepuestoAggregateType<T>>
+
+    /**
+     * Group by Repuesto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepuestoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RepuestoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RepuestoGroupByArgs['orderBy'] }
+        : { orderBy?: RepuestoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RepuestoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRepuestoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Repuesto model
+   */
+  readonly fields: RepuestoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Repuesto.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RepuestoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    movimientos<T extends Repuesto$movimientosArgs<ExtArgs> = {}>(args?: Subset<T, Repuesto$movimientosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Repuesto model
+   */
+  interface RepuestoFieldRefs {
+    readonly id: FieldRef<"Repuesto", 'String'>
+    readonly codigo: FieldRef<"Repuesto", 'String'>
+    readonly descripcion: FieldRef<"Repuesto", 'String'>
+    readonly categoria: FieldRef<"Repuesto", 'String'>
+    readonly unidadMedida: FieldRef<"Repuesto", 'String'>
+    readonly stockActual: FieldRef<"Repuesto", 'Int'>
+    readonly stockMinimo: FieldRef<"Repuesto", 'Int'>
+    readonly precioUnitario: FieldRef<"Repuesto", 'Decimal'>
+    readonly creadoEn: FieldRef<"Repuesto", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Repuesto findUnique
+   */
+  export type RepuestoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * Filter, which Repuesto to fetch.
+     */
+    where: RepuestoWhereUniqueInput
+  }
+
+  /**
+   * Repuesto findUniqueOrThrow
+   */
+  export type RepuestoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * Filter, which Repuesto to fetch.
+     */
+    where: RepuestoWhereUniqueInput
+  }
+
+  /**
+   * Repuesto findFirst
+   */
+  export type RepuestoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * Filter, which Repuesto to fetch.
+     */
+    where?: RepuestoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Repuestos to fetch.
+     */
+    orderBy?: RepuestoOrderByWithRelationInput | RepuestoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Repuestos.
+     */
+    cursor?: RepuestoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Repuestos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Repuestos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Repuestos.
+     */
+    distinct?: RepuestoScalarFieldEnum | RepuestoScalarFieldEnum[]
+  }
+
+  /**
+   * Repuesto findFirstOrThrow
+   */
+  export type RepuestoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * Filter, which Repuesto to fetch.
+     */
+    where?: RepuestoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Repuestos to fetch.
+     */
+    orderBy?: RepuestoOrderByWithRelationInput | RepuestoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Repuestos.
+     */
+    cursor?: RepuestoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Repuestos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Repuestos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Repuestos.
+     */
+    distinct?: RepuestoScalarFieldEnum | RepuestoScalarFieldEnum[]
+  }
+
+  /**
+   * Repuesto findMany
+   */
+  export type RepuestoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * Filter, which Repuestos to fetch.
+     */
+    where?: RepuestoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Repuestos to fetch.
+     */
+    orderBy?: RepuestoOrderByWithRelationInput | RepuestoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Repuestos.
+     */
+    cursor?: RepuestoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Repuestos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Repuestos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Repuestos.
+     */
+    distinct?: RepuestoScalarFieldEnum | RepuestoScalarFieldEnum[]
+  }
+
+  /**
+   * Repuesto create
+   */
+  export type RepuestoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Repuesto.
+     */
+    data: XOR<RepuestoCreateInput, RepuestoUncheckedCreateInput>
+  }
+
+  /**
+   * Repuesto createMany
+   */
+  export type RepuestoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Repuestos.
+     */
+    data: RepuestoCreateManyInput | RepuestoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Repuesto createManyAndReturn
+   */
+  export type RepuestoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * The data used to create many Repuestos.
+     */
+    data: RepuestoCreateManyInput | RepuestoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Repuesto update
+   */
+  export type RepuestoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Repuesto.
+     */
+    data: XOR<RepuestoUpdateInput, RepuestoUncheckedUpdateInput>
+    /**
+     * Choose, which Repuesto to update.
+     */
+    where: RepuestoWhereUniqueInput
+  }
+
+  /**
+   * Repuesto updateMany
+   */
+  export type RepuestoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Repuestos.
+     */
+    data: XOR<RepuestoUpdateManyMutationInput, RepuestoUncheckedUpdateManyInput>
+    /**
+     * Filter which Repuestos to update
+     */
+    where?: RepuestoWhereInput
+    /**
+     * Limit how many Repuestos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Repuesto updateManyAndReturn
+   */
+  export type RepuestoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * The data used to update Repuestos.
+     */
+    data: XOR<RepuestoUpdateManyMutationInput, RepuestoUncheckedUpdateManyInput>
+    /**
+     * Filter which Repuestos to update
+     */
+    where?: RepuestoWhereInput
+    /**
+     * Limit how many Repuestos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Repuesto upsert
+   */
+  export type RepuestoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Repuesto to update in case it exists.
+     */
+    where: RepuestoWhereUniqueInput
+    /**
+     * In case the Repuesto found by the `where` argument doesn't exist, create a new Repuesto with this data.
+     */
+    create: XOR<RepuestoCreateInput, RepuestoUncheckedCreateInput>
+    /**
+     * In case the Repuesto was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RepuestoUpdateInput, RepuestoUncheckedUpdateInput>
+  }
+
+  /**
+   * Repuesto delete
+   */
+  export type RepuestoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+    /**
+     * Filter which Repuesto to delete.
+     */
+    where: RepuestoWhereUniqueInput
+  }
+
+  /**
+   * Repuesto deleteMany
+   */
+  export type RepuestoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Repuestos to delete
+     */
+    where?: RepuestoWhereInput
+    /**
+     * Limit how many Repuestos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Repuesto.movimientos
+   */
+  export type Repuesto$movimientosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    where?: MovimientoAlmacenWhereInput
+    orderBy?: MovimientoAlmacenOrderByWithRelationInput | MovimientoAlmacenOrderByWithRelationInput[]
+    cursor?: MovimientoAlmacenWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovimientoAlmacenScalarFieldEnum | MovimientoAlmacenScalarFieldEnum[]
+  }
+
+  /**
+   * Repuesto without action
+   */
+  export type RepuestoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Repuesto
+     */
+    select?: RepuestoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Repuesto
+     */
+    omit?: RepuestoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepuestoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MovimientoAlmacen
+   */
+
+  export type AggregateMovimientoAlmacen = {
+    _count: MovimientoAlmacenCountAggregateOutputType | null
+    _avg: MovimientoAlmacenAvgAggregateOutputType | null
+    _sum: MovimientoAlmacenSumAggregateOutputType | null
+    _min: MovimientoAlmacenMinAggregateOutputType | null
+    _max: MovimientoAlmacenMaxAggregateOutputType | null
+  }
+
+  export type MovimientoAlmacenAvgAggregateOutputType = {
+    cantidad: number | null
+  }
+
+  export type MovimientoAlmacenSumAggregateOutputType = {
+    cantidad: number | null
+  }
+
+  export type MovimientoAlmacenMinAggregateOutputType = {
+    id: string | null
+    repuestoId: string | null
+    tipoMovimiento: string | null
+    cantidad: number | null
+    ordenMantenimientoId: string | null
+    responsable: string | null
+    fecha: Date | null
+    observaciones: string | null
+  }
+
+  export type MovimientoAlmacenMaxAggregateOutputType = {
+    id: string | null
+    repuestoId: string | null
+    tipoMovimiento: string | null
+    cantidad: number | null
+    ordenMantenimientoId: string | null
+    responsable: string | null
+    fecha: Date | null
+    observaciones: string | null
+  }
+
+  export type MovimientoAlmacenCountAggregateOutputType = {
+    id: number
+    repuestoId: number
+    tipoMovimiento: number
+    cantidad: number
+    ordenMantenimientoId: number
+    responsable: number
+    fecha: number
+    observaciones: number
+    _all: number
+  }
+
+
+  export type MovimientoAlmacenAvgAggregateInputType = {
+    cantidad?: true
+  }
+
+  export type MovimientoAlmacenSumAggregateInputType = {
+    cantidad?: true
+  }
+
+  export type MovimientoAlmacenMinAggregateInputType = {
+    id?: true
+    repuestoId?: true
+    tipoMovimiento?: true
+    cantidad?: true
+    ordenMantenimientoId?: true
+    responsable?: true
+    fecha?: true
+    observaciones?: true
+  }
+
+  export type MovimientoAlmacenMaxAggregateInputType = {
+    id?: true
+    repuestoId?: true
+    tipoMovimiento?: true
+    cantidad?: true
+    ordenMantenimientoId?: true
+    responsable?: true
+    fecha?: true
+    observaciones?: true
+  }
+
+  export type MovimientoAlmacenCountAggregateInputType = {
+    id?: true
+    repuestoId?: true
+    tipoMovimiento?: true
+    cantidad?: true
+    ordenMantenimientoId?: true
+    responsable?: true
+    fecha?: true
+    observaciones?: true
+    _all?: true
+  }
+
+  export type MovimientoAlmacenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MovimientoAlmacen to aggregate.
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovimientoAlmacens to fetch.
+     */
+    orderBy?: MovimientoAlmacenOrderByWithRelationInput | MovimientoAlmacenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MovimientoAlmacenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovimientoAlmacens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovimientoAlmacens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MovimientoAlmacens
+    **/
+    _count?: true | MovimientoAlmacenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MovimientoAlmacenAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MovimientoAlmacenSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MovimientoAlmacenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MovimientoAlmacenMaxAggregateInputType
+  }
+
+  export type GetMovimientoAlmacenAggregateType<T extends MovimientoAlmacenAggregateArgs> = {
+        [P in keyof T & keyof AggregateMovimientoAlmacen]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMovimientoAlmacen[P]>
+      : GetScalarType<T[P], AggregateMovimientoAlmacen[P]>
+  }
+
+
+
+
+  export type MovimientoAlmacenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovimientoAlmacenWhereInput
+    orderBy?: MovimientoAlmacenOrderByWithAggregationInput | MovimientoAlmacenOrderByWithAggregationInput[]
+    by: MovimientoAlmacenScalarFieldEnum[] | MovimientoAlmacenScalarFieldEnum
+    having?: MovimientoAlmacenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MovimientoAlmacenCountAggregateInputType | true
+    _avg?: MovimientoAlmacenAvgAggregateInputType
+    _sum?: MovimientoAlmacenSumAggregateInputType
+    _min?: MovimientoAlmacenMinAggregateInputType
+    _max?: MovimientoAlmacenMaxAggregateInputType
+  }
+
+  export type MovimientoAlmacenGroupByOutputType = {
+    id: string
+    repuestoId: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId: string | null
+    responsable: string
+    fecha: Date
+    observaciones: string | null
+    _count: MovimientoAlmacenCountAggregateOutputType | null
+    _avg: MovimientoAlmacenAvgAggregateOutputType | null
+    _sum: MovimientoAlmacenSumAggregateOutputType | null
+    _min: MovimientoAlmacenMinAggregateOutputType | null
+    _max: MovimientoAlmacenMaxAggregateOutputType | null
+  }
+
+  type GetMovimientoAlmacenGroupByPayload<T extends MovimientoAlmacenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MovimientoAlmacenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MovimientoAlmacenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MovimientoAlmacenGroupByOutputType[P]>
+            : GetScalarType<T[P], MovimientoAlmacenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MovimientoAlmacenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repuestoId?: boolean
+    tipoMovimiento?: boolean
+    cantidad?: boolean
+    ordenMantenimientoId?: boolean
+    responsable?: boolean
+    fecha?: boolean
+    observaciones?: boolean
+    repuesto?: boolean | RepuestoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["movimientoAlmacen"]>
+
+  export type MovimientoAlmacenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repuestoId?: boolean
+    tipoMovimiento?: boolean
+    cantidad?: boolean
+    ordenMantenimientoId?: boolean
+    responsable?: boolean
+    fecha?: boolean
+    observaciones?: boolean
+    repuesto?: boolean | RepuestoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["movimientoAlmacen"]>
+
+  export type MovimientoAlmacenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repuestoId?: boolean
+    tipoMovimiento?: boolean
+    cantidad?: boolean
+    ordenMantenimientoId?: boolean
+    responsable?: boolean
+    fecha?: boolean
+    observaciones?: boolean
+    repuesto?: boolean | RepuestoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["movimientoAlmacen"]>
+
+  export type MovimientoAlmacenSelectScalar = {
+    id?: boolean
+    repuestoId?: boolean
+    tipoMovimiento?: boolean
+    cantidad?: boolean
+    ordenMantenimientoId?: boolean
+    responsable?: boolean
+    fecha?: boolean
+    observaciones?: boolean
+  }
+
+  export type MovimientoAlmacenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repuestoId" | "tipoMovimiento" | "cantidad" | "ordenMantenimientoId" | "responsable" | "fecha" | "observaciones", ExtArgs["result"]["movimientoAlmacen"]>
+  export type MovimientoAlmacenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repuesto?: boolean | RepuestoDefaultArgs<ExtArgs>
+  }
+  export type MovimientoAlmacenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repuesto?: boolean | RepuestoDefaultArgs<ExtArgs>
+  }
+  export type MovimientoAlmacenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repuesto?: boolean | RepuestoDefaultArgs<ExtArgs>
+  }
+
+  export type $MovimientoAlmacenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MovimientoAlmacen"
+    objects: {
+      repuesto: Prisma.$RepuestoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repuestoId: string
+      tipoMovimiento: string
+      cantidad: number
+      ordenMantenimientoId: string | null
+      responsable: string
+      fecha: Date
+      observaciones: string | null
+    }, ExtArgs["result"]["movimientoAlmacen"]>
+    composites: {}
+  }
+
+  type MovimientoAlmacenGetPayload<S extends boolean | null | undefined | MovimientoAlmacenDefaultArgs> = $Result.GetResult<Prisma.$MovimientoAlmacenPayload, S>
+
+  type MovimientoAlmacenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MovimientoAlmacenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MovimientoAlmacenCountAggregateInputType | true
+    }
+
+  export interface MovimientoAlmacenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MovimientoAlmacen'], meta: { name: 'MovimientoAlmacen' } }
+    /**
+     * Find zero or one MovimientoAlmacen that matches the filter.
+     * @param {MovimientoAlmacenFindUniqueArgs} args - Arguments to find a MovimientoAlmacen
+     * @example
+     * // Get one MovimientoAlmacen
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MovimientoAlmacenFindUniqueArgs>(args: SelectSubset<T, MovimientoAlmacenFindUniqueArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MovimientoAlmacen that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MovimientoAlmacenFindUniqueOrThrowArgs} args - Arguments to find a MovimientoAlmacen
+     * @example
+     * // Get one MovimientoAlmacen
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MovimientoAlmacenFindUniqueOrThrowArgs>(args: SelectSubset<T, MovimientoAlmacenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MovimientoAlmacen that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenFindFirstArgs} args - Arguments to find a MovimientoAlmacen
+     * @example
+     * // Get one MovimientoAlmacen
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MovimientoAlmacenFindFirstArgs>(args?: SelectSubset<T, MovimientoAlmacenFindFirstArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MovimientoAlmacen that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenFindFirstOrThrowArgs} args - Arguments to find a MovimientoAlmacen
+     * @example
+     * // Get one MovimientoAlmacen
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MovimientoAlmacenFindFirstOrThrowArgs>(args?: SelectSubset<T, MovimientoAlmacenFindFirstOrThrowArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MovimientoAlmacens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MovimientoAlmacens
+     * const movimientoAlmacens = await prisma.movimientoAlmacen.findMany()
+     * 
+     * // Get first 10 MovimientoAlmacens
+     * const movimientoAlmacens = await prisma.movimientoAlmacen.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const movimientoAlmacenWithIdOnly = await prisma.movimientoAlmacen.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MovimientoAlmacenFindManyArgs>(args?: SelectSubset<T, MovimientoAlmacenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MovimientoAlmacen.
+     * @param {MovimientoAlmacenCreateArgs} args - Arguments to create a MovimientoAlmacen.
+     * @example
+     * // Create one MovimientoAlmacen
+     * const MovimientoAlmacen = await prisma.movimientoAlmacen.create({
+     *   data: {
+     *     // ... data to create a MovimientoAlmacen
+     *   }
+     * })
+     * 
+     */
+    create<T extends MovimientoAlmacenCreateArgs>(args: SelectSubset<T, MovimientoAlmacenCreateArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MovimientoAlmacens.
+     * @param {MovimientoAlmacenCreateManyArgs} args - Arguments to create many MovimientoAlmacens.
+     * @example
+     * // Create many MovimientoAlmacens
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MovimientoAlmacenCreateManyArgs>(args?: SelectSubset<T, MovimientoAlmacenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MovimientoAlmacens and returns the data saved in the database.
+     * @param {MovimientoAlmacenCreateManyAndReturnArgs} args - Arguments to create many MovimientoAlmacens.
+     * @example
+     * // Create many MovimientoAlmacens
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MovimientoAlmacens and only return the `id`
+     * const movimientoAlmacenWithIdOnly = await prisma.movimientoAlmacen.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MovimientoAlmacenCreateManyAndReturnArgs>(args?: SelectSubset<T, MovimientoAlmacenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MovimientoAlmacen.
+     * @param {MovimientoAlmacenDeleteArgs} args - Arguments to delete one MovimientoAlmacen.
+     * @example
+     * // Delete one MovimientoAlmacen
+     * const MovimientoAlmacen = await prisma.movimientoAlmacen.delete({
+     *   where: {
+     *     // ... filter to delete one MovimientoAlmacen
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MovimientoAlmacenDeleteArgs>(args: SelectSubset<T, MovimientoAlmacenDeleteArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MovimientoAlmacen.
+     * @param {MovimientoAlmacenUpdateArgs} args - Arguments to update one MovimientoAlmacen.
+     * @example
+     * // Update one MovimientoAlmacen
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MovimientoAlmacenUpdateArgs>(args: SelectSubset<T, MovimientoAlmacenUpdateArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MovimientoAlmacens.
+     * @param {MovimientoAlmacenDeleteManyArgs} args - Arguments to filter MovimientoAlmacens to delete.
+     * @example
+     * // Delete a few MovimientoAlmacens
+     * const { count } = await prisma.movimientoAlmacen.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MovimientoAlmacenDeleteManyArgs>(args?: SelectSubset<T, MovimientoAlmacenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MovimientoAlmacens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MovimientoAlmacens
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MovimientoAlmacenUpdateManyArgs>(args: SelectSubset<T, MovimientoAlmacenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MovimientoAlmacens and returns the data updated in the database.
+     * @param {MovimientoAlmacenUpdateManyAndReturnArgs} args - Arguments to update many MovimientoAlmacens.
+     * @example
+     * // Update many MovimientoAlmacens
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MovimientoAlmacens and only return the `id`
+     * const movimientoAlmacenWithIdOnly = await prisma.movimientoAlmacen.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MovimientoAlmacenUpdateManyAndReturnArgs>(args: SelectSubset<T, MovimientoAlmacenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MovimientoAlmacen.
+     * @param {MovimientoAlmacenUpsertArgs} args - Arguments to update or create a MovimientoAlmacen.
+     * @example
+     * // Update or create a MovimientoAlmacen
+     * const movimientoAlmacen = await prisma.movimientoAlmacen.upsert({
+     *   create: {
+     *     // ... data to create a MovimientoAlmacen
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MovimientoAlmacen we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MovimientoAlmacenUpsertArgs>(args: SelectSubset<T, MovimientoAlmacenUpsertArgs<ExtArgs>>): Prisma__MovimientoAlmacenClient<$Result.GetResult<Prisma.$MovimientoAlmacenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MovimientoAlmacens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenCountArgs} args - Arguments to filter MovimientoAlmacens to count.
+     * @example
+     * // Count the number of MovimientoAlmacens
+     * const count = await prisma.movimientoAlmacen.count({
+     *   where: {
+     *     // ... the filter for the MovimientoAlmacens we want to count
+     *   }
+     * })
+    **/
+    count<T extends MovimientoAlmacenCountArgs>(
+      args?: Subset<T, MovimientoAlmacenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MovimientoAlmacenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MovimientoAlmacen.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MovimientoAlmacenAggregateArgs>(args: Subset<T, MovimientoAlmacenAggregateArgs>): Prisma.PrismaPromise<GetMovimientoAlmacenAggregateType<T>>
+
+    /**
+     * Group by MovimientoAlmacen.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovimientoAlmacenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MovimientoAlmacenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MovimientoAlmacenGroupByArgs['orderBy'] }
+        : { orderBy?: MovimientoAlmacenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MovimientoAlmacenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMovimientoAlmacenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MovimientoAlmacen model
+   */
+  readonly fields: MovimientoAlmacenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MovimientoAlmacen.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MovimientoAlmacenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    repuesto<T extends RepuestoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RepuestoDefaultArgs<ExtArgs>>): Prisma__RepuestoClient<$Result.GetResult<Prisma.$RepuestoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MovimientoAlmacen model
+   */
+  interface MovimientoAlmacenFieldRefs {
+    readonly id: FieldRef<"MovimientoAlmacen", 'String'>
+    readonly repuestoId: FieldRef<"MovimientoAlmacen", 'String'>
+    readonly tipoMovimiento: FieldRef<"MovimientoAlmacen", 'String'>
+    readonly cantidad: FieldRef<"MovimientoAlmacen", 'Int'>
+    readonly ordenMantenimientoId: FieldRef<"MovimientoAlmacen", 'String'>
+    readonly responsable: FieldRef<"MovimientoAlmacen", 'String'>
+    readonly fecha: FieldRef<"MovimientoAlmacen", 'DateTime'>
+    readonly observaciones: FieldRef<"MovimientoAlmacen", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MovimientoAlmacen findUnique
+   */
+  export type MovimientoAlmacenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * Filter, which MovimientoAlmacen to fetch.
+     */
+    where: MovimientoAlmacenWhereUniqueInput
+  }
+
+  /**
+   * MovimientoAlmacen findUniqueOrThrow
+   */
+  export type MovimientoAlmacenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * Filter, which MovimientoAlmacen to fetch.
+     */
+    where: MovimientoAlmacenWhereUniqueInput
+  }
+
+  /**
+   * MovimientoAlmacen findFirst
+   */
+  export type MovimientoAlmacenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * Filter, which MovimientoAlmacen to fetch.
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovimientoAlmacens to fetch.
+     */
+    orderBy?: MovimientoAlmacenOrderByWithRelationInput | MovimientoAlmacenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MovimientoAlmacens.
+     */
+    cursor?: MovimientoAlmacenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovimientoAlmacens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovimientoAlmacens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovimientoAlmacens.
+     */
+    distinct?: MovimientoAlmacenScalarFieldEnum | MovimientoAlmacenScalarFieldEnum[]
+  }
+
+  /**
+   * MovimientoAlmacen findFirstOrThrow
+   */
+  export type MovimientoAlmacenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * Filter, which MovimientoAlmacen to fetch.
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovimientoAlmacens to fetch.
+     */
+    orderBy?: MovimientoAlmacenOrderByWithRelationInput | MovimientoAlmacenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MovimientoAlmacens.
+     */
+    cursor?: MovimientoAlmacenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovimientoAlmacens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovimientoAlmacens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovimientoAlmacens.
+     */
+    distinct?: MovimientoAlmacenScalarFieldEnum | MovimientoAlmacenScalarFieldEnum[]
+  }
+
+  /**
+   * MovimientoAlmacen findMany
+   */
+  export type MovimientoAlmacenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * Filter, which MovimientoAlmacens to fetch.
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovimientoAlmacens to fetch.
+     */
+    orderBy?: MovimientoAlmacenOrderByWithRelationInput | MovimientoAlmacenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MovimientoAlmacens.
+     */
+    cursor?: MovimientoAlmacenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovimientoAlmacens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovimientoAlmacens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovimientoAlmacens.
+     */
+    distinct?: MovimientoAlmacenScalarFieldEnum | MovimientoAlmacenScalarFieldEnum[]
+  }
+
+  /**
+   * MovimientoAlmacen create
+   */
+  export type MovimientoAlmacenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MovimientoAlmacen.
+     */
+    data: XOR<MovimientoAlmacenCreateInput, MovimientoAlmacenUncheckedCreateInput>
+  }
+
+  /**
+   * MovimientoAlmacen createMany
+   */
+  export type MovimientoAlmacenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MovimientoAlmacens.
+     */
+    data: MovimientoAlmacenCreateManyInput | MovimientoAlmacenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MovimientoAlmacen createManyAndReturn
+   */
+  export type MovimientoAlmacenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * The data used to create many MovimientoAlmacens.
+     */
+    data: MovimientoAlmacenCreateManyInput | MovimientoAlmacenCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MovimientoAlmacen update
+   */
+  export type MovimientoAlmacenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MovimientoAlmacen.
+     */
+    data: XOR<MovimientoAlmacenUpdateInput, MovimientoAlmacenUncheckedUpdateInput>
+    /**
+     * Choose, which MovimientoAlmacen to update.
+     */
+    where: MovimientoAlmacenWhereUniqueInput
+  }
+
+  /**
+   * MovimientoAlmacen updateMany
+   */
+  export type MovimientoAlmacenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MovimientoAlmacens.
+     */
+    data: XOR<MovimientoAlmacenUpdateManyMutationInput, MovimientoAlmacenUncheckedUpdateManyInput>
+    /**
+     * Filter which MovimientoAlmacens to update
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * Limit how many MovimientoAlmacens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovimientoAlmacen updateManyAndReturn
+   */
+  export type MovimientoAlmacenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * The data used to update MovimientoAlmacens.
+     */
+    data: XOR<MovimientoAlmacenUpdateManyMutationInput, MovimientoAlmacenUncheckedUpdateManyInput>
+    /**
+     * Filter which MovimientoAlmacens to update
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * Limit how many MovimientoAlmacens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MovimientoAlmacen upsert
+   */
+  export type MovimientoAlmacenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MovimientoAlmacen to update in case it exists.
+     */
+    where: MovimientoAlmacenWhereUniqueInput
+    /**
+     * In case the MovimientoAlmacen found by the `where` argument doesn't exist, create a new MovimientoAlmacen with this data.
+     */
+    create: XOR<MovimientoAlmacenCreateInput, MovimientoAlmacenUncheckedCreateInput>
+    /**
+     * In case the MovimientoAlmacen was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MovimientoAlmacenUpdateInput, MovimientoAlmacenUncheckedUpdateInput>
+  }
+
+  /**
+   * MovimientoAlmacen delete
+   */
+  export type MovimientoAlmacenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
+    /**
+     * Filter which MovimientoAlmacen to delete.
+     */
+    where: MovimientoAlmacenWhereUniqueInput
+  }
+
+  /**
+   * MovimientoAlmacen deleteMany
+   */
+  export type MovimientoAlmacenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MovimientoAlmacens to delete
+     */
+    where?: MovimientoAlmacenWhereInput
+    /**
+     * Limit how many MovimientoAlmacens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovimientoAlmacen without action
+   */
+  export type MovimientoAlmacenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoAlmacen
+     */
+    select?: MovimientoAlmacenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoAlmacen
+     */
+    omit?: MovimientoAlmacenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoAlmacenInclude<ExtArgs> | null
   }
 
 
@@ -31440,6 +33961,35 @@ export namespace Prisma {
   export type DocumentoVehiculoScalarFieldEnum = (typeof DocumentoVehiculoScalarFieldEnum)[keyof typeof DocumentoVehiculoScalarFieldEnum]
 
 
+  export const RepuestoScalarFieldEnum: {
+    id: 'id',
+    codigo: 'codigo',
+    descripcion: 'descripcion',
+    categoria: 'categoria',
+    unidadMedida: 'unidadMedida',
+    stockActual: 'stockActual',
+    stockMinimo: 'stockMinimo',
+    precioUnitario: 'precioUnitario',
+    creadoEn: 'creadoEn'
+  };
+
+  export type RepuestoScalarFieldEnum = (typeof RepuestoScalarFieldEnum)[keyof typeof RepuestoScalarFieldEnum]
+
+
+  export const MovimientoAlmacenScalarFieldEnum: {
+    id: 'id',
+    repuestoId: 'repuestoId',
+    tipoMovimiento: 'tipoMovimiento',
+    cantidad: 'cantidad',
+    ordenMantenimientoId: 'ordenMantenimientoId',
+    responsable: 'responsable',
+    fecha: 'fecha',
+    observaciones: 'observaciones'
+  };
+
+  export type MovimientoAlmacenScalarFieldEnum = (typeof MovimientoAlmacenScalarFieldEnum)[keyof typeof MovimientoAlmacenScalarFieldEnum]
+
+
   export const MovimientoDiarioScalarFieldEnum: {
     id: 'id',
     vehiculoId: 'vehiculoId',
@@ -33176,6 +35726,155 @@ export namespace Prisma {
     entidadEmisora?: StringNullableWithAggregatesFilter<"DocumentoVehiculo"> | string | null
     observaciones?: StringNullableWithAggregatesFilter<"DocumentoVehiculo"> | string | null
     creadoEn?: DateTimeWithAggregatesFilter<"DocumentoVehiculo"> | Date | string
+  }
+
+  export type RepuestoWhereInput = {
+    AND?: RepuestoWhereInput | RepuestoWhereInput[]
+    OR?: RepuestoWhereInput[]
+    NOT?: RepuestoWhereInput | RepuestoWhereInput[]
+    id?: StringFilter<"Repuesto"> | string
+    codigo?: StringFilter<"Repuesto"> | string
+    descripcion?: StringFilter<"Repuesto"> | string
+    categoria?: StringFilter<"Repuesto"> | string
+    unidadMedida?: StringFilter<"Repuesto"> | string
+    stockActual?: IntFilter<"Repuesto"> | number
+    stockMinimo?: IntFilter<"Repuesto"> | number
+    precioUnitario?: DecimalNullableFilter<"Repuesto"> | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFilter<"Repuesto"> | Date | string
+    movimientos?: MovimientoAlmacenListRelationFilter
+  }
+
+  export type RepuestoOrderByWithRelationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    descripcion?: SortOrder
+    categoria?: SortOrder
+    unidadMedida?: SortOrder
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    movimientos?: MovimientoAlmacenOrderByRelationAggregateInput
+  }
+
+  export type RepuestoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    codigo?: string
+    AND?: RepuestoWhereInput | RepuestoWhereInput[]
+    OR?: RepuestoWhereInput[]
+    NOT?: RepuestoWhereInput | RepuestoWhereInput[]
+    descripcion?: StringFilter<"Repuesto"> | string
+    categoria?: StringFilter<"Repuesto"> | string
+    unidadMedida?: StringFilter<"Repuesto"> | string
+    stockActual?: IntFilter<"Repuesto"> | number
+    stockMinimo?: IntFilter<"Repuesto"> | number
+    precioUnitario?: DecimalNullableFilter<"Repuesto"> | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFilter<"Repuesto"> | Date | string
+    movimientos?: MovimientoAlmacenListRelationFilter
+  }, "id" | "codigo">
+
+  export type RepuestoOrderByWithAggregationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    descripcion?: SortOrder
+    categoria?: SortOrder
+    unidadMedida?: SortOrder
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    _count?: RepuestoCountOrderByAggregateInput
+    _avg?: RepuestoAvgOrderByAggregateInput
+    _max?: RepuestoMaxOrderByAggregateInput
+    _min?: RepuestoMinOrderByAggregateInput
+    _sum?: RepuestoSumOrderByAggregateInput
+  }
+
+  export type RepuestoScalarWhereWithAggregatesInput = {
+    AND?: RepuestoScalarWhereWithAggregatesInput | RepuestoScalarWhereWithAggregatesInput[]
+    OR?: RepuestoScalarWhereWithAggregatesInput[]
+    NOT?: RepuestoScalarWhereWithAggregatesInput | RepuestoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Repuesto"> | string
+    codigo?: StringWithAggregatesFilter<"Repuesto"> | string
+    descripcion?: StringWithAggregatesFilter<"Repuesto"> | string
+    categoria?: StringWithAggregatesFilter<"Repuesto"> | string
+    unidadMedida?: StringWithAggregatesFilter<"Repuesto"> | string
+    stockActual?: IntWithAggregatesFilter<"Repuesto"> | number
+    stockMinimo?: IntWithAggregatesFilter<"Repuesto"> | number
+    precioUnitario?: DecimalNullableWithAggregatesFilter<"Repuesto"> | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeWithAggregatesFilter<"Repuesto"> | Date | string
+  }
+
+  export type MovimientoAlmacenWhereInput = {
+    AND?: MovimientoAlmacenWhereInput | MovimientoAlmacenWhereInput[]
+    OR?: MovimientoAlmacenWhereInput[]
+    NOT?: MovimientoAlmacenWhereInput | MovimientoAlmacenWhereInput[]
+    id?: StringFilter<"MovimientoAlmacen"> | string
+    repuestoId?: StringFilter<"MovimientoAlmacen"> | string
+    tipoMovimiento?: StringFilter<"MovimientoAlmacen"> | string
+    cantidad?: IntFilter<"MovimientoAlmacen"> | number
+    ordenMantenimientoId?: StringNullableFilter<"MovimientoAlmacen"> | string | null
+    responsable?: StringFilter<"MovimientoAlmacen"> | string
+    fecha?: DateTimeFilter<"MovimientoAlmacen"> | Date | string
+    observaciones?: StringNullableFilter<"MovimientoAlmacen"> | string | null
+    repuesto?: XOR<RepuestoScalarRelationFilter, RepuestoWhereInput>
+  }
+
+  export type MovimientoAlmacenOrderByWithRelationInput = {
+    id?: SortOrder
+    repuestoId?: SortOrder
+    tipoMovimiento?: SortOrder
+    cantidad?: SortOrder
+    ordenMantenimientoId?: SortOrderInput | SortOrder
+    responsable?: SortOrder
+    fecha?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    repuesto?: RepuestoOrderByWithRelationInput
+  }
+
+  export type MovimientoAlmacenWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MovimientoAlmacenWhereInput | MovimientoAlmacenWhereInput[]
+    OR?: MovimientoAlmacenWhereInput[]
+    NOT?: MovimientoAlmacenWhereInput | MovimientoAlmacenWhereInput[]
+    repuestoId?: StringFilter<"MovimientoAlmacen"> | string
+    tipoMovimiento?: StringFilter<"MovimientoAlmacen"> | string
+    cantidad?: IntFilter<"MovimientoAlmacen"> | number
+    ordenMantenimientoId?: StringNullableFilter<"MovimientoAlmacen"> | string | null
+    responsable?: StringFilter<"MovimientoAlmacen"> | string
+    fecha?: DateTimeFilter<"MovimientoAlmacen"> | Date | string
+    observaciones?: StringNullableFilter<"MovimientoAlmacen"> | string | null
+    repuesto?: XOR<RepuestoScalarRelationFilter, RepuestoWhereInput>
+  }, "id">
+
+  export type MovimientoAlmacenOrderByWithAggregationInput = {
+    id?: SortOrder
+    repuestoId?: SortOrder
+    tipoMovimiento?: SortOrder
+    cantidad?: SortOrder
+    ordenMantenimientoId?: SortOrderInput | SortOrder
+    responsable?: SortOrder
+    fecha?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    _count?: MovimientoAlmacenCountOrderByAggregateInput
+    _avg?: MovimientoAlmacenAvgOrderByAggregateInput
+    _max?: MovimientoAlmacenMaxOrderByAggregateInput
+    _min?: MovimientoAlmacenMinOrderByAggregateInput
+    _sum?: MovimientoAlmacenSumOrderByAggregateInput
+  }
+
+  export type MovimientoAlmacenScalarWhereWithAggregatesInput = {
+    AND?: MovimientoAlmacenScalarWhereWithAggregatesInput | MovimientoAlmacenScalarWhereWithAggregatesInput[]
+    OR?: MovimientoAlmacenScalarWhereWithAggregatesInput[]
+    NOT?: MovimientoAlmacenScalarWhereWithAggregatesInput | MovimientoAlmacenScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MovimientoAlmacen"> | string
+    repuestoId?: StringWithAggregatesFilter<"MovimientoAlmacen"> | string
+    tipoMovimiento?: StringWithAggregatesFilter<"MovimientoAlmacen"> | string
+    cantidad?: IntWithAggregatesFilter<"MovimientoAlmacen"> | number
+    ordenMantenimientoId?: StringNullableWithAggregatesFilter<"MovimientoAlmacen"> | string | null
+    responsable?: StringWithAggregatesFilter<"MovimientoAlmacen"> | string
+    fecha?: DateTimeWithAggregatesFilter<"MovimientoAlmacen"> | Date | string
+    observaciones?: StringNullableWithAggregatesFilter<"MovimientoAlmacen"> | string | null
   }
 
   export type MovimientoDiarioWhereInput = {
@@ -35924,6 +38623,170 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RepuestoCreateInput = {
+    id?: string
+    codigo: string
+    descripcion: string
+    categoria: string
+    unidadMedida?: string
+    stockActual?: number
+    stockMinimo?: number
+    precioUnitario?: Decimal | DecimalJsLike | number | string | null
+    creadoEn?: Date | string
+    movimientos?: MovimientoAlmacenCreateNestedManyWithoutRepuestoInput
+  }
+
+  export type RepuestoUncheckedCreateInput = {
+    id?: string
+    codigo: string
+    descripcion: string
+    categoria: string
+    unidadMedida?: string
+    stockActual?: number
+    stockMinimo?: number
+    precioUnitario?: Decimal | DecimalJsLike | number | string | null
+    creadoEn?: Date | string
+    movimientos?: MovimientoAlmacenUncheckedCreateNestedManyWithoutRepuestoInput
+  }
+
+  export type RepuestoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    categoria?: StringFieldUpdateOperationsInput | string
+    unidadMedida?: StringFieldUpdateOperationsInput | string
+    stockActual?: IntFieldUpdateOperationsInput | number
+    stockMinimo?: IntFieldUpdateOperationsInput | number
+    precioUnitario?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientos?: MovimientoAlmacenUpdateManyWithoutRepuestoNestedInput
+  }
+
+  export type RepuestoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    categoria?: StringFieldUpdateOperationsInput | string
+    unidadMedida?: StringFieldUpdateOperationsInput | string
+    stockActual?: IntFieldUpdateOperationsInput | number
+    stockMinimo?: IntFieldUpdateOperationsInput | number
+    precioUnitario?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientos?: MovimientoAlmacenUncheckedUpdateManyWithoutRepuestoNestedInput
+  }
+
+  export type RepuestoCreateManyInput = {
+    id?: string
+    codigo: string
+    descripcion: string
+    categoria: string
+    unidadMedida?: string
+    stockActual?: number
+    stockMinimo?: number
+    precioUnitario?: Decimal | DecimalJsLike | number | string | null
+    creadoEn?: Date | string
+  }
+
+  export type RepuestoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    categoria?: StringFieldUpdateOperationsInput | string
+    unidadMedida?: StringFieldUpdateOperationsInput | string
+    stockActual?: IntFieldUpdateOperationsInput | number
+    stockMinimo?: IntFieldUpdateOperationsInput | number
+    precioUnitario?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RepuestoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    categoria?: StringFieldUpdateOperationsInput | string
+    unidadMedida?: StringFieldUpdateOperationsInput | string
+    stockActual?: IntFieldUpdateOperationsInput | number
+    stockMinimo?: IntFieldUpdateOperationsInput | number
+    precioUnitario?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MovimientoAlmacenCreateInput = {
+    id?: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId?: string | null
+    responsable: string
+    fecha?: Date | string
+    observaciones?: string | null
+    repuesto: RepuestoCreateNestedOneWithoutMovimientosInput
+  }
+
+  export type MovimientoAlmacenUncheckedCreateInput = {
+    id?: string
+    repuestoId: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId?: string | null
+    responsable: string
+    fecha?: Date | string
+    observaciones?: string | null
+  }
+
+  export type MovimientoAlmacenUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    repuesto?: RepuestoUpdateOneRequiredWithoutMovimientosNestedInput
+  }
+
+  export type MovimientoAlmacenUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repuestoId?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MovimientoAlmacenCreateManyInput = {
+    id?: string
+    repuestoId: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId?: string | null
+    responsable: string
+    fecha?: Date | string
+    observaciones?: string | null
+  }
+
+  export type MovimientoAlmacenUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MovimientoAlmacenUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repuestoId?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type MovimientoDiarioCreateInput = {
     id?: string
     fecha: Date | string
@@ -38508,6 +41371,110 @@ export namespace Prisma {
     _max?: NestedEnumTipoDocumentoFilter<$PrismaModel>
   }
 
+  export type MovimientoAlmacenListRelationFilter = {
+    every?: MovimientoAlmacenWhereInput
+    some?: MovimientoAlmacenWhereInput
+    none?: MovimientoAlmacenWhereInput
+  }
+
+  export type MovimientoAlmacenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RepuestoCountOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    descripcion?: SortOrder
+    categoria?: SortOrder
+    unidadMedida?: SortOrder
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type RepuestoAvgOrderByAggregateInput = {
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrder
+  }
+
+  export type RepuestoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    descripcion?: SortOrder
+    categoria?: SortOrder
+    unidadMedida?: SortOrder
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type RepuestoMinOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    descripcion?: SortOrder
+    categoria?: SortOrder
+    unidadMedida?: SortOrder
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type RepuestoSumOrderByAggregateInput = {
+    stockActual?: SortOrder
+    stockMinimo?: SortOrder
+    precioUnitario?: SortOrder
+  }
+
+  export type RepuestoScalarRelationFilter = {
+    is?: RepuestoWhereInput
+    isNot?: RepuestoWhereInput
+  }
+
+  export type MovimientoAlmacenCountOrderByAggregateInput = {
+    id?: SortOrder
+    repuestoId?: SortOrder
+    tipoMovimiento?: SortOrder
+    cantidad?: SortOrder
+    ordenMantenimientoId?: SortOrder
+    responsable?: SortOrder
+    fecha?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type MovimientoAlmacenAvgOrderByAggregateInput = {
+    cantidad?: SortOrder
+  }
+
+  export type MovimientoAlmacenMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repuestoId?: SortOrder
+    tipoMovimiento?: SortOrder
+    cantidad?: SortOrder
+    ordenMantenimientoId?: SortOrder
+    responsable?: SortOrder
+    fecha?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type MovimientoAlmacenMinOrderByAggregateInput = {
+    id?: SortOrder
+    repuestoId?: SortOrder
+    tipoMovimiento?: SortOrder
+    cantidad?: SortOrder
+    ordenMantenimientoId?: SortOrder
+    responsable?: SortOrder
+    fecha?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type MovimientoAlmacenSumOrderByAggregateInput = {
+    cantidad?: SortOrder
+  }
+
   export type EnumEstadoMovimientoFilter<$PrismaModel = never> = {
     equals?: $Enums.EstadoMovimiento | EnumEstadoMovimientoFieldRefInput<$PrismaModel>
     in?: $Enums.EstadoMovimiento[] | ListEnumEstadoMovimientoFieldRefInput<$PrismaModel>
@@ -40292,6 +43259,62 @@ export namespace Prisma {
     upsert?: VehiculoUpsertWithoutDocumentosInput
     connect?: VehiculoWhereUniqueInput
     update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutDocumentosInput, VehiculoUpdateWithoutDocumentosInput>, VehiculoUncheckedUpdateWithoutDocumentosInput>
+  }
+
+  export type MovimientoAlmacenCreateNestedManyWithoutRepuestoInput = {
+    create?: XOR<MovimientoAlmacenCreateWithoutRepuestoInput, MovimientoAlmacenUncheckedCreateWithoutRepuestoInput> | MovimientoAlmacenCreateWithoutRepuestoInput[] | MovimientoAlmacenUncheckedCreateWithoutRepuestoInput[]
+    connectOrCreate?: MovimientoAlmacenCreateOrConnectWithoutRepuestoInput | MovimientoAlmacenCreateOrConnectWithoutRepuestoInput[]
+    createMany?: MovimientoAlmacenCreateManyRepuestoInputEnvelope
+    connect?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+  }
+
+  export type MovimientoAlmacenUncheckedCreateNestedManyWithoutRepuestoInput = {
+    create?: XOR<MovimientoAlmacenCreateWithoutRepuestoInput, MovimientoAlmacenUncheckedCreateWithoutRepuestoInput> | MovimientoAlmacenCreateWithoutRepuestoInput[] | MovimientoAlmacenUncheckedCreateWithoutRepuestoInput[]
+    connectOrCreate?: MovimientoAlmacenCreateOrConnectWithoutRepuestoInput | MovimientoAlmacenCreateOrConnectWithoutRepuestoInput[]
+    createMany?: MovimientoAlmacenCreateManyRepuestoInputEnvelope
+    connect?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+  }
+
+  export type MovimientoAlmacenUpdateManyWithoutRepuestoNestedInput = {
+    create?: XOR<MovimientoAlmacenCreateWithoutRepuestoInput, MovimientoAlmacenUncheckedCreateWithoutRepuestoInput> | MovimientoAlmacenCreateWithoutRepuestoInput[] | MovimientoAlmacenUncheckedCreateWithoutRepuestoInput[]
+    connectOrCreate?: MovimientoAlmacenCreateOrConnectWithoutRepuestoInput | MovimientoAlmacenCreateOrConnectWithoutRepuestoInput[]
+    upsert?: MovimientoAlmacenUpsertWithWhereUniqueWithoutRepuestoInput | MovimientoAlmacenUpsertWithWhereUniqueWithoutRepuestoInput[]
+    createMany?: MovimientoAlmacenCreateManyRepuestoInputEnvelope
+    set?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    disconnect?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    delete?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    connect?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    update?: MovimientoAlmacenUpdateWithWhereUniqueWithoutRepuestoInput | MovimientoAlmacenUpdateWithWhereUniqueWithoutRepuestoInput[]
+    updateMany?: MovimientoAlmacenUpdateManyWithWhereWithoutRepuestoInput | MovimientoAlmacenUpdateManyWithWhereWithoutRepuestoInput[]
+    deleteMany?: MovimientoAlmacenScalarWhereInput | MovimientoAlmacenScalarWhereInput[]
+  }
+
+  export type MovimientoAlmacenUncheckedUpdateManyWithoutRepuestoNestedInput = {
+    create?: XOR<MovimientoAlmacenCreateWithoutRepuestoInput, MovimientoAlmacenUncheckedCreateWithoutRepuestoInput> | MovimientoAlmacenCreateWithoutRepuestoInput[] | MovimientoAlmacenUncheckedCreateWithoutRepuestoInput[]
+    connectOrCreate?: MovimientoAlmacenCreateOrConnectWithoutRepuestoInput | MovimientoAlmacenCreateOrConnectWithoutRepuestoInput[]
+    upsert?: MovimientoAlmacenUpsertWithWhereUniqueWithoutRepuestoInput | MovimientoAlmacenUpsertWithWhereUniqueWithoutRepuestoInput[]
+    createMany?: MovimientoAlmacenCreateManyRepuestoInputEnvelope
+    set?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    disconnect?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    delete?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    connect?: MovimientoAlmacenWhereUniqueInput | MovimientoAlmacenWhereUniqueInput[]
+    update?: MovimientoAlmacenUpdateWithWhereUniqueWithoutRepuestoInput | MovimientoAlmacenUpdateWithWhereUniqueWithoutRepuestoInput[]
+    updateMany?: MovimientoAlmacenUpdateManyWithWhereWithoutRepuestoInput | MovimientoAlmacenUpdateManyWithWhereWithoutRepuestoInput[]
+    deleteMany?: MovimientoAlmacenScalarWhereInput | MovimientoAlmacenScalarWhereInput[]
+  }
+
+  export type RepuestoCreateNestedOneWithoutMovimientosInput = {
+    create?: XOR<RepuestoCreateWithoutMovimientosInput, RepuestoUncheckedCreateWithoutMovimientosInput>
+    connectOrCreate?: RepuestoCreateOrConnectWithoutMovimientosInput
+    connect?: RepuestoWhereUniqueInput
+  }
+
+  export type RepuestoUpdateOneRequiredWithoutMovimientosNestedInput = {
+    create?: XOR<RepuestoCreateWithoutMovimientosInput, RepuestoUncheckedCreateWithoutMovimientosInput>
+    connectOrCreate?: RepuestoCreateOrConnectWithoutMovimientosInput
+    upsert?: RepuestoUpsertWithoutMovimientosInput
+    connect?: RepuestoWhereUniqueInput
+    update?: XOR<XOR<RepuestoUpdateToOneWithWhereWithoutMovimientosInput, RepuestoUpdateWithoutMovimientosInput>, RepuestoUncheckedUpdateWithoutMovimientosInput>
   }
 
   export type VehiculoCreateNestedOneWithoutMovimientosDiariosInput = {
@@ -44633,6 +47656,130 @@ export namespace Prisma {
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
+  export type MovimientoAlmacenCreateWithoutRepuestoInput = {
+    id?: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId?: string | null
+    responsable: string
+    fecha?: Date | string
+    observaciones?: string | null
+  }
+
+  export type MovimientoAlmacenUncheckedCreateWithoutRepuestoInput = {
+    id?: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId?: string | null
+    responsable: string
+    fecha?: Date | string
+    observaciones?: string | null
+  }
+
+  export type MovimientoAlmacenCreateOrConnectWithoutRepuestoInput = {
+    where: MovimientoAlmacenWhereUniqueInput
+    create: XOR<MovimientoAlmacenCreateWithoutRepuestoInput, MovimientoAlmacenUncheckedCreateWithoutRepuestoInput>
+  }
+
+  export type MovimientoAlmacenCreateManyRepuestoInputEnvelope = {
+    data: MovimientoAlmacenCreateManyRepuestoInput | MovimientoAlmacenCreateManyRepuestoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MovimientoAlmacenUpsertWithWhereUniqueWithoutRepuestoInput = {
+    where: MovimientoAlmacenWhereUniqueInput
+    update: XOR<MovimientoAlmacenUpdateWithoutRepuestoInput, MovimientoAlmacenUncheckedUpdateWithoutRepuestoInput>
+    create: XOR<MovimientoAlmacenCreateWithoutRepuestoInput, MovimientoAlmacenUncheckedCreateWithoutRepuestoInput>
+  }
+
+  export type MovimientoAlmacenUpdateWithWhereUniqueWithoutRepuestoInput = {
+    where: MovimientoAlmacenWhereUniqueInput
+    data: XOR<MovimientoAlmacenUpdateWithoutRepuestoInput, MovimientoAlmacenUncheckedUpdateWithoutRepuestoInput>
+  }
+
+  export type MovimientoAlmacenUpdateManyWithWhereWithoutRepuestoInput = {
+    where: MovimientoAlmacenScalarWhereInput
+    data: XOR<MovimientoAlmacenUpdateManyMutationInput, MovimientoAlmacenUncheckedUpdateManyWithoutRepuestoInput>
+  }
+
+  export type MovimientoAlmacenScalarWhereInput = {
+    AND?: MovimientoAlmacenScalarWhereInput | MovimientoAlmacenScalarWhereInput[]
+    OR?: MovimientoAlmacenScalarWhereInput[]
+    NOT?: MovimientoAlmacenScalarWhereInput | MovimientoAlmacenScalarWhereInput[]
+    id?: StringFilter<"MovimientoAlmacen"> | string
+    repuestoId?: StringFilter<"MovimientoAlmacen"> | string
+    tipoMovimiento?: StringFilter<"MovimientoAlmacen"> | string
+    cantidad?: IntFilter<"MovimientoAlmacen"> | number
+    ordenMantenimientoId?: StringNullableFilter<"MovimientoAlmacen"> | string | null
+    responsable?: StringFilter<"MovimientoAlmacen"> | string
+    fecha?: DateTimeFilter<"MovimientoAlmacen"> | Date | string
+    observaciones?: StringNullableFilter<"MovimientoAlmacen"> | string | null
+  }
+
+  export type RepuestoCreateWithoutMovimientosInput = {
+    id?: string
+    codigo: string
+    descripcion: string
+    categoria: string
+    unidadMedida?: string
+    stockActual?: number
+    stockMinimo?: number
+    precioUnitario?: Decimal | DecimalJsLike | number | string | null
+    creadoEn?: Date | string
+  }
+
+  export type RepuestoUncheckedCreateWithoutMovimientosInput = {
+    id?: string
+    codigo: string
+    descripcion: string
+    categoria: string
+    unidadMedida?: string
+    stockActual?: number
+    stockMinimo?: number
+    precioUnitario?: Decimal | DecimalJsLike | number | string | null
+    creadoEn?: Date | string
+  }
+
+  export type RepuestoCreateOrConnectWithoutMovimientosInput = {
+    where: RepuestoWhereUniqueInput
+    create: XOR<RepuestoCreateWithoutMovimientosInput, RepuestoUncheckedCreateWithoutMovimientosInput>
+  }
+
+  export type RepuestoUpsertWithoutMovimientosInput = {
+    update: XOR<RepuestoUpdateWithoutMovimientosInput, RepuestoUncheckedUpdateWithoutMovimientosInput>
+    create: XOR<RepuestoCreateWithoutMovimientosInput, RepuestoUncheckedCreateWithoutMovimientosInput>
+    where?: RepuestoWhereInput
+  }
+
+  export type RepuestoUpdateToOneWithWhereWithoutMovimientosInput = {
+    where?: RepuestoWhereInput
+    data: XOR<RepuestoUpdateWithoutMovimientosInput, RepuestoUncheckedUpdateWithoutMovimientosInput>
+  }
+
+  export type RepuestoUpdateWithoutMovimientosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    categoria?: StringFieldUpdateOperationsInput | string
+    unidadMedida?: StringFieldUpdateOperationsInput | string
+    stockActual?: IntFieldUpdateOperationsInput | number
+    stockMinimo?: IntFieldUpdateOperationsInput | number
+    precioUnitario?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RepuestoUncheckedUpdateWithoutMovimientosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    categoria?: StringFieldUpdateOperationsInput | string
+    unidadMedida?: StringFieldUpdateOperationsInput | string
+    stockActual?: IntFieldUpdateOperationsInput | number
+    stockMinimo?: IntFieldUpdateOperationsInput | number
+    precioUnitario?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type VehiculoCreateWithoutMovimientosDiariosInput = {
     id?: string
     clasePatrimonial: string
@@ -48179,6 +51326,46 @@ export namespace Prisma {
     subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     nombreTecnico?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MovimientoAlmacenCreateManyRepuestoInput = {
+    id?: string
+    tipoMovimiento: string
+    cantidad: number
+    ordenMantenimientoId?: string | null
+    responsable: string
+    fecha?: Date | string
+    observaciones?: string | null
+  }
+
+  export type MovimientoAlmacenUpdateWithoutRepuestoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MovimientoAlmacenUncheckedUpdateWithoutRepuestoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MovimientoAlmacenUncheckedUpdateManyWithoutRepuestoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoMovimiento?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    ordenMantenimientoId?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MovimientoDiarioCreateManyRutaInput = {

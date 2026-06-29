@@ -304,6 +304,29 @@ exports.Prisma.DocumentoVehiculoScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.RepuestoScalarFieldEnum = {
+  id: 'id',
+  codigo: 'codigo',
+  descripcion: 'descripcion',
+  categoria: 'categoria',
+  unidadMedida: 'unidadMedida',
+  stockActual: 'stockActual',
+  stockMinimo: 'stockMinimo',
+  precioUnitario: 'precioUnitario',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.MovimientoAlmacenScalarFieldEnum = {
+  id: 'id',
+  repuestoId: 'repuestoId',
+  tipoMovimiento: 'tipoMovimiento',
+  cantidad: 'cantidad',
+  ordenMantenimientoId: 'ordenMantenimientoId',
+  responsable: 'responsable',
+  fecha: 'fecha',
+  observaciones: 'observaciones'
+};
+
 exports.Prisma.MovimientoDiarioScalarFieldEnum = {
   id: 'id',
   vehiculoId: 'vehiculoId',
@@ -694,6 +717,8 @@ exports.Prisma.ModelName = {
   DetalleManoObra: 'DetalleManoObra',
   AsignacionVehiculo: 'AsignacionVehiculo',
   DocumentoVehiculo: 'DocumentoVehiculo',
+  Repuesto: 'Repuesto',
+  MovimientoAlmacen: 'MovimientoAlmacen',
   MovimientoDiario: 'MovimientoDiario',
   ChecklistVerificacion: 'ChecklistVerificacion',
   Ruta: 'Ruta',

@@ -1,0 +1,41 @@
+// ============================================================
+// SAF - Sistema de Administración de Flotas
+// Manual F1T02 — Procedimientos Básicos de Operación y Control
+// Archivo: mantenimiento.prisma — Almacén de Mantenimiento
+// ============================================================
+
+/// Repuesto del Almacén de Mantenimiento — MA 122 02 01
+model Repuesto {
+  id              String   @id @default(uuid())
+  /// Código único del repuesto en el almacén
+  codigo          String   @unique @db.VarChar(50)
+  descripcion     String   @db.VarChar(255)
+  categoria       String   @db.VarChar(50)
+  unidadMedida    String   @default("unidad") @map("unidad_medida") @db.VarChar(30)
+  stockActual     Int      @default(0) @map("stock_actual")
+  stockMinimo     Int      @default(0) @map("stock_minimo")
+  precioUnitario  Decimal? @map("precio_unitario") @db.Decimal(10, 2)
+  creadoEn        DateTime @default(now()) @map("creado_en")
+
+  movimientos MovimientoAlmacen[]
+
+  @@map("repuestos")
+}
+
+/// Movimiento de entrada/salida en el Almacén de Mantenimiento
+model MovimientoAlmacen {
+  id                      String   @id @default(uuid())
+  repuestoId              String   @map("repuesto_id")
+  tipoMovimiento          String   @map("tipo_movimiento")
+  cantidad                Int
+  ordenMantenimientoId    String?  @map("orden_mantenimiento_id")
+  responsable             String   @db.VarChar(100)
+  fecha                   DateTime @default(now())
+  observaciones           String?
+
+  repuesto Repuesto @relation(fields: [repuestoId], references: [id])
+
+  @@index([repuestoId])
+  @@index([fecha])
+  @@map("movimientos_almacen")
+}
