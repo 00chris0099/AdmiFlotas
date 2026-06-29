@@ -574,6 +574,24 @@ model MovimientoAlmacen {
   @@map("movimientos_almacen")
 }
 
+model Lavado {
+  id            String   @id @default(uuid())
+  vehiculoId    String   @map("vehiculo_id")
+  fecha         DateTime @db.Date
+  tipoLavado    String   @map("tipo_lavado")
+  costo         Decimal? @db.Decimal(8, 2)
+  proveedor     String?  @db.VarChar(150)
+  responsable   String?  @db.VarChar(100)
+  observaciones String?
+  creadoEn      DateTime @default(now()) @map("creado_en")
+
+  vehiculo Vehiculo @relation(fields: [vehiculoId], references: [id])
+
+  @@index([vehiculoId])
+  @@index([fecha])
+  @@map("lavados")
+}
+
 // ============================================================
 // SAF - Sistema de AdministraciÃ³n de Flotas
 // Archivo: movimientos_diarios.prisma â€” Esquema de Movimientos Diarios y Checklist
@@ -1020,6 +1038,7 @@ model Vehiculo {
   asignaciones            AsignacionVehiculo[]
   documentos              DocumentoVehiculo[]
   programaciones          ProgramacionRuta[]
+  lavados                 Lavado[]
 
   @@index([placa])
   @@index([estado])

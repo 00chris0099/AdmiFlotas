@@ -74,6 +74,11 @@ export type Repuesto = $Result.DefaultSelection<Prisma.$RepuestoPayload>
  */
 export type MovimientoAlmacen = $Result.DefaultSelection<Prisma.$MovimientoAlmacenPayload>
 /**
+ * Model Lavado
+ * 
+ */
+export type Lavado = $Result.DefaultSelection<Prisma.$LavadoPayload>
+/**
  * Model MovimientoDiario
  * Registro de uso diario del vehÃ­culo â€” Formulario MA 122 01 01
  */
@@ -636,6 +641,16 @@ export class PrismaClient<
     * ```
     */
   get movimientoAlmacen(): Prisma.MovimientoAlmacenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.lavado`: Exposes CRUD operations for the **Lavado** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Lavados
+    * const lavados = await prisma.lavado.findMany()
+    * ```
+    */
+  get lavado(): Prisma.LavadoDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.movimientoDiario`: Exposes CRUD operations for the **MovimientoDiario** model.
@@ -1212,6 +1227,7 @@ export namespace Prisma {
     DocumentoVehiculo: 'DocumentoVehiculo',
     Repuesto: 'Repuesto',
     MovimientoAlmacen: 'MovimientoAlmacen',
+    Lavado: 'Lavado',
     MovimientoDiario: 'MovimientoDiario',
     ChecklistVerificacion: 'ChecklistVerificacion',
     Ruta: 'Ruta',
@@ -1240,7 +1256,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "repuesto" | "movimientoAlmacen" | "movimientoDiario" | "checklistVerificacion" | "ruta" | "programacionRuta" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
+      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "repuesto" | "movimientoAlmacen" | "lavado" | "movimientoDiario" | "checklistVerificacion" | "ruta" | "programacionRuta" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2129,6 +2145,80 @@ export namespace Prisma {
           count: {
             args: Prisma.MovimientoAlmacenCountArgs<ExtArgs>
             result: $Utils.Optional<MovimientoAlmacenCountAggregateOutputType> | number
+          }
+        }
+      }
+      Lavado: {
+        payload: Prisma.$LavadoPayload<ExtArgs>
+        fields: Prisma.LavadoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LavadoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LavadoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>
+          }
+          findFirst: {
+            args: Prisma.LavadoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LavadoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>
+          }
+          findMany: {
+            args: Prisma.LavadoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>[]
+          }
+          create: {
+            args: Prisma.LavadoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>
+          }
+          createMany: {
+            args: Prisma.LavadoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LavadoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>[]
+          }
+          delete: {
+            args: Prisma.LavadoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>
+          }
+          update: {
+            args: Prisma.LavadoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>
+          }
+          deleteMany: {
+            args: Prisma.LavadoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LavadoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LavadoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>[]
+          }
+          upsert: {
+            args: Prisma.LavadoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LavadoPayload>
+          }
+          aggregate: {
+            args: Prisma.LavadoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLavado>
+          }
+          groupBy: {
+            args: Prisma.LavadoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LavadoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LavadoCountArgs<ExtArgs>
+            result: $Utils.Optional<LavadoCountAggregateOutputType> | number
           }
         }
       }
@@ -3106,6 +3196,7 @@ export namespace Prisma {
     documentoVehiculo?: DocumentoVehiculoOmit
     repuesto?: RepuestoOmit
     movimientoAlmacen?: MovimientoAlmacenOmit
+    lavado?: LavadoOmit
     movimientoDiario?: MovimientoDiarioOmit
     checklistVerificacion?: ChecklistVerificacionOmit
     ruta?: RutaOmit
@@ -3463,6 +3554,7 @@ export namespace Prisma {
     asignaciones: number
     documentos: number
     programaciones: number
+    lavados: number
   }
 
   export type VehiculoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3476,6 +3568,7 @@ export namespace Prisma {
     asignaciones?: boolean | VehiculoCountOutputTypeCountAsignacionesArgs
     documentos?: boolean | VehiculoCountOutputTypeCountDocumentosArgs
     programaciones?: boolean | VehiculoCountOutputTypeCountProgramacionesArgs
+    lavados?: boolean | VehiculoCountOutputTypeCountLavadosArgs
   }
 
   // Custom InputTypes
@@ -3557,6 +3650,13 @@ export namespace Prisma {
    */
   export type VehiculoCountOutputTypeCountProgramacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProgramacionRutaWhereInput
+  }
+
+  /**
+   * VehiculoCountOutputType without action
+   */
+  export type VehiculoCountOutputTypeCountLavadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LavadoWhereInput
   }
 
 
@@ -18536,6 +18636,1155 @@ export namespace Prisma {
 
 
   /**
+   * Model Lavado
+   */
+
+  export type AggregateLavado = {
+    _count: LavadoCountAggregateOutputType | null
+    _avg: LavadoAvgAggregateOutputType | null
+    _sum: LavadoSumAggregateOutputType | null
+    _min: LavadoMinAggregateOutputType | null
+    _max: LavadoMaxAggregateOutputType | null
+  }
+
+  export type LavadoAvgAggregateOutputType = {
+    costo: Decimal | null
+  }
+
+  export type LavadoSumAggregateOutputType = {
+    costo: Decimal | null
+  }
+
+  export type LavadoMinAggregateOutputType = {
+    id: string | null
+    vehiculoId: string | null
+    fecha: Date | null
+    tipoLavado: string | null
+    costo: Decimal | null
+    proveedor: string | null
+    responsable: string | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type LavadoMaxAggregateOutputType = {
+    id: string | null
+    vehiculoId: string | null
+    fecha: Date | null
+    tipoLavado: string | null
+    costo: Decimal | null
+    proveedor: string | null
+    responsable: string | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type LavadoCountAggregateOutputType = {
+    id: number
+    vehiculoId: number
+    fecha: number
+    tipoLavado: number
+    costo: number
+    proveedor: number
+    responsable: number
+    observaciones: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type LavadoAvgAggregateInputType = {
+    costo?: true
+  }
+
+  export type LavadoSumAggregateInputType = {
+    costo?: true
+  }
+
+  export type LavadoMinAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    fecha?: true
+    tipoLavado?: true
+    costo?: true
+    proveedor?: true
+    responsable?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type LavadoMaxAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    fecha?: true
+    tipoLavado?: true
+    costo?: true
+    proveedor?: true
+    responsable?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type LavadoCountAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    fecha?: true
+    tipoLavado?: true
+    costo?: true
+    proveedor?: true
+    responsable?: true
+    observaciones?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type LavadoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Lavado to aggregate.
+     */
+    where?: LavadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lavados to fetch.
+     */
+    orderBy?: LavadoOrderByWithRelationInput | LavadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LavadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lavados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lavados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Lavados
+    **/
+    _count?: true | LavadoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LavadoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LavadoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LavadoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LavadoMaxAggregateInputType
+  }
+
+  export type GetLavadoAggregateType<T extends LavadoAggregateArgs> = {
+        [P in keyof T & keyof AggregateLavado]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLavado[P]>
+      : GetScalarType<T[P], AggregateLavado[P]>
+  }
+
+
+
+
+  export type LavadoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LavadoWhereInput
+    orderBy?: LavadoOrderByWithAggregationInput | LavadoOrderByWithAggregationInput[]
+    by: LavadoScalarFieldEnum[] | LavadoScalarFieldEnum
+    having?: LavadoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LavadoCountAggregateInputType | true
+    _avg?: LavadoAvgAggregateInputType
+    _sum?: LavadoSumAggregateInputType
+    _min?: LavadoMinAggregateInputType
+    _max?: LavadoMaxAggregateInputType
+  }
+
+  export type LavadoGroupByOutputType = {
+    id: string
+    vehiculoId: string
+    fecha: Date
+    tipoLavado: string
+    costo: Decimal | null
+    proveedor: string | null
+    responsable: string | null
+    observaciones: string | null
+    creadoEn: Date
+    _count: LavadoCountAggregateOutputType | null
+    _avg: LavadoAvgAggregateOutputType | null
+    _sum: LavadoSumAggregateOutputType | null
+    _min: LavadoMinAggregateOutputType | null
+    _max: LavadoMaxAggregateOutputType | null
+  }
+
+  type GetLavadoGroupByPayload<T extends LavadoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LavadoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LavadoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LavadoGroupByOutputType[P]>
+            : GetScalarType<T[P], LavadoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LavadoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    fecha?: boolean
+    tipoLavado?: boolean
+    costo?: boolean
+    proveedor?: boolean
+    responsable?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lavado"]>
+
+  export type LavadoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    fecha?: boolean
+    tipoLavado?: boolean
+    costo?: boolean
+    proveedor?: boolean
+    responsable?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lavado"]>
+
+  export type LavadoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    fecha?: boolean
+    tipoLavado?: boolean
+    costo?: boolean
+    proveedor?: boolean
+    responsable?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lavado"]>
+
+  export type LavadoSelectScalar = {
+    id?: boolean
+    vehiculoId?: boolean
+    fecha?: boolean
+    tipoLavado?: boolean
+    costo?: boolean
+    proveedor?: boolean
+    responsable?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+  }
+
+  export type LavadoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vehiculoId" | "fecha" | "tipoLavado" | "costo" | "proveedor" | "responsable" | "observaciones" | "creadoEn", ExtArgs["result"]["lavado"]>
+  export type LavadoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+  export type LavadoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+  export type LavadoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+
+  export type $LavadoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Lavado"
+    objects: {
+      vehiculo: Prisma.$VehiculoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      vehiculoId: string
+      fecha: Date
+      tipoLavado: string
+      costo: Prisma.Decimal | null
+      proveedor: string | null
+      responsable: string | null
+      observaciones: string | null
+      creadoEn: Date
+    }, ExtArgs["result"]["lavado"]>
+    composites: {}
+  }
+
+  type LavadoGetPayload<S extends boolean | null | undefined | LavadoDefaultArgs> = $Result.GetResult<Prisma.$LavadoPayload, S>
+
+  type LavadoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LavadoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LavadoCountAggregateInputType | true
+    }
+
+  export interface LavadoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Lavado'], meta: { name: 'Lavado' } }
+    /**
+     * Find zero or one Lavado that matches the filter.
+     * @param {LavadoFindUniqueArgs} args - Arguments to find a Lavado
+     * @example
+     * // Get one Lavado
+     * const lavado = await prisma.lavado.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LavadoFindUniqueArgs>(args: SelectSubset<T, LavadoFindUniqueArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Lavado that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LavadoFindUniqueOrThrowArgs} args - Arguments to find a Lavado
+     * @example
+     * // Get one Lavado
+     * const lavado = await prisma.lavado.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LavadoFindUniqueOrThrowArgs>(args: SelectSubset<T, LavadoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Lavado that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoFindFirstArgs} args - Arguments to find a Lavado
+     * @example
+     * // Get one Lavado
+     * const lavado = await prisma.lavado.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LavadoFindFirstArgs>(args?: SelectSubset<T, LavadoFindFirstArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Lavado that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoFindFirstOrThrowArgs} args - Arguments to find a Lavado
+     * @example
+     * // Get one Lavado
+     * const lavado = await prisma.lavado.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LavadoFindFirstOrThrowArgs>(args?: SelectSubset<T, LavadoFindFirstOrThrowArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Lavados that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Lavados
+     * const lavados = await prisma.lavado.findMany()
+     * 
+     * // Get first 10 Lavados
+     * const lavados = await prisma.lavado.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const lavadoWithIdOnly = await prisma.lavado.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LavadoFindManyArgs>(args?: SelectSubset<T, LavadoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Lavado.
+     * @param {LavadoCreateArgs} args - Arguments to create a Lavado.
+     * @example
+     * // Create one Lavado
+     * const Lavado = await prisma.lavado.create({
+     *   data: {
+     *     // ... data to create a Lavado
+     *   }
+     * })
+     * 
+     */
+    create<T extends LavadoCreateArgs>(args: SelectSubset<T, LavadoCreateArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Lavados.
+     * @param {LavadoCreateManyArgs} args - Arguments to create many Lavados.
+     * @example
+     * // Create many Lavados
+     * const lavado = await prisma.lavado.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LavadoCreateManyArgs>(args?: SelectSubset<T, LavadoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Lavados and returns the data saved in the database.
+     * @param {LavadoCreateManyAndReturnArgs} args - Arguments to create many Lavados.
+     * @example
+     * // Create many Lavados
+     * const lavado = await prisma.lavado.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Lavados and only return the `id`
+     * const lavadoWithIdOnly = await prisma.lavado.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LavadoCreateManyAndReturnArgs>(args?: SelectSubset<T, LavadoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Lavado.
+     * @param {LavadoDeleteArgs} args - Arguments to delete one Lavado.
+     * @example
+     * // Delete one Lavado
+     * const Lavado = await prisma.lavado.delete({
+     *   where: {
+     *     // ... filter to delete one Lavado
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LavadoDeleteArgs>(args: SelectSubset<T, LavadoDeleteArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Lavado.
+     * @param {LavadoUpdateArgs} args - Arguments to update one Lavado.
+     * @example
+     * // Update one Lavado
+     * const lavado = await prisma.lavado.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LavadoUpdateArgs>(args: SelectSubset<T, LavadoUpdateArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Lavados.
+     * @param {LavadoDeleteManyArgs} args - Arguments to filter Lavados to delete.
+     * @example
+     * // Delete a few Lavados
+     * const { count } = await prisma.lavado.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LavadoDeleteManyArgs>(args?: SelectSubset<T, LavadoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Lavados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Lavados
+     * const lavado = await prisma.lavado.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LavadoUpdateManyArgs>(args: SelectSubset<T, LavadoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Lavados and returns the data updated in the database.
+     * @param {LavadoUpdateManyAndReturnArgs} args - Arguments to update many Lavados.
+     * @example
+     * // Update many Lavados
+     * const lavado = await prisma.lavado.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Lavados and only return the `id`
+     * const lavadoWithIdOnly = await prisma.lavado.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LavadoUpdateManyAndReturnArgs>(args: SelectSubset<T, LavadoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Lavado.
+     * @param {LavadoUpsertArgs} args - Arguments to update or create a Lavado.
+     * @example
+     * // Update or create a Lavado
+     * const lavado = await prisma.lavado.upsert({
+     *   create: {
+     *     // ... data to create a Lavado
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Lavado we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LavadoUpsertArgs>(args: SelectSubset<T, LavadoUpsertArgs<ExtArgs>>): Prisma__LavadoClient<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Lavados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoCountArgs} args - Arguments to filter Lavados to count.
+     * @example
+     * // Count the number of Lavados
+     * const count = await prisma.lavado.count({
+     *   where: {
+     *     // ... the filter for the Lavados we want to count
+     *   }
+     * })
+    **/
+    count<T extends LavadoCountArgs>(
+      args?: Subset<T, LavadoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LavadoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Lavado.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LavadoAggregateArgs>(args: Subset<T, LavadoAggregateArgs>): Prisma.PrismaPromise<GetLavadoAggregateType<T>>
+
+    /**
+     * Group by Lavado.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LavadoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LavadoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LavadoGroupByArgs['orderBy'] }
+        : { orderBy?: LavadoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LavadoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLavadoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Lavado model
+   */
+  readonly fields: LavadoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Lavado.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LavadoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    vehiculo<T extends VehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehiculoDefaultArgs<ExtArgs>>): Prisma__VehiculoClient<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Lavado model
+   */
+  interface LavadoFieldRefs {
+    readonly id: FieldRef<"Lavado", 'String'>
+    readonly vehiculoId: FieldRef<"Lavado", 'String'>
+    readonly fecha: FieldRef<"Lavado", 'DateTime'>
+    readonly tipoLavado: FieldRef<"Lavado", 'String'>
+    readonly costo: FieldRef<"Lavado", 'Decimal'>
+    readonly proveedor: FieldRef<"Lavado", 'String'>
+    readonly responsable: FieldRef<"Lavado", 'String'>
+    readonly observaciones: FieldRef<"Lavado", 'String'>
+    readonly creadoEn: FieldRef<"Lavado", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Lavado findUnique
+   */
+  export type LavadoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * Filter, which Lavado to fetch.
+     */
+    where: LavadoWhereUniqueInput
+  }
+
+  /**
+   * Lavado findUniqueOrThrow
+   */
+  export type LavadoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * Filter, which Lavado to fetch.
+     */
+    where: LavadoWhereUniqueInput
+  }
+
+  /**
+   * Lavado findFirst
+   */
+  export type LavadoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * Filter, which Lavado to fetch.
+     */
+    where?: LavadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lavados to fetch.
+     */
+    orderBy?: LavadoOrderByWithRelationInput | LavadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Lavados.
+     */
+    cursor?: LavadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lavados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lavados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Lavados.
+     */
+    distinct?: LavadoScalarFieldEnum | LavadoScalarFieldEnum[]
+  }
+
+  /**
+   * Lavado findFirstOrThrow
+   */
+  export type LavadoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * Filter, which Lavado to fetch.
+     */
+    where?: LavadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lavados to fetch.
+     */
+    orderBy?: LavadoOrderByWithRelationInput | LavadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Lavados.
+     */
+    cursor?: LavadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lavados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lavados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Lavados.
+     */
+    distinct?: LavadoScalarFieldEnum | LavadoScalarFieldEnum[]
+  }
+
+  /**
+   * Lavado findMany
+   */
+  export type LavadoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * Filter, which Lavados to fetch.
+     */
+    where?: LavadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lavados to fetch.
+     */
+    orderBy?: LavadoOrderByWithRelationInput | LavadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Lavados.
+     */
+    cursor?: LavadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lavados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lavados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Lavados.
+     */
+    distinct?: LavadoScalarFieldEnum | LavadoScalarFieldEnum[]
+  }
+
+  /**
+   * Lavado create
+   */
+  export type LavadoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Lavado.
+     */
+    data: XOR<LavadoCreateInput, LavadoUncheckedCreateInput>
+  }
+
+  /**
+   * Lavado createMany
+   */
+  export type LavadoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Lavados.
+     */
+    data: LavadoCreateManyInput | LavadoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Lavado createManyAndReturn
+   */
+  export type LavadoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * The data used to create many Lavados.
+     */
+    data: LavadoCreateManyInput | LavadoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Lavado update
+   */
+  export type LavadoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Lavado.
+     */
+    data: XOR<LavadoUpdateInput, LavadoUncheckedUpdateInput>
+    /**
+     * Choose, which Lavado to update.
+     */
+    where: LavadoWhereUniqueInput
+  }
+
+  /**
+   * Lavado updateMany
+   */
+  export type LavadoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Lavados.
+     */
+    data: XOR<LavadoUpdateManyMutationInput, LavadoUncheckedUpdateManyInput>
+    /**
+     * Filter which Lavados to update
+     */
+    where?: LavadoWhereInput
+    /**
+     * Limit how many Lavados to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Lavado updateManyAndReturn
+   */
+  export type LavadoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * The data used to update Lavados.
+     */
+    data: XOR<LavadoUpdateManyMutationInput, LavadoUncheckedUpdateManyInput>
+    /**
+     * Filter which Lavados to update
+     */
+    where?: LavadoWhereInput
+    /**
+     * Limit how many Lavados to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Lavado upsert
+   */
+  export type LavadoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Lavado to update in case it exists.
+     */
+    where: LavadoWhereUniqueInput
+    /**
+     * In case the Lavado found by the `where` argument doesn't exist, create a new Lavado with this data.
+     */
+    create: XOR<LavadoCreateInput, LavadoUncheckedCreateInput>
+    /**
+     * In case the Lavado was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LavadoUpdateInput, LavadoUncheckedUpdateInput>
+  }
+
+  /**
+   * Lavado delete
+   */
+  export type LavadoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    /**
+     * Filter which Lavado to delete.
+     */
+    where: LavadoWhereUniqueInput
+  }
+
+  /**
+   * Lavado deleteMany
+   */
+  export type LavadoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Lavados to delete
+     */
+    where?: LavadoWhereInput
+    /**
+     * Limit how many Lavados to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Lavado without action
+   */
+  export type LavadoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model MovimientoDiario
    */
 
@@ -29963,6 +31212,7 @@ export namespace Prisma {
     asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
     documentos?: boolean | Vehiculo$documentosArgs<ExtArgs>
     programaciones?: boolean | Vehiculo$programacionesArgs<ExtArgs>
+    lavados?: boolean | Vehiculo$lavadosArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vehiculo"]>
 
@@ -30143,6 +31393,7 @@ export namespace Prisma {
     asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
     documentos?: boolean | Vehiculo$documentosArgs<ExtArgs>
     programaciones?: boolean | Vehiculo$programacionesArgs<ExtArgs>
+    lavados?: boolean | Vehiculo$lavadosArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -30161,6 +31412,7 @@ export namespace Prisma {
       asignaciones: Prisma.$AsignacionVehiculoPayload<ExtArgs>[]
       documentos: Prisma.$DocumentoVehiculoPayload<ExtArgs>[]
       programaciones: Prisma.$ProgramacionRutaPayload<ExtArgs>[]
+      lavados: Prisma.$LavadoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30691,6 +31943,7 @@ export namespace Prisma {
     asignaciones<T extends Vehiculo$asignacionesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     documentos<T extends Vehiculo$documentosArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$documentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programaciones<T extends Vehiculo$programacionesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$programacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    lavados<T extends Vehiculo$lavadosArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$lavadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LavadoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31402,6 +32655,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
+  }
+
+  /**
+   * Vehiculo.lavados
+   */
+  export type Vehiculo$lavadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lavado
+     */
+    select?: LavadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lavado
+     */
+    omit?: LavadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LavadoInclude<ExtArgs> | null
+    where?: LavadoWhereInput
+    orderBy?: LavadoOrderByWithRelationInput | LavadoOrderByWithRelationInput[]
+    cursor?: LavadoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LavadoScalarFieldEnum | LavadoScalarFieldEnum[]
   }
 
   /**
@@ -33990,6 +35267,21 @@ export namespace Prisma {
   export type MovimientoAlmacenScalarFieldEnum = (typeof MovimientoAlmacenScalarFieldEnum)[keyof typeof MovimientoAlmacenScalarFieldEnum]
 
 
+  export const LavadoScalarFieldEnum: {
+    id: 'id',
+    vehiculoId: 'vehiculoId',
+    fecha: 'fecha',
+    tipoLavado: 'tipoLavado',
+    costo: 'costo',
+    proveedor: 'proveedor',
+    responsable: 'responsable',
+    observaciones: 'observaciones',
+    creadoEn: 'creadoEn'
+  };
+
+  export type LavadoScalarFieldEnum = (typeof LavadoScalarFieldEnum)[keyof typeof LavadoScalarFieldEnum]
+
+
   export const MovimientoDiarioScalarFieldEnum: {
     id: 'id',
     vehiculoId: 'vehiculoId',
@@ -35877,6 +37169,83 @@ export namespace Prisma {
     observaciones?: StringNullableWithAggregatesFilter<"MovimientoAlmacen"> | string | null
   }
 
+  export type LavadoWhereInput = {
+    AND?: LavadoWhereInput | LavadoWhereInput[]
+    OR?: LavadoWhereInput[]
+    NOT?: LavadoWhereInput | LavadoWhereInput[]
+    id?: StringFilter<"Lavado"> | string
+    vehiculoId?: StringFilter<"Lavado"> | string
+    fecha?: DateTimeFilter<"Lavado"> | Date | string
+    tipoLavado?: StringFilter<"Lavado"> | string
+    costo?: DecimalNullableFilter<"Lavado"> | Decimal | DecimalJsLike | number | string | null
+    proveedor?: StringNullableFilter<"Lavado"> | string | null
+    responsable?: StringNullableFilter<"Lavado"> | string | null
+    observaciones?: StringNullableFilter<"Lavado"> | string | null
+    creadoEn?: DateTimeFilter<"Lavado"> | Date | string
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+  }
+
+  export type LavadoOrderByWithRelationInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    fecha?: SortOrder
+    tipoLavado?: SortOrder
+    costo?: SortOrderInput | SortOrder
+    proveedor?: SortOrderInput | SortOrder
+    responsable?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    vehiculo?: VehiculoOrderByWithRelationInput
+  }
+
+  export type LavadoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LavadoWhereInput | LavadoWhereInput[]
+    OR?: LavadoWhereInput[]
+    NOT?: LavadoWhereInput | LavadoWhereInput[]
+    vehiculoId?: StringFilter<"Lavado"> | string
+    fecha?: DateTimeFilter<"Lavado"> | Date | string
+    tipoLavado?: StringFilter<"Lavado"> | string
+    costo?: DecimalNullableFilter<"Lavado"> | Decimal | DecimalJsLike | number | string | null
+    proveedor?: StringNullableFilter<"Lavado"> | string | null
+    responsable?: StringNullableFilter<"Lavado"> | string | null
+    observaciones?: StringNullableFilter<"Lavado"> | string | null
+    creadoEn?: DateTimeFilter<"Lavado"> | Date | string
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+  }, "id">
+
+  export type LavadoOrderByWithAggregationInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    fecha?: SortOrder
+    tipoLavado?: SortOrder
+    costo?: SortOrderInput | SortOrder
+    proveedor?: SortOrderInput | SortOrder
+    responsable?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    _count?: LavadoCountOrderByAggregateInput
+    _avg?: LavadoAvgOrderByAggregateInput
+    _max?: LavadoMaxOrderByAggregateInput
+    _min?: LavadoMinOrderByAggregateInput
+    _sum?: LavadoSumOrderByAggregateInput
+  }
+
+  export type LavadoScalarWhereWithAggregatesInput = {
+    AND?: LavadoScalarWhereWithAggregatesInput | LavadoScalarWhereWithAggregatesInput[]
+    OR?: LavadoScalarWhereWithAggregatesInput[]
+    NOT?: LavadoScalarWhereWithAggregatesInput | LavadoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Lavado"> | string
+    vehiculoId?: StringWithAggregatesFilter<"Lavado"> | string
+    fecha?: DateTimeWithAggregatesFilter<"Lavado"> | Date | string
+    tipoLavado?: StringWithAggregatesFilter<"Lavado"> | string
+    costo?: DecimalNullableWithAggregatesFilter<"Lavado"> | Decimal | DecimalJsLike | number | string | null
+    proveedor?: StringNullableWithAggregatesFilter<"Lavado"> | string | null
+    responsable?: StringNullableWithAggregatesFilter<"Lavado"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"Lavado"> | string | null
+    creadoEn?: DateTimeWithAggregatesFilter<"Lavado"> | Date | string
+  }
+
   export type MovimientoDiarioWhereInput = {
     AND?: MovimientoDiarioWhereInput | MovimientoDiarioWhereInput[]
     OR?: MovimientoDiarioWhereInput[]
@@ -36818,6 +38187,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoListRelationFilter
     documentos?: DocumentoVehiculoListRelationFilter
     programaciones?: ProgramacionRutaListRelationFilter
+    lavados?: LavadoListRelationFilter
   }
 
   export type VehiculoOrderByWithRelationInput = {
@@ -36883,6 +38253,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoOrderByRelationAggregateInput
     documentos?: DocumentoVehiculoOrderByRelationAggregateInput
     programaciones?: ProgramacionRutaOrderByRelationAggregateInput
+    lavados?: LavadoOrderByRelationAggregateInput
   }
 
   export type VehiculoWhereUniqueInput = Prisma.AtLeast<{
@@ -36951,6 +38322,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoListRelationFilter
     documentos?: DocumentoVehiculoListRelationFilter
     programaciones?: ProgramacionRutaListRelationFilter
+    lavados?: LavadoListRelationFilter
   }, "id" | "codigoPatrimonial" | "placa" | "numeroMotor" | "numeroChasis">
 
   export type VehiculoOrderByWithAggregationInput = {
@@ -38787,6 +40159,89 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type LavadoCreateInput = {
+    id?: string
+    fecha: Date | string
+    tipoLavado: string
+    costo?: Decimal | DecimalJsLike | number | string | null
+    proveedor?: string | null
+    responsable?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+    vehiculo: VehiculoCreateNestedOneWithoutLavadosInput
+  }
+
+  export type LavadoUncheckedCreateInput = {
+    id?: string
+    vehiculoId: string
+    fecha: Date | string
+    tipoLavado: string
+    costo?: Decimal | DecimalJsLike | number | string | null
+    proveedor?: string | null
+    responsable?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type LavadoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculo?: VehiculoUpdateOneRequiredWithoutLavadosNestedInput
+  }
+
+  export type LavadoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LavadoCreateManyInput = {
+    id?: string
+    vehiculoId: string
+    fecha: Date | string
+    tipoLavado: string
+    costo?: Decimal | DecimalJsLike | number | string | null
+    proveedor?: string | null
+    responsable?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type LavadoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LavadoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MovimientoDiarioCreateInput = {
     id?: string
     fecha: Date | string
@@ -39847,6 +41302,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateInput = {
@@ -39912,6 +41368,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUpdateInput = {
@@ -39977,6 +41434,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateInput = {
@@ -40042,6 +41500,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateManyInput = {
@@ -41475,6 +42934,50 @@ export namespace Prisma {
     cantidad?: SortOrder
   }
 
+  export type LavadoCountOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    fecha?: SortOrder
+    tipoLavado?: SortOrder
+    costo?: SortOrder
+    proveedor?: SortOrder
+    responsable?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type LavadoAvgOrderByAggregateInput = {
+    costo?: SortOrder
+  }
+
+  export type LavadoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    fecha?: SortOrder
+    tipoLavado?: SortOrder
+    costo?: SortOrder
+    proveedor?: SortOrder
+    responsable?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type LavadoMinOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    fecha?: SortOrder
+    tipoLavado?: SortOrder
+    costo?: SortOrder
+    proveedor?: SortOrder
+    responsable?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type LavadoSumOrderByAggregateInput = {
+    costo?: SortOrder
+  }
+
   export type EnumEstadoMovimientoFilter<$PrismaModel = never> = {
     equals?: $Enums.EstadoMovimiento | EnumEstadoMovimientoFieldRefInput<$PrismaModel>
     in?: $Enums.EstadoMovimiento[] | ListEnumEstadoMovimientoFieldRefInput<$PrismaModel>
@@ -42101,6 +43604,12 @@ export namespace Prisma {
     none?: DocumentoVehiculoWhereInput
   }
 
+  export type LavadoListRelationFilter = {
+    every?: LavadoWhereInput
+    some?: LavadoWhereInput
+    none?: LavadoWhereInput
+  }
+
   export type ControlLlantaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -42118,6 +43627,10 @@ export namespace Prisma {
   }
 
   export type DocumentoVehiculoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LavadoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -43317,6 +44830,20 @@ export namespace Prisma {
     update?: XOR<XOR<RepuestoUpdateToOneWithWhereWithoutMovimientosInput, RepuestoUpdateWithoutMovimientosInput>, RepuestoUncheckedUpdateWithoutMovimientosInput>
   }
 
+  export type VehiculoCreateNestedOneWithoutLavadosInput = {
+    create?: XOR<VehiculoCreateWithoutLavadosInput, VehiculoUncheckedCreateWithoutLavadosInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutLavadosInput
+    connect?: VehiculoWhereUniqueInput
+  }
+
+  export type VehiculoUpdateOneRequiredWithoutLavadosNestedInput = {
+    create?: XOR<VehiculoCreateWithoutLavadosInput, VehiculoUncheckedCreateWithoutLavadosInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutLavadosInput
+    upsert?: VehiculoUpsertWithoutLavadosInput
+    connect?: VehiculoWhereUniqueInput
+    update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutLavadosInput, VehiculoUpdateWithoutLavadosInput>, VehiculoUncheckedUpdateWithoutLavadosInput>
+  }
+
   export type VehiculoCreateNestedOneWithoutMovimientosDiariosInput = {
     create?: XOR<VehiculoCreateWithoutMovimientosDiariosInput, VehiculoUncheckedCreateWithoutMovimientosDiariosInput>
     connectOrCreate?: VehiculoCreateOrConnectWithoutMovimientosDiariosInput
@@ -43744,6 +45271,13 @@ export namespace Prisma {
     connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
   }
 
+  export type LavadoCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<LavadoCreateWithoutVehiculoInput, LavadoUncheckedCreateWithoutVehiculoInput> | LavadoCreateWithoutVehiculoInput[] | LavadoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: LavadoCreateOrConnectWithoutVehiculoInput | LavadoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: LavadoCreateManyVehiculoInputEnvelope
+    connect?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+  }
+
   export type MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -43803,6 +45337,13 @@ export namespace Prisma {
     connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutVehiculoInput | ProgramacionRutaCreateOrConnectWithoutVehiculoInput[]
     createMany?: ProgramacionRutaCreateManyVehiculoInputEnvelope
     connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+  }
+
+  export type LavadoUncheckedCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<LavadoCreateWithoutVehiculoInput, LavadoUncheckedCreateWithoutVehiculoInput> | LavadoCreateWithoutVehiculoInput[] | LavadoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: LavadoCreateOrConnectWithoutVehiculoInput | LavadoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: LavadoCreateManyVehiculoInputEnvelope
+    connect?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
   }
 
   export type EnumCategoriaVehiculoFieldUpdateOperationsInput = {
@@ -43949,6 +45490,20 @@ export namespace Prisma {
     deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
   }
 
+  export type LavadoUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<LavadoCreateWithoutVehiculoInput, LavadoUncheckedCreateWithoutVehiculoInput> | LavadoCreateWithoutVehiculoInput[] | LavadoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: LavadoCreateOrConnectWithoutVehiculoInput | LavadoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: LavadoUpsertWithWhereUniqueWithoutVehiculoInput | LavadoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: LavadoCreateManyVehiculoInputEnvelope
+    set?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    disconnect?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    delete?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    connect?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    update?: LavadoUpdateWithWhereUniqueWithoutVehiculoInput | LavadoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: LavadoUpdateManyWithWhereWithoutVehiculoInput | LavadoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: LavadoScalarWhereInput | LavadoScalarWhereInput[]
+  }
+
   export type MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -44075,6 +45630,20 @@ export namespace Prisma {
     update?: ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput | ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput[]
     updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput | ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput[]
     deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+  }
+
+  export type LavadoUncheckedUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<LavadoCreateWithoutVehiculoInput, LavadoUncheckedCreateWithoutVehiculoInput> | LavadoCreateWithoutVehiculoInput[] | LavadoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: LavadoCreateOrConnectWithoutVehiculoInput | LavadoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: LavadoUpsertWithWhereUniqueWithoutVehiculoInput | LavadoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: LavadoCreateManyVehiculoInputEnvelope
+    set?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    disconnect?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    delete?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    connect?: LavadoWhereUniqueInput | LavadoWhereUniqueInput[]
+    update?: LavadoUpdateWithWhereUniqueWithoutVehiculoInput | LavadoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: LavadoUpdateManyWithWhereWithoutVehiculoInput | LavadoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: LavadoScalarWhereInput | LavadoScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -45513,6 +47082,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesCombustibleInput = {
@@ -45577,6 +47147,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesCombustibleInput = {
@@ -45720,6 +47291,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesCombustibleInput = {
@@ -45784,6 +47356,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesCombustibleInput = {
@@ -45917,6 +47490,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutControlLlantasInput = {
@@ -45981,6 +47555,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutControlLlantasInput = {
@@ -46061,6 +47636,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutControlLlantasInput = {
@@ -46125,6 +47701,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateWithoutOrdenesMantenimientoInput = {
@@ -46189,6 +47766,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesMantenimientoInput = {
@@ -46253,6 +47831,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesMantenimientoInput = {
@@ -46462,6 +48041,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesMantenimientoInput = {
@@ -46526,6 +48106,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesMantenimientoInput = {
@@ -47042,6 +48623,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutAsignacionesInput = {
@@ -47106,6 +48688,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutAsignacionesInput = {
@@ -47249,6 +48832,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutAsignacionesInput = {
@@ -47313,6 +48897,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutAsignacionesInput = {
@@ -47446,6 +49031,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutDocumentosInput = {
@@ -47510,6 +49096,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutDocumentosInput = {
@@ -47590,6 +49177,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutDocumentosInput = {
@@ -47654,6 +49242,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type MovimientoAlmacenCreateWithoutRepuestoInput = {
@@ -47780,6 +49369,282 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type VehiculoCreateWithoutLavadosInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoUncheckedCreateWithoutLavadosInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaUncheckedCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoCreateOrConnectWithoutLavadosInput = {
+    where: VehiculoWhereUniqueInput
+    create: XOR<VehiculoCreateWithoutLavadosInput, VehiculoUncheckedCreateWithoutLavadosInput>
+  }
+
+  export type VehiculoUpsertWithoutLavadosInput = {
+    update: XOR<VehiculoUpdateWithoutLavadosInput, VehiculoUncheckedUpdateWithoutLavadosInput>
+    create: XOR<VehiculoCreateWithoutLavadosInput, VehiculoUncheckedCreateWithoutLavadosInput>
+    where?: VehiculoWhereInput
+  }
+
+  export type VehiculoUpdateToOneWithWhereWithoutLavadosInput = {
+    where?: VehiculoWhereInput
+    data: XOR<VehiculoUpdateWithoutLavadosInput, VehiculoUncheckedUpdateWithoutLavadosInput>
+  }
+
+  export type VehiculoUpdateWithoutLavadosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type VehiculoUncheckedUpdateWithoutLavadosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUncheckedUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+  }
+
   export type VehiculoCreateWithoutMovimientosDiariosInput = {
     id?: string
     clasePatrimonial: string
@@ -47842,6 +49707,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutMovimientosDiariosInput = {
@@ -47906,6 +49772,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutMovimientosDiariosInput = {
@@ -48224,6 +50091,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutMovimientosDiariosInput = {
@@ -48288,6 +50156,7 @@ export namespace Prisma {
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutMovimientosDiariosInput = {
@@ -48897,6 +50766,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutProgramacionesInput = {
@@ -48961,6 +50831,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    lavados?: LavadoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutProgramacionesInput = {
@@ -49139,6 +51010,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutProgramacionesInput = {
@@ -49203,6 +51075,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    lavados?: LavadoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutProgramacionesInput = {
@@ -50266,6 +52139,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LavadoCreateWithoutVehiculoInput = {
+    id?: string
+    fecha: Date | string
+    tipoLavado: string
+    costo?: Decimal | DecimalJsLike | number | string | null
+    proveedor?: string | null
+    responsable?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type LavadoUncheckedCreateWithoutVehiculoInput = {
+    id?: string
+    fecha: Date | string
+    tipoLavado: string
+    costo?: Decimal | DecimalJsLike | number | string | null
+    proveedor?: string | null
+    responsable?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type LavadoCreateOrConnectWithoutVehiculoInput = {
+    where: LavadoWhereUniqueInput
+    create: XOR<LavadoCreateWithoutVehiculoInput, LavadoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type LavadoCreateManyVehiculoInputEnvelope = {
+    data: LavadoCreateManyVehiculoInput | LavadoCreateManyVehiculoInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MovimientoDiarioUpsertWithWhereUniqueWithoutVehiculoInput = {
     where: MovimientoDiarioWhereUniqueInput
     update: XOR<MovimientoDiarioUpdateWithoutVehiculoInput, MovimientoDiarioUncheckedUpdateWithoutVehiculoInput>
@@ -50490,6 +52395,37 @@ export namespace Prisma {
   export type ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput = {
     where: ProgramacionRutaScalarWhereInput
     data: XOR<ProgramacionRutaUpdateManyMutationInput, ProgramacionRutaUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
+  export type LavadoUpsertWithWhereUniqueWithoutVehiculoInput = {
+    where: LavadoWhereUniqueInput
+    update: XOR<LavadoUpdateWithoutVehiculoInput, LavadoUncheckedUpdateWithoutVehiculoInput>
+    create: XOR<LavadoCreateWithoutVehiculoInput, LavadoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type LavadoUpdateWithWhereUniqueWithoutVehiculoInput = {
+    where: LavadoWhereUniqueInput
+    data: XOR<LavadoUpdateWithoutVehiculoInput, LavadoUncheckedUpdateWithoutVehiculoInput>
+  }
+
+  export type LavadoUpdateManyWithWhereWithoutVehiculoInput = {
+    where: LavadoScalarWhereInput
+    data: XOR<LavadoUpdateManyMutationInput, LavadoUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
+  export type LavadoScalarWhereInput = {
+    AND?: LavadoScalarWhereInput | LavadoScalarWhereInput[]
+    OR?: LavadoScalarWhereInput[]
+    NOT?: LavadoScalarWhereInput | LavadoScalarWhereInput[]
+    id?: StringFilter<"Lavado"> | string
+    vehiculoId?: StringFilter<"Lavado"> | string
+    fecha?: DateTimeFilter<"Lavado"> | Date | string
+    tipoLavado?: StringFilter<"Lavado"> | string
+    costo?: DecimalNullableFilter<"Lavado"> | Decimal | DecimalJsLike | number | string | null
+    proveedor?: StringNullableFilter<"Lavado"> | string | null
+    responsable?: StringNullableFilter<"Lavado"> | string | null
+    observaciones?: StringNullableFilter<"Lavado"> | string | null
+    creadoEn?: DateTimeFilter<"Lavado"> | Date | string
   }
 
   export type PermisoUsuarioCreateManyUsuarioInput = {
@@ -51697,6 +53633,17 @@ export namespace Prisma {
     creadoEn?: Date | string
   }
 
+  export type LavadoCreateManyVehiculoInput = {
+    id?: string
+    fecha: Date | string
+    tipoLavado: string
+    costo?: Decimal | DecimalJsLike | number | string | null
+    proveedor?: string | null
+    responsable?: string | null
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
   export type MovimientoDiarioUpdateWithoutVehiculoInput = {
     id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52280,6 +54227,39 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LavadoUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LavadoUncheckedUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LavadoUncheckedUpdateManyWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipoLavado?: StringFieldUpdateOperationsInput | string
+    costo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }

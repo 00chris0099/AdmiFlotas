@@ -111,6 +111,7 @@ model Vehiculo {
   asignaciones           AsignacionVehiculo[]
   documentos             DocumentoVehiculo[]
   programaciones         ProgramacionRuta[]
+  lavados                Lavado[]
 
   @@index([placa])
   @@index([estado])

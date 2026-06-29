@@ -327,6 +327,18 @@ exports.Prisma.MovimientoAlmacenScalarFieldEnum = {
   observaciones: 'observaciones'
 };
 
+exports.Prisma.LavadoScalarFieldEnum = {
+  id: 'id',
+  vehiculoId: 'vehiculoId',
+  fecha: 'fecha',
+  tipoLavado: 'tipoLavado',
+  costo: 'costo',
+  proveedor: 'proveedor',
+  responsable: 'responsable',
+  observaciones: 'observaciones',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.MovimientoDiarioScalarFieldEnum = {
   id: 'id',
   vehiculoId: 'vehiculoId',
@@ -719,6 +731,7 @@ exports.Prisma.ModelName = {
   DocumentoVehiculo: 'DocumentoVehiculo',
   Repuesto: 'Repuesto',
   MovimientoAlmacen: 'MovimientoAlmacen',
+  Lavado: 'Lavado',
   MovimientoDiario: 'MovimientoDiario',
   ChecklistVerificacion: 'ChecklistVerificacion',
   Ruta: 'Ruta',
