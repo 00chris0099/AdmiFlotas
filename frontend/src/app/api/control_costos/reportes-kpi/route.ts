@@ -20,7 +20,6 @@ export const GET = withAuth(async (request: NextRequest, { user }) => {
 
     // Valores dinámicos o fallbacks por defecto
     const ckvMetaMax = parseFloat(configMap["CKV_META"] || "3.50");
-    const krpDiario = parseInt(configMap["KRP_DIARIO"] || "50");
     const hupDiario = parseInt(configMap["HUP_DIARIO"] || "8");
 
     // 3. Obtener costos fijos prorrateables activos (ej. para periodo "2026-06")
@@ -68,13 +67,9 @@ export const GET = withAuth(async (request: NextRequest, { user }) => {
       
       const ckv = ((cfpPorVehiculo + CFV) / K) + (costoVariableTotal / K);
       
-      // IUV dinámico usando KRP y HUP del settings
-      const KRP_total = diasOperados * krpDiario;
+      // IUV = (Horas Reales / Horas Estándar) × 100
       const HUP_total = diasOperados * hupDiario;
-      
-      const iuvK = KRP_total > 0 ? (K / KRP_total) : 1;
-      const iuvH = HUP_total > 0 ? (HUV / HUP_total) : 1;
-      const iuv = Math.min(100, Math.round(((iuvK + iuvH) / 2) * 100 * 10) / 10);
+      const iuv = HUP_total > 0 ? Math.min(100, Math.round((HUV / HUP_total) * 100 * 10) / 10) : 0;
       
       // Meta Cumplida dinámica
       const metaCumplida = ckv < ckvMetaMax && iuv > 75;
