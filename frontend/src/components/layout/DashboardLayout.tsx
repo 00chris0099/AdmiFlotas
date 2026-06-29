@@ -136,7 +136,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
     };
   }).filter((section) => section.items.length > 0);
 
-  // Si estamos en la página raíz (que tiene su propio selector limpio y encabezado), retornar children directamente
+  // Login y unauthorized: sin wrapper, renderizar children directamente
+  if (pathname === "/login" || pathname === "/unauthorized") {
+    return <>{children}</>;
+  }
+
+  // Página raíz: wrapper mínimo
   if (pathname === "/") {
     return <div className="min-h-screen bg-slate-950 text-slate-100">{children}</div>;
   }

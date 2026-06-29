@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { LayoutRouter } from "@/components/layout/LayoutRouter";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
@@ -34,7 +34,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">
         <ThemeProvider>
           <AuthProvider>
-            <LayoutRouter>{children}</LayoutRouter>
+            <DashboardLayout>{children}</DashboardLayout>
           </AuthProvider>
         </ThemeProvider>
       </body>
