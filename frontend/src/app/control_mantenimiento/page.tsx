@@ -113,6 +113,24 @@ export default function OrdenesMantenimientoPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validaciones antes de enviar
+    const errors: string[] = [];
+    
+    if (!vehiculoId) errors.push("Debe seleccionar un vehículo");
+    if (!tipoMantenimiento) errors.push("Debe seleccionar un tipo de mantenimiento");
+    if (!tipoTaller) errors.push("Debe seleccionar un tipo de taller");
+    if (!descripcionServicio || descripcionServicio.trim().length < 10) {
+      errors.push("La descripción del servicio debe tener al menos 10 caracteres");
+    }
+    if (parseFloat(costoRepuestos) < 0) errors.push("El costo de repuestos no puede ser negativo");
+    if (parseFloat(costoOtros) < 0) errors.push("El costo otros no puede ser negativo");
+
+    if (errors.length > 0) {
+      alert("Errores de validación:\n" + errors.join("\n"));
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetchWithAuth("/api/control_mantenimiento", {
         method: "POST",

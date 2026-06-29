@@ -154,6 +154,33 @@ export default function CombustiblePage() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validaciones antes de enviar
+    const errors: string[] = [];
+    
+    if (!vehiculoId) errors.push("Debe seleccionar un vehículo");
+    if (!conductorId) errors.push("Debe seleccionar un conductor");
+    if (!tipoCombustible) errors.push("Debe seleccionar un tipo de combustible");
+    if (!cantidadGalones || parseFloat(cantidadGalones) <= 0) {
+      errors.push("La cantidad de galones debe ser mayor a 0");
+    }
+    if (!costoGalon || parseFloat(costoGalon) <= 0) {
+      errors.push("El costo por galón debe ser mayor a 0");
+    }
+    if (!kilometrajeActual || parseInt(kilometrajeActual) <= 0) {
+      errors.push("El kilometraje actual debe ser mayor a 0");
+    }
+    if (!sectorSolicitante) errors.push("Debe seleccionar un sector solicitante");
+    if (!localidadSolicitante) errors.push("Debe seleccionar una localidad");
+    if (!nombreServiccentro) errors.push("Debe seleccionar un servicentro");
+    if (!firmaEncargadoGaraje) errors.push("La firma del Encargado del Garaje es obligatoria");
+    if (!firmaConductor) errors.push("La firma del Conductor es obligatoria");
+
+    if (errors.length > 0) {
+      alert("Errores de validación:\n" + errors.join("\n"));
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetchWithAuth("/api/control_combustible", {
         method: "POST",
