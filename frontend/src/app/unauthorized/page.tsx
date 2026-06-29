@@ -9,8 +9,8 @@ export default function UnauthorizedPage() {
   const { logout, user } = useAuth();
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950">
-      {/* Header - Logo único */}
+    <div className="flex-1 flex flex-col">
+      {/* Header */}
       <header className="px-6 py-4">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
