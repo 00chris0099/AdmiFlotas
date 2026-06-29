@@ -29,6 +29,13 @@ model MovimientoDiario {
   /// Horas efectivas de utilizaciÃ³n del vehÃ­culo en el dÃ­a
   horasUtilizacion Decimal? @map("horas_utilizacion") @db.Decimal(5, 2)
 
+  // ── Firmas Digitales ──
+  firmaConductor       String?   @map("firma_conductor") @db.VarChar(100)
+  firmaInspector       String?   @map("firma_inspector") @db.VarChar(100)
+  firmaEncargadoGaraje String?   @map("firma_encargado_garaje") @db.VarChar(100)
+  fechaFirmaConductor  DateTime? @map("fecha_firma_conductor")
+  fechaFirmaInspector  DateTime? @map("fecha_firma_inspector")
+
   // â”€â”€ Estado â”€â”€
   estado        EstadoMovimiento @default(EN_RUTA)
   observaciones String?

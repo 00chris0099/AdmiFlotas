@@ -36,6 +36,11 @@ export const GET = withAuth(async (request: NextRequest, { user }) => {
       kilometrajeLlegada: mov.kilometrajeLlegada,
       horasUtilizacion: mov.horasUtilizacion ? parseFloat(mov.horasUtilizacion.toString()) : null,
       estado: mov.estado,
+      firmaConductor: mov.firmaConductor,
+      firmaInspector: mov.firmaInspector,
+      firmaEncargadoGaraje: mov.firmaEncargadoGaraje,
+      fechaFirmaConductor: mov.fechaFirmaConductor?.toISOString() || null,
+      fechaFirmaInspector: mov.fechaFirmaInspector?.toISOString() || null,
     }));
 
     return NextResponse.json(plainMovimientos);
@@ -219,9 +224,17 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
 export const PATCH = withAuth(async (request: NextRequest, { user }) => {
   try {
     const body = await request.json();
-    const { id, kilometrajeLlegada, horaLlegada, horasUtilizacion } = body;
+    const {
+      id,
+      kilometrajeLlegada,
+      horaLlegada,
+      horasUtilizacion,
+      firmaConductor,
+      firmaInspector,
+      firmaEncargadoGaraje,
+    } = body;
 
-    if (!id || !kilometrajeLlegada || !horaLlegada || !horasUtilizacion) {
+    if (!id) {
       return NextResponse.json({ error: "Faltan campos requeridos" }, { status: 400 });
     }
 
@@ -238,25 +251,46 @@ export const PATCH = withAuth(async (request: NextRequest, { user }) => {
         throw new Error("Movimiento no encontrado");
       }
 
-      const kmSalida = mov.kilometrajeSalida;
-      const kmLlegada = parseInt(kilometrajeLlegada);
+      let kmSalida = mov.kilometrajeSalida;
+      let kmLlegada = 0;
+      let kmRecorrido = 0;
 
-      if (kmLlegada < kmSalida) {
-        throw new Error(`El kilometraje de llegada (${kmLlegada}) no puede ser menor al de salida (${kmSalida})`);
+      if (kilometrajeLlegada) {
+        kmLlegada = parseInt(kilometrajeLlegada);
+
+        if (kmLlegada < kmSalida) {
+          throw new Error(`El kilometraje de llegada (${kmLlegada}) no puede ser menor al de salida (${kmSalida})`);
+        }
+
+        kmRecorrido = kmLlegada - kmSalida;
       }
 
-      const kmRecorrido = kmLlegada - kmSalida;
+      // 2. Actualizar movimiento con firmas
+      const firmaData: Record<string, any> = {};
 
-      // 2. Actualizar movimiento a COMPLETADO
+      if (firmaConductor) {
+        firmaData.firmaConductor = firmaConductor;
+        firmaData.fechaFirmaConductor = new Date();
+      }
+      if (firmaInspector) {
+        firmaData.firmaInspector = firmaInspector;
+        firmaData.fechaFirmaInspector = new Date();
+      }
+      if (firmaEncargadoGaraje) {
+        firmaData.firmaEncargadoGaraje = firmaEncargadoGaraje;
+      }
+
+      if (kilometrajeLlegada && horaLlegada && horasUtilizacion) {
+        firmaData.kilometrajeLlegada = kmLlegada;
+        firmaData.kilometrajeRecorrido = kmRecorrido;
+        firmaData.horaLlegada = horaLlegada;
+        firmaData.horasUtilizacion = parseFloat(horasUtilizacion);
+        firmaData.estado = "COMPLETADO";
+      }
+
       const movActualizado = await tx.movimientoDiario.update({
         where: { id },
-        data: {
-          kilometrajeLlegada: kmLlegada,
-          kilometrajeRecorrido: kmRecorrido,
-          horaLlegada,
-          horasUtilizacion: parseFloat(horasUtilizacion),
-          estado: "COMPLETADO",
-        },
+        data: firmaData,
       });
 
       // 3. TRIGGER PREDICTIVO: Verificar si supera los 5,000 km desde su último mantenimiento preventivo completado

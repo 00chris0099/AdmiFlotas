@@ -18,6 +18,11 @@ interface MovimientoDiario {
   kilometrajeLlegada: number | null;
   horasUtilizacion: number | null;
   estado: "EN_RUTA" | "COMPLETADO" | "CANCELADO";
+  firmaConductor: string | null;
+  firmaInspector: string | null;
+  firmaEncargadoGaraje: string | null;
+  fechaFirmaConductor: string | null;
+  fechaFirmaInspector: string | null;
 }
 
 interface DbVehiculo {
@@ -68,6 +73,18 @@ export default function MovimientosPage() {
   const [extintorBotiquin, setExtintorBotiquin] = useState("OK");
   const [manchasFugas, setManchasFugas] = useState("OK");
 
+  // Firmas
+  const [firmaConductorInput, setFirmaConductorInput] = useState("");
+  const [firmaInspectorInput, setFirmaInspectorInput] = useState("");
+  const [firmaEncargadoGarajeInput, setFirmaEncargadoGarajeInput] = useState("");
+
+  // Modal de cierre (completar movimiento)
+  const [cierreModalOpen, setCierreModalOpen] = useState(false);
+  const [movimientoACerrar, setMovimientoACerrar] = useState<MovimientoDiario | null>(null);
+  const [kmLlegada, setKmLlegada] = useState("");
+  const [horaLlegada, setHoraLlegada] = useState("17:00");
+  const [horasUtilizacion, setHorasUtilizacion] = useState("9");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const conductorSeleccionado = conductores.find((c) => c.id === conductorId);
@@ -116,6 +133,52 @@ export default function MovimientosPage() {
     cargarCatalogos();
     cargarMovimientos();
   }, []);
+
+  const abrirCierreModal = (mov: MovimientoDiario) => {
+    setMovimientoACerrar(mov);
+    setKmLlegada(String(mov.kilometrajeSalida + 50));
+    setHoraLlegada("17:00");
+    setHorasUtilizacion("9");
+    setFirmaConductorInput("");
+    setFirmaInspectorInput("");
+    setFirmaEncargadoGarajeInput("");
+    setCierreModalOpen(true);
+  };
+
+  const handleCierreSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!movimientoACerrar) return;
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetchWithAuth("/api/movimientos_diarios", {
+        method: "PATCH",
+        body: JSON.stringify({
+          id: movimientoACerrar.id,
+          kilometrajeLlegada: parseInt(kmLlegada),
+          horaLlegada,
+          horasUtilizacion,
+          firmaConductor: firmaConductorInput || undefined,
+          firmaInspector: firmaInspectorInput || undefined,
+          firmaEncargadoGaraje: firmaEncargadoGarajeInput || undefined,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setCierreModalOpen(false);
+        setMovimientoACerrar(null);
+        cargarMovimientos();
+        alert("Movimiento completado con éxito!");
+      } else {
+        alert("Error: " + data.error);
+      }
+    } catch (err: any) {
+      alert("Error de red: " + err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,6 +265,40 @@ export default function MovimientosPage() {
         );
       },
     },
+    {
+      header: "Firmas",
+      accessorKey: (row) => {
+        const signed = [row.firmaConductor, row.firmaInspector, row.firmaEncargadoGaraje].filter(Boolean).length;
+        const total = 3;
+        const color = signed === total
+          ? "text-emerald-400"
+          : signed > 0
+            ? "text-amber-400"
+            : "text-slate-500";
+        return (
+          <span className={`text-xs font-semibold ${color}`}>
+            {signed}/{total}
+          </span>
+        );
+      },
+    },
+    {
+      header: "Acciones",
+      className: "text-right",
+      accessorKey: (row) => {
+        if (row.estado === "EN_RUTA") {
+          return (
+            <button
+              onClick={() => abrirCierreModal(row)}
+              className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold rounded-lg transition"
+            >
+              Completar
+            </button>
+          );
+        }
+        return <span className="text-[10px] text-slate-600">-</span>;
+      },
+    },
   ];
 
   const checklistItems = [
@@ -253,6 +350,108 @@ export default function MovimientosPage() {
           newActionLabel="Registrar Movimiento"
           onNewAction={() => setModalOpen(true)}
         />
+      )}
+
+      {/* MODAL DE CIERRE DE MOVIMIENTO */}
+      {cierreModalOpen && movimientoACerrar && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-in fade-in duration-150">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 space-y-5 shadow-2xl relative text-slate-100">
+            <button
+              onClick={() => { setCierreModalOpen(false); setMovimientoACerrar(null); }}
+              className="absolute top-4 right-4 text-slate-455 hover:text-white font-bold"
+            >
+              ✕
+            </button>
+
+            <div>
+              <h3 className="text-lg font-bold text-emerald-400">Completar Movimiento</h3>
+              <p className="text-xs text-slate-450">
+                {movimientoACerrar.placa} - {movimientoACerrar.vehiculo} - {movimientoACerrar.conductor}
+              </p>
+            </div>
+
+            <form onSubmit={handleCierreSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Km Llegada</label>
+                  <input
+                    type="number"
+                    value={kmLlegada}
+                    onChange={(e) => setKmLlegada(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Hora Llegada</label>
+                  <input
+                    type="text"
+                    value={horaLlegada}
+                    onChange={(e) => setHoraLlegada(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">HUV</label>
+                  <input
+                    type="text"
+                    value={horasUtilizacion}
+                    onChange={(e) => setHorasUtilizacion(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Firmas de Cierre */}
+              <div className="border-t border-slate-800 pt-4 space-y-3">
+                <span className="text-[10px] font-bold text-emerald-400 uppercase block tracking-wider">Firmas para Cierre</span>
+                
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Firma del Conductor</label>
+                    <input
+                      type="text"
+                      value={firmaConductorInput}
+                      onChange={(e) => setFirmaConductorInput(e.target.value)}
+                      placeholder="Nombre completo del conductor"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Firma del Inspector</label>
+                    <input
+                      type="text"
+                      value={firmaInspectorInput}
+                      onChange={(e) => setFirmaInspectorInput(e.target.value)}
+                      placeholder="Nombre completo del inspector"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Firma del Encargado del Garaje</label>
+                    <input
+                      type="text"
+                      value={firmaEncargadoGarajeInput}
+                      onChange={(e) => setFirmaEncargadoGarajeInput(e.target.value)}
+                      placeholder="Nombre completo del encargado"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 text-white font-bold rounded-xl transition duration-150 shadow-lg text-xs cursor-pointer"
+              >
+                {isSubmitting ? "Guardando..." : "Completar Movimiento"}
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
       {/* MODAL DE REGISTRO */}
@@ -381,6 +580,44 @@ export default function MovimientosPage() {
                       </select>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Firmas del Checklist */}
+              <div className="border-t border-slate-800 pt-4 space-y-3">
+                <span className="text-[10px] font-bold text-indigo-400 uppercase block tracking-wider">Firmas del Checklist Pre-operativo</span>
+                
+                <div className="grid grid-cols-1 gap-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Firma del Conductor</label>
+                    <input
+                      type="text"
+                      value={firmaConductorInput}
+                      onChange={(e) => setFirmaConductorInput(e.target.value)}
+                      placeholder="Nombre completo del conductor"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Firma del Inspector</label>
+                    <input
+                      type="text"
+                      value={firmaInspectorInput}
+                      onChange={(e) => setFirmaInspectorInput(e.target.value)}
+                      placeholder="Nombre completo del inspector"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Firma del Encargado del Garaje</label>
+                    <input
+                      type="text"
+                      value={firmaEncargadoGarajeInput}
+                      onChange={(e) => setFirmaEncargadoGarajeInput(e.target.value)}
+                      placeholder="Nombre completo del encargado"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
                 </div>
               </div>
 
