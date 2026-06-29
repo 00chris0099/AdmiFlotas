@@ -27,13 +27,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (theme === "light") {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
-      document.body.style.backgroundColor = "#ffffff";
-      document.body.style.color = "#1e293b";
     } else {
       document.documentElement.classList.remove("light");
       document.documentElement.classList.add("dark");
-      document.body.style.backgroundColor = "#020617";
-      document.body.style.color = "#e2e8f0";
     }
   }, [theme]);
 

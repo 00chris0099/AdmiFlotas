@@ -30,9 +30,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-hidden">
       {/* Header */}
-      <header className="px-6 py-4">
+      <header className="px-6 py-4 relative z-10">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
             <Icon name="truck" size={24} />
@@ -45,7 +45,7 @@ export default function LoginPage() {
       </header>
 
       {/* Formulario centrado */}
-      <main className="flex-1 flex items-center justify-center px-4">
+      <main className="flex-1 flex items-center justify-center px-4 relative z-10">
         <div className="w-full max-w-sm">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-6">
             <div className="text-center">

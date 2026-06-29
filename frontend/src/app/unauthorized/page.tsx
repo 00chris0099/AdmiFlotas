@@ -9,9 +9,9 @@ export default function UnauthorizedPage() {
   const { logout, user } = useAuth();
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-hidden">
       {/* Header */}
-      <header className="px-6 py-4">
+      <header className="px-6 py-4 relative z-10">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
             <Icon name="truck" size={24} />
@@ -24,7 +24,7 @@ export default function UnauthorizedPage() {
       </header>
 
       {/* Contenido centrado */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 text-center">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 text-center">
         <div className="w-16 h-16 bg-rose-500/10 border border-rose-500/20 rounded-full flex items-center justify-center mb-6">
           <Icon name="warning" size={32} />
         </div>

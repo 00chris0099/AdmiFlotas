@@ -5,6 +5,11 @@
   --foreground: #e2e8f0;
 }
 
+html.light {
+  --background: #ffffff;
+  --foreground: #1e293b;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
