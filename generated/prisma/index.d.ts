@@ -74,6 +74,16 @@ export type MovimientoDiario = $Result.DefaultSelection<Prisma.$MovimientoDiario
  */
 export type ChecklistVerificacion = $Result.DefaultSelection<Prisma.$ChecklistVerificacionPayload>
 /**
+ * Model Ruta
+ * Ruta predefinida del sistema de transporte — Origen/Destino
+ */
+export type Ruta = $Result.DefaultSelection<Prisma.$RutaPayload>
+/**
+ * Model ProgramacionRuta
+ * Programación de viajes: asigna un vehículo y conductor a una ruta en una fecha/hora
+ */
+export type ProgramacionRuta = $Result.DefaultSelection<Prisma.$ProgramacionRutaPayload>
+/**
  * Model Permiso
  * Permisos granulares del sistema SAF (mÃ³dulo + acciÃ³n)
  */
@@ -618,6 +628,26 @@ export class PrismaClient<
   get checklistVerificacion(): Prisma.ChecklistVerificacionDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.ruta`: Exposes CRUD operations for the **Ruta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Rutas
+    * const rutas = await prisma.ruta.findMany()
+    * ```
+    */
+  get ruta(): Prisma.RutaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.programacionRuta`: Exposes CRUD operations for the **ProgramacionRuta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProgramacionRutas
+    * const programacionRutas = await prisma.programacionRuta.findMany()
+    * ```
+    */
+  get programacionRuta(): Prisma.ProgramacionRutaDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.permiso`: Exposes CRUD operations for the **Permiso** model.
     * Example usage:
     * ```ts
@@ -1152,6 +1182,8 @@ export namespace Prisma {
     DocumentoVehiculo: 'DocumentoVehiculo',
     MovimientoDiario: 'MovimientoDiario',
     ChecklistVerificacion: 'ChecklistVerificacion',
+    Ruta: 'Ruta',
+    ProgramacionRuta: 'ProgramacionRuta',
     Permiso: 'Permiso',
     PermisoUsuario: 'PermisoUsuario',
     SesionAuth: 'SesionAuth',
@@ -1176,7 +1208,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "movimientoDiario" | "checklistVerificacion" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
+      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "documentoVehiculo" | "movimientoDiario" | "checklistVerificacion" | "ruta" | "programacionRuta" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2068,6 +2100,154 @@ export namespace Prisma {
           }
         }
       }
+      Ruta: {
+        payload: Prisma.$RutaPayload<ExtArgs>
+        fields: Prisma.RutaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RutaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RutaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>
+          }
+          findFirst: {
+            args: Prisma.RutaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RutaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>
+          }
+          findMany: {
+            args: Prisma.RutaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>[]
+          }
+          create: {
+            args: Prisma.RutaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>
+          }
+          createMany: {
+            args: Prisma.RutaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RutaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>[]
+          }
+          delete: {
+            args: Prisma.RutaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>
+          }
+          update: {
+            args: Prisma.RutaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>
+          }
+          deleteMany: {
+            args: Prisma.RutaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RutaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RutaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>[]
+          }
+          upsert: {
+            args: Prisma.RutaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RutaPayload>
+          }
+          aggregate: {
+            args: Prisma.RutaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRuta>
+          }
+          groupBy: {
+            args: Prisma.RutaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RutaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RutaCountArgs<ExtArgs>
+            result: $Utils.Optional<RutaCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProgramacionRuta: {
+        payload: Prisma.$ProgramacionRutaPayload<ExtArgs>
+        fields: Prisma.ProgramacionRutaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProgramacionRutaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProgramacionRutaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>
+          }
+          findFirst: {
+            args: Prisma.ProgramacionRutaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProgramacionRutaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>
+          }
+          findMany: {
+            args: Prisma.ProgramacionRutaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>[]
+          }
+          create: {
+            args: Prisma.ProgramacionRutaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>
+          }
+          createMany: {
+            args: Prisma.ProgramacionRutaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProgramacionRutaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>[]
+          }
+          delete: {
+            args: Prisma.ProgramacionRutaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>
+          }
+          update: {
+            args: Prisma.ProgramacionRutaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProgramacionRutaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProgramacionRutaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProgramacionRutaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProgramacionRutaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramacionRutaPayload>
+          }
+          aggregate: {
+            args: Prisma.ProgramacionRutaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProgramacionRuta>
+          }
+          groupBy: {
+            args: Prisma.ProgramacionRutaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProgramacionRutaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProgramacionRutaCountArgs<ExtArgs>
+            result: $Utils.Optional<ProgramacionRutaCountAggregateOutputType> | number
+          }
+        }
+      }
       Permiso: {
         payload: Prisma.$PermisoPayload<ExtArgs>
         fields: Prisma.PermisoFieldRefs
@@ -2746,6 +2926,8 @@ export namespace Prisma {
     documentoVehiculo?: DocumentoVehiculoOmit
     movimientoDiario?: MovimientoDiarioOmit
     checklistVerificacion?: ChecklistVerificacionOmit
+    ruta?: RutaOmit
+    programacionRuta?: ProgramacionRutaOmit
     permiso?: PermisoOmit
     permisoUsuario?: PermisoUsuarioOmit
     sesionAuth?: SesionAuthOmit
@@ -2844,6 +3026,7 @@ export namespace Prisma {
     ordenesCombustible: number
     ordenesMantenimiento: number
     asignaciones: number
+    programaciones: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2856,6 +3039,7 @@ export namespace Prisma {
     ordenesCombustible?: boolean | UsuarioCountOutputTypeCountOrdenesCombustibleArgs
     ordenesMantenimiento?: boolean | UsuarioCountOutputTypeCountOrdenesMantenimientoArgs
     asignaciones?: boolean | UsuarioCountOutputTypeCountAsignacionesArgs
+    programaciones?: boolean | UsuarioCountOutputTypeCountProgramacionesArgs
   }
 
   // Custom InputTypes
@@ -2932,6 +3116,13 @@ export namespace Prisma {
     where?: AsignacionVehiculoWhereInput
   }
 
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountProgramacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProgramacionRutaWhereInput
+  }
+
 
   /**
    * Count Type OrdenMantenimientoCountOutputType
@@ -2970,6 +3161,46 @@ export namespace Prisma {
    */
   export type OrdenMantenimientoCountOutputTypeCountManoDeObraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DetalleManoObraWhereInput
+  }
+
+
+  /**
+   * Count Type RutaCountOutputType
+   */
+
+  export type RutaCountOutputType = {
+    movimientos: number
+    programaciones: number
+  }
+
+  export type RutaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movimientos?: boolean | RutaCountOutputTypeCountMovimientosArgs
+    programaciones?: boolean | RutaCountOutputTypeCountProgramacionesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RutaCountOutputType without action
+   */
+  export type RutaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RutaCountOutputType
+     */
+    select?: RutaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RutaCountOutputType without action
+   */
+  export type RutaCountOutputTypeCountMovimientosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovimientoDiarioWhereInput
+  }
+
+  /**
+   * RutaCountOutputType without action
+   */
+  export type RutaCountOutputTypeCountProgramacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProgramacionRutaWhereInput
   }
 
 
@@ -3018,6 +3249,7 @@ export namespace Prisma {
     resumenKpisVehiculo: number
     asignaciones: number
     documentos: number
+    programaciones: number
   }
 
   export type VehiculoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3030,6 +3262,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: boolean | VehiculoCountOutputTypeCountResumenKpisVehiculoArgs
     asignaciones?: boolean | VehiculoCountOutputTypeCountAsignacionesArgs
     documentos?: boolean | VehiculoCountOutputTypeCountDocumentosArgs
+    programaciones?: boolean | VehiculoCountOutputTypeCountProgramacionesArgs
   }
 
   // Custom InputTypes
@@ -3104,6 +3337,13 @@ export namespace Prisma {
    */
   export type VehiculoCountOutputTypeCountDocumentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DocumentoVehiculoWhereInput
+  }
+
+  /**
+   * VehiculoCountOutputType without action
+   */
+  export type VehiculoCountOutputTypeCountProgramacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProgramacionRutaWhereInput
   }
 
 
@@ -3414,6 +3654,7 @@ export namespace Prisma {
     ordenesCombustible?: boolean | Usuario$ordenesCombustibleArgs<ExtArgs>
     ordenesMantenimiento?: boolean | Usuario$ordenesMantenimientoArgs<ExtArgs>
     asignaciones?: boolean | Usuario$asignacionesArgs<ExtArgs>
+    programaciones?: boolean | Usuario$programacionesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -3488,6 +3729,7 @@ export namespace Prisma {
     ordenesCombustible?: boolean | Usuario$ordenesCombustibleArgs<ExtArgs>
     ordenesMantenimiento?: boolean | Usuario$ordenesMantenimientoArgs<ExtArgs>
     asignaciones?: boolean | Usuario$asignacionesArgs<ExtArgs>
+    programaciones?: boolean | Usuario$programacionesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3505,6 +3747,7 @@ export namespace Prisma {
       ordenesCombustible: Prisma.$OrdenCombustiblePayload<ExtArgs>[]
       ordenesMantenimiento: Prisma.$OrdenMantenimientoPayload<ExtArgs>[]
       asignaciones: Prisma.$AsignacionVehiculoPayload<ExtArgs>[]
+      programaciones: Prisma.$ProgramacionRutaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3939,6 +4182,7 @@ export namespace Prisma {
     ordenesCombustible<T extends Usuario$ordenesCombustibleArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ordenesCombustibleArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrdenCombustiblePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ordenesMantenimiento<T extends Usuario$ordenesMantenimientoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ordenesMantenimientoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrdenMantenimientoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     asignaciones<T extends Usuario$asignacionesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    programaciones<T extends Usuario$programacionesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$programacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4591,6 +4835,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.programaciones
+   */
+  export type Usuario$programacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    where?: ProgramacionRutaWhereInput
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    cursor?: ProgramacionRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
   }
 
   /**
@@ -9635,6 +9903,10 @@ export namespace Prisma {
     costoPiezasRepuestos: Decimal | null
     costoOtros: Decimal | null
     costoTotal: Decimal | null
+    firmaEncargadoTaller: string | null
+    firmaTecnico: string | null
+    firmaJefeMantenimiento: string | null
+    fechaFirmaTecnico: Date | null
     estado: $Enums.EstadoMantenimiento | null
     observaciones: string | null
     creadoEn: Date | null
@@ -9666,6 +9938,10 @@ export namespace Prisma {
     costoPiezasRepuestos: Decimal | null
     costoOtros: Decimal | null
     costoTotal: Decimal | null
+    firmaEncargadoTaller: string | null
+    firmaTecnico: string | null
+    firmaJefeMantenimiento: string | null
+    fechaFirmaTecnico: Date | null
     estado: $Enums.EstadoMantenimiento | null
     observaciones: string | null
     creadoEn: Date | null
@@ -9697,6 +9973,10 @@ export namespace Prisma {
     costoPiezasRepuestos: number
     costoOtros: number
     costoTotal: number
+    firmaEncargadoTaller: number
+    firmaTecnico: number
+    firmaJefeMantenimiento: number
+    fechaFirmaTecnico: number
     estado: number
     observaciones: number
     creadoEn: number
@@ -9750,6 +10030,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: true
     costoOtros?: true
     costoTotal?: true
+    firmaEncargadoTaller?: true
+    firmaTecnico?: true
+    firmaJefeMantenimiento?: true
+    fechaFirmaTecnico?: true
     estado?: true
     observaciones?: true
     creadoEn?: true
@@ -9781,6 +10065,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: true
     costoOtros?: true
     costoTotal?: true
+    firmaEncargadoTaller?: true
+    firmaTecnico?: true
+    firmaJefeMantenimiento?: true
+    fechaFirmaTecnico?: true
     estado?: true
     observaciones?: true
     creadoEn?: true
@@ -9812,6 +10100,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: true
     costoOtros?: true
     costoTotal?: true
+    firmaEncargadoTaller?: true
+    firmaTecnico?: true
+    firmaJefeMantenimiento?: true
+    fechaFirmaTecnico?: true
     estado?: true
     observaciones?: true
     creadoEn?: true
@@ -9930,6 +10222,10 @@ export namespace Prisma {
     costoPiezasRepuestos: Decimal | null
     costoOtros: Decimal | null
     costoTotal: Decimal | null
+    firmaEncargadoTaller: string | null
+    firmaTecnico: string | null
+    firmaJefeMantenimiento: string | null
+    fechaFirmaTecnico: Date | null
     estado: $Enums.EstadoMantenimiento
     observaciones: string | null
     creadoEn: Date
@@ -9980,6 +10276,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: boolean
     costoOtros?: boolean
     costoTotal?: boolean
+    firmaEncargadoTaller?: boolean
+    firmaTecnico?: boolean
+    firmaJefeMantenimiento?: boolean
+    fechaFirmaTecnico?: boolean
     estado?: boolean
     observaciones?: boolean
     creadoEn?: boolean
@@ -10016,6 +10316,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: boolean
     costoOtros?: boolean
     costoTotal?: boolean
+    firmaEncargadoTaller?: boolean
+    firmaTecnico?: boolean
+    firmaJefeMantenimiento?: boolean
+    fechaFirmaTecnico?: boolean
     estado?: boolean
     observaciones?: boolean
     creadoEn?: boolean
@@ -10049,6 +10353,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: boolean
     costoOtros?: boolean
     costoTotal?: boolean
+    firmaEncargadoTaller?: boolean
+    firmaTecnico?: boolean
+    firmaJefeMantenimiento?: boolean
+    fechaFirmaTecnico?: boolean
     estado?: boolean
     observaciones?: boolean
     creadoEn?: boolean
@@ -10082,13 +10390,17 @@ export namespace Prisma {
     costoPiezasRepuestos?: boolean
     costoOtros?: boolean
     costoTotal?: boolean
+    firmaEncargadoTaller?: boolean
+    firmaTecnico?: boolean
+    firmaJefeMantenimiento?: boolean
+    fechaFirmaTecnico?: boolean
     estado?: boolean
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
   }
 
-  export type OrdenMantenimientoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroOrden" | "fechaEmision" | "vehiculoId" | "tecnicoId" | "sectorSolicitante" | "tipoMantenimiento" | "tipoTaller" | "nombreTallerExterno" | "numeroAutorizacionExterna" | "fechaEntradaTaller" | "horaEntradaTaller" | "fechaSalidaTaller" | "horaSalidaTaller" | "kilometrajeEntrada" | "kilometrajeSalida" | "descripcionServicio" | "fallaReportada" | "diagnosticoTecnico" | "costoManoObraPropia" | "costoManoObraTerceros" | "costoPiezasRepuestos" | "costoOtros" | "costoTotal" | "estado" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["ordenMantenimiento"]>
+  export type OrdenMantenimientoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroOrden" | "fechaEmision" | "vehiculoId" | "tecnicoId" | "sectorSolicitante" | "tipoMantenimiento" | "tipoTaller" | "nombreTallerExterno" | "numeroAutorizacionExterna" | "fechaEntradaTaller" | "horaEntradaTaller" | "fechaSalidaTaller" | "horaSalidaTaller" | "kilometrajeEntrada" | "kilometrajeSalida" | "descripcionServicio" | "fallaReportada" | "diagnosticoTecnico" | "costoManoObraPropia" | "costoManoObraTerceros" | "costoPiezasRepuestos" | "costoOtros" | "costoTotal" | "firmaEncargadoTaller" | "firmaTecnico" | "firmaJefeMantenimiento" | "fechaFirmaTecnico" | "estado" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["ordenMantenimiento"]>
   export type OrdenMantenimientoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     tecnico?: boolean | OrdenMantenimiento$tecnicoArgs<ExtArgs>
@@ -10175,6 +10487,10 @@ export namespace Prisma {
        * Costo total de la orden (calculado: MO + Piezas + Otros)
        */
       costoTotal: Prisma.Decimal | null
+      firmaEncargadoTaller: string | null
+      firmaTecnico: string | null
+      firmaJefeMantenimiento: string | null
+      fechaFirmaTecnico: Date | null
       estado: $Enums.EstadoMantenimiento
       observaciones: string | null
       creadoEn: Date
@@ -10630,6 +10946,10 @@ export namespace Prisma {
     readonly costoPiezasRepuestos: FieldRef<"OrdenMantenimiento", 'Decimal'>
     readonly costoOtros: FieldRef<"OrdenMantenimiento", 'Decimal'>
     readonly costoTotal: FieldRef<"OrdenMantenimiento", 'Decimal'>
+    readonly firmaEncargadoTaller: FieldRef<"OrdenMantenimiento", 'String'>
+    readonly firmaTecnico: FieldRef<"OrdenMantenimiento", 'String'>
+    readonly firmaJefeMantenimiento: FieldRef<"OrdenMantenimiento", 'String'>
+    readonly fechaFirmaTecnico: FieldRef<"OrdenMantenimiento", 'DateTime'>
     readonly estado: FieldRef<"OrdenMantenimiento", 'EstadoMantenimiento'>
     readonly observaciones: FieldRef<"OrdenMantenimiento", 'String'>
     readonly creadoEn: FieldRef<"OrdenMantenimiento", 'DateTime'>
@@ -15735,8 +16055,14 @@ export namespace Prisma {
     horaSalida: string | null
     horaLlegada: string | null
     horasUtilizacion: Decimal | null
+    firmaConductor: string | null
+    firmaInspector: string | null
+    firmaEncargadoGaraje: string | null
+    fechaFirmaConductor: Date | null
+    fechaFirmaInspector: Date | null
     estado: $Enums.EstadoMovimiento | null
     observaciones: string | null
+    rutaId: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
   }
@@ -15756,8 +16082,14 @@ export namespace Prisma {
     horaSalida: string | null
     horaLlegada: string | null
     horasUtilizacion: Decimal | null
+    firmaConductor: string | null
+    firmaInspector: string | null
+    firmaEncargadoGaraje: string | null
+    fechaFirmaConductor: Date | null
+    fechaFirmaInspector: Date | null
     estado: $Enums.EstadoMovimiento | null
     observaciones: string | null
+    rutaId: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
   }
@@ -15777,8 +16109,14 @@ export namespace Prisma {
     horaSalida: number
     horaLlegada: number
     horasUtilizacion: number
+    firmaConductor: number
+    firmaInspector: number
+    firmaEncargadoGaraje: number
+    fechaFirmaConductor: number
+    fechaFirmaInspector: number
     estado: number
     observaciones: number
+    rutaId: number
     creadoEn: number
     actualizadoEn: number
     _all: number
@@ -15814,8 +16152,14 @@ export namespace Prisma {
     horaSalida?: true
     horaLlegada?: true
     horasUtilizacion?: true
+    firmaConductor?: true
+    firmaInspector?: true
+    firmaEncargadoGaraje?: true
+    fechaFirmaConductor?: true
+    fechaFirmaInspector?: true
     estado?: true
     observaciones?: true
+    rutaId?: true
     creadoEn?: true
     actualizadoEn?: true
   }
@@ -15835,8 +16179,14 @@ export namespace Prisma {
     horaSalida?: true
     horaLlegada?: true
     horasUtilizacion?: true
+    firmaConductor?: true
+    firmaInspector?: true
+    firmaEncargadoGaraje?: true
+    fechaFirmaConductor?: true
+    fechaFirmaInspector?: true
     estado?: true
     observaciones?: true
+    rutaId?: true
     creadoEn?: true
     actualizadoEn?: true
   }
@@ -15856,8 +16206,14 @@ export namespace Prisma {
     horaSalida?: true
     horaLlegada?: true
     horasUtilizacion?: true
+    firmaConductor?: true
+    firmaInspector?: true
+    firmaEncargadoGaraje?: true
+    fechaFirmaConductor?: true
+    fechaFirmaInspector?: true
     estado?: true
     observaciones?: true
+    rutaId?: true
     creadoEn?: true
     actualizadoEn?: true
     _all?: true
@@ -15964,8 +16320,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada: string | null
     horasUtilizacion: Decimal | null
+    firmaConductor: string | null
+    firmaInspector: string | null
+    firmaEncargadoGaraje: string | null
+    fechaFirmaConductor: Date | null
+    fechaFirmaInspector: Date | null
     estado: $Enums.EstadoMovimiento
     observaciones: string | null
+    rutaId: string | null
     creadoEn: Date
     actualizadoEn: Date
     _count: MovimientoDiarioCountAggregateOutputType | null
@@ -16004,14 +16366,21 @@ export namespace Prisma {
     horaSalida?: boolean
     horaLlegada?: boolean
     horasUtilizacion?: boolean
+    firmaConductor?: boolean
+    firmaInspector?: boolean
+    firmaEncargadoGaraje?: boolean
+    fechaFirmaConductor?: boolean
+    fechaFirmaInspector?: boolean
     estado?: boolean
     observaciones?: boolean
+    rutaId?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
     inspector?: boolean | MovimientoDiario$inspectorArgs<ExtArgs>
     checklist?: boolean | MovimientoDiario$checklistArgs<ExtArgs>
+    ruta?: boolean | MovimientoDiario$rutaArgs<ExtArgs>
   }, ExtArgs["result"]["movimientoDiario"]>
 
   export type MovimientoDiarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16029,13 +16398,20 @@ export namespace Prisma {
     horaSalida?: boolean
     horaLlegada?: boolean
     horasUtilizacion?: boolean
+    firmaConductor?: boolean
+    firmaInspector?: boolean
+    firmaEncargadoGaraje?: boolean
+    fechaFirmaConductor?: boolean
+    fechaFirmaInspector?: boolean
     estado?: boolean
     observaciones?: boolean
+    rutaId?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
     inspector?: boolean | MovimientoDiario$inspectorArgs<ExtArgs>
+    ruta?: boolean | MovimientoDiario$rutaArgs<ExtArgs>
   }, ExtArgs["result"]["movimientoDiario"]>
 
   export type MovimientoDiarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16053,13 +16429,20 @@ export namespace Prisma {
     horaSalida?: boolean
     horaLlegada?: boolean
     horasUtilizacion?: boolean
+    firmaConductor?: boolean
+    firmaInspector?: boolean
+    firmaEncargadoGaraje?: boolean
+    fechaFirmaConductor?: boolean
+    fechaFirmaInspector?: boolean
     estado?: boolean
     observaciones?: boolean
+    rutaId?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
     inspector?: boolean | MovimientoDiario$inspectorArgs<ExtArgs>
+    ruta?: boolean | MovimientoDiario$rutaArgs<ExtArgs>
   }, ExtArgs["result"]["movimientoDiario"]>
 
   export type MovimientoDiarioSelectScalar = {
@@ -16077,28 +16460,37 @@ export namespace Prisma {
     horaSalida?: boolean
     horaLlegada?: boolean
     horasUtilizacion?: boolean
+    firmaConductor?: boolean
+    firmaInspector?: boolean
+    firmaEncargadoGaraje?: boolean
+    fechaFirmaConductor?: boolean
+    fechaFirmaInspector?: boolean
     estado?: boolean
     observaciones?: boolean
+    rutaId?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
   }
 
-  export type MovimientoDiarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vehiculoId" | "conductorId" | "inspectorId" | "fecha" | "sectorSolicitante" | "destino" | "proposito" | "kilometrajeSalida" | "kilometrajeLlegada" | "kilometrajeRecorrido" | "horaSalida" | "horaLlegada" | "horasUtilizacion" | "estado" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["movimientoDiario"]>
+  export type MovimientoDiarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vehiculoId" | "conductorId" | "inspectorId" | "fecha" | "sectorSolicitante" | "destino" | "proposito" | "kilometrajeSalida" | "kilometrajeLlegada" | "kilometrajeRecorrido" | "horaSalida" | "horaLlegada" | "horasUtilizacion" | "firmaConductor" | "firmaInspector" | "firmaEncargadoGaraje" | "fechaFirmaConductor" | "fechaFirmaInspector" | "estado" | "observaciones" | "rutaId" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["movimientoDiario"]>
   export type MovimientoDiarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
     inspector?: boolean | MovimientoDiario$inspectorArgs<ExtArgs>
     checklist?: boolean | MovimientoDiario$checklistArgs<ExtArgs>
+    ruta?: boolean | MovimientoDiario$rutaArgs<ExtArgs>
   }
   export type MovimientoDiarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
     inspector?: boolean | MovimientoDiario$inspectorArgs<ExtArgs>
+    ruta?: boolean | MovimientoDiario$rutaArgs<ExtArgs>
   }
   export type MovimientoDiarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
     inspector?: boolean | MovimientoDiario$inspectorArgs<ExtArgs>
+    ruta?: boolean | MovimientoDiario$rutaArgs<ExtArgs>
   }
 
   export type $MovimientoDiarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16108,6 +16500,7 @@ export namespace Prisma {
       conductor: Prisma.$UsuarioPayload<ExtArgs>
       inspector: Prisma.$UsuarioPayload<ExtArgs> | null
       checklist: Prisma.$ChecklistVerificacionPayload<ExtArgs> | null
+      ruta: Prisma.$RutaPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16139,8 +16532,14 @@ export namespace Prisma {
        * Horas efectivas de utilizaciÃ³n del vehÃ­culo en el dÃ­a
        */
       horasUtilizacion: Prisma.Decimal | null
+      firmaConductor: string | null
+      firmaInspector: string | null
+      firmaEncargadoGaraje: string | null
+      fechaFirmaConductor: Date | null
+      fechaFirmaInspector: Date | null
       estado: $Enums.EstadoMovimiento
       observaciones: string | null
+      rutaId: string | null
       creadoEn: Date
       actualizadoEn: Date
     }, ExtArgs["result"]["movimientoDiario"]>
@@ -16541,6 +16940,7 @@ export namespace Prisma {
     conductor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     inspector<T extends MovimientoDiario$inspectorArgs<ExtArgs> = {}>(args?: Subset<T, MovimientoDiario$inspectorArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     checklist<T extends MovimientoDiario$checklistArgs<ExtArgs> = {}>(args?: Subset<T, MovimientoDiario$checklistArgs<ExtArgs>>): Prisma__ChecklistVerificacionClient<$Result.GetResult<Prisma.$ChecklistVerificacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ruta<T extends MovimientoDiario$rutaArgs<ExtArgs> = {}>(args?: Subset<T, MovimientoDiario$rutaArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16584,8 +16984,14 @@ export namespace Prisma {
     readonly horaSalida: FieldRef<"MovimientoDiario", 'String'>
     readonly horaLlegada: FieldRef<"MovimientoDiario", 'String'>
     readonly horasUtilizacion: FieldRef<"MovimientoDiario", 'Decimal'>
+    readonly firmaConductor: FieldRef<"MovimientoDiario", 'String'>
+    readonly firmaInspector: FieldRef<"MovimientoDiario", 'String'>
+    readonly firmaEncargadoGaraje: FieldRef<"MovimientoDiario", 'String'>
+    readonly fechaFirmaConductor: FieldRef<"MovimientoDiario", 'DateTime'>
+    readonly fechaFirmaInspector: FieldRef<"MovimientoDiario", 'DateTime'>
     readonly estado: FieldRef<"MovimientoDiario", 'EstadoMovimiento'>
     readonly observaciones: FieldRef<"MovimientoDiario", 'String'>
+    readonly rutaId: FieldRef<"MovimientoDiario", 'String'>
     readonly creadoEn: FieldRef<"MovimientoDiario", 'DateTime'>
     readonly actualizadoEn: FieldRef<"MovimientoDiario", 'DateTime'>
   }
@@ -17024,6 +17430,25 @@ export namespace Prisma {
      */
     include?: ChecklistVerificacionInclude<ExtArgs> | null
     where?: ChecklistVerificacionWhereInput
+  }
+
+  /**
+   * MovimientoDiario.ruta
+   */
+  export type MovimientoDiario$rutaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    where?: RutaWhereInput
   }
 
   /**
@@ -18521,6 +18946,2326 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ChecklistVerificacionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Ruta
+   */
+
+  export type AggregateRuta = {
+    _count: RutaCountAggregateOutputType | null
+    _avg: RutaAvgAggregateOutputType | null
+    _sum: RutaSumAggregateOutputType | null
+    _min: RutaMinAggregateOutputType | null
+    _max: RutaMaxAggregateOutputType | null
+  }
+
+  export type RutaAvgAggregateOutputType = {
+    distanciaKm: Decimal | null
+  }
+
+  export type RutaSumAggregateOutputType = {
+    distanciaKm: Decimal | null
+  }
+
+  export type RutaMinAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    origen: string | null
+    destino: string | null
+    distanciaKm: Decimal | null
+    tiempoEstimado: string | null
+    activa: boolean | null
+    creadoEn: Date | null
+  }
+
+  export type RutaMaxAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    origen: string | null
+    destino: string | null
+    distanciaKm: Decimal | null
+    tiempoEstimado: string | null
+    activa: boolean | null
+    creadoEn: Date | null
+  }
+
+  export type RutaCountAggregateOutputType = {
+    id: number
+    nombre: number
+    origen: number
+    destino: number
+    distanciaKm: number
+    tiempoEstimado: number
+    activa: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type RutaAvgAggregateInputType = {
+    distanciaKm?: true
+  }
+
+  export type RutaSumAggregateInputType = {
+    distanciaKm?: true
+  }
+
+  export type RutaMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    origen?: true
+    destino?: true
+    distanciaKm?: true
+    tiempoEstimado?: true
+    activa?: true
+    creadoEn?: true
+  }
+
+  export type RutaMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    origen?: true
+    destino?: true
+    distanciaKm?: true
+    tiempoEstimado?: true
+    activa?: true
+    creadoEn?: true
+  }
+
+  export type RutaCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    origen?: true
+    destino?: true
+    distanciaKm?: true
+    tiempoEstimado?: true
+    activa?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type RutaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Ruta to aggregate.
+     */
+    where?: RutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rutas to fetch.
+     */
+    orderBy?: RutaOrderByWithRelationInput | RutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Rutas
+    **/
+    _count?: true | RutaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RutaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RutaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RutaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RutaMaxAggregateInputType
+  }
+
+  export type GetRutaAggregateType<T extends RutaAggregateArgs> = {
+        [P in keyof T & keyof AggregateRuta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRuta[P]>
+      : GetScalarType<T[P], AggregateRuta[P]>
+  }
+
+
+
+
+  export type RutaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RutaWhereInput
+    orderBy?: RutaOrderByWithAggregationInput | RutaOrderByWithAggregationInput[]
+    by: RutaScalarFieldEnum[] | RutaScalarFieldEnum
+    having?: RutaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RutaCountAggregateInputType | true
+    _avg?: RutaAvgAggregateInputType
+    _sum?: RutaSumAggregateInputType
+    _min?: RutaMinAggregateInputType
+    _max?: RutaMaxAggregateInputType
+  }
+
+  export type RutaGroupByOutputType = {
+    id: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm: Decimal | null
+    tiempoEstimado: string | null
+    activa: boolean
+    creadoEn: Date
+    _count: RutaCountAggregateOutputType | null
+    _avg: RutaAvgAggregateOutputType | null
+    _sum: RutaSumAggregateOutputType | null
+    _min: RutaMinAggregateOutputType | null
+    _max: RutaMaxAggregateOutputType | null
+  }
+
+  type GetRutaGroupByPayload<T extends RutaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RutaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RutaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RutaGroupByOutputType[P]>
+            : GetScalarType<T[P], RutaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RutaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    origen?: boolean
+    destino?: boolean
+    distanciaKm?: boolean
+    tiempoEstimado?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+    movimientos?: boolean | Ruta$movimientosArgs<ExtArgs>
+    programaciones?: boolean | Ruta$programacionesArgs<ExtArgs>
+    _count?: boolean | RutaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ruta"]>
+
+  export type RutaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    origen?: boolean
+    destino?: boolean
+    distanciaKm?: boolean
+    tiempoEstimado?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+  }, ExtArgs["result"]["ruta"]>
+
+  export type RutaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    origen?: boolean
+    destino?: boolean
+    distanciaKm?: boolean
+    tiempoEstimado?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+  }, ExtArgs["result"]["ruta"]>
+
+  export type RutaSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    origen?: boolean
+    destino?: boolean
+    distanciaKm?: boolean
+    tiempoEstimado?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+  }
+
+  export type RutaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "origen" | "destino" | "distanciaKm" | "tiempoEstimado" | "activa" | "creadoEn", ExtArgs["result"]["ruta"]>
+  export type RutaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movimientos?: boolean | Ruta$movimientosArgs<ExtArgs>
+    programaciones?: boolean | Ruta$programacionesArgs<ExtArgs>
+    _count?: boolean | RutaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RutaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type RutaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RutaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Ruta"
+    objects: {
+      movimientos: Prisma.$MovimientoDiarioPayload<ExtArgs>[]
+      programaciones: Prisma.$ProgramacionRutaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nombre: string
+      origen: string
+      destino: string
+      distanciaKm: Prisma.Decimal | null
+      tiempoEstimado: string | null
+      activa: boolean
+      creadoEn: Date
+    }, ExtArgs["result"]["ruta"]>
+    composites: {}
+  }
+
+  type RutaGetPayload<S extends boolean | null | undefined | RutaDefaultArgs> = $Result.GetResult<Prisma.$RutaPayload, S>
+
+  type RutaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RutaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RutaCountAggregateInputType | true
+    }
+
+  export interface RutaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Ruta'], meta: { name: 'Ruta' } }
+    /**
+     * Find zero or one Ruta that matches the filter.
+     * @param {RutaFindUniqueArgs} args - Arguments to find a Ruta
+     * @example
+     * // Get one Ruta
+     * const ruta = await prisma.ruta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RutaFindUniqueArgs>(args: SelectSubset<T, RutaFindUniqueArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Ruta that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RutaFindUniqueOrThrowArgs} args - Arguments to find a Ruta
+     * @example
+     * // Get one Ruta
+     * const ruta = await prisma.ruta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RutaFindUniqueOrThrowArgs>(args: SelectSubset<T, RutaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ruta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaFindFirstArgs} args - Arguments to find a Ruta
+     * @example
+     * // Get one Ruta
+     * const ruta = await prisma.ruta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RutaFindFirstArgs>(args?: SelectSubset<T, RutaFindFirstArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ruta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaFindFirstOrThrowArgs} args - Arguments to find a Ruta
+     * @example
+     * // Get one Ruta
+     * const ruta = await prisma.ruta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RutaFindFirstOrThrowArgs>(args?: SelectSubset<T, RutaFindFirstOrThrowArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Rutas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Rutas
+     * const rutas = await prisma.ruta.findMany()
+     * 
+     * // Get first 10 Rutas
+     * const rutas = await prisma.ruta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const rutaWithIdOnly = await prisma.ruta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RutaFindManyArgs>(args?: SelectSubset<T, RutaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Ruta.
+     * @param {RutaCreateArgs} args - Arguments to create a Ruta.
+     * @example
+     * // Create one Ruta
+     * const Ruta = await prisma.ruta.create({
+     *   data: {
+     *     // ... data to create a Ruta
+     *   }
+     * })
+     * 
+     */
+    create<T extends RutaCreateArgs>(args: SelectSubset<T, RutaCreateArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Rutas.
+     * @param {RutaCreateManyArgs} args - Arguments to create many Rutas.
+     * @example
+     * // Create many Rutas
+     * const ruta = await prisma.ruta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RutaCreateManyArgs>(args?: SelectSubset<T, RutaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Rutas and returns the data saved in the database.
+     * @param {RutaCreateManyAndReturnArgs} args - Arguments to create many Rutas.
+     * @example
+     * // Create many Rutas
+     * const ruta = await prisma.ruta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Rutas and only return the `id`
+     * const rutaWithIdOnly = await prisma.ruta.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RutaCreateManyAndReturnArgs>(args?: SelectSubset<T, RutaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Ruta.
+     * @param {RutaDeleteArgs} args - Arguments to delete one Ruta.
+     * @example
+     * // Delete one Ruta
+     * const Ruta = await prisma.ruta.delete({
+     *   where: {
+     *     // ... filter to delete one Ruta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RutaDeleteArgs>(args: SelectSubset<T, RutaDeleteArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Ruta.
+     * @param {RutaUpdateArgs} args - Arguments to update one Ruta.
+     * @example
+     * // Update one Ruta
+     * const ruta = await prisma.ruta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RutaUpdateArgs>(args: SelectSubset<T, RutaUpdateArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Rutas.
+     * @param {RutaDeleteManyArgs} args - Arguments to filter Rutas to delete.
+     * @example
+     * // Delete a few Rutas
+     * const { count } = await prisma.ruta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RutaDeleteManyArgs>(args?: SelectSubset<T, RutaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Rutas
+     * const ruta = await prisma.ruta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RutaUpdateManyArgs>(args: SelectSubset<T, RutaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rutas and returns the data updated in the database.
+     * @param {RutaUpdateManyAndReturnArgs} args - Arguments to update many Rutas.
+     * @example
+     * // Update many Rutas
+     * const ruta = await prisma.ruta.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Rutas and only return the `id`
+     * const rutaWithIdOnly = await prisma.ruta.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RutaUpdateManyAndReturnArgs>(args: SelectSubset<T, RutaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Ruta.
+     * @param {RutaUpsertArgs} args - Arguments to update or create a Ruta.
+     * @example
+     * // Update or create a Ruta
+     * const ruta = await prisma.ruta.upsert({
+     *   create: {
+     *     // ... data to create a Ruta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Ruta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RutaUpsertArgs>(args: SelectSubset<T, RutaUpsertArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Rutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaCountArgs} args - Arguments to filter Rutas to count.
+     * @example
+     * // Count the number of Rutas
+     * const count = await prisma.ruta.count({
+     *   where: {
+     *     // ... the filter for the Rutas we want to count
+     *   }
+     * })
+    **/
+    count<T extends RutaCountArgs>(
+      args?: Subset<T, RutaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RutaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Ruta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RutaAggregateArgs>(args: Subset<T, RutaAggregateArgs>): Prisma.PrismaPromise<GetRutaAggregateType<T>>
+
+    /**
+     * Group by Ruta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RutaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RutaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RutaGroupByArgs['orderBy'] }
+        : { orderBy?: RutaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RutaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRutaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Ruta model
+   */
+  readonly fields: RutaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Ruta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RutaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    movimientos<T extends Ruta$movimientosArgs<ExtArgs> = {}>(args?: Subset<T, Ruta$movimientosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovimientoDiarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    programaciones<T extends Ruta$programacionesArgs<ExtArgs> = {}>(args?: Subset<T, Ruta$programacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Ruta model
+   */
+  interface RutaFieldRefs {
+    readonly id: FieldRef<"Ruta", 'String'>
+    readonly nombre: FieldRef<"Ruta", 'String'>
+    readonly origen: FieldRef<"Ruta", 'String'>
+    readonly destino: FieldRef<"Ruta", 'String'>
+    readonly distanciaKm: FieldRef<"Ruta", 'Decimal'>
+    readonly tiempoEstimado: FieldRef<"Ruta", 'String'>
+    readonly activa: FieldRef<"Ruta", 'Boolean'>
+    readonly creadoEn: FieldRef<"Ruta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Ruta findUnique
+   */
+  export type RutaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ruta to fetch.
+     */
+    where: RutaWhereUniqueInput
+  }
+
+  /**
+   * Ruta findUniqueOrThrow
+   */
+  export type RutaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ruta to fetch.
+     */
+    where: RutaWhereUniqueInput
+  }
+
+  /**
+   * Ruta findFirst
+   */
+  export type RutaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ruta to fetch.
+     */
+    where?: RutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rutas to fetch.
+     */
+    orderBy?: RutaOrderByWithRelationInput | RutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rutas.
+     */
+    cursor?: RutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rutas.
+     */
+    distinct?: RutaScalarFieldEnum | RutaScalarFieldEnum[]
+  }
+
+  /**
+   * Ruta findFirstOrThrow
+   */
+  export type RutaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ruta to fetch.
+     */
+    where?: RutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rutas to fetch.
+     */
+    orderBy?: RutaOrderByWithRelationInput | RutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rutas.
+     */
+    cursor?: RutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rutas.
+     */
+    distinct?: RutaScalarFieldEnum | RutaScalarFieldEnum[]
+  }
+
+  /**
+   * Ruta findMany
+   */
+  export type RutaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * Filter, which Rutas to fetch.
+     */
+    where?: RutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rutas to fetch.
+     */
+    orderBy?: RutaOrderByWithRelationInput | RutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Rutas.
+     */
+    cursor?: RutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rutas.
+     */
+    distinct?: RutaScalarFieldEnum | RutaScalarFieldEnum[]
+  }
+
+  /**
+   * Ruta create
+   */
+  export type RutaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Ruta.
+     */
+    data: XOR<RutaCreateInput, RutaUncheckedCreateInput>
+  }
+
+  /**
+   * Ruta createMany
+   */
+  export type RutaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Rutas.
+     */
+    data: RutaCreateManyInput | RutaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Ruta createManyAndReturn
+   */
+  export type RutaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * The data used to create many Rutas.
+     */
+    data: RutaCreateManyInput | RutaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Ruta update
+   */
+  export type RutaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Ruta.
+     */
+    data: XOR<RutaUpdateInput, RutaUncheckedUpdateInput>
+    /**
+     * Choose, which Ruta to update.
+     */
+    where: RutaWhereUniqueInput
+  }
+
+  /**
+   * Ruta updateMany
+   */
+  export type RutaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Rutas.
+     */
+    data: XOR<RutaUpdateManyMutationInput, RutaUncheckedUpdateManyInput>
+    /**
+     * Filter which Rutas to update
+     */
+    where?: RutaWhereInput
+    /**
+     * Limit how many Rutas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ruta updateManyAndReturn
+   */
+  export type RutaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * The data used to update Rutas.
+     */
+    data: XOR<RutaUpdateManyMutationInput, RutaUncheckedUpdateManyInput>
+    /**
+     * Filter which Rutas to update
+     */
+    where?: RutaWhereInput
+    /**
+     * Limit how many Rutas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ruta upsert
+   */
+  export type RutaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Ruta to update in case it exists.
+     */
+    where: RutaWhereUniqueInput
+    /**
+     * In case the Ruta found by the `where` argument doesn't exist, create a new Ruta with this data.
+     */
+    create: XOR<RutaCreateInput, RutaUncheckedCreateInput>
+    /**
+     * In case the Ruta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RutaUpdateInput, RutaUncheckedUpdateInput>
+  }
+
+  /**
+   * Ruta delete
+   */
+  export type RutaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+    /**
+     * Filter which Ruta to delete.
+     */
+    where: RutaWhereUniqueInput
+  }
+
+  /**
+   * Ruta deleteMany
+   */
+  export type RutaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Rutas to delete
+     */
+    where?: RutaWhereInput
+    /**
+     * Limit how many Rutas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ruta.movimientos
+   */
+  export type Ruta$movimientosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovimientoDiario
+     */
+    select?: MovimientoDiarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovimientoDiario
+     */
+    omit?: MovimientoDiarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovimientoDiarioInclude<ExtArgs> | null
+    where?: MovimientoDiarioWhereInput
+    orderBy?: MovimientoDiarioOrderByWithRelationInput | MovimientoDiarioOrderByWithRelationInput[]
+    cursor?: MovimientoDiarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovimientoDiarioScalarFieldEnum | MovimientoDiarioScalarFieldEnum[]
+  }
+
+  /**
+   * Ruta.programaciones
+   */
+  export type Ruta$programacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    where?: ProgramacionRutaWhereInput
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    cursor?: ProgramacionRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
+  }
+
+  /**
+   * Ruta without action
+   */
+  export type RutaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ruta
+     */
+    select?: RutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ruta
+     */
+    omit?: RutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RutaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProgramacionRuta
+   */
+
+  export type AggregateProgramacionRuta = {
+    _count: ProgramacionRutaCountAggregateOutputType | null
+    _min: ProgramacionRutaMinAggregateOutputType | null
+    _max: ProgramacionRutaMaxAggregateOutputType | null
+  }
+
+  export type ProgramacionRutaMinAggregateOutputType = {
+    id: string | null
+    rutaId: string | null
+    vehiculoId: string | null
+    conductorId: string | null
+    fecha: Date | null
+    horaSalida: string | null
+    horaLlegada: string | null
+    estado: string | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type ProgramacionRutaMaxAggregateOutputType = {
+    id: string | null
+    rutaId: string | null
+    vehiculoId: string | null
+    conductorId: string | null
+    fecha: Date | null
+    horaSalida: string | null
+    horaLlegada: string | null
+    estado: string | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type ProgramacionRutaCountAggregateOutputType = {
+    id: number
+    rutaId: number
+    vehiculoId: number
+    conductorId: number
+    fecha: number
+    horaSalida: number
+    horaLlegada: number
+    estado: number
+    observaciones: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type ProgramacionRutaMinAggregateInputType = {
+    id?: true
+    rutaId?: true
+    vehiculoId?: true
+    conductorId?: true
+    fecha?: true
+    horaSalida?: true
+    horaLlegada?: true
+    estado?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type ProgramacionRutaMaxAggregateInputType = {
+    id?: true
+    rutaId?: true
+    vehiculoId?: true
+    conductorId?: true
+    fecha?: true
+    horaSalida?: true
+    horaLlegada?: true
+    estado?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type ProgramacionRutaCountAggregateInputType = {
+    id?: true
+    rutaId?: true
+    vehiculoId?: true
+    conductorId?: true
+    fecha?: true
+    horaSalida?: true
+    horaLlegada?: true
+    estado?: true
+    observaciones?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type ProgramacionRutaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProgramacionRuta to aggregate.
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramacionRutas to fetch.
+     */
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProgramacionRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramacionRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramacionRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProgramacionRutas
+    **/
+    _count?: true | ProgramacionRutaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProgramacionRutaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProgramacionRutaMaxAggregateInputType
+  }
+
+  export type GetProgramacionRutaAggregateType<T extends ProgramacionRutaAggregateArgs> = {
+        [P in keyof T & keyof AggregateProgramacionRuta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProgramacionRuta[P]>
+      : GetScalarType<T[P], AggregateProgramacionRuta[P]>
+  }
+
+
+
+
+  export type ProgramacionRutaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProgramacionRutaWhereInput
+    orderBy?: ProgramacionRutaOrderByWithAggregationInput | ProgramacionRutaOrderByWithAggregationInput[]
+    by: ProgramacionRutaScalarFieldEnum[] | ProgramacionRutaScalarFieldEnum
+    having?: ProgramacionRutaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProgramacionRutaCountAggregateInputType | true
+    _min?: ProgramacionRutaMinAggregateInputType
+    _max?: ProgramacionRutaMaxAggregateInputType
+  }
+
+  export type ProgramacionRutaGroupByOutputType = {
+    id: string
+    rutaId: string
+    vehiculoId: string
+    conductorId: string
+    fecha: Date
+    horaSalida: string
+    horaLlegada: string | null
+    estado: string
+    observaciones: string | null
+    creadoEn: Date
+    _count: ProgramacionRutaCountAggregateOutputType | null
+    _min: ProgramacionRutaMinAggregateOutputType | null
+    _max: ProgramacionRutaMaxAggregateOutputType | null
+  }
+
+  type GetProgramacionRutaGroupByPayload<T extends ProgramacionRutaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProgramacionRutaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProgramacionRutaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProgramacionRutaGroupByOutputType[P]>
+            : GetScalarType<T[P], ProgramacionRutaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProgramacionRutaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rutaId?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    fecha?: boolean
+    horaSalida?: boolean
+    horaLlegada?: boolean
+    estado?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    ruta?: boolean | RutaDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["programacionRuta"]>
+
+  export type ProgramacionRutaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rutaId?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    fecha?: boolean
+    horaSalida?: boolean
+    horaLlegada?: boolean
+    estado?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    ruta?: boolean | RutaDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["programacionRuta"]>
+
+  export type ProgramacionRutaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rutaId?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    fecha?: boolean
+    horaSalida?: boolean
+    horaLlegada?: boolean
+    estado?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    ruta?: boolean | RutaDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["programacionRuta"]>
+
+  export type ProgramacionRutaSelectScalar = {
+    id?: boolean
+    rutaId?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    fecha?: boolean
+    horaSalida?: boolean
+    horaLlegada?: boolean
+    estado?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+  }
+
+  export type ProgramacionRutaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rutaId" | "vehiculoId" | "conductorId" | "fecha" | "horaSalida" | "horaLlegada" | "estado" | "observaciones" | "creadoEn", ExtArgs["result"]["programacionRuta"]>
+  export type ProgramacionRutaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ruta?: boolean | RutaDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ProgramacionRutaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ruta?: boolean | RutaDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ProgramacionRutaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ruta?: boolean | RutaDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $ProgramacionRutaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProgramacionRuta"
+    objects: {
+      ruta: Prisma.$RutaPayload<ExtArgs>
+      vehiculo: Prisma.$VehiculoPayload<ExtArgs>
+      conductor: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      rutaId: string
+      vehiculoId: string
+      conductorId: string
+      fecha: Date
+      horaSalida: string
+      horaLlegada: string | null
+      estado: string
+      observaciones: string | null
+      creadoEn: Date
+    }, ExtArgs["result"]["programacionRuta"]>
+    composites: {}
+  }
+
+  type ProgramacionRutaGetPayload<S extends boolean | null | undefined | ProgramacionRutaDefaultArgs> = $Result.GetResult<Prisma.$ProgramacionRutaPayload, S>
+
+  type ProgramacionRutaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProgramacionRutaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProgramacionRutaCountAggregateInputType | true
+    }
+
+  export interface ProgramacionRutaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProgramacionRuta'], meta: { name: 'ProgramacionRuta' } }
+    /**
+     * Find zero or one ProgramacionRuta that matches the filter.
+     * @param {ProgramacionRutaFindUniqueArgs} args - Arguments to find a ProgramacionRuta
+     * @example
+     * // Get one ProgramacionRuta
+     * const programacionRuta = await prisma.programacionRuta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProgramacionRutaFindUniqueArgs>(args: SelectSubset<T, ProgramacionRutaFindUniqueArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProgramacionRuta that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProgramacionRutaFindUniqueOrThrowArgs} args - Arguments to find a ProgramacionRuta
+     * @example
+     * // Get one ProgramacionRuta
+     * const programacionRuta = await prisma.programacionRuta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProgramacionRutaFindUniqueOrThrowArgs>(args: SelectSubset<T, ProgramacionRutaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProgramacionRuta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaFindFirstArgs} args - Arguments to find a ProgramacionRuta
+     * @example
+     * // Get one ProgramacionRuta
+     * const programacionRuta = await prisma.programacionRuta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProgramacionRutaFindFirstArgs>(args?: SelectSubset<T, ProgramacionRutaFindFirstArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProgramacionRuta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaFindFirstOrThrowArgs} args - Arguments to find a ProgramacionRuta
+     * @example
+     * // Get one ProgramacionRuta
+     * const programacionRuta = await prisma.programacionRuta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProgramacionRutaFindFirstOrThrowArgs>(args?: SelectSubset<T, ProgramacionRutaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProgramacionRutas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProgramacionRutas
+     * const programacionRutas = await prisma.programacionRuta.findMany()
+     * 
+     * // Get first 10 ProgramacionRutas
+     * const programacionRutas = await prisma.programacionRuta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const programacionRutaWithIdOnly = await prisma.programacionRuta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProgramacionRutaFindManyArgs>(args?: SelectSubset<T, ProgramacionRutaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProgramacionRuta.
+     * @param {ProgramacionRutaCreateArgs} args - Arguments to create a ProgramacionRuta.
+     * @example
+     * // Create one ProgramacionRuta
+     * const ProgramacionRuta = await prisma.programacionRuta.create({
+     *   data: {
+     *     // ... data to create a ProgramacionRuta
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProgramacionRutaCreateArgs>(args: SelectSubset<T, ProgramacionRutaCreateArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProgramacionRutas.
+     * @param {ProgramacionRutaCreateManyArgs} args - Arguments to create many ProgramacionRutas.
+     * @example
+     * // Create many ProgramacionRutas
+     * const programacionRuta = await prisma.programacionRuta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProgramacionRutaCreateManyArgs>(args?: SelectSubset<T, ProgramacionRutaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProgramacionRutas and returns the data saved in the database.
+     * @param {ProgramacionRutaCreateManyAndReturnArgs} args - Arguments to create many ProgramacionRutas.
+     * @example
+     * // Create many ProgramacionRutas
+     * const programacionRuta = await prisma.programacionRuta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProgramacionRutas and only return the `id`
+     * const programacionRutaWithIdOnly = await prisma.programacionRuta.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProgramacionRutaCreateManyAndReturnArgs>(args?: SelectSubset<T, ProgramacionRutaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProgramacionRuta.
+     * @param {ProgramacionRutaDeleteArgs} args - Arguments to delete one ProgramacionRuta.
+     * @example
+     * // Delete one ProgramacionRuta
+     * const ProgramacionRuta = await prisma.programacionRuta.delete({
+     *   where: {
+     *     // ... filter to delete one ProgramacionRuta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProgramacionRutaDeleteArgs>(args: SelectSubset<T, ProgramacionRutaDeleteArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProgramacionRuta.
+     * @param {ProgramacionRutaUpdateArgs} args - Arguments to update one ProgramacionRuta.
+     * @example
+     * // Update one ProgramacionRuta
+     * const programacionRuta = await prisma.programacionRuta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProgramacionRutaUpdateArgs>(args: SelectSubset<T, ProgramacionRutaUpdateArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProgramacionRutas.
+     * @param {ProgramacionRutaDeleteManyArgs} args - Arguments to filter ProgramacionRutas to delete.
+     * @example
+     * // Delete a few ProgramacionRutas
+     * const { count } = await prisma.programacionRuta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProgramacionRutaDeleteManyArgs>(args?: SelectSubset<T, ProgramacionRutaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProgramacionRutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProgramacionRutas
+     * const programacionRuta = await prisma.programacionRuta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProgramacionRutaUpdateManyArgs>(args: SelectSubset<T, ProgramacionRutaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProgramacionRutas and returns the data updated in the database.
+     * @param {ProgramacionRutaUpdateManyAndReturnArgs} args - Arguments to update many ProgramacionRutas.
+     * @example
+     * // Update many ProgramacionRutas
+     * const programacionRuta = await prisma.programacionRuta.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProgramacionRutas and only return the `id`
+     * const programacionRutaWithIdOnly = await prisma.programacionRuta.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProgramacionRutaUpdateManyAndReturnArgs>(args: SelectSubset<T, ProgramacionRutaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProgramacionRuta.
+     * @param {ProgramacionRutaUpsertArgs} args - Arguments to update or create a ProgramacionRuta.
+     * @example
+     * // Update or create a ProgramacionRuta
+     * const programacionRuta = await prisma.programacionRuta.upsert({
+     *   create: {
+     *     // ... data to create a ProgramacionRuta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProgramacionRuta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProgramacionRutaUpsertArgs>(args: SelectSubset<T, ProgramacionRutaUpsertArgs<ExtArgs>>): Prisma__ProgramacionRutaClient<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProgramacionRutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaCountArgs} args - Arguments to filter ProgramacionRutas to count.
+     * @example
+     * // Count the number of ProgramacionRutas
+     * const count = await prisma.programacionRuta.count({
+     *   where: {
+     *     // ... the filter for the ProgramacionRutas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProgramacionRutaCountArgs>(
+      args?: Subset<T, ProgramacionRutaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProgramacionRutaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProgramacionRuta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProgramacionRutaAggregateArgs>(args: Subset<T, ProgramacionRutaAggregateArgs>): Prisma.PrismaPromise<GetProgramacionRutaAggregateType<T>>
+
+    /**
+     * Group by ProgramacionRuta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramacionRutaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProgramacionRutaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProgramacionRutaGroupByArgs['orderBy'] }
+        : { orderBy?: ProgramacionRutaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProgramacionRutaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProgramacionRutaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProgramacionRuta model
+   */
+  readonly fields: ProgramacionRutaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProgramacionRuta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProgramacionRutaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    ruta<T extends RutaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RutaDefaultArgs<ExtArgs>>): Prisma__RutaClient<$Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    vehiculo<T extends VehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehiculoDefaultArgs<ExtArgs>>): Prisma__VehiculoClient<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    conductor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProgramacionRuta model
+   */
+  interface ProgramacionRutaFieldRefs {
+    readonly id: FieldRef<"ProgramacionRuta", 'String'>
+    readonly rutaId: FieldRef<"ProgramacionRuta", 'String'>
+    readonly vehiculoId: FieldRef<"ProgramacionRuta", 'String'>
+    readonly conductorId: FieldRef<"ProgramacionRuta", 'String'>
+    readonly fecha: FieldRef<"ProgramacionRuta", 'DateTime'>
+    readonly horaSalida: FieldRef<"ProgramacionRuta", 'String'>
+    readonly horaLlegada: FieldRef<"ProgramacionRuta", 'String'>
+    readonly estado: FieldRef<"ProgramacionRuta", 'String'>
+    readonly observaciones: FieldRef<"ProgramacionRuta", 'String'>
+    readonly creadoEn: FieldRef<"ProgramacionRuta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProgramacionRuta findUnique
+   */
+  export type ProgramacionRutaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramacionRuta to fetch.
+     */
+    where: ProgramacionRutaWhereUniqueInput
+  }
+
+  /**
+   * ProgramacionRuta findUniqueOrThrow
+   */
+  export type ProgramacionRutaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramacionRuta to fetch.
+     */
+    where: ProgramacionRutaWhereUniqueInput
+  }
+
+  /**
+   * ProgramacionRuta findFirst
+   */
+  export type ProgramacionRutaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramacionRuta to fetch.
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramacionRutas to fetch.
+     */
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProgramacionRutas.
+     */
+    cursor?: ProgramacionRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramacionRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramacionRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProgramacionRutas.
+     */
+    distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramacionRuta findFirstOrThrow
+   */
+  export type ProgramacionRutaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramacionRuta to fetch.
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramacionRutas to fetch.
+     */
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProgramacionRutas.
+     */
+    cursor?: ProgramacionRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramacionRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramacionRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProgramacionRutas.
+     */
+    distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramacionRuta findMany
+   */
+  export type ProgramacionRutaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramacionRutas to fetch.
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramacionRutas to fetch.
+     */
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProgramacionRutas.
+     */
+    cursor?: ProgramacionRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramacionRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramacionRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProgramacionRutas.
+     */
+    distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramacionRuta create
+   */
+  export type ProgramacionRutaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProgramacionRuta.
+     */
+    data: XOR<ProgramacionRutaCreateInput, ProgramacionRutaUncheckedCreateInput>
+  }
+
+  /**
+   * ProgramacionRuta createMany
+   */
+  export type ProgramacionRutaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProgramacionRutas.
+     */
+    data: ProgramacionRutaCreateManyInput | ProgramacionRutaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProgramacionRuta createManyAndReturn
+   */
+  export type ProgramacionRutaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProgramacionRutas.
+     */
+    data: ProgramacionRutaCreateManyInput | ProgramacionRutaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProgramacionRuta update
+   */
+  export type ProgramacionRutaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProgramacionRuta.
+     */
+    data: XOR<ProgramacionRutaUpdateInput, ProgramacionRutaUncheckedUpdateInput>
+    /**
+     * Choose, which ProgramacionRuta to update.
+     */
+    where: ProgramacionRutaWhereUniqueInput
+  }
+
+  /**
+   * ProgramacionRuta updateMany
+   */
+  export type ProgramacionRutaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProgramacionRutas.
+     */
+    data: XOR<ProgramacionRutaUpdateManyMutationInput, ProgramacionRutaUncheckedUpdateManyInput>
+    /**
+     * Filter which ProgramacionRutas to update
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * Limit how many ProgramacionRutas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProgramacionRuta updateManyAndReturn
+   */
+  export type ProgramacionRutaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * The data used to update ProgramacionRutas.
+     */
+    data: XOR<ProgramacionRutaUpdateManyMutationInput, ProgramacionRutaUncheckedUpdateManyInput>
+    /**
+     * Filter which ProgramacionRutas to update
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * Limit how many ProgramacionRutas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProgramacionRuta upsert
+   */
+  export type ProgramacionRutaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProgramacionRuta to update in case it exists.
+     */
+    where: ProgramacionRutaWhereUniqueInput
+    /**
+     * In case the ProgramacionRuta found by the `where` argument doesn't exist, create a new ProgramacionRuta with this data.
+     */
+    create: XOR<ProgramacionRutaCreateInput, ProgramacionRutaUncheckedCreateInput>
+    /**
+     * In case the ProgramacionRuta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProgramacionRutaUpdateInput, ProgramacionRutaUncheckedUpdateInput>
+  }
+
+  /**
+   * ProgramacionRuta delete
+   */
+  export type ProgramacionRutaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    /**
+     * Filter which ProgramacionRuta to delete.
+     */
+    where: ProgramacionRutaWhereUniqueInput
+  }
+
+  /**
+   * ProgramacionRuta deleteMany
+   */
+  export type ProgramacionRutaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProgramacionRutas to delete
+     */
+    where?: ProgramacionRutaWhereInput
+    /**
+     * Limit how many ProgramacionRutas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProgramacionRuta without action
+   */
+  export type ProgramacionRutaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
   }
 
 
@@ -24696,6 +27441,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: boolean | Vehiculo$resumenKpisVehiculoArgs<ExtArgs>
     asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
     documentos?: boolean | Vehiculo$documentosArgs<ExtArgs>
+    programaciones?: boolean | Vehiculo$programacionesArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vehiculo"]>
 
@@ -24875,6 +27621,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: boolean | Vehiculo$resumenKpisVehiculoArgs<ExtArgs>
     asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
     documentos?: boolean | Vehiculo$documentosArgs<ExtArgs>
+    programaciones?: boolean | Vehiculo$programacionesArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -24892,6 +27639,7 @@ export namespace Prisma {
       resumenKpisVehiculo: Prisma.$ResumenKpisVehiculoPayload<ExtArgs>[]
       asignaciones: Prisma.$AsignacionVehiculoPayload<ExtArgs>[]
       documentos: Prisma.$DocumentoVehiculoPayload<ExtArgs>[]
+      programaciones: Prisma.$ProgramacionRutaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -25421,6 +28169,7 @@ export namespace Prisma {
     resumenKpisVehiculo<T extends Vehiculo$resumenKpisVehiculoArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$resumenKpisVehiculoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumenKpisVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     asignaciones<T extends Vehiculo$asignacionesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     documentos<T extends Vehiculo$documentosArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$documentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    programaciones<T extends Vehiculo$programacionesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$programacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramacionRutaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -26108,6 +28857,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DocumentoVehiculoScalarFieldEnum | DocumentoVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Vehiculo.programaciones
+   */
+  export type Vehiculo$programacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramacionRuta
+     */
+    select?: ProgramacionRutaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgramacionRuta
+     */
+    omit?: ProgramacionRutaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramacionRutaInclude<ExtArgs> | null
+    where?: ProgramacionRutaWhereInput
+    orderBy?: ProgramacionRutaOrderByWithRelationInput | ProgramacionRutaOrderByWithRelationInput[]
+    cursor?: ProgramacionRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProgramacionRutaScalarFieldEnum | ProgramacionRutaScalarFieldEnum[]
   }
 
   /**
@@ -28593,6 +31366,10 @@ export namespace Prisma {
     costoPiezasRepuestos: 'costoPiezasRepuestos',
     costoOtros: 'costoOtros',
     costoTotal: 'costoTotal',
+    firmaEncargadoTaller: 'firmaEncargadoTaller',
+    firmaTecnico: 'firmaTecnico',
+    firmaJefeMantenimiento: 'firmaJefeMantenimiento',
+    fechaFirmaTecnico: 'fechaFirmaTecnico',
     estado: 'estado',
     observaciones: 'observaciones',
     creadoEn: 'creadoEn',
@@ -28678,8 +31455,14 @@ export namespace Prisma {
     horaSalida: 'horaSalida',
     horaLlegada: 'horaLlegada',
     horasUtilizacion: 'horasUtilizacion',
+    firmaConductor: 'firmaConductor',
+    firmaInspector: 'firmaInspector',
+    firmaEncargadoGaraje: 'firmaEncargadoGaraje',
+    fechaFirmaConductor: 'fechaFirmaConductor',
+    fechaFirmaInspector: 'fechaFirmaInspector',
     estado: 'estado',
     observaciones: 'observaciones',
+    rutaId: 'rutaId',
     creadoEn: 'creadoEn',
     actualizadoEn: 'actualizadoEn'
   };
@@ -28728,6 +31511,36 @@ export namespace Prisma {
   };
 
   export type ChecklistVerificacionScalarFieldEnum = (typeof ChecklistVerificacionScalarFieldEnum)[keyof typeof ChecklistVerificacionScalarFieldEnum]
+
+
+  export const RutaScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    origen: 'origen',
+    destino: 'destino',
+    distanciaKm: 'distanciaKm',
+    tiempoEstimado: 'tiempoEstimado',
+    activa: 'activa',
+    creadoEn: 'creadoEn'
+  };
+
+  export type RutaScalarFieldEnum = (typeof RutaScalarFieldEnum)[keyof typeof RutaScalarFieldEnum]
+
+
+  export const ProgramacionRutaScalarFieldEnum: {
+    id: 'id',
+    rutaId: 'rutaId',
+    vehiculoId: 'vehiculoId',
+    conductorId: 'conductorId',
+    fecha: 'fecha',
+    horaSalida: 'horaSalida',
+    horaLlegada: 'horaLlegada',
+    estado: 'estado',
+    observaciones: 'observaciones',
+    creadoEn: 'creadoEn'
+  };
+
+  export type ProgramacionRutaScalarFieldEnum = (typeof ProgramacionRutaScalarFieldEnum)[keyof typeof ProgramacionRutaScalarFieldEnum]
 
 
   export const PermisoScalarFieldEnum: {
@@ -29275,6 +32088,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleListRelationFilter
     ordenesMantenimiento?: OrdenMantenimientoListRelationFilter
     asignaciones?: AsignacionVehiculoListRelationFilter
+    programaciones?: ProgramacionRutaListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -29304,6 +32118,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleOrderByRelationAggregateInput
     ordenesMantenimiento?: OrdenMantenimientoOrderByRelationAggregateInput
     asignaciones?: AsignacionVehiculoOrderByRelationAggregateInput
+    programaciones?: ProgramacionRutaOrderByRelationAggregateInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -29336,6 +32151,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleListRelationFilter
     ordenesMantenimiento?: OrdenMantenimientoListRelationFilter
     asignaciones?: AsignacionVehiculoListRelationFilter
+    programaciones?: ProgramacionRutaListRelationFilter
   }, "id" | "email">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -29877,6 +32693,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoOtros?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoTotal?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    firmaTecnico?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    firmaJefeMantenimiento?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    fechaFirmaTecnico?: DateTimeNullableFilter<"OrdenMantenimiento"> | Date | string | null
     estado?: EnumEstadoMantenimientoFilter<"OrdenMantenimiento"> | $Enums.EstadoMantenimiento
     observaciones?: StringNullableFilter<"OrdenMantenimiento"> | string | null
     creadoEn?: DateTimeFilter<"OrdenMantenimiento"> | Date | string
@@ -29912,6 +32732,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: SortOrderInput | SortOrder
     costoOtros?: SortOrderInput | SortOrder
     costoTotal?: SortOrderInput | SortOrder
+    firmaEncargadoTaller?: SortOrderInput | SortOrder
+    firmaTecnico?: SortOrderInput | SortOrder
+    firmaJefeMantenimiento?: SortOrderInput | SortOrder
+    fechaFirmaTecnico?: SortOrderInput | SortOrder
     estado?: SortOrder
     observaciones?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
@@ -29950,6 +32774,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoOtros?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoTotal?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    firmaTecnico?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    firmaJefeMantenimiento?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    fechaFirmaTecnico?: DateTimeNullableFilter<"OrdenMantenimiento"> | Date | string | null
     estado?: EnumEstadoMantenimientoFilter<"OrdenMantenimiento"> | $Enums.EstadoMantenimiento
     observaciones?: StringNullableFilter<"OrdenMantenimiento"> | string | null
     creadoEn?: DateTimeFilter<"OrdenMantenimiento"> | Date | string
@@ -29985,6 +32813,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: SortOrderInput | SortOrder
     costoOtros?: SortOrderInput | SortOrder
     costoTotal?: SortOrderInput | SortOrder
+    firmaEncargadoTaller?: SortOrderInput | SortOrder
+    firmaTecnico?: SortOrderInput | SortOrder
+    firmaJefeMantenimiento?: SortOrderInput | SortOrder
+    fechaFirmaTecnico?: SortOrderInput | SortOrder
     estado?: SortOrder
     observaciones?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
@@ -30024,6 +32856,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: DecimalNullableWithAggregatesFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoOtros?: DecimalNullableWithAggregatesFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoTotal?: DecimalNullableWithAggregatesFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: StringNullableWithAggregatesFilter<"OrdenMantenimiento"> | string | null
+    firmaTecnico?: StringNullableWithAggregatesFilter<"OrdenMantenimiento"> | string | null
+    firmaJefeMantenimiento?: StringNullableWithAggregatesFilter<"OrdenMantenimiento"> | string | null
+    fechaFirmaTecnico?: DateTimeNullableWithAggregatesFilter<"OrdenMantenimiento"> | Date | string | null
     estado?: EnumEstadoMantenimientoWithAggregatesFilter<"OrdenMantenimiento"> | $Enums.EstadoMantenimiento
     observaciones?: StringNullableWithAggregatesFilter<"OrdenMantenimiento"> | string | null
     creadoEn?: DateTimeWithAggregatesFilter<"OrdenMantenimiento"> | Date | string
@@ -30360,14 +33196,21 @@ export namespace Prisma {
     horaSalida?: StringFilter<"MovimientoDiario"> | string
     horaLlegada?: StringNullableFilter<"MovimientoDiario"> | string | null
     horasUtilizacion?: DecimalNullableFilter<"MovimientoDiario"> | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: StringNullableFilter<"MovimientoDiario"> | string | null
+    firmaInspector?: StringNullableFilter<"MovimientoDiario"> | string | null
+    firmaEncargadoGaraje?: StringNullableFilter<"MovimientoDiario"> | string | null
+    fechaFirmaConductor?: DateTimeNullableFilter<"MovimientoDiario"> | Date | string | null
+    fechaFirmaInspector?: DateTimeNullableFilter<"MovimientoDiario"> | Date | string | null
     estado?: EnumEstadoMovimientoFilter<"MovimientoDiario"> | $Enums.EstadoMovimiento
     observaciones?: StringNullableFilter<"MovimientoDiario"> | string | null
+    rutaId?: StringNullableFilter<"MovimientoDiario"> | string | null
     creadoEn?: DateTimeFilter<"MovimientoDiario"> | Date | string
     actualizadoEn?: DateTimeFilter<"MovimientoDiario"> | Date | string
     vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
     conductor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     inspector?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
     checklist?: XOR<ChecklistVerificacionNullableScalarRelationFilter, ChecklistVerificacionWhereInput> | null
+    ruta?: XOR<RutaNullableScalarRelationFilter, RutaWhereInput> | null
   }
 
   export type MovimientoDiarioOrderByWithRelationInput = {
@@ -30385,14 +33228,21 @@ export namespace Prisma {
     horaSalida?: SortOrder
     horaLlegada?: SortOrderInput | SortOrder
     horasUtilizacion?: SortOrderInput | SortOrder
+    firmaConductor?: SortOrderInput | SortOrder
+    firmaInspector?: SortOrderInput | SortOrder
+    firmaEncargadoGaraje?: SortOrderInput | SortOrder
+    fechaFirmaConductor?: SortOrderInput | SortOrder
+    fechaFirmaInspector?: SortOrderInput | SortOrder
     estado?: SortOrder
     observaciones?: SortOrderInput | SortOrder
+    rutaId?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     vehiculo?: VehiculoOrderByWithRelationInput
     conductor?: UsuarioOrderByWithRelationInput
     inspector?: UsuarioOrderByWithRelationInput
     checklist?: ChecklistVerificacionOrderByWithRelationInput
+    ruta?: RutaOrderByWithRelationInput
   }
 
   export type MovimientoDiarioWhereUniqueInput = Prisma.AtLeast<{
@@ -30413,14 +33263,21 @@ export namespace Prisma {
     horaSalida?: StringFilter<"MovimientoDiario"> | string
     horaLlegada?: StringNullableFilter<"MovimientoDiario"> | string | null
     horasUtilizacion?: DecimalNullableFilter<"MovimientoDiario"> | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: StringNullableFilter<"MovimientoDiario"> | string | null
+    firmaInspector?: StringNullableFilter<"MovimientoDiario"> | string | null
+    firmaEncargadoGaraje?: StringNullableFilter<"MovimientoDiario"> | string | null
+    fechaFirmaConductor?: DateTimeNullableFilter<"MovimientoDiario"> | Date | string | null
+    fechaFirmaInspector?: DateTimeNullableFilter<"MovimientoDiario"> | Date | string | null
     estado?: EnumEstadoMovimientoFilter<"MovimientoDiario"> | $Enums.EstadoMovimiento
     observaciones?: StringNullableFilter<"MovimientoDiario"> | string | null
+    rutaId?: StringNullableFilter<"MovimientoDiario"> | string | null
     creadoEn?: DateTimeFilter<"MovimientoDiario"> | Date | string
     actualizadoEn?: DateTimeFilter<"MovimientoDiario"> | Date | string
     vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
     conductor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     inspector?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
     checklist?: XOR<ChecklistVerificacionNullableScalarRelationFilter, ChecklistVerificacionWhereInput> | null
+    ruta?: XOR<RutaNullableScalarRelationFilter, RutaWhereInput> | null
   }, "id">
 
   export type MovimientoDiarioOrderByWithAggregationInput = {
@@ -30438,8 +33295,14 @@ export namespace Prisma {
     horaSalida?: SortOrder
     horaLlegada?: SortOrderInput | SortOrder
     horasUtilizacion?: SortOrderInput | SortOrder
+    firmaConductor?: SortOrderInput | SortOrder
+    firmaInspector?: SortOrderInput | SortOrder
+    firmaEncargadoGaraje?: SortOrderInput | SortOrder
+    fechaFirmaConductor?: SortOrderInput | SortOrder
+    fechaFirmaInspector?: SortOrderInput | SortOrder
     estado?: SortOrder
     observaciones?: SortOrderInput | SortOrder
+    rutaId?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     _count?: MovimientoDiarioCountOrderByAggregateInput
@@ -30467,8 +33330,14 @@ export namespace Prisma {
     horaSalida?: StringWithAggregatesFilter<"MovimientoDiario"> | string
     horaLlegada?: StringNullableWithAggregatesFilter<"MovimientoDiario"> | string | null
     horasUtilizacion?: DecimalNullableWithAggregatesFilter<"MovimientoDiario"> | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: StringNullableWithAggregatesFilter<"MovimientoDiario"> | string | null
+    firmaInspector?: StringNullableWithAggregatesFilter<"MovimientoDiario"> | string | null
+    firmaEncargadoGaraje?: StringNullableWithAggregatesFilter<"MovimientoDiario"> | string | null
+    fechaFirmaConductor?: DateTimeNullableWithAggregatesFilter<"MovimientoDiario"> | Date | string | null
+    fechaFirmaInspector?: DateTimeNullableWithAggregatesFilter<"MovimientoDiario"> | Date | string | null
     estado?: EnumEstadoMovimientoWithAggregatesFilter<"MovimientoDiario"> | $Enums.EstadoMovimiento
     observaciones?: StringNullableWithAggregatesFilter<"MovimientoDiario"> | string | null
+    rutaId?: StringNullableWithAggregatesFilter<"MovimientoDiario"> | string | null
     creadoEn?: DateTimeWithAggregatesFilter<"MovimientoDiario"> | Date | string
     actualizadoEn?: DateTimeWithAggregatesFilter<"MovimientoDiario"> | Date | string
   }
@@ -30686,6 +33555,167 @@ export namespace Prisma {
     firmaConductor?: StringNullableWithAggregatesFilter<"ChecklistVerificacion"> | string | null
     firmaInspector?: StringNullableWithAggregatesFilter<"ChecklistVerificacion"> | string | null
     fechaRegistro?: DateTimeWithAggregatesFilter<"ChecklistVerificacion"> | Date | string
+  }
+
+  export type RutaWhereInput = {
+    AND?: RutaWhereInput | RutaWhereInput[]
+    OR?: RutaWhereInput[]
+    NOT?: RutaWhereInput | RutaWhereInput[]
+    id?: StringFilter<"Ruta"> | string
+    nombre?: StringFilter<"Ruta"> | string
+    origen?: StringFilter<"Ruta"> | string
+    destino?: StringFilter<"Ruta"> | string
+    distanciaKm?: DecimalNullableFilter<"Ruta"> | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: StringNullableFilter<"Ruta"> | string | null
+    activa?: BoolFilter<"Ruta"> | boolean
+    creadoEn?: DateTimeFilter<"Ruta"> | Date | string
+    movimientos?: MovimientoDiarioListRelationFilter
+    programaciones?: ProgramacionRutaListRelationFilter
+  }
+
+  export type RutaOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    origen?: SortOrder
+    destino?: SortOrder
+    distanciaKm?: SortOrderInput | SortOrder
+    tiempoEstimado?: SortOrderInput | SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    movimientos?: MovimientoDiarioOrderByRelationAggregateInput
+    programaciones?: ProgramacionRutaOrderByRelationAggregateInput
+  }
+
+  export type RutaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RutaWhereInput | RutaWhereInput[]
+    OR?: RutaWhereInput[]
+    NOT?: RutaWhereInput | RutaWhereInput[]
+    nombre?: StringFilter<"Ruta"> | string
+    origen?: StringFilter<"Ruta"> | string
+    destino?: StringFilter<"Ruta"> | string
+    distanciaKm?: DecimalNullableFilter<"Ruta"> | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: StringNullableFilter<"Ruta"> | string | null
+    activa?: BoolFilter<"Ruta"> | boolean
+    creadoEn?: DateTimeFilter<"Ruta"> | Date | string
+    movimientos?: MovimientoDiarioListRelationFilter
+    programaciones?: ProgramacionRutaListRelationFilter
+  }, "id">
+
+  export type RutaOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    origen?: SortOrder
+    destino?: SortOrder
+    distanciaKm?: SortOrderInput | SortOrder
+    tiempoEstimado?: SortOrderInput | SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    _count?: RutaCountOrderByAggregateInput
+    _avg?: RutaAvgOrderByAggregateInput
+    _max?: RutaMaxOrderByAggregateInput
+    _min?: RutaMinOrderByAggregateInput
+    _sum?: RutaSumOrderByAggregateInput
+  }
+
+  export type RutaScalarWhereWithAggregatesInput = {
+    AND?: RutaScalarWhereWithAggregatesInput | RutaScalarWhereWithAggregatesInput[]
+    OR?: RutaScalarWhereWithAggregatesInput[]
+    NOT?: RutaScalarWhereWithAggregatesInput | RutaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Ruta"> | string
+    nombre?: StringWithAggregatesFilter<"Ruta"> | string
+    origen?: StringWithAggregatesFilter<"Ruta"> | string
+    destino?: StringWithAggregatesFilter<"Ruta"> | string
+    distanciaKm?: DecimalNullableWithAggregatesFilter<"Ruta"> | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: StringNullableWithAggregatesFilter<"Ruta"> | string | null
+    activa?: BoolWithAggregatesFilter<"Ruta"> | boolean
+    creadoEn?: DateTimeWithAggregatesFilter<"Ruta"> | Date | string
+  }
+
+  export type ProgramacionRutaWhereInput = {
+    AND?: ProgramacionRutaWhereInput | ProgramacionRutaWhereInput[]
+    OR?: ProgramacionRutaWhereInput[]
+    NOT?: ProgramacionRutaWhereInput | ProgramacionRutaWhereInput[]
+    id?: StringFilter<"ProgramacionRuta"> | string
+    rutaId?: StringFilter<"ProgramacionRuta"> | string
+    vehiculoId?: StringFilter<"ProgramacionRuta"> | string
+    conductorId?: StringFilter<"ProgramacionRuta"> | string
+    fecha?: DateTimeFilter<"ProgramacionRuta"> | Date | string
+    horaSalida?: StringFilter<"ProgramacionRuta"> | string
+    horaLlegada?: StringNullableFilter<"ProgramacionRuta"> | string | null
+    estado?: StringFilter<"ProgramacionRuta"> | string
+    observaciones?: StringNullableFilter<"ProgramacionRuta"> | string | null
+    creadoEn?: DateTimeFilter<"ProgramacionRuta"> | Date | string
+    ruta?: XOR<RutaScalarRelationFilter, RutaWhereInput>
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+    conductor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type ProgramacionRutaOrderByWithRelationInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    fecha?: SortOrder
+    horaSalida?: SortOrder
+    horaLlegada?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    ruta?: RutaOrderByWithRelationInput
+    vehiculo?: VehiculoOrderByWithRelationInput
+    conductor?: UsuarioOrderByWithRelationInput
+  }
+
+  export type ProgramacionRutaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProgramacionRutaWhereInput | ProgramacionRutaWhereInput[]
+    OR?: ProgramacionRutaWhereInput[]
+    NOT?: ProgramacionRutaWhereInput | ProgramacionRutaWhereInput[]
+    rutaId?: StringFilter<"ProgramacionRuta"> | string
+    vehiculoId?: StringFilter<"ProgramacionRuta"> | string
+    conductorId?: StringFilter<"ProgramacionRuta"> | string
+    fecha?: DateTimeFilter<"ProgramacionRuta"> | Date | string
+    horaSalida?: StringFilter<"ProgramacionRuta"> | string
+    horaLlegada?: StringNullableFilter<"ProgramacionRuta"> | string | null
+    estado?: StringFilter<"ProgramacionRuta"> | string
+    observaciones?: StringNullableFilter<"ProgramacionRuta"> | string | null
+    creadoEn?: DateTimeFilter<"ProgramacionRuta"> | Date | string
+    ruta?: XOR<RutaScalarRelationFilter, RutaWhereInput>
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+    conductor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type ProgramacionRutaOrderByWithAggregationInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    fecha?: SortOrder
+    horaSalida?: SortOrder
+    horaLlegada?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    _count?: ProgramacionRutaCountOrderByAggregateInput
+    _max?: ProgramacionRutaMaxOrderByAggregateInput
+    _min?: ProgramacionRutaMinOrderByAggregateInput
+  }
+
+  export type ProgramacionRutaScalarWhereWithAggregatesInput = {
+    AND?: ProgramacionRutaScalarWhereWithAggregatesInput | ProgramacionRutaScalarWhereWithAggregatesInput[]
+    OR?: ProgramacionRutaScalarWhereWithAggregatesInput[]
+    NOT?: ProgramacionRutaScalarWhereWithAggregatesInput | ProgramacionRutaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProgramacionRuta"> | string
+    rutaId?: StringWithAggregatesFilter<"ProgramacionRuta"> | string
+    vehiculoId?: StringWithAggregatesFilter<"ProgramacionRuta"> | string
+    conductorId?: StringWithAggregatesFilter<"ProgramacionRuta"> | string
+    fecha?: DateTimeWithAggregatesFilter<"ProgramacionRuta"> | Date | string
+    horaSalida?: StringWithAggregatesFilter<"ProgramacionRuta"> | string
+    horaLlegada?: StringNullableWithAggregatesFilter<"ProgramacionRuta"> | string | null
+    estado?: StringWithAggregatesFilter<"ProgramacionRuta"> | string
+    observaciones?: StringNullableWithAggregatesFilter<"ProgramacionRuta"> | string | null
+    creadoEn?: DateTimeWithAggregatesFilter<"ProgramacionRuta"> | Date | string
   }
 
   export type PermisoWhereInput = {
@@ -31088,6 +34118,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoListRelationFilter
     asignaciones?: AsignacionVehiculoListRelationFilter
     documentos?: DocumentoVehiculoListRelationFilter
+    programaciones?: ProgramacionRutaListRelationFilter
   }
 
   export type VehiculoOrderByWithRelationInput = {
@@ -31152,6 +34183,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoOrderByRelationAggregateInput
     asignaciones?: AsignacionVehiculoOrderByRelationAggregateInput
     documentos?: DocumentoVehiculoOrderByRelationAggregateInput
+    programaciones?: ProgramacionRutaOrderByRelationAggregateInput
   }
 
   export type VehiculoWhereUniqueInput = Prisma.AtLeast<{
@@ -31219,6 +34251,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoListRelationFilter
     asignaciones?: AsignacionVehiculoListRelationFilter
     documentos?: DocumentoVehiculoListRelationFilter
+    programaciones?: ProgramacionRutaListRelationFilter
   }, "id" | "codigoPatrimonial" | "placa" | "numeroMotor" | "numeroChasis">
 
   export type VehiculoOrderByWithAggregationInput = {
@@ -31592,6 +34625,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -31621,6 +34655,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUpdateInput = {
@@ -31650,6 +34685,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -31679,6 +34715,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -32321,6 +35358,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -32356,6 +35397,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -32387,6 +35432,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32422,6 +35471,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32455,6 +35508,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -32484,6 +35541,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32515,6 +35576,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32871,6 +35936,11 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -32879,6 +35949,7 @@ export namespace Prisma {
     conductor: UsuarioCreateNestedOneWithoutMovimientosDiariosInput
     inspector?: UsuarioCreateNestedOneWithoutRevisionesChecklistInput
     checklist?: ChecklistVerificacionCreateNestedOneWithoutMovimientoInput
+    ruta?: RutaCreateNestedOneWithoutMovimientosInput
   }
 
   export type MovimientoDiarioUncheckedCreateInput = {
@@ -32896,8 +35967,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     checklist?: ChecklistVerificacionUncheckedCreateNestedOneWithoutMovimientoInput
@@ -32915,6 +35992,11 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32923,6 +36005,7 @@ export namespace Prisma {
     conductor?: UsuarioUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     inspector?: UsuarioUpdateOneWithoutRevisionesChecklistNestedInput
     checklist?: ChecklistVerificacionUpdateOneWithoutMovimientoNestedInput
+    ruta?: RutaUpdateOneWithoutMovimientosNestedInput
   }
 
   export type MovimientoDiarioUncheckedUpdateInput = {
@@ -32940,8 +36023,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     checklist?: ChecklistVerificacionUncheckedUpdateOneWithoutMovimientoNestedInput
@@ -32962,8 +36051,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
   }
@@ -32980,6 +36075,11 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33001,8 +36101,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33284,6 +36390,179 @@ export namespace Prisma {
     firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
     firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RutaCreateInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+    movimientos?: MovimientoDiarioCreateNestedManyWithoutRutaInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutRutaInput
+  }
+
+  export type RutaUncheckedCreateInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+    movimientos?: MovimientoDiarioUncheckedCreateNestedManyWithoutRutaInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type RutaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientos?: MovimientoDiarioUpdateManyWithoutRutaNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutRutaNestedInput
+  }
+
+  export type RutaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientos?: MovimientoDiarioUncheckedUpdateManyWithoutRutaNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type RutaCreateManyInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+  }
+
+  export type RutaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RutaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaCreateInput = {
+    id?: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+    ruta: RutaCreateNestedOneWithoutProgramacionesInput
+    vehiculo: VehiculoCreateNestedOneWithoutProgramacionesInput
+    conductor: UsuarioCreateNestedOneWithoutProgramacionesInput
+  }
+
+  export type ProgramacionRutaUncheckedCreateInput = {
+    id?: string
+    rutaId: string
+    vehiculoId: string
+    conductorId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruta?: RutaUpdateOneRequiredWithoutProgramacionesNestedInput
+    vehiculo?: VehiculoUpdateOneRequiredWithoutProgramacionesNestedInput
+    conductor?: UsuarioUpdateOneRequiredWithoutProgramacionesNestedInput
+  }
+
+  export type ProgramacionRutaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaCreateManyInput = {
+    id?: string
+    rutaId: string
+    vehiculoId: string
+    conductorId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PermisoCreateInput = {
@@ -33704,6 +36983,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateInput = {
@@ -33768,6 +37048,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUpdateInput = {
@@ -33832,6 +37113,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateInput = {
@@ -33896,6 +37178,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateManyInput = {
@@ -34186,6 +37469,12 @@ export namespace Prisma {
     none?: AsignacionVehiculoWhereInput
   }
 
+  export type ProgramacionRutaListRelationFilter = {
+    every?: ProgramacionRutaWhereInput
+    some?: ProgramacionRutaWhereInput
+    none?: ProgramacionRutaWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -34220,6 +37509,10 @@ export namespace Prisma {
   }
 
   export type AsignacionVehiculoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProgramacionRutaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -34892,6 +38185,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: SortOrder
     costoOtros?: SortOrder
     costoTotal?: SortOrder
+    firmaEncargadoTaller?: SortOrder
+    firmaTecnico?: SortOrder
+    firmaJefeMantenimiento?: SortOrder
+    fechaFirmaTecnico?: SortOrder
     estado?: SortOrder
     observaciones?: SortOrder
     creadoEn?: SortOrder
@@ -34933,6 +38230,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: SortOrder
     costoOtros?: SortOrder
     costoTotal?: SortOrder
+    firmaEncargadoTaller?: SortOrder
+    firmaTecnico?: SortOrder
+    firmaJefeMantenimiento?: SortOrder
+    fechaFirmaTecnico?: SortOrder
     estado?: SortOrder
     observaciones?: SortOrder
     creadoEn?: SortOrder
@@ -34964,6 +38265,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: SortOrder
     costoOtros?: SortOrder
     costoTotal?: SortOrder
+    firmaEncargadoTaller?: SortOrder
+    firmaTecnico?: SortOrder
+    firmaJefeMantenimiento?: SortOrder
+    fechaFirmaTecnico?: SortOrder
     estado?: SortOrder
     observaciones?: SortOrder
     creadoEn?: SortOrder
@@ -35215,6 +38520,11 @@ export namespace Prisma {
     isNot?: ChecklistVerificacionWhereInput | null
   }
 
+  export type RutaNullableScalarRelationFilter = {
+    is?: RutaWhereInput | null
+    isNot?: RutaWhereInput | null
+  }
+
   export type MovimientoDiarioCountOrderByAggregateInput = {
     id?: SortOrder
     vehiculoId?: SortOrder
@@ -35230,8 +38540,14 @@ export namespace Prisma {
     horaSalida?: SortOrder
     horaLlegada?: SortOrder
     horasUtilizacion?: SortOrder
+    firmaConductor?: SortOrder
+    firmaInspector?: SortOrder
+    firmaEncargadoGaraje?: SortOrder
+    fechaFirmaConductor?: SortOrder
+    fechaFirmaInspector?: SortOrder
     estado?: SortOrder
     observaciones?: SortOrder
+    rutaId?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
   }
@@ -35258,8 +38574,14 @@ export namespace Prisma {
     horaSalida?: SortOrder
     horaLlegada?: SortOrder
     horasUtilizacion?: SortOrder
+    firmaConductor?: SortOrder
+    firmaInspector?: SortOrder
+    firmaEncargadoGaraje?: SortOrder
+    fechaFirmaConductor?: SortOrder
+    fechaFirmaInspector?: SortOrder
     estado?: SortOrder
     observaciones?: SortOrder
+    rutaId?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
   }
@@ -35279,8 +38601,14 @@ export namespace Prisma {
     horaSalida?: SortOrder
     horaLlegada?: SortOrder
     horasUtilizacion?: SortOrder
+    firmaConductor?: SortOrder
+    firmaInspector?: SortOrder
+    firmaEncargadoGaraje?: SortOrder
+    fechaFirmaConductor?: SortOrder
+    fechaFirmaInspector?: SortOrder
     estado?: SortOrder
     observaciones?: SortOrder
+    rutaId?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
   }
@@ -35442,6 +38770,91 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumEstadoChecklistFilter<$PrismaModel>
     _max?: NestedEnumEstadoChecklistFilter<$PrismaModel>
+  }
+
+  export type RutaCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    origen?: SortOrder
+    destino?: SortOrder
+    distanciaKm?: SortOrder
+    tiempoEstimado?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type RutaAvgOrderByAggregateInput = {
+    distanciaKm?: SortOrder
+  }
+
+  export type RutaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    origen?: SortOrder
+    destino?: SortOrder
+    distanciaKm?: SortOrder
+    tiempoEstimado?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type RutaMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    origen?: SortOrder
+    destino?: SortOrder
+    distanciaKm?: SortOrder
+    tiempoEstimado?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type RutaSumOrderByAggregateInput = {
+    distanciaKm?: SortOrder
+  }
+
+  export type RutaScalarRelationFilter = {
+    is?: RutaWhereInput
+    isNot?: RutaWhereInput
+  }
+
+  export type ProgramacionRutaCountOrderByAggregateInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    fecha?: SortOrder
+    horaSalida?: SortOrder
+    horaLlegada?: SortOrder
+    estado?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type ProgramacionRutaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    fecha?: SortOrder
+    horaSalida?: SortOrder
+    horaLlegada?: SortOrder
+    estado?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type ProgramacionRutaMinOrderByAggregateInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    fecha?: SortOrder
+    horaSalida?: SortOrder
+    horaLlegada?: SortOrder
+    estado?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
   }
 
   export type PermisoModuloAccionCompoundUniqueInput = {
@@ -36214,6 +39627,13 @@ export namespace Prisma {
     connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
   }
 
+  export type ProgramacionRutaCreateNestedManyWithoutConductorInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutConductorInput, ProgramacionRutaUncheckedCreateWithoutConductorInput> | ProgramacionRutaCreateWithoutConductorInput[] | ProgramacionRutaUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutConductorInput | ProgramacionRutaCreateOrConnectWithoutConductorInput[]
+    createMany?: ProgramacionRutaCreateManyConductorInputEnvelope
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+  }
+
   export type PermisoUsuarioUncheckedCreateNestedManyWithoutUsuarioInput = {
     create?: XOR<PermisoUsuarioCreateWithoutUsuarioInput, PermisoUsuarioUncheckedCreateWithoutUsuarioInput> | PermisoUsuarioCreateWithoutUsuarioInput[] | PermisoUsuarioUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoUsuarioCreateOrConnectWithoutUsuarioInput | PermisoUsuarioCreateOrConnectWithoutUsuarioInput[]
@@ -36275,6 +39695,13 @@ export namespace Prisma {
     connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutConductorInput | AsignacionVehiculoCreateOrConnectWithoutConductorInput[]
     createMany?: AsignacionVehiculoCreateManyConductorInputEnvelope
     connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+  }
+
+  export type ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutConductorInput, ProgramacionRutaUncheckedCreateWithoutConductorInput> | ProgramacionRutaCreateWithoutConductorInput[] | ProgramacionRutaUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutConductorInput | ProgramacionRutaCreateOrConnectWithoutConductorInput[]
+    createMany?: ProgramacionRutaCreateManyConductorInputEnvelope
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -36435,6 +39862,20 @@ export namespace Prisma {
     deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
   }
 
+  export type ProgramacionRutaUpdateManyWithoutConductorNestedInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutConductorInput, ProgramacionRutaUncheckedCreateWithoutConductorInput> | ProgramacionRutaCreateWithoutConductorInput[] | ProgramacionRutaUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutConductorInput | ProgramacionRutaCreateOrConnectWithoutConductorInput[]
+    upsert?: ProgramacionRutaUpsertWithWhereUniqueWithoutConductorInput | ProgramacionRutaUpsertWithWhereUniqueWithoutConductorInput[]
+    createMany?: ProgramacionRutaCreateManyConductorInputEnvelope
+    set?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    disconnect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    delete?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    update?: ProgramacionRutaUpdateWithWhereUniqueWithoutConductorInput | ProgramacionRutaUpdateWithWhereUniqueWithoutConductorInput[]
+    updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutConductorInput | ProgramacionRutaUpdateManyWithWhereWithoutConductorInput[]
+    deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+  }
+
   export type PermisoUsuarioUncheckedUpdateManyWithoutUsuarioNestedInput = {
     create?: XOR<PermisoUsuarioCreateWithoutUsuarioInput, PermisoUsuarioUncheckedCreateWithoutUsuarioInput> | PermisoUsuarioCreateWithoutUsuarioInput[] | PermisoUsuarioUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoUsuarioCreateOrConnectWithoutUsuarioInput | PermisoUsuarioCreateOrConnectWithoutUsuarioInput[]
@@ -36559,6 +40000,20 @@ export namespace Prisma {
     update?: AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput | AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput[]
     updateMany?: AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput | AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput[]
     deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutConductorInput, ProgramacionRutaUncheckedCreateWithoutConductorInput> | ProgramacionRutaCreateWithoutConductorInput[] | ProgramacionRutaUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutConductorInput | ProgramacionRutaCreateOrConnectWithoutConductorInput[]
+    upsert?: ProgramacionRutaUpsertWithWhereUniqueWithoutConductorInput | ProgramacionRutaUpsertWithWhereUniqueWithoutConductorInput[]
+    createMany?: ProgramacionRutaCreateManyConductorInputEnvelope
+    set?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    disconnect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    delete?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    update?: ProgramacionRutaUpdateWithWhereUniqueWithoutConductorInput | ProgramacionRutaUpdateWithWhereUniqueWithoutConductorInput[]
+    updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutConductorInput | ProgramacionRutaUpdateManyWithWhereWithoutConductorInput[]
+    deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
   }
 
   export type VehiculoCreateNestedOneWithoutOrdenesCombustibleInput = {
@@ -36863,6 +40318,12 @@ export namespace Prisma {
     connect?: ChecklistVerificacionWhereUniqueInput
   }
 
+  export type RutaCreateNestedOneWithoutMovimientosInput = {
+    create?: XOR<RutaCreateWithoutMovimientosInput, RutaUncheckedCreateWithoutMovimientosInput>
+    connectOrCreate?: RutaCreateOrConnectWithoutMovimientosInput
+    connect?: RutaWhereUniqueInput
+  }
+
   export type ChecklistVerificacionUncheckedCreateNestedOneWithoutMovimientoInput = {
     create?: XOR<ChecklistVerificacionCreateWithoutMovimientoInput, ChecklistVerificacionUncheckedCreateWithoutMovimientoInput>
     connectOrCreate?: ChecklistVerificacionCreateOrConnectWithoutMovimientoInput
@@ -36909,6 +40370,16 @@ export namespace Prisma {
     update?: XOR<XOR<ChecklistVerificacionUpdateToOneWithWhereWithoutMovimientoInput, ChecklistVerificacionUpdateWithoutMovimientoInput>, ChecklistVerificacionUncheckedUpdateWithoutMovimientoInput>
   }
 
+  export type RutaUpdateOneWithoutMovimientosNestedInput = {
+    create?: XOR<RutaCreateWithoutMovimientosInput, RutaUncheckedCreateWithoutMovimientosInput>
+    connectOrCreate?: RutaCreateOrConnectWithoutMovimientosInput
+    upsert?: RutaUpsertWithoutMovimientosInput
+    disconnect?: RutaWhereInput | boolean
+    delete?: RutaWhereInput | boolean
+    connect?: RutaWhereUniqueInput
+    update?: XOR<XOR<RutaUpdateToOneWithWhereWithoutMovimientosInput, RutaUpdateWithoutMovimientosInput>, RutaUncheckedUpdateWithoutMovimientosInput>
+  }
+
   export type ChecklistVerificacionUncheckedUpdateOneWithoutMovimientoNestedInput = {
     create?: XOR<ChecklistVerificacionCreateWithoutMovimientoInput, ChecklistVerificacionUncheckedCreateWithoutMovimientoInput>
     connectOrCreate?: ChecklistVerificacionCreateOrConnectWithoutMovimientoInput
@@ -36935,6 +40406,132 @@ export namespace Prisma {
     upsert?: MovimientoDiarioUpsertWithoutChecklistInput
     connect?: MovimientoDiarioWhereUniqueInput
     update?: XOR<XOR<MovimientoDiarioUpdateToOneWithWhereWithoutChecklistInput, MovimientoDiarioUpdateWithoutChecklistInput>, MovimientoDiarioUncheckedUpdateWithoutChecklistInput>
+  }
+
+  export type MovimientoDiarioCreateNestedManyWithoutRutaInput = {
+    create?: XOR<MovimientoDiarioCreateWithoutRutaInput, MovimientoDiarioUncheckedCreateWithoutRutaInput> | MovimientoDiarioCreateWithoutRutaInput[] | MovimientoDiarioUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutRutaInput | MovimientoDiarioCreateOrConnectWithoutRutaInput[]
+    createMany?: MovimientoDiarioCreateManyRutaInputEnvelope
+    connect?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+  }
+
+  export type ProgramacionRutaCreateNestedManyWithoutRutaInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutRutaInput, ProgramacionRutaUncheckedCreateWithoutRutaInput> | ProgramacionRutaCreateWithoutRutaInput[] | ProgramacionRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutRutaInput | ProgramacionRutaCreateOrConnectWithoutRutaInput[]
+    createMany?: ProgramacionRutaCreateManyRutaInputEnvelope
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+  }
+
+  export type MovimientoDiarioUncheckedCreateNestedManyWithoutRutaInput = {
+    create?: XOR<MovimientoDiarioCreateWithoutRutaInput, MovimientoDiarioUncheckedCreateWithoutRutaInput> | MovimientoDiarioCreateWithoutRutaInput[] | MovimientoDiarioUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutRutaInput | MovimientoDiarioCreateOrConnectWithoutRutaInput[]
+    createMany?: MovimientoDiarioCreateManyRutaInputEnvelope
+    connect?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+  }
+
+  export type ProgramacionRutaUncheckedCreateNestedManyWithoutRutaInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutRutaInput, ProgramacionRutaUncheckedCreateWithoutRutaInput> | ProgramacionRutaCreateWithoutRutaInput[] | ProgramacionRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutRutaInput | ProgramacionRutaCreateOrConnectWithoutRutaInput[]
+    createMany?: ProgramacionRutaCreateManyRutaInputEnvelope
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+  }
+
+  export type MovimientoDiarioUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<MovimientoDiarioCreateWithoutRutaInput, MovimientoDiarioUncheckedCreateWithoutRutaInput> | MovimientoDiarioCreateWithoutRutaInput[] | MovimientoDiarioUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutRutaInput | MovimientoDiarioCreateOrConnectWithoutRutaInput[]
+    upsert?: MovimientoDiarioUpsertWithWhereUniqueWithoutRutaInput | MovimientoDiarioUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: MovimientoDiarioCreateManyRutaInputEnvelope
+    set?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    disconnect?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    delete?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    connect?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    update?: MovimientoDiarioUpdateWithWhereUniqueWithoutRutaInput | MovimientoDiarioUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: MovimientoDiarioUpdateManyWithWhereWithoutRutaInput | MovimientoDiarioUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: MovimientoDiarioScalarWhereInput | MovimientoDiarioScalarWhereInput[]
+  }
+
+  export type ProgramacionRutaUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutRutaInput, ProgramacionRutaUncheckedCreateWithoutRutaInput> | ProgramacionRutaCreateWithoutRutaInput[] | ProgramacionRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutRutaInput | ProgramacionRutaCreateOrConnectWithoutRutaInput[]
+    upsert?: ProgramacionRutaUpsertWithWhereUniqueWithoutRutaInput | ProgramacionRutaUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: ProgramacionRutaCreateManyRutaInputEnvelope
+    set?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    disconnect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    delete?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    update?: ProgramacionRutaUpdateWithWhereUniqueWithoutRutaInput | ProgramacionRutaUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutRutaInput | ProgramacionRutaUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+  }
+
+  export type MovimientoDiarioUncheckedUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<MovimientoDiarioCreateWithoutRutaInput, MovimientoDiarioUncheckedCreateWithoutRutaInput> | MovimientoDiarioCreateWithoutRutaInput[] | MovimientoDiarioUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutRutaInput | MovimientoDiarioCreateOrConnectWithoutRutaInput[]
+    upsert?: MovimientoDiarioUpsertWithWhereUniqueWithoutRutaInput | MovimientoDiarioUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: MovimientoDiarioCreateManyRutaInputEnvelope
+    set?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    disconnect?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    delete?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    connect?: MovimientoDiarioWhereUniqueInput | MovimientoDiarioWhereUniqueInput[]
+    update?: MovimientoDiarioUpdateWithWhereUniqueWithoutRutaInput | MovimientoDiarioUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: MovimientoDiarioUpdateManyWithWhereWithoutRutaInput | MovimientoDiarioUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: MovimientoDiarioScalarWhereInput | MovimientoDiarioScalarWhereInput[]
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutRutaInput, ProgramacionRutaUncheckedCreateWithoutRutaInput> | ProgramacionRutaCreateWithoutRutaInput[] | ProgramacionRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutRutaInput | ProgramacionRutaCreateOrConnectWithoutRutaInput[]
+    upsert?: ProgramacionRutaUpsertWithWhereUniqueWithoutRutaInput | ProgramacionRutaUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: ProgramacionRutaCreateManyRutaInputEnvelope
+    set?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    disconnect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    delete?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    update?: ProgramacionRutaUpdateWithWhereUniqueWithoutRutaInput | ProgramacionRutaUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutRutaInput | ProgramacionRutaUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+  }
+
+  export type RutaCreateNestedOneWithoutProgramacionesInput = {
+    create?: XOR<RutaCreateWithoutProgramacionesInput, RutaUncheckedCreateWithoutProgramacionesInput>
+    connectOrCreate?: RutaCreateOrConnectWithoutProgramacionesInput
+    connect?: RutaWhereUniqueInput
+  }
+
+  export type VehiculoCreateNestedOneWithoutProgramacionesInput = {
+    create?: XOR<VehiculoCreateWithoutProgramacionesInput, VehiculoUncheckedCreateWithoutProgramacionesInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutProgramacionesInput
+    connect?: VehiculoWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutProgramacionesInput = {
+    create?: XOR<UsuarioCreateWithoutProgramacionesInput, UsuarioUncheckedCreateWithoutProgramacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutProgramacionesInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type RutaUpdateOneRequiredWithoutProgramacionesNestedInput = {
+    create?: XOR<RutaCreateWithoutProgramacionesInput, RutaUncheckedCreateWithoutProgramacionesInput>
+    connectOrCreate?: RutaCreateOrConnectWithoutProgramacionesInput
+    upsert?: RutaUpsertWithoutProgramacionesInput
+    connect?: RutaWhereUniqueInput
+    update?: XOR<XOR<RutaUpdateToOneWithWhereWithoutProgramacionesInput, RutaUpdateWithoutProgramacionesInput>, RutaUncheckedUpdateWithoutProgramacionesInput>
+  }
+
+  export type VehiculoUpdateOneRequiredWithoutProgramacionesNestedInput = {
+    create?: XOR<VehiculoCreateWithoutProgramacionesInput, VehiculoUncheckedCreateWithoutProgramacionesInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutProgramacionesInput
+    upsert?: VehiculoUpsertWithoutProgramacionesInput
+    connect?: VehiculoWhereUniqueInput
+    update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutProgramacionesInput, VehiculoUpdateWithoutProgramacionesInput>, VehiculoUncheckedUpdateWithoutProgramacionesInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutProgramacionesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutProgramacionesInput, UsuarioUncheckedCreateWithoutProgramacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutProgramacionesInput
+    upsert?: UsuarioUpsertWithoutProgramacionesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutProgramacionesInput, UsuarioUpdateWithoutProgramacionesInput>, UsuarioUncheckedUpdateWithoutProgramacionesInput>
   }
 
   export type PermisoUsuarioCreateNestedManyWithoutPermisoInput = {
@@ -37117,6 +40714,13 @@ export namespace Prisma {
     connect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
   }
 
+  export type ProgramacionRutaCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutVehiculoInput, ProgramacionRutaUncheckedCreateWithoutVehiculoInput> | ProgramacionRutaCreateWithoutVehiculoInput[] | ProgramacionRutaUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutVehiculoInput | ProgramacionRutaCreateOrConnectWithoutVehiculoInput[]
+    createMany?: ProgramacionRutaCreateManyVehiculoInputEnvelope
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+  }
+
   export type MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -37169,6 +40773,13 @@ export namespace Prisma {
     connectOrCreate?: DocumentoVehiculoCreateOrConnectWithoutVehiculoInput | DocumentoVehiculoCreateOrConnectWithoutVehiculoInput[]
     createMany?: DocumentoVehiculoCreateManyVehiculoInputEnvelope
     connect?: DocumentoVehiculoWhereUniqueInput | DocumentoVehiculoWhereUniqueInput[]
+  }
+
+  export type ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutVehiculoInput, ProgramacionRutaUncheckedCreateWithoutVehiculoInput> | ProgramacionRutaCreateWithoutVehiculoInput[] | ProgramacionRutaUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutVehiculoInput | ProgramacionRutaCreateOrConnectWithoutVehiculoInput[]
+    createMany?: ProgramacionRutaCreateManyVehiculoInputEnvelope
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
   }
 
   export type EnumCategoriaVehiculoFieldUpdateOperationsInput = {
@@ -37301,6 +40912,20 @@ export namespace Prisma {
     deleteMany?: DocumentoVehiculoScalarWhereInput | DocumentoVehiculoScalarWhereInput[]
   }
 
+  export type ProgramacionRutaUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutVehiculoInput, ProgramacionRutaUncheckedCreateWithoutVehiculoInput> | ProgramacionRutaCreateWithoutVehiculoInput[] | ProgramacionRutaUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutVehiculoInput | ProgramacionRutaCreateOrConnectWithoutVehiculoInput[]
+    upsert?: ProgramacionRutaUpsertWithWhereUniqueWithoutVehiculoInput | ProgramacionRutaUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: ProgramacionRutaCreateManyVehiculoInputEnvelope
+    set?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    disconnect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    delete?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    update?: ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput | ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput | ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+  }
+
   export type MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -37413,6 +41038,20 @@ export namespace Prisma {
     update?: DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | DocumentoVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
     updateMany?: DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput | DocumentoVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
     deleteMany?: DocumentoVehiculoScalarWhereInput | DocumentoVehiculoScalarWhereInput[]
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<ProgramacionRutaCreateWithoutVehiculoInput, ProgramacionRutaUncheckedCreateWithoutVehiculoInput> | ProgramacionRutaCreateWithoutVehiculoInput[] | ProgramacionRutaUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: ProgramacionRutaCreateOrConnectWithoutVehiculoInput | ProgramacionRutaCreateOrConnectWithoutVehiculoInput[]
+    upsert?: ProgramacionRutaUpsertWithWhereUniqueWithoutVehiculoInput | ProgramacionRutaUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: ProgramacionRutaCreateManyVehiculoInputEnvelope
+    set?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    disconnect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    delete?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    connect?: ProgramacionRutaWhereUniqueInput | ProgramacionRutaWhereUniqueInput[]
+    update?: ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput | ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput | ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -38089,6 +41728,11 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -38096,6 +41740,7 @@ export namespace Prisma {
     vehiculo: VehiculoCreateNestedOneWithoutMovimientosDiariosInput
     inspector?: UsuarioCreateNestedOneWithoutRevisionesChecklistInput
     checklist?: ChecklistVerificacionCreateNestedOneWithoutMovimientoInput
+    ruta?: RutaCreateNestedOneWithoutMovimientosInput
   }
 
   export type MovimientoDiarioUncheckedCreateWithoutConductorInput = {
@@ -38112,8 +41757,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     checklist?: ChecklistVerificacionUncheckedCreateNestedOneWithoutMovimientoInput
@@ -38141,6 +41792,11 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -38148,6 +41804,7 @@ export namespace Prisma {
     vehiculo: VehiculoCreateNestedOneWithoutMovimientosDiariosInput
     conductor: UsuarioCreateNestedOneWithoutMovimientosDiariosInput
     checklist?: ChecklistVerificacionCreateNestedOneWithoutMovimientoInput
+    ruta?: RutaCreateNestedOneWithoutMovimientosInput
   }
 
   export type MovimientoDiarioUncheckedCreateWithoutInspectorInput = {
@@ -38164,8 +41821,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     checklist?: ChecklistVerificacionUncheckedCreateNestedOneWithoutMovimientoInput
@@ -38286,6 +41949,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -38319,6 +41986,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -38366,6 +42037,40 @@ export namespace Prisma {
 
   export type AsignacionVehiculoCreateManyConductorInputEnvelope = {
     data: AsignacionVehiculoCreateManyConductorInput | AsignacionVehiculoCreateManyConductorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProgramacionRutaCreateWithoutConductorInput = {
+    id?: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+    ruta: RutaCreateNestedOneWithoutProgramacionesInput
+    vehiculo: VehiculoCreateNestedOneWithoutProgramacionesInput
+  }
+
+  export type ProgramacionRutaUncheckedCreateWithoutConductorInput = {
+    id?: string
+    rutaId: string
+    vehiculoId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaCreateOrConnectWithoutConductorInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    create: XOR<ProgramacionRutaCreateWithoutConductorInput, ProgramacionRutaUncheckedCreateWithoutConductorInput>
+  }
+
+  export type ProgramacionRutaCreateManyConductorInputEnvelope = {
+    data: ProgramacionRutaCreateManyConductorInput | ProgramacionRutaCreateManyConductorInput[]
     skipDuplicates?: boolean
   }
 
@@ -38522,8 +42227,14 @@ export namespace Prisma {
     horaSalida?: StringFilter<"MovimientoDiario"> | string
     horaLlegada?: StringNullableFilter<"MovimientoDiario"> | string | null
     horasUtilizacion?: DecimalNullableFilter<"MovimientoDiario"> | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: StringNullableFilter<"MovimientoDiario"> | string | null
+    firmaInspector?: StringNullableFilter<"MovimientoDiario"> | string | null
+    firmaEncargadoGaraje?: StringNullableFilter<"MovimientoDiario"> | string | null
+    fechaFirmaConductor?: DateTimeNullableFilter<"MovimientoDiario"> | Date | string | null
+    fechaFirmaInspector?: DateTimeNullableFilter<"MovimientoDiario"> | Date | string | null
     estado?: EnumEstadoMovimientoFilter<"MovimientoDiario"> | $Enums.EstadoMovimiento
     observaciones?: StringNullableFilter<"MovimientoDiario"> | string | null
+    rutaId?: StringNullableFilter<"MovimientoDiario"> | string | null
     creadoEn?: DateTimeFilter<"MovimientoDiario"> | Date | string
     actualizadoEn?: DateTimeFilter<"MovimientoDiario"> | Date | string
   }
@@ -38644,6 +42355,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoOtros?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
     costoTotal?: DecimalNullableFilter<"OrdenMantenimiento"> | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    firmaTecnico?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    firmaJefeMantenimiento?: StringNullableFilter<"OrdenMantenimiento"> | string | null
+    fechaFirmaTecnico?: DateTimeNullableFilter<"OrdenMantenimiento"> | Date | string | null
     estado?: EnumEstadoMantenimientoFilter<"OrdenMantenimiento"> | $Enums.EstadoMantenimiento
     observaciones?: StringNullableFilter<"OrdenMantenimiento"> | string | null
     creadoEn?: DateTimeFilter<"OrdenMantenimiento"> | Date | string
@@ -38679,6 +42394,38 @@ export namespace Prisma {
     activa?: BoolFilter<"AsignacionVehiculo"> | boolean
     observaciones?: StringNullableFilter<"AsignacionVehiculo"> | string | null
     creadoEn?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+  }
+
+  export type ProgramacionRutaUpsertWithWhereUniqueWithoutConductorInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    update: XOR<ProgramacionRutaUpdateWithoutConductorInput, ProgramacionRutaUncheckedUpdateWithoutConductorInput>
+    create: XOR<ProgramacionRutaCreateWithoutConductorInput, ProgramacionRutaUncheckedCreateWithoutConductorInput>
+  }
+
+  export type ProgramacionRutaUpdateWithWhereUniqueWithoutConductorInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    data: XOR<ProgramacionRutaUpdateWithoutConductorInput, ProgramacionRutaUncheckedUpdateWithoutConductorInput>
+  }
+
+  export type ProgramacionRutaUpdateManyWithWhereWithoutConductorInput = {
+    where: ProgramacionRutaScalarWhereInput
+    data: XOR<ProgramacionRutaUpdateManyMutationInput, ProgramacionRutaUncheckedUpdateManyWithoutConductorInput>
+  }
+
+  export type ProgramacionRutaScalarWhereInput = {
+    AND?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+    OR?: ProgramacionRutaScalarWhereInput[]
+    NOT?: ProgramacionRutaScalarWhereInput | ProgramacionRutaScalarWhereInput[]
+    id?: StringFilter<"ProgramacionRuta"> | string
+    rutaId?: StringFilter<"ProgramacionRuta"> | string
+    vehiculoId?: StringFilter<"ProgramacionRuta"> | string
+    conductorId?: StringFilter<"ProgramacionRuta"> | string
+    fecha?: DateTimeFilter<"ProgramacionRuta"> | Date | string
+    horaSalida?: StringFilter<"ProgramacionRuta"> | string
+    horaLlegada?: StringNullableFilter<"ProgramacionRuta"> | string | null
+    estado?: StringFilter<"ProgramacionRuta"> | string
+    observaciones?: StringNullableFilter<"ProgramacionRuta"> | string | null
+    creadoEn?: DateTimeFilter<"ProgramacionRuta"> | Date | string
   }
 
   export type VehiculoCreateWithoutOrdenesCombustibleInput = {
@@ -38742,6 +42489,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesCombustibleInput = {
@@ -38805,6 +42553,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesCombustibleInput = {
@@ -38838,6 +42587,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutOrdenesCombustibleInput = {
@@ -38866,6 +42616,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutOrdenesCombustibleInput = {
@@ -38945,6 +42696,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesCombustibleInput = {
@@ -39008,6 +42760,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesCombustibleInput = {
@@ -39047,6 +42800,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutOrdenesCombustibleInput = {
@@ -39075,6 +42829,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type VehiculoCreateWithoutControlLlantasInput = {
@@ -39138,6 +42893,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutControlLlantasInput = {
@@ -39201,6 +42957,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutControlLlantasInput = {
@@ -39280,6 +43037,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutControlLlantasInput = {
@@ -39343,6 +43101,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateWithoutOrdenesMantenimientoInput = {
@@ -39406,6 +43165,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesMantenimientoInput = {
@@ -39469,6 +43229,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesMantenimientoInput = {
@@ -39502,6 +43263,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutOrdenesMantenimientoInput = {
@@ -39530,6 +43292,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutOrdenesMantenimientoInput = {
@@ -39675,6 +43438,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesMantenimientoInput = {
@@ -39738,6 +43502,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesMantenimientoInput = {
@@ -39777,6 +43542,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutOrdenesMantenimientoInput = {
@@ -39805,6 +43571,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type DetalleRepuestoUpsertWithWhereUniqueWithoutOrdenMantenimientoInput = {
@@ -39893,6 +43660,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -39927,6 +43698,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -39973,6 +43748,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40007,6 +43786,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40037,6 +43820,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -40071,6 +43858,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -40117,6 +43908,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40151,6 +43946,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40219,6 +44018,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutAsignacionesInput = {
@@ -40282,6 +44082,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutAsignacionesInput = {
@@ -40315,6 +44116,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAsignacionesInput = {
@@ -40343,6 +44145,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAsignacionesInput = {
@@ -40422,6 +44225,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutAsignacionesInput = {
@@ -40485,6 +44289,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutAsignacionesInput = {
@@ -40524,6 +44329,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAsignacionesInput = {
@@ -40552,6 +44358,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type VehiculoCreateWithoutDocumentosInput = {
@@ -40615,6 +44422,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutDocumentosInput = {
@@ -40678,6 +44486,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutDocumentosInput = {
@@ -40757,6 +44566,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutDocumentosInput = {
@@ -40820,6 +44630,7 @@ export namespace Prisma {
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateWithoutMovimientosDiariosInput = {
@@ -40883,6 +44694,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutMovimientosDiariosInput = {
@@ -40946,6 +44758,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
     documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutMovimientosDiariosInput = {
@@ -40979,6 +44792,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutMovimientosDiariosInput = {
@@ -41007,6 +44821,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutMovimientosDiariosInput = {
@@ -41040,6 +44855,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutRevisionesChecklistInput = {
@@ -41068,6 +44884,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutRevisionesChecklistInput = {
@@ -41158,6 +44975,35 @@ export namespace Prisma {
     create: XOR<ChecklistVerificacionCreateWithoutMovimientoInput, ChecklistVerificacionUncheckedCreateWithoutMovimientoInput>
   }
 
+  export type RutaCreateWithoutMovimientosInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutRutaInput
+  }
+
+  export type RutaUncheckedCreateWithoutMovimientosInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type RutaCreateOrConnectWithoutMovimientosInput = {
+    where: RutaWhereUniqueInput
+    create: XOR<RutaCreateWithoutMovimientosInput, RutaUncheckedCreateWithoutMovimientosInput>
+  }
+
   export type VehiculoUpsertWithoutMovimientosDiariosInput = {
     update: XOR<VehiculoUpdateWithoutMovimientosDiariosInput, VehiculoUncheckedUpdateWithoutMovimientosDiariosInput>
     create: XOR<VehiculoCreateWithoutMovimientosDiariosInput, VehiculoUncheckedCreateWithoutMovimientosDiariosInput>
@@ -41230,6 +45076,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutMovimientosDiariosInput = {
@@ -41293,6 +45140,7 @@ export namespace Prisma {
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
     documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutMovimientosDiariosInput = {
@@ -41332,6 +45180,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutMovimientosDiariosInput = {
@@ -41360,6 +45209,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUpsertWithoutRevisionesChecklistInput = {
@@ -41399,6 +45249,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutRevisionesChecklistInput = {
@@ -41427,6 +45278,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type ChecklistVerificacionUpsertWithoutMovimientoInput = {
@@ -41518,6 +45370,41 @@ export namespace Prisma {
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RutaUpsertWithoutMovimientosInput = {
+    update: XOR<RutaUpdateWithoutMovimientosInput, RutaUncheckedUpdateWithoutMovimientosInput>
+    create: XOR<RutaCreateWithoutMovimientosInput, RutaUncheckedCreateWithoutMovimientosInput>
+    where?: RutaWhereInput
+  }
+
+  export type RutaUpdateToOneWithWhereWithoutMovimientosInput = {
+    where?: RutaWhereInput
+    data: XOR<RutaUpdateWithoutMovimientosInput, RutaUncheckedUpdateWithoutMovimientosInput>
+  }
+
+  export type RutaUpdateWithoutMovimientosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    programaciones?: ProgramacionRutaUpdateManyWithoutRutaNestedInput
+  }
+
+  export type RutaUncheckedUpdateWithoutMovimientosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
   export type MovimientoDiarioCreateWithoutChecklistInput = {
     id?: string
     fecha: Date | string
@@ -41530,6 +45417,11 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -41537,6 +45429,7 @@ export namespace Prisma {
     vehiculo: VehiculoCreateNestedOneWithoutMovimientosDiariosInput
     conductor: UsuarioCreateNestedOneWithoutMovimientosDiariosInput
     inspector?: UsuarioCreateNestedOneWithoutRevisionesChecklistInput
+    ruta?: RutaCreateNestedOneWithoutMovimientosInput
   }
 
   export type MovimientoDiarioUncheckedCreateWithoutChecklistInput = {
@@ -41554,8 +45447,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
   }
@@ -41588,6 +45487,11 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41595,6 +45499,7 @@ export namespace Prisma {
     vehiculo?: VehiculoUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     conductor?: UsuarioUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     inspector?: UsuarioUpdateOneWithoutRevisionesChecklistNestedInput
+    ruta?: RutaUpdateOneWithoutMovimientosNestedInput
   }
 
   export type MovimientoDiarioUncheckedUpdateWithoutChecklistInput = {
@@ -41612,10 +45517,614 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MovimientoDiarioCreateWithoutRutaInput = {
+    id?: string
+    fecha: Date | string
+    sectorSolicitante: string
+    destino: string
+    proposito?: string | null
+    kilometrajeSalida: number
+    kilometrajeLlegada?: number | null
+    kilometrajeRecorrido?: number | null
+    horaSalida: string
+    horaLlegada?: string | null
+    horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
+    estado?: $Enums.EstadoMovimiento
+    observaciones?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    vehiculo: VehiculoCreateNestedOneWithoutMovimientosDiariosInput
+    conductor: UsuarioCreateNestedOneWithoutMovimientosDiariosInput
+    inspector?: UsuarioCreateNestedOneWithoutRevisionesChecklistInput
+    checklist?: ChecklistVerificacionCreateNestedOneWithoutMovimientoInput
+  }
+
+  export type MovimientoDiarioUncheckedCreateWithoutRutaInput = {
+    id?: string
+    vehiculoId: string
+    conductorId: string
+    inspectorId?: string | null
+    fecha: Date | string
+    sectorSolicitante: string
+    destino: string
+    proposito?: string | null
+    kilometrajeSalida: number
+    kilometrajeLlegada?: number | null
+    kilometrajeRecorrido?: number | null
+    horaSalida: string
+    horaLlegada?: string | null
+    horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
+    estado?: $Enums.EstadoMovimiento
+    observaciones?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    checklist?: ChecklistVerificacionUncheckedCreateNestedOneWithoutMovimientoInput
+  }
+
+  export type MovimientoDiarioCreateOrConnectWithoutRutaInput = {
+    where: MovimientoDiarioWhereUniqueInput
+    create: XOR<MovimientoDiarioCreateWithoutRutaInput, MovimientoDiarioUncheckedCreateWithoutRutaInput>
+  }
+
+  export type MovimientoDiarioCreateManyRutaInputEnvelope = {
+    data: MovimientoDiarioCreateManyRutaInput | MovimientoDiarioCreateManyRutaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProgramacionRutaCreateWithoutRutaInput = {
+    id?: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+    vehiculo: VehiculoCreateNestedOneWithoutProgramacionesInput
+    conductor: UsuarioCreateNestedOneWithoutProgramacionesInput
+  }
+
+  export type ProgramacionRutaUncheckedCreateWithoutRutaInput = {
+    id?: string
+    vehiculoId: string
+    conductorId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaCreateOrConnectWithoutRutaInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    create: XOR<ProgramacionRutaCreateWithoutRutaInput, ProgramacionRutaUncheckedCreateWithoutRutaInput>
+  }
+
+  export type ProgramacionRutaCreateManyRutaInputEnvelope = {
+    data: ProgramacionRutaCreateManyRutaInput | ProgramacionRutaCreateManyRutaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MovimientoDiarioUpsertWithWhereUniqueWithoutRutaInput = {
+    where: MovimientoDiarioWhereUniqueInput
+    update: XOR<MovimientoDiarioUpdateWithoutRutaInput, MovimientoDiarioUncheckedUpdateWithoutRutaInput>
+    create: XOR<MovimientoDiarioCreateWithoutRutaInput, MovimientoDiarioUncheckedCreateWithoutRutaInput>
+  }
+
+  export type MovimientoDiarioUpdateWithWhereUniqueWithoutRutaInput = {
+    where: MovimientoDiarioWhereUniqueInput
+    data: XOR<MovimientoDiarioUpdateWithoutRutaInput, MovimientoDiarioUncheckedUpdateWithoutRutaInput>
+  }
+
+  export type MovimientoDiarioUpdateManyWithWhereWithoutRutaInput = {
+    where: MovimientoDiarioScalarWhereInput
+    data: XOR<MovimientoDiarioUpdateManyMutationInput, MovimientoDiarioUncheckedUpdateManyWithoutRutaInput>
+  }
+
+  export type ProgramacionRutaUpsertWithWhereUniqueWithoutRutaInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    update: XOR<ProgramacionRutaUpdateWithoutRutaInput, ProgramacionRutaUncheckedUpdateWithoutRutaInput>
+    create: XOR<ProgramacionRutaCreateWithoutRutaInput, ProgramacionRutaUncheckedCreateWithoutRutaInput>
+  }
+
+  export type ProgramacionRutaUpdateWithWhereUniqueWithoutRutaInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    data: XOR<ProgramacionRutaUpdateWithoutRutaInput, ProgramacionRutaUncheckedUpdateWithoutRutaInput>
+  }
+
+  export type ProgramacionRutaUpdateManyWithWhereWithoutRutaInput = {
+    where: ProgramacionRutaScalarWhereInput
+    data: XOR<ProgramacionRutaUpdateManyMutationInput, ProgramacionRutaUncheckedUpdateManyWithoutRutaInput>
+  }
+
+  export type RutaCreateWithoutProgramacionesInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+    movimientos?: MovimientoDiarioCreateNestedManyWithoutRutaInput
+  }
+
+  export type RutaUncheckedCreateWithoutProgramacionesInput = {
+    id?: string
+    nombre: string
+    origen: string
+    destino: string
+    distanciaKm?: Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: string | null
+    activa?: boolean
+    creadoEn?: Date | string
+    movimientos?: MovimientoDiarioUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type RutaCreateOrConnectWithoutProgramacionesInput = {
+    where: RutaWhereUniqueInput
+    create: XOR<RutaCreateWithoutProgramacionesInput, RutaUncheckedCreateWithoutProgramacionesInput>
+  }
+
+  export type VehiculoCreateWithoutProgramacionesInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoUncheckedCreateWithoutProgramacionesInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaUncheckedCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    documentos?: DocumentoVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoCreateOrConnectWithoutProgramacionesInput = {
+    where: VehiculoWhereUniqueInput
+    create: XOR<VehiculoCreateWithoutProgramacionesInput, VehiculoUncheckedCreateWithoutProgramacionesInput>
+  }
+
+  export type UsuarioCreateWithoutProgramacionesInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    email: string
+    password?: string | null
+    rol?: $Enums.RolUsuario
+    activo?: boolean
+    telefono?: string | null
+    licenciaConducir?: string | null
+    categoriaLicencia?: string | null
+    vencimientoLicencia?: Date | string | null
+    especialidad?: string | null
+    ultimoAcceso?: Date | string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    bloqueadoHasta?: Date | string | null
+    intentosFallidos?: number
+    permisos?: PermisoUsuarioCreateNestedManyWithoutUsuarioInput
+    sesionesAuth?: SesionAuthCreateNestedManyWithoutUsuarioInput
+    auditoria?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    tokensConfirmacion?: TokenConfirmacionCreateNestedManyWithoutUsuarioInput
+    movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutConductorInput
+    revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
+    ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
+    ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutProgramacionesInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    email: string
+    password?: string | null
+    rol?: $Enums.RolUsuario
+    activo?: boolean
+    telefono?: string | null
+    licenciaConducir?: string | null
+    categoriaLicencia?: string | null
+    vencimientoLicencia?: Date | string | null
+    especialidad?: string | null
+    ultimoAcceso?: Date | string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    bloqueadoHasta?: Date | string | null
+    intentosFallidos?: number
+    permisos?: PermisoUsuarioUncheckedCreateNestedManyWithoutUsuarioInput
+    sesionesAuth?: SesionAuthUncheckedCreateNestedManyWithoutUsuarioInput
+    auditoria?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    tokensConfirmacion?: TokenConfirmacionUncheckedCreateNestedManyWithoutUsuarioInput
+    movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutConductorInput
+    revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
+    ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutProgramacionesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutProgramacionesInput, UsuarioUncheckedCreateWithoutProgramacionesInput>
+  }
+
+  export type RutaUpsertWithoutProgramacionesInput = {
+    update: XOR<RutaUpdateWithoutProgramacionesInput, RutaUncheckedUpdateWithoutProgramacionesInput>
+    create: XOR<RutaCreateWithoutProgramacionesInput, RutaUncheckedCreateWithoutProgramacionesInput>
+    where?: RutaWhereInput
+  }
+
+  export type RutaUpdateToOneWithWhereWithoutProgramacionesInput = {
+    where?: RutaWhereInput
+    data: XOR<RutaUpdateWithoutProgramacionesInput, RutaUncheckedUpdateWithoutProgramacionesInput>
+  }
+
+  export type RutaUpdateWithoutProgramacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientos?: MovimientoDiarioUpdateManyWithoutRutaNestedInput
+  }
+
+  export type RutaUncheckedUpdateWithoutProgramacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    origen?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    distanciaKm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tiempoEstimado?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientos?: MovimientoDiarioUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type VehiculoUpsertWithoutProgramacionesInput = {
+    update: XOR<VehiculoUpdateWithoutProgramacionesInput, VehiculoUncheckedUpdateWithoutProgramacionesInput>
+    create: XOR<VehiculoCreateWithoutProgramacionesInput, VehiculoUncheckedCreateWithoutProgramacionesInput>
+    where?: VehiculoWhereInput
+  }
+
+  export type VehiculoUpdateToOneWithWhereWithoutProgramacionesInput = {
+    where?: VehiculoWhereInput
+    data: XOR<VehiculoUpdateWithoutProgramacionesInput, VehiculoUncheckedUpdateWithoutProgramacionesInput>
+  }
+
+  export type VehiculoUpdateWithoutProgramacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type VehiculoUncheckedUpdateWithoutProgramacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUncheckedUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    documentos?: DocumentoVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type UsuarioUpsertWithoutProgramacionesInput = {
+    update: XOR<UsuarioUpdateWithoutProgramacionesInput, UsuarioUncheckedUpdateWithoutProgramacionesInput>
+    create: XOR<UsuarioCreateWithoutProgramacionesInput, UsuarioUncheckedCreateWithoutProgramacionesInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutProgramacionesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutProgramacionesInput, UsuarioUncheckedUpdateWithoutProgramacionesInput>
+  }
+
+  export type UsuarioUpdateWithoutProgramacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    licenciaConducir?: NullableStringFieldUpdateOperationsInput | string | null
+    categoriaLicencia?: NullableStringFieldUpdateOperationsInput | string | null
+    vencimientoLicencia?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    especialidad?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimoAcceso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    bloqueadoHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    intentosFallidos?: IntFieldUpdateOperationsInput | number
+    permisos?: PermisoUsuarioUpdateManyWithoutUsuarioNestedInput
+    sesionesAuth?: SesionAuthUpdateManyWithoutUsuarioNestedInput
+    auditoria?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    tokensConfirmacion?: TokenConfirmacionUpdateManyWithoutUsuarioNestedInput
+    movimientosDiarios?: MovimientoDiarioUpdateManyWithoutConductorNestedInput
+    revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
+    ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutProgramacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    licenciaConducir?: NullableStringFieldUpdateOperationsInput | string | null
+    categoriaLicencia?: NullableStringFieldUpdateOperationsInput | string | null
+    vencimientoLicencia?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    especialidad?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimoAcceso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    bloqueadoHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    intentosFallidos?: IntFieldUpdateOperationsInput | number
+    permisos?: PermisoUsuarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    sesionesAuth?: SesionAuthUncheckedUpdateManyWithoutUsuarioNestedInput
+    auditoria?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    tokensConfirmacion?: TokenConfirmacionUncheckedUpdateManyWithoutUsuarioNestedInput
+    movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutConductorNestedInput
+    revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
+    ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type PermisoUsuarioCreateWithoutPermisoInput = {
@@ -41703,6 +46212,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPermisosInput = {
@@ -41731,6 +46241,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPermisosInput = {
@@ -41802,6 +46313,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPermisosInput = {
@@ -41830,6 +46342,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateWithoutSesionesAuthInput = {
@@ -41858,6 +46371,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutSesionesAuthInput = {
@@ -41886,6 +46400,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutSesionesAuthInput = {
@@ -41930,6 +46445,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutSesionesAuthInput = {
@@ -41958,6 +46474,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateWithoutAuditoriaInput = {
@@ -41986,6 +46503,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAuditoriaInput = {
@@ -42014,6 +46532,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAuditoriaInput = {
@@ -42058,6 +46577,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAuditoriaInput = {
@@ -42086,6 +46606,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateWithoutTokensConfirmacionInput = {
@@ -42114,6 +46635,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutTokensConfirmacionInput = {
@@ -42142,6 +46664,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
     asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
+    programaciones?: ProgramacionRutaUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutTokensConfirmacionInput = {
@@ -42186,6 +46709,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutTokensConfirmacionInput = {
@@ -42214,6 +46738,7 @@ export namespace Prisma {
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
     asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
+    programaciones?: ProgramacionRutaUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type MovimientoDiarioCreateWithoutVehiculoInput = {
@@ -42228,6 +46753,11 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -42235,6 +46765,7 @@ export namespace Prisma {
     conductor: UsuarioCreateNestedOneWithoutMovimientosDiariosInput
     inspector?: UsuarioCreateNestedOneWithoutRevisionesChecklistInput
     checklist?: ChecklistVerificacionCreateNestedOneWithoutMovimientoInput
+    ruta?: RutaCreateNestedOneWithoutMovimientosInput
   }
 
   export type MovimientoDiarioUncheckedCreateWithoutVehiculoInput = {
@@ -42251,8 +46782,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     checklist?: ChecklistVerificacionUncheckedCreateNestedOneWithoutMovimientoInput
@@ -42373,6 +46910,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -42406,6 +46947,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -42537,6 +47082,40 @@ export namespace Prisma {
 
   export type DocumentoVehiculoCreateManyVehiculoInputEnvelope = {
     data: DocumentoVehiculoCreateManyVehiculoInput | DocumentoVehiculoCreateManyVehiculoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProgramacionRutaCreateWithoutVehiculoInput = {
+    id?: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+    ruta: RutaCreateNestedOneWithoutProgramacionesInput
+    conductor: UsuarioCreateNestedOneWithoutProgramacionesInput
+  }
+
+  export type ProgramacionRutaUncheckedCreateWithoutVehiculoInput = {
+    id?: string
+    rutaId: string
+    conductorId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaCreateOrConnectWithoutVehiculoInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    create: XOR<ProgramacionRutaCreateWithoutVehiculoInput, ProgramacionRutaUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type ProgramacionRutaCreateManyVehiculoInputEnvelope = {
+    data: ProgramacionRutaCreateManyVehiculoInput | ProgramacionRutaCreateManyVehiculoInput[]
     skipDuplicates?: boolean
   }
 
@@ -42750,6 +47329,22 @@ export namespace Prisma {
     creadoEn?: DateTimeFilter<"DocumentoVehiculo"> | Date | string
   }
 
+  export type ProgramacionRutaUpsertWithWhereUniqueWithoutVehiculoInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    update: XOR<ProgramacionRutaUpdateWithoutVehiculoInput, ProgramacionRutaUncheckedUpdateWithoutVehiculoInput>
+    create: XOR<ProgramacionRutaCreateWithoutVehiculoInput, ProgramacionRutaUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type ProgramacionRutaUpdateWithWhereUniqueWithoutVehiculoInput = {
+    where: ProgramacionRutaWhereUniqueInput
+    data: XOR<ProgramacionRutaUpdateWithoutVehiculoInput, ProgramacionRutaUncheckedUpdateWithoutVehiculoInput>
+  }
+
+  export type ProgramacionRutaUpdateManyWithWhereWithoutVehiculoInput = {
+    where: ProgramacionRutaScalarWhereInput
+    data: XOR<ProgramacionRutaUpdateManyMutationInput, ProgramacionRutaUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
   export type PermisoUsuarioCreateManyUsuarioInput = {
     id?: string
     permisoId: string
@@ -42803,8 +47398,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
   }
@@ -42823,8 +47424,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
   }
@@ -42889,6 +47496,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -42902,6 +47513,18 @@ export namespace Prisma {
     fechaAsignacion?: Date | string
     fechaFin?: Date | string | null
     activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaCreateManyConductorInput = {
+    id?: string
+    rutaId: string
+    vehiculoId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
     observaciones?: string | null
     creadoEn?: Date | string
   }
@@ -43035,6 +47658,11 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43042,6 +47670,7 @@ export namespace Prisma {
     vehiculo?: VehiculoUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     inspector?: UsuarioUpdateOneWithoutRevisionesChecklistNestedInput
     checklist?: ChecklistVerificacionUpdateOneWithoutMovimientoNestedInput
+    ruta?: RutaUpdateOneWithoutMovimientosNestedInput
   }
 
   export type MovimientoDiarioUncheckedUpdateWithoutConductorInput = {
@@ -43058,8 +47687,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     checklist?: ChecklistVerificacionUncheckedUpdateOneWithoutMovimientoNestedInput
@@ -43079,8 +47714,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43097,6 +47738,11 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43104,6 +47750,7 @@ export namespace Prisma {
     vehiculo?: VehiculoUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     conductor?: UsuarioUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     checklist?: ChecklistVerificacionUpdateOneWithoutMovimientoNestedInput
+    ruta?: RutaUpdateOneWithoutMovimientosNestedInput
   }
 
   export type MovimientoDiarioUncheckedUpdateWithoutInspectorInput = {
@@ -43120,8 +47767,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     checklist?: ChecklistVerificacionUncheckedUpdateOneWithoutMovimientoNestedInput
@@ -43141,8 +47794,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43278,6 +47937,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43311,6 +47974,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43343,6 +48010,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43378,6 +48049,42 @@ export namespace Prisma {
     fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUpdateWithoutConductorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruta?: RutaUpdateOneRequiredWithoutProgramacionesNestedInput
+    vehiculo?: VehiculoUpdateOneRequiredWithoutProgramacionesNestedInput
+  }
+
+  export type ProgramacionRutaUncheckedUpdateWithoutConductorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyWithoutConductorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43474,6 +48181,160 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MovimientoDiarioCreateManyRutaInput = {
+    id?: string
+    vehiculoId: string
+    conductorId: string
+    inspectorId?: string | null
+    fecha: Date | string
+    sectorSolicitante: string
+    destino: string
+    proposito?: string | null
+    kilometrajeSalida: number
+    kilometrajeLlegada?: number | null
+    kilometrajeRecorrido?: number | null
+    horaSalida: string
+    horaLlegada?: string | null
+    horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
+    estado?: $Enums.EstadoMovimiento
+    observaciones?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type ProgramacionRutaCreateManyRutaInput = {
+    id?: string
+    vehiculoId: string
+    conductorId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type MovimientoDiarioUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    sectorSolicitante?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    proposito?: NullableStringFieldUpdateOperationsInput | string | null
+    kilometrajeSalida?: IntFieldUpdateOperationsInput | number
+    kilometrajeLlegada?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeRecorrido?: NullableIntFieldUpdateOperationsInput | number | null
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculo?: VehiculoUpdateOneRequiredWithoutMovimientosDiariosNestedInput
+    conductor?: UsuarioUpdateOneRequiredWithoutMovimientosDiariosNestedInput
+    inspector?: UsuarioUpdateOneWithoutRevisionesChecklistNestedInput
+    checklist?: ChecklistVerificacionUpdateOneWithoutMovimientoNestedInput
+  }
+
+  export type MovimientoDiarioUncheckedUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    inspectorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    sectorSolicitante?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    proposito?: NullableStringFieldUpdateOperationsInput | string | null
+    kilometrajeSalida?: IntFieldUpdateOperationsInput | number
+    kilometrajeLlegada?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeRecorrido?: NullableIntFieldUpdateOperationsInput | number | null
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    checklist?: ChecklistVerificacionUncheckedUpdateOneWithoutMovimientoNestedInput
+  }
+
+  export type MovimientoDiarioUncheckedUpdateManyWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    inspectorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    sectorSolicitante?: StringFieldUpdateOperationsInput | string
+    destino?: StringFieldUpdateOperationsInput | string
+    proposito?: NullableStringFieldUpdateOperationsInput | string | null
+    kilometrajeSalida?: IntFieldUpdateOperationsInput | number
+    kilometrajeLlegada?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeRecorrido?: NullableIntFieldUpdateOperationsInput | number | null
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculo?: VehiculoUpdateOneRequiredWithoutProgramacionesNestedInput
+    conductor?: UsuarioUpdateOneRequiredWithoutProgramacionesNestedInput
+  }
+
+  export type ProgramacionRutaUncheckedUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PermisoUsuarioCreateManyPermisoInput = {
     id?: string
     usuarioId: string
@@ -43512,8 +48373,14 @@ export namespace Prisma {
     horaSalida: string
     horaLlegada?: string | null
     horasUtilizacion?: Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: string | null
+    firmaInspector?: string | null
+    firmaEncargadoGaraje?: string | null
+    fechaFirmaConductor?: Date | string | null
+    fechaFirmaInspector?: Date | string | null
     estado?: $Enums.EstadoMovimiento
     observaciones?: string | null
+    rutaId?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
   }
@@ -43578,6 +48445,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: Decimal | DecimalJsLike | number | string | null
     costoOtros?: Decimal | DecimalJsLike | number | string | null
     costoTotal?: Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: string | null
+    firmaTecnico?: string | null
+    firmaJefeMantenimiento?: string | null
+    fechaFirmaTecnico?: Date | string | null
     estado?: $Enums.EstadoMantenimiento
     observaciones?: string | null
     creadoEn?: Date | string
@@ -43627,6 +48498,18 @@ export namespace Prisma {
     creadoEn?: Date | string
   }
 
+  export type ProgramacionRutaCreateManyVehiculoInput = {
+    id?: string
+    rutaId: string
+    conductorId: string
+    fecha: Date | string
+    horaSalida: string
+    horaLlegada?: string | null
+    estado?: string
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
   export type MovimientoDiarioUpdateWithoutVehiculoInput = {
     id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43639,6 +48522,11 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43646,6 +48534,7 @@ export namespace Prisma {
     conductor?: UsuarioUpdateOneRequiredWithoutMovimientosDiariosNestedInput
     inspector?: UsuarioUpdateOneWithoutRevisionesChecklistNestedInput
     checklist?: ChecklistVerificacionUpdateOneWithoutMovimientoNestedInput
+    ruta?: RutaUpdateOneWithoutMovimientosNestedInput
   }
 
   export type MovimientoDiarioUncheckedUpdateWithoutVehiculoInput = {
@@ -43662,8 +48551,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     checklist?: ChecklistVerificacionUncheckedUpdateOneWithoutMovimientoNestedInput
@@ -43683,8 +48578,14 @@ export namespace Prisma {
     horaSalida?: StringFieldUpdateOperationsInput | string
     horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
     horasUtilizacion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaConductor?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaInspector?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaEncargadoGaraje?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaConductor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFirmaInspector?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMovimientoFieldUpdateOperationsInput | $Enums.EstadoMovimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43820,6 +48721,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43853,6 +48758,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43885,6 +48794,10 @@ export namespace Prisma {
     costoPiezasRepuestos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoOtros?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoTotal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    firmaEncargadoTaller?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaTecnico?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeMantenimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaFirmaTecnico?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estado?: EnumEstadoMantenimientoFieldUpdateOperationsInput | $Enums.EstadoMantenimiento
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44144,6 +49057,42 @@ export namespace Prisma {
     fechaEmision?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaVencimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     entidadEmisora?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruta?: RutaUpdateOneRequiredWithoutProgramacionesNestedInput
+    conductor?: UsuarioUpdateOneRequiredWithoutProgramacionesNestedInput
+  }
+
+  export type ProgramacionRutaUncheckedUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramacionRutaUncheckedUpdateManyWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    horaSalida?: StringFieldUpdateOperationsInput | string
+    horaLlegada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }

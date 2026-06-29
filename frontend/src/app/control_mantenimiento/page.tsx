@@ -30,6 +30,10 @@ interface OrdenMantenimiento {
   costoTotal: number;
   estado: "PENDIENTE" | "EN_PROCESO" | "COMPLETADO";
   manoDeObra?: DetalleManoObra[];
+  firmaEncargadoTaller?: string | null;
+  firmaTecnico?: string | null;
+  firmaJefeMantenimiento?: string | null;
+  fechaFirmaTecnico?: string | null;
 }
 
 interface DbVehiculo {
@@ -62,6 +66,12 @@ export default function OrdenesMantenimientoPage() {
   const [costoHora, setCostoHora] = useState("45");
   const [nombreTecnico, setNombreTecnico] = useState("");
   const [savingLabor, setSavingLabor] = useState(false);
+
+  // Estados Firmas
+  const [signingOrderId, setSigningOrderId] = useState<string | null>(null);
+  const [signingRole, setSigningRole] = useState<string>("");
+  const [firmaNombre, setFirmaNombre] = useState("");
+  const [savingFirma, setSavingFirma] = useState(false);
 
   const cargarCatalogos = async () => {
     try {
@@ -169,6 +179,41 @@ export default function OrdenesMantenimientoPage() {
     }
   };
 
+  // Firma digital
+  const handleFirmar = async (ordenId: string, tipoFirma: string) => {
+    if (!firmaNombre.trim()) {
+      alert("Ingrese su nombre para firmar");
+      return;
+    }
+    setSavingFirma(true);
+    try {
+      const res = await fetchWithAuth("/api/control_mantenimiento", {
+        method: "PUT",
+        body: JSON.stringify({
+          id: ordenId,
+          firma: firmaNombre.trim(),
+          tipoFirma,
+        }),
+      });
+
+      if (res.ok) {
+        setSigningOrderId(null);
+        setSigningRole("");
+        setFirmaNombre("");
+        cargarOrdenes();
+        alert("Firma registrada con éxito");
+      } else {
+        const data = await res.json();
+        alert(data.error || "Error al firmar");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error de red al firmar");
+    } finally {
+      setSavingFirma(false);
+    }
+  };
+
   const columns: ColumnDef<OrdenMantenimiento>[] = [
     { header: "N° Orden", accessorKey: "numeroOrden", className: "font-mono text-indigo-400 font-semibold" },
     { header: "Vehículo", accessorKey: "placa" },
@@ -186,6 +231,27 @@ export default function OrdenesMantenimientoPage() {
         return (
           <span className={`inline-block border px-2.5 py-0.5 rounded-full text-xs font-semibold ${classes[row.estado] || classes.PENDIENTE}`}>
             {row.estado}
+          </span>
+        );
+      },
+    },
+    {
+      header: "Firmas",
+      accessorKey: (row) => {
+        const total = 3;
+        const firmadas = [
+          row.firmaEncargadoTaller,
+          row.firmaTecnico,
+          row.firmaJefeMantenimiento,
+        ].filter(Boolean).length;
+        const allSigned = firmadas === total;
+        return (
+          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
+            allSigned
+              ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"
+              : "bg-slate-500/15 text-slate-400 border border-slate-500/20"
+          }`}>
+            {firmadas}/{total}
           </span>
         );
       },
@@ -319,6 +385,104 @@ export default function OrdenesMantenimientoPage() {
                 </div>
               </div>
             </div>
+
+            {/* FIRMAS DIGITALES */}
+            <div className="border-t border-slate-900 pt-4 space-y-4">
+              <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Firmas Digitales (MA 122 02 01)</h4>
+              <div className="space-y-2">
+                {/* Encargado del Taller */}
+                <div className="flex items-center justify-between p-2 bg-slate-900 rounded-xl border border-slate-850">
+                  <div className="text-[10px]">
+                    <span className="text-slate-400 block">Encargado del Taller</span>
+                    {selectedOrder.firmaEncargadoTaller ? (
+                      <span className="text-emerald-400 font-semibold">✓ {selectedOrder.firmaEncargadoTaller}</span>
+                    ) : (
+                      <span className="text-slate-500">Sin firmar</span>
+                    )}
+                  </div>
+                  {!selectedOrder.firmaEncargadoTaller && (
+                    <button
+                      onClick={() => { setSigningOrderId(selectedOrder.id); setSigningRole("encargado_taller"); }}
+                      className="px-2 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold rounded-lg transition"
+                    >
+                      Firmar
+                    </button>
+                  )}
+                </div>
+
+                {/* Técnico */}
+                <div className="flex items-center justify-between p-2 bg-slate-900 rounded-xl border border-slate-850">
+                  <div className="text-[10px]">
+                    <span className="text-slate-400 block">Técnico</span>
+                    {selectedOrder.firmaTecnico ? (
+                      <span className="text-emerald-400 font-semibold">✓ {selectedOrder.firmaTecnico}</span>
+                    ) : (
+                      <span className="text-slate-500">Sin firmar</span>
+                    )}
+                  </div>
+                  {!selectedOrder.firmaTecnico && (
+                    <button
+                      onClick={() => { setSigningOrderId(selectedOrder.id); setSigningRole("tecnico"); }}
+                      className="px-2 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold rounded-lg transition"
+                    >
+                      Firmar
+                    </button>
+                  )}
+                </div>
+
+                {/* Jefe de Mantenimiento */}
+                <div className="flex items-center justify-between p-2 bg-slate-900 rounded-xl border border-slate-850">
+                  <div className="text-[10px]">
+                    <span className="text-slate-400 block">Jefe de Mantenimiento</span>
+                    {selectedOrder.firmaJefeMantenimiento ? (
+                      <span className="text-emerald-400 font-semibold">✓ {selectedOrder.firmaJefeMantenimiento}</span>
+                    ) : (
+                      <span className="text-slate-500">Sin firmar</span>
+                    )}
+                  </div>
+                  {!selectedOrder.firmaJefeMantenimiento && (
+                    <button
+                      onClick={() => { setSigningOrderId(selectedOrder.id); setSigningRole("jefe_mantenimiento"); }}
+                      className="px-2 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold rounded-lg transition"
+                    >
+                      Firmar
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* MODAL FIRMA */}
+            {signingOrderId && (
+              <div className="border-t border-slate-900 pt-4 space-y-3">
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Firmar como {
+                  signingRole === "encargado_taller" ? "Encargado del Taller" :
+                  signingRole === "tecnico" ? "Técnico" : "Jefe de Mantenimiento"
+                }</h4>
+                <input
+                  type="text"
+                  placeholder="Nombre completo para la firma"
+                  value={firmaNombre}
+                  onChange={(e) => setFirmaNombre(e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { setSigningOrderId(null); setSigningRole(""); setFirmaNombre(""); }}
+                    className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={() => handleFirmar(signingOrderId, signingRole)}
+                    disabled={savingFirma || !firmaNombre.trim()}
+                    className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 text-white font-bold rounded-xl text-xs transition"
+                  >
+                    {savingFirma ? "Firmando..." : "Confirmar Firma"}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* FORMULARIO TARJETA MANO DE OBRA (MA 122 02 04) */}
             <div className="border-t border-slate-900 pt-4 space-y-4">

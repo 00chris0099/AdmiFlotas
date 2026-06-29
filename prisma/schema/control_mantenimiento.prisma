@@ -53,6 +53,12 @@ model OrdenMantenimiento {
   /// Costo total de la orden (calculado: MO + Piezas + Otros)
   costoTotal            Decimal? @map("costo_total") @db.Decimal(12, 2)
 
+  // Firmas Digitales
+  firmaEncargadoTaller   String?    @map("firma_encargado_taller") @db.VarChar(100)
+  firmaTecnico           String?    @map("firma_tecnico") @db.VarChar(100)
+  firmaJefeMantenimiento String?    @map("firma_jefe_mantenimiento") @db.VarChar(100)
+  fechaFirmaTecnico      DateTime?  @map("fecha_firma_tecnico")
+
   // â”€â”€ Estado â”€â”€
   estado        EstadoMantenimiento @default(PENDIENTE)
   observaciones String?

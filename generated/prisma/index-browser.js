@@ -245,6 +245,10 @@ exports.Prisma.OrdenMantenimientoScalarFieldEnum = {
   costoPiezasRepuestos: 'costoPiezasRepuestos',
   costoOtros: 'costoOtros',
   costoTotal: 'costoTotal',
+  firmaEncargadoTaller: 'firmaEncargadoTaller',
+  firmaTecnico: 'firmaTecnico',
+  firmaJefeMantenimiento: 'firmaJefeMantenimiento',
+  fechaFirmaTecnico: 'fechaFirmaTecnico',
   estado: 'estado',
   observaciones: 'observaciones',
   creadoEn: 'creadoEn',
@@ -315,8 +319,14 @@ exports.Prisma.MovimientoDiarioScalarFieldEnum = {
   horaSalida: 'horaSalida',
   horaLlegada: 'horaLlegada',
   horasUtilizacion: 'horasUtilizacion',
+  firmaConductor: 'firmaConductor',
+  firmaInspector: 'firmaInspector',
+  firmaEncargadoGaraje: 'firmaEncargadoGaraje',
+  fechaFirmaConductor: 'fechaFirmaConductor',
+  fechaFirmaInspector: 'fechaFirmaInspector',
   estado: 'estado',
   observaciones: 'observaciones',
+  rutaId: 'rutaId',
   creadoEn: 'creadoEn',
   actualizadoEn: 'actualizadoEn'
 };
@@ -359,6 +369,30 @@ exports.Prisma.ChecklistVerificacionScalarFieldEnum = {
   firmaConductor: 'firmaConductor',
   firmaInspector: 'firmaInspector',
   fechaRegistro: 'fechaRegistro'
+};
+
+exports.Prisma.RutaScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  origen: 'origen',
+  destino: 'destino',
+  distanciaKm: 'distanciaKm',
+  tiempoEstimado: 'tiempoEstimado',
+  activa: 'activa',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.ProgramacionRutaScalarFieldEnum = {
+  id: 'id',
+  rutaId: 'rutaId',
+  vehiculoId: 'vehiculoId',
+  conductorId: 'conductorId',
+  fecha: 'fecha',
+  horaSalida: 'horaSalida',
+  horaLlegada: 'horaLlegada',
+  estado: 'estado',
+  observaciones: 'observaciones',
+  creadoEn: 'creadoEn'
 };
 
 exports.Prisma.PermisoScalarFieldEnum = {
@@ -662,6 +696,8 @@ exports.Prisma.ModelName = {
   DocumentoVehiculo: 'DocumentoVehiculo',
   MovimientoDiario: 'MovimientoDiario',
   ChecklistVerificacion: 'ChecklistVerificacion',
+  Ruta: 'Ruta',
+  ProgramacionRuta: 'ProgramacionRuta',
   Permiso: 'Permiso',
   PermisoUsuario: 'PermisoUsuario',
   SesionAuth: 'SesionAuth',
