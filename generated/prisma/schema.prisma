@@ -122,14 +122,16 @@ model ConfiguracionFlota {
 
 /// Orden de abastecimiento de combustible y lubricantes â€” MA 122 01 02
 model OrdenCombustible {
-  id                String               @id @default(uuid())
+  id                 String               @id @default(uuid())
   /// NÃºmero de orden correlativo
-  numeroOrden       String               @unique @map("numero_orden") @db.VarChar(20)
-  fecha             DateTime             @db.Date
-  vehiculoId        String               @map("vehiculo_id")
-  conductorId       String               @map("conductor_id")
-  sectorSolicitante String               @map("sector_solicitante") @db.VarChar(150)
-  tipoCombustible   TipoCombustibleOrden @map("tipo_combustible")
+  numeroOrden        String               @unique @map("numero_orden") @db.VarChar(20)
+  fecha              DateTime             @db.Date
+  vehiculoId         String               @map("vehiculo_id")
+  conductorId        String               @map("conductor_id")
+  sectorSolicitante  String               @map("sector_solicitante") @db.VarChar(150)
+  tipoCombustible    TipoCombustibleOrden @map("tipo_combustible")
+  /// Subtipo de combustible (ej. DIESEL_UBA, GASOLINA_95)
+  subtipoCombustible String?              @map("subtipo_combustible") @db.VarChar(50)
 
   // â”€â”€ Combustible â”€â”€
   cantidadGalones  Decimal? @map("cantidad_galones") @db.Decimal(8, 2)
@@ -926,100 +928,77 @@ enum TipoToken {
 }
 
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: vehiculos.prisma â€” Esquema de VehÃ­culos y Ficha TÃ©cnica
+// SAF - Sistema de Administracion de Flotas
+// Archivo: vehiculos.prisma - Esquema de Vehiculos
 // ============================================================
 
-/// VehÃ­culo: tabla central del SAF. Ficha tÃ©cnica patrimonial completa (F1T02 Diagrama 3)
 model Vehiculo {
   id String @id @default(uuid())
 
-  // â”€â”€ IdentificaciÃ³n Patrimonial (CÃ³digo 6 dÃ­gitos: CL-CAT-SEQ) â”€â”€
-  /// Clase del vehÃ­culo: 01=Terrestre, 02=AcuÃ¡tico, 03=AÃ©reo
+  // Identificacion Patrimonial
   clasePatrimonial     String            @map("clase_patrimonial") @db.VarChar(2)
-  /// CategorÃ­a: 01=Pasajeros, 02=Carga, 03=Especial
   categoriaPatrimonial CategoriaVehiculo @map("categoria_patrimonial")
-  /// NÃºmero secuencial dentro de la categorÃ­a (001â€“999)
   secuencial           String            @db.VarChar(3)
-  /// CÃ³digo patrimonial completo generado: ej. "010200 3" â†’ "01-02-003"
   codigoPatrimonial    String            @unique @map("codigo_patrimonial") @db.VarChar(20)
 
-  // â”€â”€ Datos de Registro â”€â”€
+  // Datos de Registro
   placa           String  @unique @db.VarChar(10)
   marca           String  @db.VarChar(80)
   modelo          String  @db.VarChar(80)
   anioFabricacion Int     @map("anio_fabricacion")
   color           String? @db.VarChar(50)
 
-  // â”€â”€ Especificaciones del Motor y Chasis â”€â”€
+  // Especificaciones del Motor y Chasis
   numeroMotor        String?         @unique @map("numero_motor") @db.VarChar(50)
   numeroChasis       String?         @unique @map("numero_chasis") @db.VarChar(50)
   potenciaHp         Int?            @map("potencia_hp")
   cilindraje         Decimal?        @db.Decimal(5, 2)
   numeroCilindros    Int?            @map("numero_cilindros")
   tipoCombustible    TipoCombustible @map("tipo_combustible")
+  subtipoCombustible String?         @map("subtipo_combustible") @db.VarChar(50)
   capacidadTanqueGal Decimal?        @map("capacidad_tanque_gal") @db.Decimal(8, 2)
 
-  // â”€â”€ Capacidades de Carga y Pasajeros â”€â”€
+  // Capacidades de Carga y Pasajeros
   capacidadCargaKg   Decimal? @map("capacidad_carga_kg") @db.Decimal(10, 2)
   capacidadPasajeros Int?     @map("capacidad_pasajeros")
   pesoNetoKg         Decimal? @map("peso_neto_kg") @db.Decimal(10, 2)
   pesoBrutoKg        Decimal? @map("peso_bruto_kg") @db.Decimal(10, 2)
 
-  // â”€â”€ Especificaciones ElÃ©ctricas de la BaterÃ­a â”€â”€
-  /// Tipo de baterÃ­a (ej. Plomo-Ãcido, AGM, Gel)
+  // Especificaciones Electricas de la Bateria
   bateriaTipo     String? @map("bateria_tipo") @db.VarChar(50)
-  /// NÃºmero de celdas de la baterÃ­a
   bateriaCeldas   Int?    @map("bateria_celdas")
-  /// Voltaje nominal de la baterÃ­a (6V, 12V, 24V)
   bateriaVoltios  Int?    @map("bateria_voltios")
-  /// Amperaje/Capacidad en Ah
   bateriaAmperios Int?    @map("bateria_amperios")
-  /// NÃºmero de baterÃ­as instaladas
   numeroBaterias  Int?    @default(1) @map("numero_baterias")
 
-  // â”€â”€ ConfiguraciÃ³n de Ejes y Llantas â”€â”€
+  // Configuracion de Ejes y Llantas
   numeroEjes              Int?     @map("numero_ejes")
   configuracionEjes       String?  @map("configuracion_ejes") @db.VarChar(30)
-  /// NÃºmero total de llantas (incluyendo repuesto)
   totalLlantas            Int?     @default(4) @map("total_llantas")
   dimensionLlantaEstandar String?  @map("dimension_llanta_estandar") @db.VarChar(30)
   presionLlantaDelantera  Decimal? @map("presion_llanta_delantera") @db.Decimal(5, 2)
   presionLlantaTrasera    Decimal? @map("presion_llanta_trasera") @db.Decimal(5, 2)
 
-  // â”€â”€ Inventario FÃ­sico del VehÃ­culo (Diagrama 3 â€” Estado Visual) â”€â”€
-  /// Estado de la pintura: BUENO / REGULAR / MALO
+  // Inventario Fisico del Vehiculo
   estadoPintura          EstadoFisico? @map("estado_pintura")
-  /// Estado de los faros delanteros
   estadoFaros            EstadoFisico? @map("estado_faros")
-  /// Estado de las lunas/vidrios
   estadoLunas            EstadoFisico? @map("estado_lunas")
-  /// Estado de los espejos retrovisores
   estadoEspejos          EstadoFisico? @map("estado_espejos")
-  /// Estado general de la carrocerÃ­a
   estadoCarroceria       EstadoFisico? @map("estado_carroceria")
-  /// Inventario de herramientas y accesorios (texto libre o JSON)
   inventarioHerramientas String?       @map("inventario_herramientas")
-  /// Observaciones generales del estado fÃ­sico
   observacionesFisicas   String?       @map("observaciones_fisicas")
 
-  // â”€â”€ Costos Fijos del VehÃ­culo â€” Soporte para CKV â”€â”€
-  /// Valor de adquisiciÃ³n del vehÃ­culo (para cÃ¡lculo de depreciaciÃ³n)
+  // Costos Fijos del Vehiculo
   valorAdquisicion            Decimal? @map("valor_adquisicion") @db.Decimal(14, 2)
-  /// Vida Ãºtil estimada en aÃ±os (para cÃ¡lculo de depreciaciÃ³n)
   vidaUtilAnios               Int?     @map("vida_util_anios")
-  /// KilÃ³metros anuales de referencia para prorratear depreciaciÃ³n
   kmAnualesReferencia         Int?     @map("km_anuales_referencia")
-  /// Prima de seguro anual del vehÃ­culo
   seguroAnual                 Decimal? @map("seguro_anual") @db.Decimal(12, 2)
-  /// Costo anual de licenciamiento y SOAT
   licenciamientoAnual         Decimal? @map("licenciamiento_anual") @db.Decimal(10, 2)
-  /// Kilometraje en que se activÃ³ la alerta de mantenimiento preventivo
   kmAlertaMantenimiento       Int?     @map("km_alerta_mantenimiento")
-  /// Periodicidad de mantenimiento preventivo en km (segÃºn fabricante)
   periodicidadMantenimientoKm Int?     @default(5000) @map("periodicidad_mantenimiento_km")
+  kilometrajeActual           Int?     @map("kilometraje_actual")
 
-  // â”€â”€ Estado Operativo â”€â”€
+  // Estado Operativo
   estado        EstadoVehiculo @default(OPERATIVO)
   fechaIngreso  DateTime       @default(now()) @map("fecha_ingreso")
   fechaBaja     DateTime?      @map("fecha_baja")
@@ -1027,7 +1006,7 @@ model Vehiculo {
   creadoEn      DateTime       @default(now()) @map("creado_en")
   actualizadoEn DateTime       @updatedAt @map("actualizado_en")
 
-  // â”€â”€ Relaciones â”€â”€
+  // Relaciones
   movimientosDiarios      MovimientoDiario[]
   ordenesCombustible      OrdenCombustible[]
   ordenesMantenimiento    OrdenMantenimiento[]
@@ -1049,14 +1028,12 @@ model Vehiculo {
   @@map("vehiculos")
 }
 
-/// CategorÃ­as patrimoniales del vehÃ­culo segÃºn clasificaciÃ³n F1T02
 enum CategoriaVehiculo {
   PASAJEROS
   CARGA
   ESPECIAL
 }
 
-/// Tipos de combustible del vehÃ­culo
 enum TipoCombustible {
   GASOLINA
   DIESEL
@@ -1065,7 +1042,6 @@ enum TipoCombustible {
   HIBRIDO
 }
 
-/// Estado operativo del vehÃ­culo
 enum EstadoVehiculo {
   OPERATIVO
   EN_MANTENIMIENTO
@@ -1073,7 +1049,6 @@ enum EstadoVehiculo {
   DADO_DE_BAJA
 }
 
-/// Estado fÃ­sico de componentes visuales del vehÃ­culo (Diagrama 3)
 enum EstadoFisico {
   BUENO
   REGULAR

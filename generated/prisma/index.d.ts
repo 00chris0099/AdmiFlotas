@@ -125,7 +125,7 @@ export type Auditoria = $Result.DefaultSelection<Prisma.$AuditoriaPayload>
 export type TokenConfirmacion = $Result.DefaultSelection<Prisma.$TokenConfirmacionPayload>
 /**
  * Model Vehiculo
- * VehÃ­culo: tabla central del SAF. Ficha tÃ©cnica patrimonial completa (F1T02 Diagrama 3)
+ * 
  */
 export type Vehiculo = $Result.DefaultSelection<Prisma.$VehiculoPayload>
 /**
@@ -6263,6 +6263,7 @@ export namespace Prisma {
     conductorId: string | null
     sectorSolicitante: string | null
     tipoCombustible: $Enums.TipoCombustibleOrden | null
+    subtipoCombustible: string | null
     cantidadGalones: Decimal | null
     costoGalon: Decimal | null
     costoCombustible: Decimal | null
@@ -6300,6 +6301,7 @@ export namespace Prisma {
     conductorId: string | null
     sectorSolicitante: string | null
     tipoCombustible: $Enums.TipoCombustibleOrden | null
+    subtipoCombustible: string | null
     cantidadGalones: Decimal | null
     costoGalon: Decimal | null
     costoCombustible: Decimal | null
@@ -6337,6 +6339,7 @@ export namespace Prisma {
     conductorId: number
     sectorSolicitante: number
     tipoCombustible: number
+    subtipoCombustible: number
     cantidadGalones: number
     costoGalon: number
     costoCombustible: number
@@ -6400,6 +6403,7 @@ export namespace Prisma {
     conductorId?: true
     sectorSolicitante?: true
     tipoCombustible?: true
+    subtipoCombustible?: true
     cantidadGalones?: true
     costoGalon?: true
     costoCombustible?: true
@@ -6437,6 +6441,7 @@ export namespace Prisma {
     conductorId?: true
     sectorSolicitante?: true
     tipoCombustible?: true
+    subtipoCombustible?: true
     cantidadGalones?: true
     costoGalon?: true
     costoCombustible?: true
@@ -6474,6 +6479,7 @@ export namespace Prisma {
     conductorId?: true
     sectorSolicitante?: true
     tipoCombustible?: true
+    subtipoCombustible?: true
     cantidadGalones?: true
     costoGalon?: true
     costoCombustible?: true
@@ -6598,6 +6604,7 @@ export namespace Prisma {
     conductorId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible: string | null
     cantidadGalones: Decimal | null
     costoGalon: Decimal | null
     costoCombustible: Decimal | null
@@ -6654,6 +6661,7 @@ export namespace Prisma {
     conductorId?: boolean
     sectorSolicitante?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     cantidadGalones?: boolean
     costoGalon?: boolean
     costoCombustible?: boolean
@@ -6693,6 +6701,7 @@ export namespace Prisma {
     conductorId?: boolean
     sectorSolicitante?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     cantidadGalones?: boolean
     costoGalon?: boolean
     costoCombustible?: boolean
@@ -6732,6 +6741,7 @@ export namespace Prisma {
     conductorId?: boolean
     sectorSolicitante?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     cantidadGalones?: boolean
     costoGalon?: boolean
     costoCombustible?: boolean
@@ -6771,6 +6781,7 @@ export namespace Prisma {
     conductorId?: boolean
     sectorSolicitante?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     cantidadGalones?: boolean
     costoGalon?: boolean
     costoCombustible?: boolean
@@ -6800,7 +6811,7 @@ export namespace Prisma {
     actualizadoEn?: boolean
   }
 
-  export type OrdenCombustibleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroOrden" | "fecha" | "vehiculoId" | "conductorId" | "sectorSolicitante" | "tipoCombustible" | "cantidadGalones" | "costoGalon" | "costoCombustible" | "incluyeAceiteMotor" | "cantidadAceiteMotorLt" | "marcaAceiteMotor" | "viscosidadAceiteMotor" | "costoAceiteMotor" | "incluyeAceiteCaja" | "cantidadAceiteCajaLt" | "marcaAceiteCaja" | "viscosidadAceiteCaja" | "costoAceiteCaja" | "costoTotal" | "kilometrajeActual" | "nombreServiccentro" | "direccionServiccentro" | "numeroTicketServiccentro" | "responsableServiccentro" | "selloServiccentro" | "localidadSolicitante" | "firmaEncargadoGaraje" | "firmaConductor" | "firmaServicentro" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["ordenCombustible"]>
+  export type OrdenCombustibleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroOrden" | "fecha" | "vehiculoId" | "conductorId" | "sectorSolicitante" | "tipoCombustible" | "subtipoCombustible" | "cantidadGalones" | "costoGalon" | "costoCombustible" | "incluyeAceiteMotor" | "cantidadAceiteMotorLt" | "marcaAceiteMotor" | "viscosidadAceiteMotor" | "costoAceiteMotor" | "incluyeAceiteCaja" | "cantidadAceiteCajaLt" | "marcaAceiteCaja" | "viscosidadAceiteCaja" | "costoAceiteCaja" | "costoTotal" | "kilometrajeActual" | "nombreServiccentro" | "direccionServiccentro" | "numeroTicketServiccentro" | "responsableServiccentro" | "selloServiccentro" | "localidadSolicitante" | "firmaEncargadoGaraje" | "firmaConductor" | "firmaServicentro" | "observaciones" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["ordenCombustible"]>
   export type OrdenCombustibleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
     conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
@@ -6831,6 +6842,10 @@ export namespace Prisma {
       conductorId: string
       sectorSolicitante: string
       tipoCombustible: $Enums.TipoCombustibleOrden
+      /**
+       * Subtipo de combustible (ej. DIESEL_UBA, GASOLINA_95)
+       */
+      subtipoCombustible: string | null
       cantidadGalones: Prisma.Decimal | null
       costoGalon: Prisma.Decimal | null
       costoCombustible: Prisma.Decimal | null
@@ -7317,6 +7332,7 @@ export namespace Prisma {
     readonly conductorId: FieldRef<"OrdenCombustible", 'String'>
     readonly sectorSolicitante: FieldRef<"OrdenCombustible", 'String'>
     readonly tipoCombustible: FieldRef<"OrdenCombustible", 'TipoCombustibleOrden'>
+    readonly subtipoCombustible: FieldRef<"OrdenCombustible", 'String'>
     readonly cantidadGalones: FieldRef<"OrdenCombustible", 'Decimal'>
     readonly costoGalon: FieldRef<"OrdenCombustible", 'Decimal'>
     readonly costoCombustible: FieldRef<"OrdenCombustible", 'Decimal'>
@@ -30573,6 +30589,7 @@ export namespace Prisma {
     licenciamientoAnual: Decimal | null
     kmAlertaMantenimiento: number | null
     periodicidadMantenimientoKm: number | null
+    kilometrajeActual: number | null
   }
 
   export type VehiculoSumAggregateOutputType = {
@@ -30600,6 +30617,7 @@ export namespace Prisma {
     licenciamientoAnual: Decimal | null
     kmAlertaMantenimiento: number | null
     periodicidadMantenimientoKm: number | null
+    kilometrajeActual: number | null
   }
 
   export type VehiculoMinAggregateOutputType = {
@@ -30619,6 +30637,7 @@ export namespace Prisma {
     cilindraje: Decimal | null
     numeroCilindros: number | null
     tipoCombustible: $Enums.TipoCombustible | null
+    subtipoCombustible: string | null
     capacidadTanqueGal: Decimal | null
     capacidadCargaKg: Decimal | null
     capacidadPasajeros: number | null
@@ -30649,6 +30668,7 @@ export namespace Prisma {
     licenciamientoAnual: Decimal | null
     kmAlertaMantenimiento: number | null
     periodicidadMantenimientoKm: number | null
+    kilometrajeActual: number | null
     estado: $Enums.EstadoVehiculo | null
     fechaIngreso: Date | null
     fechaBaja: Date | null
@@ -30674,6 +30694,7 @@ export namespace Prisma {
     cilindraje: Decimal | null
     numeroCilindros: number | null
     tipoCombustible: $Enums.TipoCombustible | null
+    subtipoCombustible: string | null
     capacidadTanqueGal: Decimal | null
     capacidadCargaKg: Decimal | null
     capacidadPasajeros: number | null
@@ -30704,6 +30725,7 @@ export namespace Prisma {
     licenciamientoAnual: Decimal | null
     kmAlertaMantenimiento: number | null
     periodicidadMantenimientoKm: number | null
+    kilometrajeActual: number | null
     estado: $Enums.EstadoVehiculo | null
     fechaIngreso: Date | null
     fechaBaja: Date | null
@@ -30729,6 +30751,7 @@ export namespace Prisma {
     cilindraje: number
     numeroCilindros: number
     tipoCombustible: number
+    subtipoCombustible: number
     capacidadTanqueGal: number
     capacidadCargaKg: number
     capacidadPasajeros: number
@@ -30759,6 +30782,7 @@ export namespace Prisma {
     licenciamientoAnual: number
     kmAlertaMantenimiento: number
     periodicidadMantenimientoKm: number
+    kilometrajeActual: number
     estado: number
     fechaIngreso: number
     fechaBaja: number
@@ -30794,6 +30818,7 @@ export namespace Prisma {
     licenciamientoAnual?: true
     kmAlertaMantenimiento?: true
     periodicidadMantenimientoKm?: true
+    kilometrajeActual?: true
   }
 
   export type VehiculoSumAggregateInputType = {
@@ -30821,6 +30846,7 @@ export namespace Prisma {
     licenciamientoAnual?: true
     kmAlertaMantenimiento?: true
     periodicidadMantenimientoKm?: true
+    kilometrajeActual?: true
   }
 
   export type VehiculoMinAggregateInputType = {
@@ -30840,6 +30866,7 @@ export namespace Prisma {
     cilindraje?: true
     numeroCilindros?: true
     tipoCombustible?: true
+    subtipoCombustible?: true
     capacidadTanqueGal?: true
     capacidadCargaKg?: true
     capacidadPasajeros?: true
@@ -30870,6 +30897,7 @@ export namespace Prisma {
     licenciamientoAnual?: true
     kmAlertaMantenimiento?: true
     periodicidadMantenimientoKm?: true
+    kilometrajeActual?: true
     estado?: true
     fechaIngreso?: true
     fechaBaja?: true
@@ -30895,6 +30923,7 @@ export namespace Prisma {
     cilindraje?: true
     numeroCilindros?: true
     tipoCombustible?: true
+    subtipoCombustible?: true
     capacidadTanqueGal?: true
     capacidadCargaKg?: true
     capacidadPasajeros?: true
@@ -30925,6 +30954,7 @@ export namespace Prisma {
     licenciamientoAnual?: true
     kmAlertaMantenimiento?: true
     periodicidadMantenimientoKm?: true
+    kilometrajeActual?: true
     estado?: true
     fechaIngreso?: true
     fechaBaja?: true
@@ -30950,6 +30980,7 @@ export namespace Prisma {
     cilindraje?: true
     numeroCilindros?: true
     tipoCombustible?: true
+    subtipoCombustible?: true
     capacidadTanqueGal?: true
     capacidadCargaKg?: true
     capacidadPasajeros?: true
@@ -30980,6 +31011,7 @@ export namespace Prisma {
     licenciamientoAnual?: true
     kmAlertaMantenimiento?: true
     periodicidadMantenimientoKm?: true
+    kilometrajeActual?: true
     estado?: true
     fechaIngreso?: true
     fechaBaja?: true
@@ -31092,6 +31124,7 @@ export namespace Prisma {
     cilindraje: Decimal | null
     numeroCilindros: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible: string | null
     capacidadTanqueGal: Decimal | null
     capacidadCargaKg: Decimal | null
     capacidadPasajeros: number | null
@@ -31122,6 +31155,7 @@ export namespace Prisma {
     licenciamientoAnual: Decimal | null
     kmAlertaMantenimiento: number | null
     periodicidadMantenimientoKm: number | null
+    kilometrajeActual: number | null
     estado: $Enums.EstadoVehiculo
     fechaIngreso: Date
     fechaBaja: Date | null
@@ -31166,6 +31200,7 @@ export namespace Prisma {
     cilindraje?: boolean
     numeroCilindros?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     capacidadTanqueGal?: boolean
     capacidadCargaKg?: boolean
     capacidadPasajeros?: boolean
@@ -31196,6 +31231,7 @@ export namespace Prisma {
     licenciamientoAnual?: boolean
     kmAlertaMantenimiento?: boolean
     periodicidadMantenimientoKm?: boolean
+    kilometrajeActual?: boolean
     estado?: boolean
     fechaIngreso?: boolean
     fechaBaja?: boolean
@@ -31233,6 +31269,7 @@ export namespace Prisma {
     cilindraje?: boolean
     numeroCilindros?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     capacidadTanqueGal?: boolean
     capacidadCargaKg?: boolean
     capacidadPasajeros?: boolean
@@ -31263,6 +31300,7 @@ export namespace Prisma {
     licenciamientoAnual?: boolean
     kmAlertaMantenimiento?: boolean
     periodicidadMantenimientoKm?: boolean
+    kilometrajeActual?: boolean
     estado?: boolean
     fechaIngreso?: boolean
     fechaBaja?: boolean
@@ -31288,6 +31326,7 @@ export namespace Prisma {
     cilindraje?: boolean
     numeroCilindros?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     capacidadTanqueGal?: boolean
     capacidadCargaKg?: boolean
     capacidadPasajeros?: boolean
@@ -31318,6 +31357,7 @@ export namespace Prisma {
     licenciamientoAnual?: boolean
     kmAlertaMantenimiento?: boolean
     periodicidadMantenimientoKm?: boolean
+    kilometrajeActual?: boolean
     estado?: boolean
     fechaIngreso?: boolean
     fechaBaja?: boolean
@@ -31343,6 +31383,7 @@ export namespace Prisma {
     cilindraje?: boolean
     numeroCilindros?: boolean
     tipoCombustible?: boolean
+    subtipoCombustible?: boolean
     capacidadTanqueGal?: boolean
     capacidadCargaKg?: boolean
     capacidadPasajeros?: boolean
@@ -31373,6 +31414,7 @@ export namespace Prisma {
     licenciamientoAnual?: boolean
     kmAlertaMantenimiento?: boolean
     periodicidadMantenimientoKm?: boolean
+    kilometrajeActual?: boolean
     estado?: boolean
     fechaIngreso?: boolean
     fechaBaja?: boolean
@@ -31381,7 +31423,7 @@ export namespace Prisma {
     actualizadoEn?: boolean
   }
 
-  export type VehiculoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clasePatrimonial" | "categoriaPatrimonial" | "secuencial" | "codigoPatrimonial" | "placa" | "marca" | "modelo" | "anioFabricacion" | "color" | "numeroMotor" | "numeroChasis" | "potenciaHp" | "cilindraje" | "numeroCilindros" | "tipoCombustible" | "capacidadTanqueGal" | "capacidadCargaKg" | "capacidadPasajeros" | "pesoNetoKg" | "pesoBrutoKg" | "bateriaTipo" | "bateriaCeldas" | "bateriaVoltios" | "bateriaAmperios" | "numeroBaterias" | "numeroEjes" | "configuracionEjes" | "totalLlantas" | "dimensionLlantaEstandar" | "presionLlantaDelantera" | "presionLlantaTrasera" | "estadoPintura" | "estadoFaros" | "estadoLunas" | "estadoEspejos" | "estadoCarroceria" | "inventarioHerramientas" | "observacionesFisicas" | "valorAdquisicion" | "vidaUtilAnios" | "kmAnualesReferencia" | "seguroAnual" | "licenciamientoAnual" | "kmAlertaMantenimiento" | "periodicidadMantenimientoKm" | "estado" | "fechaIngreso" | "fechaBaja" | "motivoBaja" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["vehiculo"]>
+  export type VehiculoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clasePatrimonial" | "categoriaPatrimonial" | "secuencial" | "codigoPatrimonial" | "placa" | "marca" | "modelo" | "anioFabricacion" | "color" | "numeroMotor" | "numeroChasis" | "potenciaHp" | "cilindraje" | "numeroCilindros" | "tipoCombustible" | "subtipoCombustible" | "capacidadTanqueGal" | "capacidadCargaKg" | "capacidadPasajeros" | "pesoNetoKg" | "pesoBrutoKg" | "bateriaTipo" | "bateriaCeldas" | "bateriaVoltios" | "bateriaAmperios" | "numeroBaterias" | "numeroEjes" | "configuracionEjes" | "totalLlantas" | "dimensionLlantaEstandar" | "presionLlantaDelantera" | "presionLlantaTrasera" | "estadoPintura" | "estadoFaros" | "estadoLunas" | "estadoEspejos" | "estadoCarroceria" | "inventarioHerramientas" | "observacionesFisicas" | "valorAdquisicion" | "vidaUtilAnios" | "kmAnualesReferencia" | "seguroAnual" | "licenciamientoAnual" | "kmAlertaMantenimiento" | "periodicidadMantenimientoKm" | "kilometrajeActual" | "estado" | "fechaIngreso" | "fechaBaja" | "motivoBaja" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["vehiculo"]>
   export type VehiculoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     movimientosDiarios?: boolean | Vehiculo$movimientosDiariosArgs<ExtArgs>
     ordenesCombustible?: boolean | Vehiculo$ordenesCombustibleArgs<ExtArgs>
@@ -31416,21 +31458,9 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      /**
-       * Clase del vehÃ­culo: 01=Terrestre, 02=AcuÃ¡tico, 03=AÃ©reo
-       */
       clasePatrimonial: string
-      /**
-       * CategorÃ­a: 01=Pasajeros, 02=Carga, 03=Especial
-       */
       categoriaPatrimonial: $Enums.CategoriaVehiculo
-      /**
-       * NÃºmero secuencial dentro de la categorÃ­a (001â€“999)
-       */
       secuencial: string
-      /**
-       * CÃ³digo patrimonial completo generado: ej. "010200 3" â†’ "01-02-003"
-       */
       codigoPatrimonial: string
       placa: string
       marca: string
@@ -31443,96 +31473,38 @@ export namespace Prisma {
       cilindraje: Prisma.Decimal | null
       numeroCilindros: number | null
       tipoCombustible: $Enums.TipoCombustible
+      subtipoCombustible: string | null
       capacidadTanqueGal: Prisma.Decimal | null
       capacidadCargaKg: Prisma.Decimal | null
       capacidadPasajeros: number | null
       pesoNetoKg: Prisma.Decimal | null
       pesoBrutoKg: Prisma.Decimal | null
-      /**
-       * Tipo de baterÃ­a (ej. Plomo-Ãcido, AGM, Gel)
-       */
       bateriaTipo: string | null
-      /**
-       * NÃºmero de celdas de la baterÃ­a
-       */
       bateriaCeldas: number | null
-      /**
-       * Voltaje nominal de la baterÃ­a (6V, 12V, 24V)
-       */
       bateriaVoltios: number | null
-      /**
-       * Amperaje/Capacidad en Ah
-       */
       bateriaAmperios: number | null
-      /**
-       * NÃºmero de baterÃ­as instaladas
-       */
       numeroBaterias: number | null
       numeroEjes: number | null
       configuracionEjes: string | null
-      /**
-       * NÃºmero total de llantas (incluyendo repuesto)
-       */
       totalLlantas: number | null
       dimensionLlantaEstandar: string | null
       presionLlantaDelantera: Prisma.Decimal | null
       presionLlantaTrasera: Prisma.Decimal | null
-      /**
-       * Estado de la pintura: BUENO / REGULAR / MALO
-       */
       estadoPintura: $Enums.EstadoFisico | null
-      /**
-       * Estado de los faros delanteros
-       */
       estadoFaros: $Enums.EstadoFisico | null
-      /**
-       * Estado de las lunas/vidrios
-       */
       estadoLunas: $Enums.EstadoFisico | null
-      /**
-       * Estado de los espejos retrovisores
-       */
       estadoEspejos: $Enums.EstadoFisico | null
-      /**
-       * Estado general de la carrocerÃ­a
-       */
       estadoCarroceria: $Enums.EstadoFisico | null
-      /**
-       * Inventario de herramientas y accesorios (texto libre o JSON)
-       */
       inventarioHerramientas: string | null
-      /**
-       * Observaciones generales del estado fÃ­sico
-       */
       observacionesFisicas: string | null
-      /**
-       * Valor de adquisiciÃ³n del vehÃ­culo (para cÃ¡lculo de depreciaciÃ³n)
-       */
       valorAdquisicion: Prisma.Decimal | null
-      /**
-       * Vida Ãºtil estimada en aÃ±os (para cÃ¡lculo de depreciaciÃ³n)
-       */
       vidaUtilAnios: number | null
-      /**
-       * KilÃ³metros anuales de referencia para prorratear depreciaciÃ³n
-       */
       kmAnualesReferencia: number | null
-      /**
-       * Prima de seguro anual del vehÃ­culo
-       */
       seguroAnual: Prisma.Decimal | null
-      /**
-       * Costo anual de licenciamiento y SOAT
-       */
       licenciamientoAnual: Prisma.Decimal | null
-      /**
-       * Kilometraje en que se activÃ³ la alerta de mantenimiento preventivo
-       */
       kmAlertaMantenimiento: number | null
-      /**
-       * Periodicidad de mantenimiento preventivo en km (segÃºn fabricante)
-       */
       periodicidadMantenimientoKm: number | null
+      kilometrajeActual: number | null
       estado: $Enums.EstadoVehiculo
       fechaIngreso: Date
       fechaBaja: Date | null
@@ -31989,6 +31961,7 @@ export namespace Prisma {
     readonly cilindraje: FieldRef<"Vehiculo", 'Decimal'>
     readonly numeroCilindros: FieldRef<"Vehiculo", 'Int'>
     readonly tipoCombustible: FieldRef<"Vehiculo", 'TipoCombustible'>
+    readonly subtipoCombustible: FieldRef<"Vehiculo", 'String'>
     readonly capacidadTanqueGal: FieldRef<"Vehiculo", 'Decimal'>
     readonly capacidadCargaKg: FieldRef<"Vehiculo", 'Decimal'>
     readonly capacidadPasajeros: FieldRef<"Vehiculo", 'Int'>
@@ -32019,6 +31992,7 @@ export namespace Prisma {
     readonly licenciamientoAnual: FieldRef<"Vehiculo", 'Decimal'>
     readonly kmAlertaMantenimiento: FieldRef<"Vehiculo", 'Int'>
     readonly periodicidadMantenimientoKm: FieldRef<"Vehiculo", 'Int'>
+    readonly kilometrajeActual: FieldRef<"Vehiculo", 'Int'>
     readonly estado: FieldRef<"Vehiculo", 'EstadoVehiculo'>
     readonly fechaIngreso: FieldRef<"Vehiculo", 'DateTime'>
     readonly fechaBaja: FieldRef<"Vehiculo", 'DateTime'>
@@ -35068,6 +35042,7 @@ export namespace Prisma {
     conductorId: 'conductorId',
     sectorSolicitante: 'sectorSolicitante',
     tipoCombustible: 'tipoCombustible',
+    subtipoCombustible: 'subtipoCombustible',
     cantidadGalones: 'cantidadGalones',
     costoGalon: 'costoGalon',
     costoCombustible: 'costoCombustible',
@@ -35468,6 +35443,7 @@ export namespace Prisma {
     cilindraje: 'cilindraje',
     numeroCilindros: 'numeroCilindros',
     tipoCombustible: 'tipoCombustible',
+    subtipoCombustible: 'subtipoCombustible',
     capacidadTanqueGal: 'capacidadTanqueGal',
     capacidadCargaKg: 'capacidadCargaKg',
     capacidadPasajeros: 'capacidadPasajeros',
@@ -35498,6 +35474,7 @@ export namespace Prisma {
     licenciamientoAnual: 'licenciamientoAnual',
     kmAlertaMantenimiento: 'kmAlertaMantenimiento',
     periodicidadMantenimientoKm: 'periodicidadMantenimientoKm',
+    kilometrajeActual: 'kilometrajeActual',
     estado: 'estado',
     fechaIngreso: 'fechaIngreso',
     fechaBaja: 'fechaBaja',
@@ -36117,6 +36094,7 @@ export namespace Prisma {
     conductorId?: StringFilter<"OrdenCombustible"> | string
     sectorSolicitante?: StringFilter<"OrdenCombustible"> | string
     tipoCombustible?: EnumTipoCombustibleOrdenFilter<"OrdenCombustible"> | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: StringNullableFilter<"OrdenCombustible"> | string | null
     cantidadGalones?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoGalon?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
@@ -36156,6 +36134,7 @@ export namespace Prisma {
     conductorId?: SortOrder
     sectorSolicitante?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrderInput | SortOrder
     cantidadGalones?: SortOrderInput | SortOrder
     costoGalon?: SortOrderInput | SortOrder
     costoCombustible?: SortOrderInput | SortOrder
@@ -36198,6 +36177,7 @@ export namespace Prisma {
     conductorId?: StringFilter<"OrdenCombustible"> | string
     sectorSolicitante?: StringFilter<"OrdenCombustible"> | string
     tipoCombustible?: EnumTipoCombustibleOrdenFilter<"OrdenCombustible"> | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: StringNullableFilter<"OrdenCombustible"> | string | null
     cantidadGalones?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoGalon?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
@@ -36237,6 +36217,7 @@ export namespace Prisma {
     conductorId?: SortOrder
     sectorSolicitante?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrderInput | SortOrder
     cantidadGalones?: SortOrderInput | SortOrder
     costoGalon?: SortOrderInput | SortOrder
     costoCombustible?: SortOrderInput | SortOrder
@@ -36282,6 +36263,7 @@ export namespace Prisma {
     conductorId?: StringWithAggregatesFilter<"OrdenCombustible"> | string
     sectorSolicitante?: StringWithAggregatesFilter<"OrdenCombustible"> | string
     tipoCombustible?: EnumTipoCombustibleOrdenWithAggregatesFilter<"OrdenCombustible"> | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: StringNullableWithAggregatesFilter<"OrdenCombustible"> | string | null
     cantidadGalones?: DecimalNullableWithAggregatesFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoGalon?: DecimalNullableWithAggregatesFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: DecimalNullableWithAggregatesFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
@@ -38141,6 +38123,7 @@ export namespace Prisma {
     cilindraje?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: IntNullableFilter<"Vehiculo"> | number | null
     tipoCombustible?: EnumTipoCombustibleFilter<"Vehiculo"> | $Enums.TipoCombustible
+    subtipoCombustible?: StringNullableFilter<"Vehiculo"> | string | null
     capacidadTanqueGal?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: IntNullableFilter<"Vehiculo"> | number | null
@@ -38171,6 +38154,7 @@ export namespace Prisma {
     licenciamientoAnual?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: IntNullableFilter<"Vehiculo"> | number | null
     periodicidadMantenimientoKm?: IntNullableFilter<"Vehiculo"> | number | null
+    kilometrajeActual?: IntNullableFilter<"Vehiculo"> | number | null
     estado?: EnumEstadoVehiculoFilter<"Vehiculo"> | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFilter<"Vehiculo"> | Date | string
     fechaBaja?: DateTimeNullableFilter<"Vehiculo"> | Date | string | null
@@ -38207,6 +38191,7 @@ export namespace Prisma {
     cilindraje?: SortOrderInput | SortOrder
     numeroCilindros?: SortOrderInput | SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrderInput | SortOrder
     capacidadTanqueGal?: SortOrderInput | SortOrder
     capacidadCargaKg?: SortOrderInput | SortOrder
     capacidadPasajeros?: SortOrderInput | SortOrder
@@ -38237,6 +38222,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrderInput | SortOrder
     kmAlertaMantenimiento?: SortOrderInput | SortOrder
     periodicidadMantenimientoKm?: SortOrderInput | SortOrder
+    kilometrajeActual?: SortOrderInput | SortOrder
     estado?: SortOrder
     fechaIngreso?: SortOrder
     fechaBaja?: SortOrderInput | SortOrder
@@ -38276,6 +38262,7 @@ export namespace Prisma {
     cilindraje?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: IntNullableFilter<"Vehiculo"> | number | null
     tipoCombustible?: EnumTipoCombustibleFilter<"Vehiculo"> | $Enums.TipoCombustible
+    subtipoCombustible?: StringNullableFilter<"Vehiculo"> | string | null
     capacidadTanqueGal?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: IntNullableFilter<"Vehiculo"> | number | null
@@ -38306,6 +38293,7 @@ export namespace Prisma {
     licenciamientoAnual?: DecimalNullableFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: IntNullableFilter<"Vehiculo"> | number | null
     periodicidadMantenimientoKm?: IntNullableFilter<"Vehiculo"> | number | null
+    kilometrajeActual?: IntNullableFilter<"Vehiculo"> | number | null
     estado?: EnumEstadoVehiculoFilter<"Vehiculo"> | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFilter<"Vehiculo"> | Date | string
     fechaBaja?: DateTimeNullableFilter<"Vehiculo"> | Date | string | null
@@ -38342,6 +38330,7 @@ export namespace Prisma {
     cilindraje?: SortOrderInput | SortOrder
     numeroCilindros?: SortOrderInput | SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrderInput | SortOrder
     capacidadTanqueGal?: SortOrderInput | SortOrder
     capacidadCargaKg?: SortOrderInput | SortOrder
     capacidadPasajeros?: SortOrderInput | SortOrder
@@ -38372,6 +38361,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrderInput | SortOrder
     kmAlertaMantenimiento?: SortOrderInput | SortOrder
     periodicidadMantenimientoKm?: SortOrderInput | SortOrder
+    kilometrajeActual?: SortOrderInput | SortOrder
     estado?: SortOrder
     fechaIngreso?: SortOrder
     fechaBaja?: SortOrderInput | SortOrder
@@ -38405,6 +38395,7 @@ export namespace Prisma {
     cilindraje?: DecimalNullableWithAggregatesFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: IntNullableWithAggregatesFilter<"Vehiculo"> | number | null
     tipoCombustible?: EnumTipoCombustibleWithAggregatesFilter<"Vehiculo"> | $Enums.TipoCombustible
+    subtipoCombustible?: StringNullableWithAggregatesFilter<"Vehiculo"> | string | null
     capacidadTanqueGal?: DecimalNullableWithAggregatesFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: DecimalNullableWithAggregatesFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: IntNullableWithAggregatesFilter<"Vehiculo"> | number | null
@@ -38435,6 +38426,7 @@ export namespace Prisma {
     licenciamientoAnual?: DecimalNullableWithAggregatesFilter<"Vehiculo"> | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: IntNullableWithAggregatesFilter<"Vehiculo"> | number | null
     periodicidadMantenimientoKm?: IntNullableWithAggregatesFilter<"Vehiculo"> | number | null
+    kilometrajeActual?: IntNullableWithAggregatesFilter<"Vehiculo"> | number | null
     estado?: EnumEstadoVehiculoWithAggregatesFilter<"Vehiculo"> | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeWithAggregatesFilter<"Vehiculo"> | Date | string
     fechaBaja?: DateTimeNullableWithAggregatesFilter<"Vehiculo"> | Date | string | null
@@ -38925,6 +38917,7 @@ export namespace Prisma {
     fecha: Date | string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -38964,6 +38957,7 @@ export namespace Prisma {
     conductorId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -38999,6 +38993,7 @@ export namespace Prisma {
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -39038,6 +39033,7 @@ export namespace Prisma {
     conductorId?: StringFieldUpdateOperationsInput | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -39075,6 +39071,7 @@ export namespace Prisma {
     conductorId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -39110,6 +39107,7 @@ export namespace Prisma {
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -39147,6 +39145,7 @@ export namespace Prisma {
     conductorId?: StringFieldUpdateOperationsInput | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -41256,6 +41255,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -41286,6 +41286,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -41322,6 +41323,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -41352,6 +41354,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -41388,6 +41391,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -41418,6 +41422,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -41454,6 +41459,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -41484,6 +41490,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -41520,6 +41527,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -41550,6 +41558,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -41575,6 +41584,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -41605,6 +41615,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -41630,6 +41641,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -41660,6 +41672,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -42081,6 +42094,7 @@ export namespace Prisma {
     conductorId?: SortOrder
     sectorSolicitante?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrder
     cantidadGalones?: SortOrder
     costoGalon?: SortOrder
     costoCombustible?: SortOrder
@@ -42130,6 +42144,7 @@ export namespace Prisma {
     conductorId?: SortOrder
     sectorSolicitante?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrder
     cantidadGalones?: SortOrder
     costoGalon?: SortOrder
     costoCombustible?: SortOrder
@@ -42167,6 +42182,7 @@ export namespace Prisma {
     conductorId?: SortOrder
     sectorSolicitante?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrder
     cantidadGalones?: SortOrder
     costoGalon?: SortOrder
     costoCombustible?: SortOrder
@@ -43651,6 +43667,7 @@ export namespace Prisma {
     cilindraje?: SortOrder
     numeroCilindros?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrder
     capacidadTanqueGal?: SortOrder
     capacidadCargaKg?: SortOrder
     capacidadPasajeros?: SortOrder
@@ -43681,6 +43698,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrder
     kmAlertaMantenimiento?: SortOrder
     periodicidadMantenimientoKm?: SortOrder
+    kilometrajeActual?: SortOrder
     estado?: SortOrder
     fechaIngreso?: SortOrder
     fechaBaja?: SortOrder
@@ -43714,6 +43732,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrder
     kmAlertaMantenimiento?: SortOrder
     periodicidadMantenimientoKm?: SortOrder
+    kilometrajeActual?: SortOrder
   }
 
   export type VehiculoMaxOrderByAggregateInput = {
@@ -43733,6 +43752,7 @@ export namespace Prisma {
     cilindraje?: SortOrder
     numeroCilindros?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrder
     capacidadTanqueGal?: SortOrder
     capacidadCargaKg?: SortOrder
     capacidadPasajeros?: SortOrder
@@ -43763,6 +43783,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrder
     kmAlertaMantenimiento?: SortOrder
     periodicidadMantenimientoKm?: SortOrder
+    kilometrajeActual?: SortOrder
     estado?: SortOrder
     fechaIngreso?: SortOrder
     fechaBaja?: SortOrder
@@ -43788,6 +43809,7 @@ export namespace Prisma {
     cilindraje?: SortOrder
     numeroCilindros?: SortOrder
     tipoCombustible?: SortOrder
+    subtipoCombustible?: SortOrder
     capacidadTanqueGal?: SortOrder
     capacidadCargaKg?: SortOrder
     capacidadPasajeros?: SortOrder
@@ -43818,6 +43840,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrder
     kmAlertaMantenimiento?: SortOrder
     periodicidadMantenimientoKm?: SortOrder
+    kilometrajeActual?: SortOrder
     estado?: SortOrder
     fechaIngreso?: SortOrder
     fechaBaja?: SortOrder
@@ -43851,6 +43874,7 @@ export namespace Prisma {
     licenciamientoAnual?: SortOrder
     kmAlertaMantenimiento?: SortOrder
     periodicidadMantenimientoKm?: SortOrder
+    kilometrajeActual?: SortOrder
   }
 
   export type EnumCategoriaVehiculoWithAggregatesFilter<$PrismaModel = never> = {
@@ -46442,6 +46466,7 @@ export namespace Prisma {
     fecha: Date | string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -46479,6 +46504,7 @@ export namespace Prisma {
     vehiculoId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -46874,6 +46900,7 @@ export namespace Prisma {
     conductorId?: StringFilter<"OrdenCombustible"> | string
     sectorSolicitante?: StringFilter<"OrdenCombustible"> | string
     tipoCombustible?: EnumTipoCombustibleOrdenFilter<"OrdenCombustible"> | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: StringNullableFilter<"OrdenCombustible"> | string | null
     cantidadGalones?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoGalon?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: DecimalNullableFilter<"OrdenCombustible"> | Decimal | DecimalJsLike | number | string | null
@@ -47037,6 +47064,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -47067,6 +47095,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -47102,6 +47131,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -47132,6 +47162,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -47246,6 +47277,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -47276,6 +47308,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47311,6 +47344,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -47341,6 +47375,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47445,6 +47480,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -47475,6 +47511,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -47510,6 +47547,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -47540,6 +47578,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -47591,6 +47630,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -47621,6 +47661,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47656,6 +47697,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -47686,6 +47728,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47721,6 +47764,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -47751,6 +47795,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -47786,6 +47831,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -47816,6 +47862,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -47996,6 +48043,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48026,6 +48074,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48061,6 +48110,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48091,6 +48141,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48578,6 +48629,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -48608,6 +48660,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -48643,6 +48696,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -48673,6 +48727,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -48787,6 +48842,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48817,6 +48873,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48852,6 +48909,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48882,6 +48940,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48986,6 +49045,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -49016,6 +49076,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -49051,6 +49112,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -49081,6 +49143,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -49132,6 +49195,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49162,6 +49226,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49197,6 +49262,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49227,6 +49293,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49386,6 +49453,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -49416,6 +49484,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -49451,6 +49520,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -49481,6 +49551,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -49532,6 +49603,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49562,6 +49634,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49597,6 +49670,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49627,6 +49701,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49662,6 +49737,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -49692,6 +49768,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -49727,6 +49804,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -49757,6 +49835,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -50046,6 +50125,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50076,6 +50156,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50111,6 +50192,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50141,6 +50223,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50721,6 +50804,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -50751,6 +50835,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -50786,6 +50871,7 @@ export namespace Prisma {
     cilindraje?: Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: number | null
     tipoCombustible: $Enums.TipoCombustible
+    subtipoCombustible?: string | null
     capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: number | null
@@ -50816,6 +50902,7 @@ export namespace Prisma {
     licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: number | null
     periodicidadMantenimientoKm?: number | null
+    kilometrajeActual?: number | null
     estado?: $Enums.EstadoVehiculo
     fechaIngreso?: Date | string
     fechaBaja?: Date | string | null
@@ -50965,6 +51052,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50995,6 +51083,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51030,6 +51119,7 @@ export namespace Prisma {
     cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
     tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51060,6 +51150,7 @@ export namespace Prisma {
     licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
     periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    kilometrajeActual?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51831,6 +51922,7 @@ export namespace Prisma {
     fecha: Date | string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -51868,6 +51960,7 @@ export namespace Prisma {
     conductorId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -52526,6 +52619,7 @@ export namespace Prisma {
     vehiculoId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -52895,6 +52989,7 @@ export namespace Prisma {
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -52932,6 +53027,7 @@ export namespace Prisma {
     vehiculoId?: StringFieldUpdateOperationsInput | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -52968,6 +53064,7 @@ export namespace Prisma {
     vehiculoId?: StringFieldUpdateOperationsInput | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -53515,6 +53612,7 @@ export namespace Prisma {
     conductorId: string
     sectorSolicitante: string
     tipoCombustible: $Enums.TipoCombustibleOrden
+    subtipoCombustible?: string | null
     cantidadGalones?: Decimal | DecimalJsLike | number | string | null
     costoGalon?: Decimal | DecimalJsLike | number | string | null
     costoCombustible?: Decimal | DecimalJsLike | number | string | null
@@ -53730,6 +53828,7 @@ export namespace Prisma {
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -53767,6 +53866,7 @@ export namespace Prisma {
     conductorId?: StringFieldUpdateOperationsInput | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -53803,6 +53903,7 @@ export namespace Prisma {
     conductorId?: StringFieldUpdateOperationsInput | string
     sectorSolicitante?: StringFieldUpdateOperationsInput | string
     tipoCombustible?: EnumTipoCombustibleOrdenFieldUpdateOperationsInput | $Enums.TipoCombustibleOrden
+    subtipoCombustible?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadGalones?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoGalon?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     costoCombustible?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null

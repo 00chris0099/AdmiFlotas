@@ -78,6 +78,7 @@ export const PUT = withAuth(async (request: NextRequest, { user }) => {
         ...(body.seguroAnual !== undefined && { seguroAnual: body.seguroAnual ? parseFloat(body.seguroAnual) : null }),
         ...(body.licenciamientoAnual !== undefined && { licenciamientoAnual: body.licenciamientoAnual ? parseFloat(body.licenciamientoAnual) : null }),
         ...(body.periodicidadMantenimientoKm !== undefined && { periodicidadMantenimientoKm: body.periodicidadMantenimientoKm ? parseInt(body.periodicidadMantenimientoKm) : null }),
+        ...(body.kilometrajeActual !== undefined && { kilometrajeActual: body.kilometrajeActual ? parseInt(body.kilometrajeActual) : null }),
       },
     });
 
