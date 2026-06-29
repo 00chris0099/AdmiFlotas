@@ -9,41 +9,110 @@ export default function UnauthorizedPage() {
   const { logout, user } = useAuth();
 
   return (
-    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-hidden">
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "#020617",
+        color: "#e2e8f0",
+        display: "flex",
+        flexDirection: "column",
+        zIndex: 0,
+      }}
+    >
       {/* Header */}
-      <header className="px-6 py-4 relative z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+      <header style={{ padding: "16px 24px", position: "relative", zIndex: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "12px",
+              background: "rgba(16, 185, 129, 0.1)",
+              border: "1px solid rgba(16, 185, 129, 0.2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Icon name="truck" size={24} />
           </div>
           <div>
-            <h1 className="font-bold text-sm text-emerald-400 tracking-tight">SAF ERP</h1>
-            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Manual F1T02</p>
+            <h1 style={{ fontWeight: 700, fontSize: "14px", color: "#10b981", letterSpacing: "-0.025em", margin: 0 }}>
+              SAF ERP
+            </h1>
+            <p style={{ fontSize: "9px", color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>
+              Manual F1T02
+            </p>
           </div>
         </div>
       </header>
 
       {/* Contenido centrado */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 text-center">
-        <div className="w-16 h-16 bg-rose-500/10 border border-rose-500/20 rounded-full flex items-center justify-center mb-6">
+      <main
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0 16px",
+          position: "relative",
+          zIndex: 10,
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "64px",
+            height: "64px",
+            background: "rgba(239, 68, 68, 0.1)",
+            border: "1px solid rgba(239, 68, 68, 0.2)",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "24px",
+          }}
+        >
           <Icon name="warning" size={32} />
         </div>
 
-        <h1 className="text-2xl font-bold text-white mb-2">Acceso Restringido</h1>
-        <p className="text-sm text-slate-400 max-w-sm mb-8">
-          Tu rol (<span className="text-rose-400 font-medium">{user?.rol || "Sin Rol"}</span>) no tiene permisos para este módulo.
+        <h1 style={{ fontSize: "24px", fontWeight: 700, color: "#ffffff", marginBottom: "8px", margin: "0 0 8px 0" }}>
+          Acceso Restringido
+        </h1>
+        <p style={{ fontSize: "14px", color: "#94a3b8", maxWidth: "384px", marginBottom: "32px", margin: "0 0 32px 0" }}>
+          Tu rol (<span style={{ color: "#f87171", fontWeight: 500 }}>{user?.rol || "Sin Rol"}</span>) no tiene permisos para este módulo.
         </p>
 
-        <div className="flex gap-3">
+        <div style={{ display: "flex", gap: "12px" }}>
           <Link
             href="/"
-            className="px-5 py-2.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 text-sm font-medium rounded-lg transition"
+            style={{
+              padding: "10px 20px",
+              background: "#0f172a",
+              border: "1px solid #1e293b",
+              color: "#e2e8f0",
+              fontSize: "14px",
+              fontWeight: 500,
+              borderRadius: "8px",
+              textDecoration: "none",
+            }}
           >
             Inicio
           </Link>
           <button
             onClick={logout}
-            className="px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-sm font-medium rounded-lg transition"
+            style={{
+              padding: "10px 20px",
+              background: "#ef4444",
+              color: "#ffffff",
+              fontSize: "14px",
+              fontWeight: 500,
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             Cerrar Sesión
           </button>

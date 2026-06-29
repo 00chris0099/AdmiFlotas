@@ -30,65 +30,158 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-hidden">
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "#020617",
+        color: "#e2e8f0",
+        display: "flex",
+        flexDirection: "column",
+        zIndex: 0,
+      }}
+    >
       {/* Header */}
-      <header className="px-6 py-4 relative z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+      <header style={{ padding: "16px 24px", position: "relative", zIndex: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "12px",
+              background: "rgba(16, 185, 129, 0.1)",
+              border: "1px solid rgba(16, 185, 129, 0.2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Icon name="truck" size={24} />
           </div>
           <div>
-            <h1 className="font-bold text-sm text-emerald-400 tracking-tight">SAF ERP</h1>
-            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Manual F1T02</p>
+            <h1 style={{ fontWeight: 700, fontSize: "14px", color: "#10b981", letterSpacing: "-0.025em", margin: 0 }}>
+              SAF ERP
+            </h1>
+            <p style={{ fontSize: "9px", color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>
+              Manual F1T02
+            </p>
           </div>
         </div>
       </header>
 
       {/* Formulario centrado */}
-      <main className="flex-1 flex items-center justify-center px-4 relative z-10">
-        <div className="w-full max-w-sm">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-6">
-            <div className="text-center">
-              <h2 className="text-xl font-bold text-white">Iniciar Sesión</h2>
-              <p className="text-xs text-slate-400 mt-1">Ingrese sus credenciales institucionales</p>
+      <main
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0 16px",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: "384px" }}>
+          <div
+            style={{
+              background: "#0f172a",
+              border: "1px solid #1e293b",
+              borderRadius: "16px",
+              padding: "32px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px",
+            }}
+          >
+            <div style={{ textAlign: "center" }}>
+              <h2 style={{ fontSize: "20px", fontWeight: 700, color: "#ffffff", margin: 0 }}>
+                Iniciar Sesión
+              </h2>
+              <p style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px", margin: "4px 0 0 0" }}>
+               Ingrese sus credenciales institucionales
+              </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               {error && (
-                <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg px-4 py-2.5 text-xs text-rose-400 font-medium">
+                <div
+                  style={{
+                    background: "rgba(239, 68, 68, 0.1)",
+                    border: "1px solid rgba(239, 68, 68, 0.2)",
+                    borderRadius: "8px",
+                    padding: "10px 16px",
+                    fontSize: "12px",
+                    color: "#f87171",
+                    fontWeight: 500,
+                  }}
+                >
                   {error}
                 </div>
               )}
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1.5">Correo</label>
+                <label style={{ fontSize: "12px", fontWeight: 500, color: "#cbd5e1", display: "block", marginBottom: "6px" }}>
+                  Correo
+                </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="correo@empresa.com"
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none transition"
+                  style={{
+                    width: "100%",
+                    background: "#020617",
+                    border: "1px solid #1e293b",
+                    borderRadius: "8px",
+                    padding: "10px 12px",
+                    fontSize: "14px",
+                    color: "#e2e8f0",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
                   required
                   autoComplete="email"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1.5">Contraseña</label>
-                <div className="relative">
+                <label style={{ fontSize: "12px", fontWeight: 500, color: "#cbd5e1", display: "block", marginBottom: "6px" }}>
+                  Contraseña
+                </label>
+                <div style={{ position: "relative" }}>
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none transition"
+                    style={{
+                      width: "100%",
+                      background: "#020617",
+                      border: "1px solid #1e293b",
+                      borderRadius: "8px",
+                      padding: "10px 40px 10px 12px",
+                      fontSize: "14px",
+                      color: "#e2e8f0",
+                      outline: "none",
+                      boxSizing: "border-box",
+                    }}
                     required
                     autoComplete="current-password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      color: "#64748b",
+                      padding: 0,
+                    }}
                     tabIndex={-1}
                   >
                     <Icon name={showPassword ? "eye-hide" : "eye"} size={16} />
@@ -99,7 +192,17 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 font-bold rounded-lg transition text-sm"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  background: isLoading ? "#1e293b" : "#10b981",
+                  color: isLoading ? "#64748b" : "#020617",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  cursor: isLoading ? "not-allowed" : "pointer",
+                }}
               >
                 {isLoading ? "Ingresando..." : "Iniciar Sesión"}
               </button>
