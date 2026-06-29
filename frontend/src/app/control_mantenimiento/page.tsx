@@ -8,6 +8,7 @@ import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
 import { generateNumeroOrden } from "@/lib/orderGenerator";
 import Icon from "@/components/ui/Icon";
 import { exportToExcel } from "@/utils/exportUtils";
+import { CODIGOS_SERVICIO, CONJUNTOS_SUBSTITUIDOS } from "@/lib/constants";
 
 interface DetalleManoObra {
   id: string;
@@ -58,7 +59,10 @@ export default function OrdenesMantenimientoPage() {
   const [vehiculoId, setVehiculoId] = useState("");
   const [tipoMantenimiento, setTipoMantenimiento] = useState("PREVENTIVO");
   const [tipoTaller, setTipoTaller] = useState("PROPIO");
+  const [codigoServicio, setCodigoServicio] = useState("");
+  const [organoServicio, setOrganoServicio] = useState("");
   const [descripcionServicio, setDescripcionServicio] = useState("");
+  const [conjuntosSubstituidos, setConjuntosSubstituidos] = useState<string[]>([]);
   const [costoRepuestos, setCostoRepuestos] = useState("0");
   const [costoOtros, setCostoOtros] = useState("0");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -139,8 +143,10 @@ export default function OrdenesMantenimientoPage() {
           vehiculoId,
           tipoMantenimiento,
           tipoTaller,
+          codigoServicio: `${codigoServicio}-${organoServicio}`,
           descripcionServicio,
-          costoManoObraPropia: 0, // Inicia en 0 hasta registrar tareas
+          conjuntosSubstituidos,
+          costoManoObraPropia: 0,
           costoPiezasRepuestos: parseFloat(costoRepuestos),
           costoOtros: parseFloat(costoOtros),
         }),
@@ -660,6 +666,58 @@ export default function OrdenesMantenimientoPage() {
                     <option value="PROPIO">PROPIO (Taller Interno)</option>
                     <option value="TERCEROS">TERCEROS (Taller Externo)</option>
                   </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-slate-350">Código Trabajo</label>
+                  <select
+                    value={codigoServicio}
+                    onChange={(e) => setCodigoServicio(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
+                  >
+                    <option value="">Seleccionar...</option>
+                    {CODIGOS_SERVICIO.TRABAJO.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-350">Órgano/Sistema</label>
+                  <select
+                    value={organoServicio}
+                    onChange={(e) => setOrganoServicio(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
+                  >
+                    <option value="">Seleccionar...</option>
+                    {CODIGOS_SERVICIO.ORGANO.map((o) => (
+                      <option key={o.value} value={o.value}>{o.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-350">Conjuntos Substituidos</label>
+                <div className="flex flex-wrap gap-2">
+                  {CONJUNTOS_SUBSTITUIDOS.slice(0, 10).map((conjunto) => (
+                    <label key={conjunto} className="flex items-center gap-1 text-[10px] text-slate-400">
+                      <input
+                        type="checkbox"
+                        checked={conjuntosSubstituidos.includes(conjunto)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setConjuntosSubstituidos([...conjuntosSubstituidos, conjunto]);
+                          } else {
+                            setConjuntosSubstituidos(conjuntosSubstituidos.filter(c => c !== conjunto));
+                          }
+                        }}
+                        className="w-3 h-3 rounded"
+                      />
+                      {conjunto}
+                    </label>
+                  ))}
                 </div>
               </div>
 
