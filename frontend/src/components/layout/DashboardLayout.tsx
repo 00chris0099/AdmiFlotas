@@ -136,8 +136,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
     };
   }).filter((section) => section.items.length > 0);
 
-  // Si estamos en la página de login o en la raíz (que tiene su propio selector limpio y encabezado), retornar children directamente
-  if (pathname === "/login" || pathname === "/" || pathname === "/unauthorized") {
+  // Si estamos en la página raíz (que tiene su propio selector limpio y encabezado), retornar children directamente
+  if (pathname === "/") {
     return <div className="min-h-screen bg-slate-950 text-slate-100">{children}</div>;
   }
 
