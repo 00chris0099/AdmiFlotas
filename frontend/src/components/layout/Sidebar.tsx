@@ -139,6 +139,12 @@ const MENU_SECTIONS: MenuSection[] = [
         icon: "eye",
         roles: ["JEFE_PROCESO"],
       },
+      {
+        name: "Control de Sesiones",
+        href: "/seguridad/sesiones",
+        icon: "lock",
+        roles: ["JEFE_PROCESO"],
+      },
     ],
   },
 ];
