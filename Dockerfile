@@ -18,7 +18,7 @@ ENV JWT_SECRET=$JWT_SECRET
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN npx prisma generate --schema=../prisma/schema
+RUN ./node_modules/.bin/prisma generate --schema=../prisma/schema
 RUN npm run build
 
 FROM node:20-alpine AS runner
