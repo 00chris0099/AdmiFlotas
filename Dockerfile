@@ -30,9 +30,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY frontend/package*.json ./
 RUN npm install --omit=dev
 
-COPY prisma ../prisma
-RUN npx prisma generate --schema=../prisma/schema
-
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
