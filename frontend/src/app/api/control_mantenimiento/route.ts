@@ -109,7 +109,7 @@ export const PUT = withAuth(async (request: NextRequest, { user }) => {
     });
 
     return NextResponse.json(ordenActualizada);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error al actualizar firma:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -154,7 +154,7 @@ export const PATCH = withAuth(async (request: NextRequest, { user }) => {
     }
 
     return NextResponse.json(ordenActualizada);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error al actualizar estado:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
