@@ -9,3 +9,11 @@ html.light {
   --background: #ffffff;
   --foreground: #1e293b;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #020617;
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
+}

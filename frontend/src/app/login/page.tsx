@@ -38,7 +38,7 @@ export default function LoginPage() {
         color: "#e2e8f0",
         display: "flex",
         flexDirection: "column",
-        zIndex: 0,
+        zIndex: 9999,
       }}
     >
       {/* Header */}

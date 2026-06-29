@@ -17,7 +17,7 @@ export default function UnauthorizedPage() {
         color: "#e2e8f0",
         display: "flex",
         flexDirection: "column",
-        zIndex: 0,
+        zIndex: 9999,
       }}
     >
       {/* Header */}
