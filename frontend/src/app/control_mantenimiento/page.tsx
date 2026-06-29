@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
 
 interface DetalleManoObra {
@@ -260,12 +261,21 @@ export default function OrdenesMantenimientoPage() {
       header: "Mano de Obra",
       className: "text-right",
       accessorKey: (row) => (
-        <button
-          onClick={() => setSelectedOrderId(row.id)}
-          className="px-2.5 py-1 bg-indigo-950/40 hover:bg-indigo-900/40 border border-indigo-500/20 text-indigo-400 font-semibold rounded-lg text-xs transition cursor-pointer"
-        >
-          Gestionar MO
-        </button>
+        <div className="flex items-center justify-end gap-1.5">
+          <button
+            onClick={() => handleDownloadPDF(row.id)}
+            className="px-2.5 py-1 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold rounded-lg transition"
+            title="Descargar PDF"
+          >
+            PDF
+          </button>
+          <button
+            onClick={() => setSelectedOrderId(row.id)}
+            className="px-2.5 py-1 bg-indigo-950/40 hover:bg-indigo-900/40 border border-indigo-500/20 text-indigo-400 font-semibold rounded-lg text-xs transition cursor-pointer"
+          >
+            Gestionar MO
+          </button>
+        </div>
       ),
     },
   ];
@@ -275,6 +285,20 @@ export default function OrdenesMantenimientoPage() {
 
   // Buscar orden seleccionada
   const selectedOrder = ordenes.find((o) => o.id === selectedOrderId);
+
+  const handleDownloadPDF = async (ordenId: string) => {
+    try {
+      const res = await fetchWithAuth(`/api/reportes/pdf?tipo=orden_mantenimiento&id=${ordenId}`);
+      const data = await res.json();
+      if (res.ok) {
+        generateOrdenMantenimientoPDF(data);
+      } else {
+        alert("Error al obtener datos: " + data.error);
+      }
+    } catch (err: any) {
+      alert("Error al generar PDF: " + err.message);
+    }
+  };
 
   return (
     <div className="space-y-6">

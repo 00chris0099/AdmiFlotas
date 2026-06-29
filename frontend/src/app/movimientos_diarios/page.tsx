@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
 
 interface MovimientoDiario {
@@ -286,17 +287,25 @@ export default function MovimientosPage() {
       header: "Acciones",
       className: "text-right",
       accessorKey: (row) => {
-        if (row.estado === "EN_RUTA") {
-          return (
+        return (
+          <div className="flex items-center justify-end gap-1.5">
             <button
-              onClick={() => abrirCierreModal(row)}
-              className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold rounded-lg transition"
+              onClick={() => generateMovimientoDiarioPDF(row)}
+              className="px-2.5 py-1 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold rounded-lg transition"
+              title="Descargar PDF"
             >
-              Completar
+              PDF
             </button>
-          );
-        }
-        return <span className="text-[10px] text-slate-600">-</span>;
+            {row.estado === "EN_RUTA" && (
+              <button
+                onClick={() => abrirCierreModal(row)}
+                className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold rounded-lg transition"
+              >
+                Completar
+              </button>
+            )}
+          </div>
+        );
       },
     },
   ];

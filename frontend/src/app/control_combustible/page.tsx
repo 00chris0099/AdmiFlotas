@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 
 interface OrdenCombustible {
   id: string;
@@ -248,6 +249,19 @@ export default function CombustiblePage() {
           {row.firmaConductor && <span title="Conductor" className="text-[10px] bg-blue-500/20 text-blue-400 px-1 rounded">CD</span>}
           {row.firmaServicentro && <span title="Servicentro" className="text-[10px] bg-amber-500/20 text-amber-400 px-1 rounded">SV</span>}
         </div>
+      ),
+    },
+    {
+      header: "PDF",
+      className: "text-right",
+      accessorKey: (row) => (
+        <button
+          onClick={() => generateOrdenAbastecimientoPDF(row)}
+          className="px-2.5 py-1 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold rounded-lg transition"
+          title="Descargar PDF"
+        >
+          PDF
+        </button>
       ),
     },
   ];
