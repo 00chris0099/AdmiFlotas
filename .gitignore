@@ -4,8 +4,8 @@ node_modules
 .env.local
 .env.production
 
-# Prisma generated client
-/generated/prisma
+# Prisma generated client - committed for Docker builds
+# /generated/prisma
 
 # OS files
 .DS_Store

@@ -7,8 +7,7 @@ RUN npm install
 
 COPY frontend/ .
 COPY package*.json ../
-COPY prisma.config.ts ../
-COPY prisma ../prisma
+COPY generated/ ../generated/
 
 ARG DATABASE_URL
 ARG JWT_SECRET
@@ -18,7 +17,6 @@ ENV JWT_SECRET=$JWT_SECRET
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN ./node_modules/.bin/prisma generate --schema=../prisma/schema
 RUN npm run build
 
 FROM node:20-alpine AS runner
