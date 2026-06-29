@@ -135,12 +135,11 @@ export const PATCH = withAuth(async (request: NextRequest, { user }) => {
       },
     });
 
-    // Si se completa, actualizar odómetro del vehículo
-    if (estado === "COMPLETADO" && kilometrajeSalida) {
+    // Si se completa, actualizar estado del vehículo
+    if (estado === "COMPLETADO") {
       await prisma.vehiculo.update({
         where: { id: ordenActualizada.vehiculoId },
         data: {
-          kilometrajeActual: parseInt(kilometrajeSalida),
           estado: "OPERATIVO",
         },
       });

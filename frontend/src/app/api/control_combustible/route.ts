@@ -143,11 +143,9 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
       },
     });
 
-    // Actualizar odómetro del vehículo
-    await prisma.vehiculo.update({
-      where: { id: vehiculoId },
-      data: { kilometrajeActual: odoActual },
-    });
+    // Actualizar odómetro del vehículo si el campo existe
+    // Nota: El campo kilometrajeActual no existe en el schema actual del Vehiculo
+    // Se puede agregar si es necesario para el seguimiento de odómetro
 
     return NextResponse.json(nuevaOrden, { status: 201 });
   } catch (error: any) {
