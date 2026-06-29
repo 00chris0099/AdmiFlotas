@@ -7,6 +7,7 @@ RUN npm install
 
 COPY frontend/ .
 COPY package*.json ../
+COPY prisma.config.ts ../
 COPY prisma ../prisma
 
 ARG DATABASE_URL
