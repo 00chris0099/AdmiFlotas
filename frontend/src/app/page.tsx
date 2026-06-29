@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Icon from "@/components/ui/Icon";
 
 interface TaskItem {
@@ -22,6 +23,27 @@ interface ModuleData {
   hoverGradient: string;
   roles: string[];
   tasks: TaskItem[];
+}
+
+interface KPI {
+  label: string;
+  value: string;
+  icon: string;
+  color: string;
+  bgColor: string;
+}
+
+interface ActivityItem {
+  label: string;
+  detail: string;
+  time: string;
+  type: "movimiento" | "combustible" | "mantenimiento";
+}
+
+interface AlertItem {
+  message: string;
+  severity: "high" | "medium" | "low";
+  type: "documento" | "mantenimiento" | "stock";
 }
 
 const MODULES: ModuleData[] = [
@@ -153,8 +175,153 @@ export default function Home() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [kpis, setKpis] = useState<KPI[]>([]);
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
+  const [alerts, setAlerts] = useState<AlertItem[]>([]);
+  const [dashboardLoading, setDashboardLoading] = useState(true);
 
   const userRole = user?.rol || "ADMINISTRATIVO";
+
+  useEffect(() => {
+    if (selectedModuleId || !user) return;
+    async function loadDashboard() {
+      setDashboardLoading(true);
+      try {
+        const [vehiculosRes, movimientosRes, mantenimientoRes, combustibleRes, documentosRes, almacenRes] =
+          await Promise.all([
+            fetchWithAuth("/api/vehiculos"),
+            fetchWithAuth("/api/movimientos_diarios"),
+            fetchWithAuth("/api/control_mantenimiento"),
+            fetchWithAuth("/api/control_combustible"),
+            fetchWithAuth("/api/flota/documentos"),
+            fetchWithAuth("/api/mantenimiento/almacen").catch(() => null),
+          ]);
+
+        const vehiculos = vehiculosRes.ok ? await vehiculosRes.json() : [];
+        const movimientos = movimientosRes.ok ? await movimientosRes.json() : [];
+        const ordenesMant = mantenimientoRes.ok ? await mantenimientoRes.json() : [];
+        const ordenesComb = combustibleRes.ok ? await combustibleRes.json() : [];
+        const documentos = documentosRes.ok ? await documentosRes.json() : [];
+        const repuestos = almacenRes && almacenRes.ok ? await almacenRes.json() : [];
+
+        const today = new Date().toISOString().split("T")[0];
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+
+        const activosHoy = movimientos.filter(
+          (m: any) => m.fecha === today && m.estado === "EN_RUTA"
+        ).length;
+
+        const ordenesPendientes = ordenesMant.filter((o: any) => o.estado === "PENDIENTE").length;
+
+        const costoCombustibleMes = ordenesComb
+          .filter((o: any) => {
+            const d = new Date(o.fecha);
+            return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+          })
+          .reduce((sum: number, o: any) => sum + (o.costoTotal || 0), 0);
+
+        setKpis([
+          {
+            label: "Vehículos en Flota",
+            value: String(vehiculos.length),
+            icon: "truck",
+            color: "text-cyan-400",
+            bgColor: "bg-cyan-500/10 border-cyan-500/20",
+          },
+          {
+            label: "Movimientos Hoy",
+            value: String(activosHoy),
+            icon: "clipboard",
+            color: "text-emerald-400",
+            bgColor: "bg-emerald-500/10 border-emerald-500/20",
+          },
+          {
+            label: "Órdenes Pendientes",
+            value: String(ordenesPendientes),
+            icon: "wrench",
+            color: "text-amber-400",
+            bgColor: "bg-amber-500/10 border-amber-500/20",
+          },
+          {
+            label: "Costo Combustible (Mes)",
+            value: `$${costoCombustibleMes.toLocaleString("es-EC", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            icon: "fuel",
+            color: "text-rose-400",
+            bgColor: "bg-rose-500/10 border-rose-500/20",
+          },
+        ]);
+
+        const recentMoves: ActivityItem[] = movimientos.slice(0, 5).map((m: any) => ({
+          label: `${m.vehiculo} (${m.placa})`,
+          detail: m.destino || "Sin destino",
+          time: m.fecha,
+          type: "movimiento" as const,
+        }));
+
+        const recentFuel: ActivityItem[] = ordenesComb.slice(0, 5).map((o: any) => ({
+          label: `${o.vehiculoLabel} (${o.placa})`,
+          detail: `${o.cantidadGalones || 0} gal - $${(o.costoTotal || 0).toFixed(2)}`,
+          time: o.fecha,
+          type: "combustible" as const,
+        }));
+
+        const recentMant: ActivityItem[] = ordenesMant.slice(0, 5).map((o: any) => ({
+          label: `${o.numeroOrden} (${o.placa})`,
+          detail: `${o.tipoMantenimiento} - ${o.estado}`,
+          time: o.numeroOrden,
+          type: "mantenimiento" as const,
+        }));
+
+        const allActivity = [...recentMoves, ...recentFuel, ...recentMant].slice(0, 10);
+        setActivities(allActivity);
+
+        const alertList: AlertItem[] = [];
+
+        const expiredDocs = documentos.filter((d: any) => {
+          if (!d.fechaVencimiento) return false;
+          return new Date(d.fechaVencimiento) < now;
+        });
+        expiredDocs.forEach((d: any) => {
+          alertList.push({
+            message: `Documento vencido: ${d.tipoDocumento} - ${d.vehiculo?.placa || "N/A"}`,
+            severity: "high",
+            type: "documento",
+          });
+        });
+
+        const overdueMant = ordenesMant.filter(
+          (o: any) => o.estado === "PENDIENTE" && o.tipoMantenimiento === "PREVENTIVO"
+        );
+        overdueMant.slice(0, 5).forEach((o: any) => {
+          alertList.push({
+            message: `Mantenimiento preventivo pendiente: ${o.numeroOrden} (${o.placa})`,
+            severity: "medium",
+            type: "mantenimiento",
+          });
+        });
+
+        const lowStock = repuestos.filter(
+          (r: any) => r.estadoStock === "BAJO" || r.estadoStock === "AGOTADO"
+        );
+        lowStock.slice(0, 5).forEach((r: any) => {
+          alertList.push({
+            message: `Stock ${r.estadoStock === "AGOTADO" ? "agotado" : "bajo"}: ${r.descripcion} (${r.codigo})`,
+            severity: r.estadoStock === "AGOTADO" ? "high" : "low",
+            type: "stock",
+          });
+        });
+
+        setAlerts(alertList.slice(0, 8));
+      } catch (err) {
+        console.error("Error cargando dashboard:", err);
+      } finally {
+        setDashboardLoading(false);
+      }
+    }
+    loadDashboard();
+  }, [selectedModuleId, user]);
 
   // Cerrar el dropdown al hacer click fuera
   useEffect(() => {
@@ -266,6 +433,123 @@ export default function Home() {
               <p className="text-sm text-slate-450">
                 Bienvenido. Por favor selecciona uno de los módulos de la administración de flotas autorizados para tu rol actual.
               </p>
+            </div>
+
+            {/* KPI CARDS */}
+            {kpis.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                {kpis.map((kpi) => (
+                  <div
+                    key={kpi.label}
+                    className={`${kpi.bgColor} border rounded-2xl p-5 flex items-center space-x-4 transition duration-200`}
+                  >
+                    <div className={`${kpi.bgColor} rounded-xl p-3`}>
+                      <Icon name={kpi.icon} size={28} color="currentColor" className={kpi.color} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{kpi.label}</p>
+                      <p className={`text-2xl font-black ${kpi.color} tracking-tight`}>{kpi.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* ALERTS + ACTIVITY ROW */}
+            {(alerts.length > 0 || activities.length > 0) && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+                {/* ALERTS */}
+                {alerts.length > 0 && (
+                  <div className="bg-slate-900/60 border border-slate-800/60 rounded-3xl p-6 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-bold text-white flex items-center space-x-2">
+                        <Icon name="warning" size={18} className="text-amber-400" />
+                        <span>Alertas Activas</span>
+                      </h3>
+                      <span className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-full text-[10px] font-bold">
+                        {alerts.length}
+                      </span>
+                    </div>
+                    <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                      {alerts.map((alert, i) => (
+                        <div
+                          key={i}
+                          className={`flex items-start space-x-3 p-3 rounded-xl border transition duration-150 ${
+                            alert.severity === "high"
+                              ? "bg-rose-500/5 border-rose-500/20"
+                              : alert.severity === "medium"
+                              ? "bg-amber-500/5 border-amber-500/20"
+                              : "bg-slate-800/50 border-slate-700/50"
+                          }`}
+                        >
+                          <span
+                            className={`mt-0.5 w-2 h-2 rounded-full flex-shrink-0 ${
+                              alert.severity === "high"
+                                ? "bg-rose-500"
+                                : alert.severity === "medium"
+                                ? "bg-amber-500"
+                                : "bg-slate-500"
+                            }`}
+                          />
+                          <p className="text-xs text-slate-300 leading-relaxed">{alert.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* RECENT ACTIVITY */}
+                {activities.length > 0 && (
+                  <div className="bg-slate-900/60 border border-slate-800/60 rounded-3xl p-6 space-y-4">
+                    <h3 className="text-sm font-bold text-white flex items-center space-x-2">
+                      <Icon name="clipboard" size={18} className="text-emerald-400" />
+                      <span>Actividad Reciente</span>
+                    </h3>
+                    <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                      {activities.map((act, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center space-x-3 p-3 bg-slate-800/40 rounded-xl border border-slate-800/50"
+                        >
+                          <span
+                            className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                              act.type === "movimiento"
+                                ? "bg-emerald-500/10"
+                                : act.type === "combustible"
+                                ? "bg-rose-500/10"
+                                : "bg-blue-500/10"
+                            }`}
+                          >
+                            <Icon
+                              name={act.type === "movimiento" ? "clipboard" : act.type === "combustible" ? "fuel" : "wrench"}
+                              size={16}
+                              className={
+                                act.type === "movimiento"
+                                  ? "text-emerald-400"
+                                  : act.type === "combustible"
+                                  ? "text-rose-400"
+                                  : "text-blue-400"
+                              }
+                            />
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-bold text-white truncate">{act.label}</p>
+                            <p className="text-[10px] text-slate-400 truncate">{act.detail}</p>
+                          </div>
+                          <span className="text-[9px] text-slate-500 font-mono flex-shrink-0">{act.time}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* MODULE CARDS SECTION HEADER */}
+            <div className="pt-4">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                Módulos del Sistema
+              </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
