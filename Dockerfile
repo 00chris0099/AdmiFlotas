@@ -1,30 +1,24 @@
-# ===== BUILD =====
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Prisma schema + config (needed BEFORE npm ci for postinstall)
-COPY prisma.config.ts ./
-COPY prisma/ ./prisma/
+COPY frontend/package*.json ./
+RUN npm install
 
-# Root dependencies — skip postinstall (ERD generator needs Chrome which we don't have)
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
+COPY frontend/ .
+COPY package*.json ../
+COPY generated/ ../generated/
 
-# Generate only Prisma client (skip ERD generator - no Chrome in Docker)
-RUN npx prisma generate --generator client
+ARG DATABASE_URL
+ARG JWT_SECRET
+ARG NEXT_PUBLIC_APP_URL
+ENV DATABASE_URL=$DATABASE_URL
+ENV JWT_SECRET=$JWT_SECRET
+ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Frontend dependencies
-COPY frontend/package.json frontend/package-lock.json ./frontend/
-RUN cd frontend && npm install
+RUN npm run build
 
-# Frontend source
-COPY frontend/ ./frontend/
-
-# Build Next.js
-RUN cd frontend && npm run build
-
-# ===== PRODUCTION =====
 FROM node:20-alpine AS runner
 
 WORKDIR /app
@@ -32,17 +26,12 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Install frontend production deps (not root - root has no "next")
-COPY frontend/package.json frontend/package-lock.json ./
-RUN npm install --omit=dev --ignore-scripts
+COPY frontend/package*.json ./
+RUN npm install --omit=dev
 
-# Generated Prisma client (already built in builder stage)
-COPY --from=builder /app/generated ./generated/
-
-# Frontend production files
-COPY --from=builder /app/frontend/.next ./.next/
-COPY --from=builder /app/frontend/public ./public/
-COPY --from=builder /app/frontend/next.config.ts ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 

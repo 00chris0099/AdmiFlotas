@@ -78,6 +78,30 @@ export default function LoginPage() {
           >
             {isLoading ? "Validando credenciales..." : "Iniciar Sesión"}
           </button>
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={() => {
+                const emailInput = document.querySelector('input[type="email"]') as HTMLInputElement;
+                const email = emailInput?.value;
+                if (email) {
+                  fetch("/api/auth/recuperar-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email }),
+                  }).then(() => {
+                    setErrorMessage("Si el correo existe, recibirás un enlace de recuperación.");
+                  });
+                } else {
+                  setErrorMessage("Ingresa tu correo para recuperar la contraseña.");
+                }
+              }}
+              className="text-[10px] text-slate-500 hover:text-slate-300 transition"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
         </form>
 
         <div className="border-t border-slate-800/80 pt-4 space-y-3">

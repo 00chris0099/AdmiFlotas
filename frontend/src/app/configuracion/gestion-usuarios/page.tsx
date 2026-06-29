@@ -22,7 +22,7 @@ const ROLES = [
   { value: "INSPECTOR", label: "Inspector", color: "cyan" },
   { value: "ANALISTA", label: "Analista", color: "blue" },
   { value: "MECANICO", label: "Mecánico", color: "pink" },
-  {value: "ELECTRICISTA", label: "Eléctrico", color: "violet" },
+  { value: "ELECTRICISTA", label: "Eléctrico", color: "violet" },
   { value: "ADMINISTRATIVO", label: "Administrativo", color: "emerald" },
 ];
 
@@ -109,6 +109,28 @@ export default function GestionUsuariosPage() {
     }
   };
 
+  const handleDelete = async (id: string, nombre: string) => {
+    if (!confirm(`¿Eliminar al usuario ${nombre}? Esta acción no se puede deshacer.`)) return;
+
+    try {
+      const res = await fetch(`/api/admin/usuarios/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage({ type: "success", text: data.message });
+        fetchUsuarios();
+      } else {
+        setMessage({ type: "error", text: data.message });
+      }
+    } catch {
+      setMessage({ type: "error", text: "Error de conexión" });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-4 md:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
@@ -143,7 +165,7 @@ export default function GestionUsuariosPage() {
             <p className="font-bold">No se pudo enviar el correo (SMTP no configurado).</p>
             <p>Copia este enlace y compártelo con el usuario:</p>
             <code className="block bg-slate-900 rounded-lg p-2 text-[10px] break-all">
-              {typeof window !== "undefined" ? window.location.origin : ""}/confirmar-usuario?token={tokenResult}
+              {getAppUrl()}/confirmar-usuario?token={tokenResult}
             </code>
           </div>
         )}
@@ -242,6 +264,7 @@ export default function GestionUsuariosPage() {
                     <th className="text-left px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rol</th>
                     <th className="text-left px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Estado</th>
                     <th className="text-left px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Último Acceso</th>
+                    <th className="text-left px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -270,6 +293,16 @@ export default function GestionUsuariosPage() {
                           ? new Date(u.ultimoAcceso).toLocaleDateString("es-PE")
                           : "Nunca"}
                       </td>
+                      <td className="px-4 py-3">
+                        {u.email !== "anchillo00@gmail.com" && (
+                          <button
+                            onClick={() => handleDelete(u.id, `${u.nombre} ${u.apellido}`)}
+                            className="px-2 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg text-[10px] font-bold transition"
+                          >
+                            Eliminar
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -280,4 +313,11 @@ export default function GestionUsuariosPage() {
       </div>
     </div>
   );
+}
+
+function getAppUrl(): string {
+  if (typeof window !== "undefined") {
+    return window.location.origin;
+  }
+  return "https://aimachristian-administraciondeflotas.ajcxjb.easypanel.host";
 }
