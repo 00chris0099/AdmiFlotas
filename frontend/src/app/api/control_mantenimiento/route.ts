@@ -109,8 +109,54 @@ export const PUT = withAuth(async (request: NextRequest, { user }) => {
     });
 
     return NextResponse.json(ordenActualizada);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error al actualizar firma:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+});
+
+// PATCH: Actualizar estado de la orden
+export const PATCH = withAuth(async (request: NextRequest, { user }) => {
+  try {
+    const body = await request.json();
+    const { id, estado, kilometrajeSalida } = body;
+
+    if (!id || !estado) {
+      return NextResponse.json({ error: "Faltan campos: id y estado son requeridos" }, { status: 400 });
+    }
+
+    const prisma = getPrisma();
+    const ordenActualizada = await prisma.ordenMantenimiento.update({
+      where: { id },
+      data: {
+        estado,
+        kilometrajeSalida: kilometrajeSalida ? parseInt(kilometrajeSalida) : undefined,
+        fechaSalidaTaller: estado === "COMPLETADO" ? new Date() : undefined,
+      },
+    });
+
+    // Si se completa, actualizar odómetro del vehículo
+    if (estado === "COMPLETADO" && kilometrajeSalida) {
+      await prisma.vehiculo.update({
+        where: { id: ordenActualizada.vehiculoId },
+        data: {
+          kilometrajeActual: parseInt(kilometrajeSalida),
+          estado: "OPERATIVO",
+        },
+      });
+    }
+
+    // Si se inicia, marcar vehículo en mantenimiento
+    if (estado === "EN_PROCESO") {
+      await prisma.vehiculo.update({
+        where: { id: ordenActualizada.vehiculoId },
+        data: { estado: "EN_MANTENIMIENTO" },
+      });
+    }
+
+    return NextResponse.json(ordenActualizada);
+  } catch (error) {
+    console.error("Error al actualizar estado:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 });

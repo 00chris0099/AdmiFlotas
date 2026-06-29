@@ -143,6 +143,12 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
       },
     });
 
+    // Actualizar odómetro del vehículo
+    await prisma.vehiculo.update({
+      where: { id: vehiculoId },
+      data: { kilometrajeActual: odoActual },
+    });
+
     return NextResponse.json(nuevaOrden, { status: 201 });
   } catch (error: any) {
     console.error("Error al registrar combustible:", error);
