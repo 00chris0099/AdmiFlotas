@@ -1,1 +1,19 @@
-// File removed: content migrated to separate schema files
+model AsignacionVehiculo {
+  id              String    @id @default(uuid())
+  vehiculoId      String    @map("vehiculo_id")
+  conductorId     String    @map("conductor_id")
+  sectorAsignado  String    @map("sector_asignado") @db.VarChar(150)
+  fechaAsignacion DateTime  @default(now()) @map("fecha_asignacion")
+  fechaFin        DateTime? @map("fecha_fin")
+  activa          Boolean   @default(true)
+  observaciones   String?
+  creadoEn        DateTime  @default(now()) @map("creado_en")
+
+  vehiculo  Vehiculo @relation(fields: [vehiculoId], references: [id])
+  conductor Usuario  @relation(fields: [conductorId], references: [id])
+
+  @@index([vehiculoId])
+  @@index([conductorId])
+  @@index([activa])
+  @@map("asignaciones_vehiculos")
+}

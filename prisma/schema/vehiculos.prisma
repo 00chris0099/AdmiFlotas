@@ -108,6 +108,7 @@ model Vehiculo {
   reportesMensualesCostos ReporteMensualCostos[]
   desempenoLlantas       DesempenoLlantas[]
   resumenKpisVehiculo    ResumenKpisVehiculo[]
+  asignaciones           AsignacionVehiculo[]
 
   @@index([placa])
   @@index([estado])

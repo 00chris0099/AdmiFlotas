@@ -54,24 +54,45 @@ model Usuario {
   revisionesChecklist  MovimientoDiario[]   @relation("InspectorMovimiento")
   ordenesCombustible   OrdenCombustible[]
   ordenesMantenimiento OrdenMantenimiento[]
+  asignaciones         AsignacionVehiculo[]
 
   @@index([rol])
   @@index([activo])
   @@map("usuarios")
 }
 
-/// Roles jerÃ¡rquicos del organigrama F1T02
-/// JEFE_PROCESO: mÃ¡xima autoridad del proceso de gestiÃ³n de flotas
-/// CONDUCTOR / INSPECTOR / ANALISTA: Equipo de OperaciÃ³n
-/// MECANICO / ELECTRICISTA: Equipo de Mantenimiento
-/// ADMINISTRATIVO: Apoyo Administrativo
+/// Roles jerárquicos del organigrama F1T02 (13 roles)
+/// JEFE_PROCESO: máxima autoridad del proceso de gestión de flotas
+///
+/// Equipo de Operación:
+///   JEFE_OPERACION, ENCARGADO_GARAJE, INSPECTOR, CONTROLADOR_TRANSITO, ANALISTA, CONDUCTOR
+///
+/// Equipo de Mantenimiento:
+///   JEFE_MANTENIMIENTO, ENCARGADO_TALLER, MECANICO, ELECTRICISTA, REENCAUCHADOR, LAVADOR
+///
+/// Apoyo Administrativo:
+///   ADMINISTRATIVO
 enum RolUsuario {
+  // General
   JEFE_PROCESO
-  CONDUCTOR
+
+  // Equipo de Operación
+  JEFE_OPERACION
+  ENCARGADO_GARAJE
   INSPECTOR
+  CONTROLADOR_TRANSITO
   ANALISTA
+  CONDUCTOR
+
+  // Equipo de Mantenimiento
+  JEFE_MANTENIMIENTO
+  ENCARGADO_TALLER
   MECANICO
   ELECTRICISTA
+  REENCAUCHADOR
+  LAVADOR
+
+  // Apoyo Administrativo
   ADMINISTRATIVO
 }
 
@@ -456,7 +477,25 @@ enum EstadoMantenimiento {
   CANCELADO
 }
 
-// File removed: content migrated to separate schema files
+model AsignacionVehiculo {
+  id              String    @id @default(uuid())
+  vehiculoId      String    @map("vehiculo_id")
+  conductorId     String    @map("conductor_id")
+  sectorAsignado  String    @map("sector_asignado") @db.VarChar(150)
+  fechaAsignacion DateTime  @default(now()) @map("fecha_asignacion")
+  fechaFin        DateTime? @map("fecha_fin")
+  activa          Boolean   @default(true)
+  observaciones   String?
+  creadoEn        DateTime  @default(now()) @map("creado_en")
+
+  vehiculo  Vehiculo @relation(fields: [vehiculoId], references: [id])
+  conductor Usuario  @relation(fields: [conductorId], references: [id])
+
+  @@index([vehiculoId])
+  @@index([conductorId])
+  @@index([activa])
+  @@map("asignaciones_vehiculos")
+}
 
 // ============================================================
 // SAF - Sistema de AdministraciÃ³n de Flotas
@@ -849,6 +888,7 @@ model Vehiculo {
   reportesMensualesCostos ReporteMensualCostos[]
   desempenoLlantas        DesempenoLlantas[]
   resumenKpisVehiculo     ResumenKpisVehiculo[]
+  asignaciones            AsignacionVehiculo[]
 
   @@index([placa])
   @@index([estado])

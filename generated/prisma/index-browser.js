@@ -276,6 +276,18 @@ exports.Prisma.DetalleManoObraScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.AsignacionVehiculoScalarFieldEnum = {
+  id: 'id',
+  vehiculoId: 'vehiculoId',
+  conductorId: 'conductorId',
+  sectorAsignado: 'sectorAsignado',
+  fechaAsignacion: 'fechaAsignacion',
+  fechaFin: 'fechaFin',
+  activa: 'activa',
+  observaciones: 'observaciones',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.MovimientoDiarioScalarFieldEnum = {
   id: 'id',
   vehiculoId: 'vehiculoId',
@@ -494,11 +506,18 @@ exports.Prisma.NullsOrder = {
 };
 exports.RolUsuario = exports.$Enums.RolUsuario = {
   JEFE_PROCESO: 'JEFE_PROCESO',
-  CONDUCTOR: 'CONDUCTOR',
+  JEFE_OPERACION: 'JEFE_OPERACION',
+  ENCARGADO_GARAJE: 'ENCARGADO_GARAJE',
   INSPECTOR: 'INSPECTOR',
+  CONTROLADOR_TRANSITO: 'CONTROLADOR_TRANSITO',
   ANALISTA: 'ANALISTA',
+  CONDUCTOR: 'CONDUCTOR',
+  JEFE_MANTENIMIENTO: 'JEFE_MANTENIMIENTO',
+  ENCARGADO_TALLER: 'ENCARGADO_TALLER',
   MECANICO: 'MECANICO',
   ELECTRICISTA: 'ELECTRICISTA',
+  REENCAUCHADOR: 'REENCAUCHADOR',
+  LAVADOR: 'LAVADOR',
   ADMINISTRATIVO: 'ADMINISTRATIVO'
 };
 
@@ -618,6 +637,7 @@ exports.Prisma.ModelName = {
   OrdenMantenimiento: 'OrdenMantenimiento',
   DetalleRepuesto: 'DetalleRepuesto',
   DetalleManoObra: 'DetalleManoObra',
+  AsignacionVehiculo: 'AsignacionVehiculo',
   MovimientoDiario: 'MovimientoDiario',
   ChecklistVerificacion: 'ChecklistVerificacion',
   Permiso: 'Permiso',

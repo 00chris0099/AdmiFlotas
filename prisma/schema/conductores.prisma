@@ -36,6 +36,7 @@ model Usuario {
   revisionesChecklist  MovimientoDiario[]   @relation("InspectorMovimiento")
   ordenesCombustible   OrdenCombustible[]
   ordenesMantenimiento OrdenMantenimiento[]
+  asignaciones         AsignacionVehiculo[]
 
   @@map("usuarios")
   @@index([rol])

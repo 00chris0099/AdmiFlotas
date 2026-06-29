@@ -54,6 +54,11 @@ export type DetalleRepuesto = $Result.DefaultSelection<Prisma.$DetalleRepuestoPa
  */
 export type DetalleManoObra = $Result.DefaultSelection<Prisma.$DetalleManoObraPayload>
 /**
+ * Model AsignacionVehiculo
+ * 
+ */
+export type AsignacionVehiculo = $Result.DefaultSelection<Prisma.$AsignacionVehiculoPayload>
+/**
  * Model MovimientoDiario
  * Registro de uso diario del vehÃ­culo â€” Formulario MA 122 01 01
  */
@@ -115,11 +120,18 @@ export type DesempenoLlantas = $Result.DefaultSelection<Prisma.$DesempenoLlantas
 export namespace $Enums {
   export const RolUsuario: {
   JEFE_PROCESO: 'JEFE_PROCESO',
-  CONDUCTOR: 'CONDUCTOR',
+  JEFE_OPERACION: 'JEFE_OPERACION',
+  ENCARGADO_GARAJE: 'ENCARGADO_GARAJE',
   INSPECTOR: 'INSPECTOR',
+  CONTROLADOR_TRANSITO: 'CONTROLADOR_TRANSITO',
   ANALISTA: 'ANALISTA',
+  CONDUCTOR: 'CONDUCTOR',
+  JEFE_MANTENIMIENTO: 'JEFE_MANTENIMIENTO',
+  ENCARGADO_TALLER: 'ENCARGADO_TALLER',
   MECANICO: 'MECANICO',
   ELECTRICISTA: 'ELECTRICISTA',
+  REENCAUCHADOR: 'REENCAUCHADOR',
+  LAVADOR: 'LAVADOR',
   ADMINISTRATIVO: 'ADMINISTRATIVO'
 };
 
@@ -543,6 +555,16 @@ export class PrismaClient<
     * ```
     */
   get detalleManoObra(): Prisma.DetalleManoObraDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.asignacionVehiculo`: Exposes CRUD operations for the **AsignacionVehiculo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AsignacionVehiculos
+    * const asignacionVehiculos = await prisma.asignacionVehiculo.findMany()
+    * ```
+    */
+  get asignacionVehiculo(): Prisma.AsignacionVehiculoDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.movimientoDiario`: Exposes CRUD operations for the **MovimientoDiario** model.
@@ -1095,6 +1117,7 @@ export namespace Prisma {
     OrdenMantenimiento: 'OrdenMantenimiento',
     DetalleRepuesto: 'DetalleRepuesto',
     DetalleManoObra: 'DetalleManoObra',
+    AsignacionVehiculo: 'AsignacionVehiculo',
     MovimientoDiario: 'MovimientoDiario',
     ChecklistVerificacion: 'ChecklistVerificacion',
     Permiso: 'Permiso',
@@ -1121,7 +1144,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "movimientoDiario" | "checklistVerificacion" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
+      modelProps: "usuario" | "configuracionFlota" | "ordenCombustible" | "costoFijoProrrateable" | "controlLlanta" | "ordenMantenimiento" | "detalleRepuesto" | "detalleManoObra" | "asignacionVehiculo" | "movimientoDiario" | "checklistVerificacion" | "permiso" | "permisoUsuario" | "sesionAuth" | "auditoria" | "tokenConfirmacion" | "vehiculo" | "reporteMensualCostos" | "resumenKpisVehiculo" | "desempenoLlantas"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1714,6 +1737,80 @@ export namespace Prisma {
           count: {
             args: Prisma.DetalleManoObraCountArgs<ExtArgs>
             result: $Utils.Optional<DetalleManoObraCountAggregateOutputType> | number
+          }
+        }
+      }
+      AsignacionVehiculo: {
+        payload: Prisma.$AsignacionVehiculoPayload<ExtArgs>
+        fields: Prisma.AsignacionVehiculoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AsignacionVehiculoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AsignacionVehiculoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>
+          }
+          findFirst: {
+            args: Prisma.AsignacionVehiculoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AsignacionVehiculoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>
+          }
+          findMany: {
+            args: Prisma.AsignacionVehiculoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>[]
+          }
+          create: {
+            args: Prisma.AsignacionVehiculoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>
+          }
+          createMany: {
+            args: Prisma.AsignacionVehiculoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AsignacionVehiculoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>[]
+          }
+          delete: {
+            args: Prisma.AsignacionVehiculoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>
+          }
+          update: {
+            args: Prisma.AsignacionVehiculoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>
+          }
+          deleteMany: {
+            args: Prisma.AsignacionVehiculoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AsignacionVehiculoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AsignacionVehiculoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>[]
+          }
+          upsert: {
+            args: Prisma.AsignacionVehiculoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsignacionVehiculoPayload>
+          }
+          aggregate: {
+            args: Prisma.AsignacionVehiculoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAsignacionVehiculo>
+          }
+          groupBy: {
+            args: Prisma.AsignacionVehiculoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AsignacionVehiculoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AsignacionVehiculoCountArgs<ExtArgs>
+            result: $Utils.Optional<AsignacionVehiculoCountAggregateOutputType> | number
           }
         }
       }
@@ -2539,6 +2636,7 @@ export namespace Prisma {
     ordenMantenimiento?: OrdenMantenimientoOmit
     detalleRepuesto?: DetalleRepuestoOmit
     detalleManoObra?: DetalleManoObraOmit
+    asignacionVehiculo?: AsignacionVehiculoOmit
     movimientoDiario?: MovimientoDiarioOmit
     checklistVerificacion?: ChecklistVerificacionOmit
     permiso?: PermisoOmit
@@ -2638,6 +2736,7 @@ export namespace Prisma {
     revisionesChecklist: number
     ordenesCombustible: number
     ordenesMantenimiento: number
+    asignaciones: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2649,6 +2748,7 @@ export namespace Prisma {
     revisionesChecklist?: boolean | UsuarioCountOutputTypeCountRevisionesChecklistArgs
     ordenesCombustible?: boolean | UsuarioCountOutputTypeCountOrdenesCombustibleArgs
     ordenesMantenimiento?: boolean | UsuarioCountOutputTypeCountOrdenesMantenimientoArgs
+    asignaciones?: boolean | UsuarioCountOutputTypeCountAsignacionesArgs
   }
 
   // Custom InputTypes
@@ -2716,6 +2816,13 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountOrdenesMantenimientoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrdenMantenimientoWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountAsignacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsignacionVehiculoWhereInput
   }
 
 
@@ -2802,6 +2909,7 @@ export namespace Prisma {
     reportesMensualesCostos: number
     desempenoLlantas: number
     resumenKpisVehiculo: number
+    asignaciones: number
   }
 
   export type VehiculoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2812,6 +2920,7 @@ export namespace Prisma {
     reportesMensualesCostos?: boolean | VehiculoCountOutputTypeCountReportesMensualesCostosArgs
     desempenoLlantas?: boolean | VehiculoCountOutputTypeCountDesempenoLlantasArgs
     resumenKpisVehiculo?: boolean | VehiculoCountOutputTypeCountResumenKpisVehiculoArgs
+    asignaciones?: boolean | VehiculoCountOutputTypeCountAsignacionesArgs
   }
 
   // Custom InputTypes
@@ -2872,6 +2981,13 @@ export namespace Prisma {
    */
   export type VehiculoCountOutputTypeCountResumenKpisVehiculoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResumenKpisVehiculoWhereInput
+  }
+
+  /**
+   * VehiculoCountOutputType without action
+   */
+  export type VehiculoCountOutputTypeCountAsignacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsignacionVehiculoWhereInput
   }
 
 
@@ -3181,6 +3297,7 @@ export namespace Prisma {
     revisionesChecklist?: boolean | Usuario$revisionesChecklistArgs<ExtArgs>
     ordenesCombustible?: boolean | Usuario$ordenesCombustibleArgs<ExtArgs>
     ordenesMantenimiento?: boolean | Usuario$ordenesMantenimientoArgs<ExtArgs>
+    asignaciones?: boolean | Usuario$asignacionesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -3254,6 +3371,7 @@ export namespace Prisma {
     revisionesChecklist?: boolean | Usuario$revisionesChecklistArgs<ExtArgs>
     ordenesCombustible?: boolean | Usuario$ordenesCombustibleArgs<ExtArgs>
     ordenesMantenimiento?: boolean | Usuario$ordenesMantenimientoArgs<ExtArgs>
+    asignaciones?: boolean | Usuario$asignacionesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3270,6 +3388,7 @@ export namespace Prisma {
       revisionesChecklist: Prisma.$MovimientoDiarioPayload<ExtArgs>[]
       ordenesCombustible: Prisma.$OrdenCombustiblePayload<ExtArgs>[]
       ordenesMantenimiento: Prisma.$OrdenMantenimientoPayload<ExtArgs>[]
+      asignaciones: Prisma.$AsignacionVehiculoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3703,6 +3822,7 @@ export namespace Prisma {
     revisionesChecklist<T extends Usuario$revisionesChecklistArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$revisionesChecklistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovimientoDiarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ordenesCombustible<T extends Usuario$ordenesCombustibleArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ordenesCombustibleArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrdenCombustiblePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ordenesMantenimiento<T extends Usuario$ordenesMantenimientoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ordenesMantenimientoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrdenMantenimientoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    asignaciones<T extends Usuario$asignacionesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4331,6 +4451,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OrdenMantenimientoScalarFieldEnum | OrdenMantenimientoScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.asignaciones
+   */
+  export type Usuario$asignacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    where?: AsignacionVehiculoWhereInput
+    orderBy?: AsignacionVehiculoOrderByWithRelationInput | AsignacionVehiculoOrderByWithRelationInput[]
+    cursor?: AsignacionVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
   }
 
   /**
@@ -13193,6 +13337,1129 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DetalleManoObraInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AsignacionVehiculo
+   */
+
+  export type AggregateAsignacionVehiculo = {
+    _count: AsignacionVehiculoCountAggregateOutputType | null
+    _min: AsignacionVehiculoMinAggregateOutputType | null
+    _max: AsignacionVehiculoMaxAggregateOutputType | null
+  }
+
+  export type AsignacionVehiculoMinAggregateOutputType = {
+    id: string | null
+    vehiculoId: string | null
+    conductorId: string | null
+    sectorAsignado: string | null
+    fechaAsignacion: Date | null
+    fechaFin: Date | null
+    activa: boolean | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type AsignacionVehiculoMaxAggregateOutputType = {
+    id: string | null
+    vehiculoId: string | null
+    conductorId: string | null
+    sectorAsignado: string | null
+    fechaAsignacion: Date | null
+    fechaFin: Date | null
+    activa: boolean | null
+    observaciones: string | null
+    creadoEn: Date | null
+  }
+
+  export type AsignacionVehiculoCountAggregateOutputType = {
+    id: number
+    vehiculoId: number
+    conductorId: number
+    sectorAsignado: number
+    fechaAsignacion: number
+    fechaFin: number
+    activa: number
+    observaciones: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type AsignacionVehiculoMinAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    conductorId?: true
+    sectorAsignado?: true
+    fechaAsignacion?: true
+    fechaFin?: true
+    activa?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type AsignacionVehiculoMaxAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    conductorId?: true
+    sectorAsignado?: true
+    fechaAsignacion?: true
+    fechaFin?: true
+    activa?: true
+    observaciones?: true
+    creadoEn?: true
+  }
+
+  export type AsignacionVehiculoCountAggregateInputType = {
+    id?: true
+    vehiculoId?: true
+    conductorId?: true
+    sectorAsignado?: true
+    fechaAsignacion?: true
+    fechaFin?: true
+    activa?: true
+    observaciones?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type AsignacionVehiculoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AsignacionVehiculo to aggregate.
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsignacionVehiculos to fetch.
+     */
+    orderBy?: AsignacionVehiculoOrderByWithRelationInput | AsignacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AsignacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsignacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsignacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AsignacionVehiculos
+    **/
+    _count?: true | AsignacionVehiculoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AsignacionVehiculoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AsignacionVehiculoMaxAggregateInputType
+  }
+
+  export type GetAsignacionVehiculoAggregateType<T extends AsignacionVehiculoAggregateArgs> = {
+        [P in keyof T & keyof AggregateAsignacionVehiculo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAsignacionVehiculo[P]>
+      : GetScalarType<T[P], AggregateAsignacionVehiculo[P]>
+  }
+
+
+
+
+  export type AsignacionVehiculoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsignacionVehiculoWhereInput
+    orderBy?: AsignacionVehiculoOrderByWithAggregationInput | AsignacionVehiculoOrderByWithAggregationInput[]
+    by: AsignacionVehiculoScalarFieldEnum[] | AsignacionVehiculoScalarFieldEnum
+    having?: AsignacionVehiculoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AsignacionVehiculoCountAggregateInputType | true
+    _min?: AsignacionVehiculoMinAggregateInputType
+    _max?: AsignacionVehiculoMaxAggregateInputType
+  }
+
+  export type AsignacionVehiculoGroupByOutputType = {
+    id: string
+    vehiculoId: string
+    conductorId: string
+    sectorAsignado: string
+    fechaAsignacion: Date
+    fechaFin: Date | null
+    activa: boolean
+    observaciones: string | null
+    creadoEn: Date
+    _count: AsignacionVehiculoCountAggregateOutputType | null
+    _min: AsignacionVehiculoMinAggregateOutputType | null
+    _max: AsignacionVehiculoMaxAggregateOutputType | null
+  }
+
+  type GetAsignacionVehiculoGroupByPayload<T extends AsignacionVehiculoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AsignacionVehiculoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AsignacionVehiculoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AsignacionVehiculoGroupByOutputType[P]>
+            : GetScalarType<T[P], AsignacionVehiculoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AsignacionVehiculoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    sectorAsignado?: boolean
+    fechaAsignacion?: boolean
+    fechaFin?: boolean
+    activa?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asignacionVehiculo"]>
+
+  export type AsignacionVehiculoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    sectorAsignado?: boolean
+    fechaAsignacion?: boolean
+    fechaFin?: boolean
+    activa?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asignacionVehiculo"]>
+
+  export type AsignacionVehiculoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    sectorAsignado?: boolean
+    fechaAsignacion?: boolean
+    fechaFin?: boolean
+    activa?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asignacionVehiculo"]>
+
+  export type AsignacionVehiculoSelectScalar = {
+    id?: boolean
+    vehiculoId?: boolean
+    conductorId?: boolean
+    sectorAsignado?: boolean
+    fechaAsignacion?: boolean
+    fechaFin?: boolean
+    activa?: boolean
+    observaciones?: boolean
+    creadoEn?: boolean
+  }
+
+  export type AsignacionVehiculoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vehiculoId" | "conductorId" | "sectorAsignado" | "fechaAsignacion" | "fechaFin" | "activa" | "observaciones" | "creadoEn", ExtArgs["result"]["asignacionVehiculo"]>
+  export type AsignacionVehiculoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AsignacionVehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AsignacionVehiculoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+    conductor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $AsignacionVehiculoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AsignacionVehiculo"
+    objects: {
+      vehiculo: Prisma.$VehiculoPayload<ExtArgs>
+      conductor: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      vehiculoId: string
+      conductorId: string
+      sectorAsignado: string
+      fechaAsignacion: Date
+      fechaFin: Date | null
+      activa: boolean
+      observaciones: string | null
+      creadoEn: Date
+    }, ExtArgs["result"]["asignacionVehiculo"]>
+    composites: {}
+  }
+
+  type AsignacionVehiculoGetPayload<S extends boolean | null | undefined | AsignacionVehiculoDefaultArgs> = $Result.GetResult<Prisma.$AsignacionVehiculoPayload, S>
+
+  type AsignacionVehiculoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AsignacionVehiculoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AsignacionVehiculoCountAggregateInputType | true
+    }
+
+  export interface AsignacionVehiculoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AsignacionVehiculo'], meta: { name: 'AsignacionVehiculo' } }
+    /**
+     * Find zero or one AsignacionVehiculo that matches the filter.
+     * @param {AsignacionVehiculoFindUniqueArgs} args - Arguments to find a AsignacionVehiculo
+     * @example
+     * // Get one AsignacionVehiculo
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AsignacionVehiculoFindUniqueArgs>(args: SelectSubset<T, AsignacionVehiculoFindUniqueArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AsignacionVehiculo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AsignacionVehiculoFindUniqueOrThrowArgs} args - Arguments to find a AsignacionVehiculo
+     * @example
+     * // Get one AsignacionVehiculo
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AsignacionVehiculoFindUniqueOrThrowArgs>(args: SelectSubset<T, AsignacionVehiculoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AsignacionVehiculo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoFindFirstArgs} args - Arguments to find a AsignacionVehiculo
+     * @example
+     * // Get one AsignacionVehiculo
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AsignacionVehiculoFindFirstArgs>(args?: SelectSubset<T, AsignacionVehiculoFindFirstArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AsignacionVehiculo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoFindFirstOrThrowArgs} args - Arguments to find a AsignacionVehiculo
+     * @example
+     * // Get one AsignacionVehiculo
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AsignacionVehiculoFindFirstOrThrowArgs>(args?: SelectSubset<T, AsignacionVehiculoFindFirstOrThrowArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AsignacionVehiculos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AsignacionVehiculos
+     * const asignacionVehiculos = await prisma.asignacionVehiculo.findMany()
+     * 
+     * // Get first 10 AsignacionVehiculos
+     * const asignacionVehiculos = await prisma.asignacionVehiculo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const asignacionVehiculoWithIdOnly = await prisma.asignacionVehiculo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AsignacionVehiculoFindManyArgs>(args?: SelectSubset<T, AsignacionVehiculoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AsignacionVehiculo.
+     * @param {AsignacionVehiculoCreateArgs} args - Arguments to create a AsignacionVehiculo.
+     * @example
+     * // Create one AsignacionVehiculo
+     * const AsignacionVehiculo = await prisma.asignacionVehiculo.create({
+     *   data: {
+     *     // ... data to create a AsignacionVehiculo
+     *   }
+     * })
+     * 
+     */
+    create<T extends AsignacionVehiculoCreateArgs>(args: SelectSubset<T, AsignacionVehiculoCreateArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AsignacionVehiculos.
+     * @param {AsignacionVehiculoCreateManyArgs} args - Arguments to create many AsignacionVehiculos.
+     * @example
+     * // Create many AsignacionVehiculos
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AsignacionVehiculoCreateManyArgs>(args?: SelectSubset<T, AsignacionVehiculoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AsignacionVehiculos and returns the data saved in the database.
+     * @param {AsignacionVehiculoCreateManyAndReturnArgs} args - Arguments to create many AsignacionVehiculos.
+     * @example
+     * // Create many AsignacionVehiculos
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AsignacionVehiculos and only return the `id`
+     * const asignacionVehiculoWithIdOnly = await prisma.asignacionVehiculo.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AsignacionVehiculoCreateManyAndReturnArgs>(args?: SelectSubset<T, AsignacionVehiculoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AsignacionVehiculo.
+     * @param {AsignacionVehiculoDeleteArgs} args - Arguments to delete one AsignacionVehiculo.
+     * @example
+     * // Delete one AsignacionVehiculo
+     * const AsignacionVehiculo = await prisma.asignacionVehiculo.delete({
+     *   where: {
+     *     // ... filter to delete one AsignacionVehiculo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AsignacionVehiculoDeleteArgs>(args: SelectSubset<T, AsignacionVehiculoDeleteArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AsignacionVehiculo.
+     * @param {AsignacionVehiculoUpdateArgs} args - Arguments to update one AsignacionVehiculo.
+     * @example
+     * // Update one AsignacionVehiculo
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AsignacionVehiculoUpdateArgs>(args: SelectSubset<T, AsignacionVehiculoUpdateArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AsignacionVehiculos.
+     * @param {AsignacionVehiculoDeleteManyArgs} args - Arguments to filter AsignacionVehiculos to delete.
+     * @example
+     * // Delete a few AsignacionVehiculos
+     * const { count } = await prisma.asignacionVehiculo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AsignacionVehiculoDeleteManyArgs>(args?: SelectSubset<T, AsignacionVehiculoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AsignacionVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AsignacionVehiculos
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AsignacionVehiculoUpdateManyArgs>(args: SelectSubset<T, AsignacionVehiculoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AsignacionVehiculos and returns the data updated in the database.
+     * @param {AsignacionVehiculoUpdateManyAndReturnArgs} args - Arguments to update many AsignacionVehiculos.
+     * @example
+     * // Update many AsignacionVehiculos
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AsignacionVehiculos and only return the `id`
+     * const asignacionVehiculoWithIdOnly = await prisma.asignacionVehiculo.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AsignacionVehiculoUpdateManyAndReturnArgs>(args: SelectSubset<T, AsignacionVehiculoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AsignacionVehiculo.
+     * @param {AsignacionVehiculoUpsertArgs} args - Arguments to update or create a AsignacionVehiculo.
+     * @example
+     * // Update or create a AsignacionVehiculo
+     * const asignacionVehiculo = await prisma.asignacionVehiculo.upsert({
+     *   create: {
+     *     // ... data to create a AsignacionVehiculo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AsignacionVehiculo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AsignacionVehiculoUpsertArgs>(args: SelectSubset<T, AsignacionVehiculoUpsertArgs<ExtArgs>>): Prisma__AsignacionVehiculoClient<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AsignacionVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoCountArgs} args - Arguments to filter AsignacionVehiculos to count.
+     * @example
+     * // Count the number of AsignacionVehiculos
+     * const count = await prisma.asignacionVehiculo.count({
+     *   where: {
+     *     // ... the filter for the AsignacionVehiculos we want to count
+     *   }
+     * })
+    **/
+    count<T extends AsignacionVehiculoCountArgs>(
+      args?: Subset<T, AsignacionVehiculoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AsignacionVehiculoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AsignacionVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AsignacionVehiculoAggregateArgs>(args: Subset<T, AsignacionVehiculoAggregateArgs>): Prisma.PrismaPromise<GetAsignacionVehiculoAggregateType<T>>
+
+    /**
+     * Group by AsignacionVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsignacionVehiculoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AsignacionVehiculoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AsignacionVehiculoGroupByArgs['orderBy'] }
+        : { orderBy?: AsignacionVehiculoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AsignacionVehiculoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAsignacionVehiculoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AsignacionVehiculo model
+   */
+  readonly fields: AsignacionVehiculoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AsignacionVehiculo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AsignacionVehiculoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    vehiculo<T extends VehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehiculoDefaultArgs<ExtArgs>>): Prisma__VehiculoClient<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    conductor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AsignacionVehiculo model
+   */
+  interface AsignacionVehiculoFieldRefs {
+    readonly id: FieldRef<"AsignacionVehiculo", 'String'>
+    readonly vehiculoId: FieldRef<"AsignacionVehiculo", 'String'>
+    readonly conductorId: FieldRef<"AsignacionVehiculo", 'String'>
+    readonly sectorAsignado: FieldRef<"AsignacionVehiculo", 'String'>
+    readonly fechaAsignacion: FieldRef<"AsignacionVehiculo", 'DateTime'>
+    readonly fechaFin: FieldRef<"AsignacionVehiculo", 'DateTime'>
+    readonly activa: FieldRef<"AsignacionVehiculo", 'Boolean'>
+    readonly observaciones: FieldRef<"AsignacionVehiculo", 'String'>
+    readonly creadoEn: FieldRef<"AsignacionVehiculo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AsignacionVehiculo findUnique
+   */
+  export type AsignacionVehiculoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which AsignacionVehiculo to fetch.
+     */
+    where: AsignacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * AsignacionVehiculo findUniqueOrThrow
+   */
+  export type AsignacionVehiculoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which AsignacionVehiculo to fetch.
+     */
+    where: AsignacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * AsignacionVehiculo findFirst
+   */
+  export type AsignacionVehiculoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which AsignacionVehiculo to fetch.
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsignacionVehiculos to fetch.
+     */
+    orderBy?: AsignacionVehiculoOrderByWithRelationInput | AsignacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AsignacionVehiculos.
+     */
+    cursor?: AsignacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsignacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsignacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsignacionVehiculos.
+     */
+    distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * AsignacionVehiculo findFirstOrThrow
+   */
+  export type AsignacionVehiculoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which AsignacionVehiculo to fetch.
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsignacionVehiculos to fetch.
+     */
+    orderBy?: AsignacionVehiculoOrderByWithRelationInput | AsignacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AsignacionVehiculos.
+     */
+    cursor?: AsignacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsignacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsignacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsignacionVehiculos.
+     */
+    distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * AsignacionVehiculo findMany
+   */
+  export type AsignacionVehiculoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which AsignacionVehiculos to fetch.
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsignacionVehiculos to fetch.
+     */
+    orderBy?: AsignacionVehiculoOrderByWithRelationInput | AsignacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AsignacionVehiculos.
+     */
+    cursor?: AsignacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsignacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsignacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsignacionVehiculos.
+     */
+    distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * AsignacionVehiculo create
+   */
+  export type AsignacionVehiculoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AsignacionVehiculo.
+     */
+    data: XOR<AsignacionVehiculoCreateInput, AsignacionVehiculoUncheckedCreateInput>
+  }
+
+  /**
+   * AsignacionVehiculo createMany
+   */
+  export type AsignacionVehiculoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AsignacionVehiculos.
+     */
+    data: AsignacionVehiculoCreateManyInput | AsignacionVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AsignacionVehiculo createManyAndReturn
+   */
+  export type AsignacionVehiculoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * The data used to create many AsignacionVehiculos.
+     */
+    data: AsignacionVehiculoCreateManyInput | AsignacionVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AsignacionVehiculo update
+   */
+  export type AsignacionVehiculoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AsignacionVehiculo.
+     */
+    data: XOR<AsignacionVehiculoUpdateInput, AsignacionVehiculoUncheckedUpdateInput>
+    /**
+     * Choose, which AsignacionVehiculo to update.
+     */
+    where: AsignacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * AsignacionVehiculo updateMany
+   */
+  export type AsignacionVehiculoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AsignacionVehiculos.
+     */
+    data: XOR<AsignacionVehiculoUpdateManyMutationInput, AsignacionVehiculoUncheckedUpdateManyInput>
+    /**
+     * Filter which AsignacionVehiculos to update
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * Limit how many AsignacionVehiculos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AsignacionVehiculo updateManyAndReturn
+   */
+  export type AsignacionVehiculoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * The data used to update AsignacionVehiculos.
+     */
+    data: XOR<AsignacionVehiculoUpdateManyMutationInput, AsignacionVehiculoUncheckedUpdateManyInput>
+    /**
+     * Filter which AsignacionVehiculos to update
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * Limit how many AsignacionVehiculos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AsignacionVehiculo upsert
+   */
+  export type AsignacionVehiculoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AsignacionVehiculo to update in case it exists.
+     */
+    where: AsignacionVehiculoWhereUniqueInput
+    /**
+     * In case the AsignacionVehiculo found by the `where` argument doesn't exist, create a new AsignacionVehiculo with this data.
+     */
+    create: XOR<AsignacionVehiculoCreateInput, AsignacionVehiculoUncheckedCreateInput>
+    /**
+     * In case the AsignacionVehiculo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AsignacionVehiculoUpdateInput, AsignacionVehiculoUncheckedUpdateInput>
+  }
+
+  /**
+   * AsignacionVehiculo delete
+   */
+  export type AsignacionVehiculoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter which AsignacionVehiculo to delete.
+     */
+    where: AsignacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * AsignacionVehiculo deleteMany
+   */
+  export type AsignacionVehiculoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AsignacionVehiculos to delete
+     */
+    where?: AsignacionVehiculoWhereInput
+    /**
+     * Limit how many AsignacionVehiculos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AsignacionVehiculo without action
+   */
+  export type AsignacionVehiculoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
   }
 
 
@@ -22196,6 +23463,7 @@ export namespace Prisma {
     reportesMensualesCostos?: boolean | Vehiculo$reportesMensualesCostosArgs<ExtArgs>
     desempenoLlantas?: boolean | Vehiculo$desempenoLlantasArgs<ExtArgs>
     resumenKpisVehiculo?: boolean | Vehiculo$resumenKpisVehiculoArgs<ExtArgs>
+    asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vehiculo"]>
 
@@ -22373,6 +23641,7 @@ export namespace Prisma {
     reportesMensualesCostos?: boolean | Vehiculo$reportesMensualesCostosArgs<ExtArgs>
     desempenoLlantas?: boolean | Vehiculo$desempenoLlantasArgs<ExtArgs>
     resumenKpisVehiculo?: boolean | Vehiculo$resumenKpisVehiculoArgs<ExtArgs>
+    asignaciones?: boolean | Vehiculo$asignacionesArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -22388,6 +23657,7 @@ export namespace Prisma {
       reportesMensualesCostos: Prisma.$ReporteMensualCostosPayload<ExtArgs>[]
       desempenoLlantas: Prisma.$DesempenoLlantasPayload<ExtArgs>[]
       resumenKpisVehiculo: Prisma.$ResumenKpisVehiculoPayload<ExtArgs>[]
+      asignaciones: Prisma.$AsignacionVehiculoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -22915,6 +24185,7 @@ export namespace Prisma {
     reportesMensualesCostos<T extends Vehiculo$reportesMensualesCostosArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$reportesMensualesCostosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReporteMensualCostosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     desempenoLlantas<T extends Vehiculo$desempenoLlantasArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$desempenoLlantasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DesempenoLlantasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resumenKpisVehiculo<T extends Vehiculo$resumenKpisVehiculoArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$resumenKpisVehiculoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumenKpisVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    asignaciones<T extends Vehiculo$asignacionesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsignacionVehiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23554,6 +24825,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResumenKpisVehiculoScalarFieldEnum | ResumenKpisVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Vehiculo.asignaciones
+   */
+  export type Vehiculo$asignacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsignacionVehiculo
+     */
+    select?: AsignacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsignacionVehiculo
+     */
+    omit?: AsignacionVehiculoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsignacionVehiculoInclude<ExtArgs> | null
+    where?: AsignacionVehiculoWhereInput
+    orderBy?: AsignacionVehiculoOrderByWithRelationInput | AsignacionVehiculoOrderByWithRelationInput[]
+    cursor?: AsignacionVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AsignacionVehiculoScalarFieldEnum | AsignacionVehiculoScalarFieldEnum[]
   }
 
   /**
@@ -26079,6 +27374,21 @@ export namespace Prisma {
   export type DetalleManoObraScalarFieldEnum = (typeof DetalleManoObraScalarFieldEnum)[keyof typeof DetalleManoObraScalarFieldEnum]
 
 
+  export const AsignacionVehiculoScalarFieldEnum: {
+    id: 'id',
+    vehiculoId: 'vehiculoId',
+    conductorId: 'conductorId',
+    sectorAsignado: 'sectorAsignado',
+    fechaAsignacion: 'fechaAsignacion',
+    fechaFin: 'fechaFin',
+    activa: 'activa',
+    observaciones: 'observaciones',
+    creadoEn: 'creadoEn'
+  };
+
+  export type AsignacionVehiculoScalarFieldEnum = (typeof AsignacionVehiculoScalarFieldEnum)[keyof typeof AsignacionVehiculoScalarFieldEnum]
+
+
   export const MovimientoDiarioScalarFieldEnum: {
     id: 'id',
     vehiculoId: 'vehiculoId',
@@ -26676,6 +27986,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioListRelationFilter
     ordenesCombustible?: OrdenCombustibleListRelationFilter
     ordenesMantenimiento?: OrdenMantenimientoListRelationFilter
+    asignaciones?: AsignacionVehiculoListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -26704,6 +28015,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioOrderByRelationAggregateInput
     ordenesCombustible?: OrdenCombustibleOrderByRelationAggregateInput
     ordenesMantenimiento?: OrdenMantenimientoOrderByRelationAggregateInput
+    asignaciones?: AsignacionVehiculoOrderByRelationAggregateInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -26735,6 +28047,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioListRelationFilter
     ordenesCombustible?: OrdenCombustibleListRelationFilter
     ordenesMantenimiento?: OrdenMantenimientoListRelationFilter
+    asignaciones?: AsignacionVehiculoListRelationFilter
   }, "id" | "email">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -27588,6 +28901,84 @@ export namespace Prisma {
     creadoEn?: DateTimeWithAggregatesFilter<"DetalleManoObra"> | Date | string
   }
 
+  export type AsignacionVehiculoWhereInput = {
+    AND?: AsignacionVehiculoWhereInput | AsignacionVehiculoWhereInput[]
+    OR?: AsignacionVehiculoWhereInput[]
+    NOT?: AsignacionVehiculoWhereInput | AsignacionVehiculoWhereInput[]
+    id?: StringFilter<"AsignacionVehiculo"> | string
+    vehiculoId?: StringFilter<"AsignacionVehiculo"> | string
+    conductorId?: StringFilter<"AsignacionVehiculo"> | string
+    sectorAsignado?: StringFilter<"AsignacionVehiculo"> | string
+    fechaAsignacion?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+    fechaFin?: DateTimeNullableFilter<"AsignacionVehiculo"> | Date | string | null
+    activa?: BoolFilter<"AsignacionVehiculo"> | boolean
+    observaciones?: StringNullableFilter<"AsignacionVehiculo"> | string | null
+    creadoEn?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+    conductor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type AsignacionVehiculoOrderByWithRelationInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    sectorAsignado?: SortOrder
+    fechaAsignacion?: SortOrder
+    fechaFin?: SortOrderInput | SortOrder
+    activa?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    vehiculo?: VehiculoOrderByWithRelationInput
+    conductor?: UsuarioOrderByWithRelationInput
+  }
+
+  export type AsignacionVehiculoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AsignacionVehiculoWhereInput | AsignacionVehiculoWhereInput[]
+    OR?: AsignacionVehiculoWhereInput[]
+    NOT?: AsignacionVehiculoWhereInput | AsignacionVehiculoWhereInput[]
+    vehiculoId?: StringFilter<"AsignacionVehiculo"> | string
+    conductorId?: StringFilter<"AsignacionVehiculo"> | string
+    sectorAsignado?: StringFilter<"AsignacionVehiculo"> | string
+    fechaAsignacion?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+    fechaFin?: DateTimeNullableFilter<"AsignacionVehiculo"> | Date | string | null
+    activa?: BoolFilter<"AsignacionVehiculo"> | boolean
+    observaciones?: StringNullableFilter<"AsignacionVehiculo"> | string | null
+    creadoEn?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+    vehiculo?: XOR<VehiculoScalarRelationFilter, VehiculoWhereInput>
+    conductor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type AsignacionVehiculoOrderByWithAggregationInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    sectorAsignado?: SortOrder
+    fechaAsignacion?: SortOrder
+    fechaFin?: SortOrderInput | SortOrder
+    activa?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    creadoEn?: SortOrder
+    _count?: AsignacionVehiculoCountOrderByAggregateInput
+    _max?: AsignacionVehiculoMaxOrderByAggregateInput
+    _min?: AsignacionVehiculoMinOrderByAggregateInput
+  }
+
+  export type AsignacionVehiculoScalarWhereWithAggregatesInput = {
+    AND?: AsignacionVehiculoScalarWhereWithAggregatesInput | AsignacionVehiculoScalarWhereWithAggregatesInput[]
+    OR?: AsignacionVehiculoScalarWhereWithAggregatesInput[]
+    NOT?: AsignacionVehiculoScalarWhereWithAggregatesInput | AsignacionVehiculoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AsignacionVehiculo"> | string
+    vehiculoId?: StringWithAggregatesFilter<"AsignacionVehiculo"> | string
+    conductorId?: StringWithAggregatesFilter<"AsignacionVehiculo"> | string
+    sectorAsignado?: StringWithAggregatesFilter<"AsignacionVehiculo"> | string
+    fechaAsignacion?: DateTimeWithAggregatesFilter<"AsignacionVehiculo"> | Date | string
+    fechaFin?: DateTimeNullableWithAggregatesFilter<"AsignacionVehiculo"> | Date | string | null
+    activa?: BoolWithAggregatesFilter<"AsignacionVehiculo"> | boolean
+    observaciones?: StringNullableWithAggregatesFilter<"AsignacionVehiculo"> | string | null
+    creadoEn?: DateTimeWithAggregatesFilter<"AsignacionVehiculo"> | Date | string
+  }
+
   export type MovimientoDiarioWhereInput = {
     AND?: MovimientoDiarioWhereInput | MovimientoDiarioWhereInput[]
     OR?: MovimientoDiarioWhereInput[]
@@ -28332,6 +29723,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosListRelationFilter
     desempenoLlantas?: DesempenoLlantasListRelationFilter
     resumenKpisVehiculo?: ResumenKpisVehiculoListRelationFilter
+    asignaciones?: AsignacionVehiculoListRelationFilter
   }
 
   export type VehiculoOrderByWithRelationInput = {
@@ -28394,6 +29786,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosOrderByRelationAggregateInput
     desempenoLlantas?: DesempenoLlantasOrderByRelationAggregateInput
     resumenKpisVehiculo?: ResumenKpisVehiculoOrderByRelationAggregateInput
+    asignaciones?: AsignacionVehiculoOrderByRelationAggregateInput
   }
 
   export type VehiculoWhereUniqueInput = Prisma.AtLeast<{
@@ -28459,6 +29852,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosListRelationFilter
     desempenoLlantas?: DesempenoLlantasListRelationFilter
     resumenKpisVehiculo?: ResumenKpisVehiculoListRelationFilter
+    asignaciones?: AsignacionVehiculoListRelationFilter
   }, "id" | "codigoPatrimonial" | "placa" | "numeroMotor" | "numeroChasis">
 
   export type VehiculoOrderByWithAggregationInput = {
@@ -28831,6 +30225,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -28859,6 +30254,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUpdateInput = {
@@ -28887,6 +30283,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -28915,6 +30312,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -29930,6 +31328,88 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AsignacionVehiculoCreateInput = {
+    id?: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+    vehiculo: VehiculoCreateNestedOneWithoutAsignacionesInput
+    conductor: UsuarioCreateNestedOneWithoutAsignacionesInput
+  }
+
+  export type AsignacionVehiculoUncheckedCreateInput = {
+    id?: string
+    vehiculoId: string
+    conductorId: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type AsignacionVehiculoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculo?: VehiculoUpdateOneRequiredWithoutAsignacionesNestedInput
+    conductor?: UsuarioUpdateOneRequiredWithoutAsignacionesNestedInput
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AsignacionVehiculoCreateManyInput = {
+    id?: string
+    vehiculoId: string
+    conductorId: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type AsignacionVehiculoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MovimientoDiarioCreateInput = {
     id?: string
     fecha: Date | string
@@ -30773,6 +32253,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateInput = {
@@ -30835,6 +32316,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUpdateInput = {
@@ -30897,6 +32379,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateInput = {
@@ -30959,6 +32442,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateManyInput = {
@@ -31243,6 +32727,12 @@ export namespace Prisma {
     none?: OrdenMantenimientoWhereInput
   }
 
+  export type AsignacionVehiculoListRelationFilter = {
+    every?: AsignacionVehiculoWhereInput
+    some?: AsignacionVehiculoWhereInput
+    none?: AsignacionVehiculoWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -31273,6 +32763,10 @@ export namespace Prisma {
   }
 
   export type OrdenMantenimientoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AsignacionVehiculoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -32165,6 +33659,42 @@ export namespace Prisma {
     horasTrabajadas?: SortOrder
     costoHora?: SortOrder
     subtotal?: SortOrder
+  }
+
+  export type AsignacionVehiculoCountOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    sectorAsignado?: SortOrder
+    fechaAsignacion?: SortOrder
+    fechaFin?: SortOrder
+    activa?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type AsignacionVehiculoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    sectorAsignado?: SortOrder
+    fechaAsignacion?: SortOrder
+    fechaFin?: SortOrder
+    activa?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type AsignacionVehiculoMinOrderByAggregateInput = {
+    id?: SortOrder
+    vehiculoId?: SortOrder
+    conductorId?: SortOrder
+    sectorAsignado?: SortOrder
+    fechaAsignacion?: SortOrder
+    fechaFin?: SortOrder
+    activa?: SortOrder
+    observaciones?: SortOrder
+    creadoEn?: SortOrder
   }
 
   export type EnumEstadoMovimientoFilter<$PrismaModel = never> = {
@@ -33161,6 +34691,13 @@ export namespace Prisma {
     connect?: OrdenMantenimientoWhereUniqueInput | OrdenMantenimientoWhereUniqueInput[]
   }
 
+  export type AsignacionVehiculoCreateNestedManyWithoutConductorInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutConductorInput, AsignacionVehiculoUncheckedCreateWithoutConductorInput> | AsignacionVehiculoCreateWithoutConductorInput[] | AsignacionVehiculoUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutConductorInput | AsignacionVehiculoCreateOrConnectWithoutConductorInput[]
+    createMany?: AsignacionVehiculoCreateManyConductorInputEnvelope
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+  }
+
   export type PermisoUsuarioUncheckedCreateNestedManyWithoutUsuarioInput = {
     create?: XOR<PermisoUsuarioCreateWithoutUsuarioInput, PermisoUsuarioUncheckedCreateWithoutUsuarioInput> | PermisoUsuarioCreateWithoutUsuarioInput[] | PermisoUsuarioUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoUsuarioCreateOrConnectWithoutUsuarioInput | PermisoUsuarioCreateOrConnectWithoutUsuarioInput[]
@@ -33215,6 +34752,13 @@ export namespace Prisma {
     connectOrCreate?: OrdenMantenimientoCreateOrConnectWithoutTecnicoInput | OrdenMantenimientoCreateOrConnectWithoutTecnicoInput[]
     createMany?: OrdenMantenimientoCreateManyTecnicoInputEnvelope
     connect?: OrdenMantenimientoWhereUniqueInput | OrdenMantenimientoWhereUniqueInput[]
+  }
+
+  export type AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutConductorInput, AsignacionVehiculoUncheckedCreateWithoutConductorInput> | AsignacionVehiculoCreateWithoutConductorInput[] | AsignacionVehiculoUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutConductorInput | AsignacionVehiculoCreateOrConnectWithoutConductorInput[]
+    createMany?: AsignacionVehiculoCreateManyConductorInputEnvelope
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -33361,6 +34905,20 @@ export namespace Prisma {
     deleteMany?: OrdenMantenimientoScalarWhereInput | OrdenMantenimientoScalarWhereInput[]
   }
 
+  export type AsignacionVehiculoUpdateManyWithoutConductorNestedInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutConductorInput, AsignacionVehiculoUncheckedCreateWithoutConductorInput> | AsignacionVehiculoCreateWithoutConductorInput[] | AsignacionVehiculoUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutConductorInput | AsignacionVehiculoCreateOrConnectWithoutConductorInput[]
+    upsert?: AsignacionVehiculoUpsertWithWhereUniqueWithoutConductorInput | AsignacionVehiculoUpsertWithWhereUniqueWithoutConductorInput[]
+    createMany?: AsignacionVehiculoCreateManyConductorInputEnvelope
+    set?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    disconnect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    delete?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    update?: AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput | AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput[]
+    updateMany?: AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput | AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput[]
+    deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
+  }
+
   export type PermisoUsuarioUncheckedUpdateManyWithoutUsuarioNestedInput = {
     create?: XOR<PermisoUsuarioCreateWithoutUsuarioInput, PermisoUsuarioUncheckedCreateWithoutUsuarioInput> | PermisoUsuarioCreateWithoutUsuarioInput[] | PermisoUsuarioUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoUsuarioCreateOrConnectWithoutUsuarioInput | PermisoUsuarioCreateOrConnectWithoutUsuarioInput[]
@@ -33471,6 +35029,20 @@ export namespace Prisma {
     update?: OrdenMantenimientoUpdateWithWhereUniqueWithoutTecnicoInput | OrdenMantenimientoUpdateWithWhereUniqueWithoutTecnicoInput[]
     updateMany?: OrdenMantenimientoUpdateManyWithWhereWithoutTecnicoInput | OrdenMantenimientoUpdateManyWithWhereWithoutTecnicoInput[]
     deleteMany?: OrdenMantenimientoScalarWhereInput | OrdenMantenimientoScalarWhereInput[]
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutConductorInput, AsignacionVehiculoUncheckedCreateWithoutConductorInput> | AsignacionVehiculoCreateWithoutConductorInput[] | AsignacionVehiculoUncheckedCreateWithoutConductorInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutConductorInput | AsignacionVehiculoCreateOrConnectWithoutConductorInput[]
+    upsert?: AsignacionVehiculoUpsertWithWhereUniqueWithoutConductorInput | AsignacionVehiculoUpsertWithWhereUniqueWithoutConductorInput[]
+    createMany?: AsignacionVehiculoCreateManyConductorInputEnvelope
+    set?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    disconnect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    delete?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    update?: AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput | AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput[]
+    updateMany?: AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput | AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput[]
+    deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
   }
 
   export type VehiculoCreateNestedOneWithoutOrdenesCombustibleInput = {
@@ -33703,6 +35275,34 @@ export namespace Prisma {
     upsert?: OrdenMantenimientoUpsertWithoutManoDeObraInput
     connect?: OrdenMantenimientoWhereUniqueInput
     update?: XOR<XOR<OrdenMantenimientoUpdateToOneWithWhereWithoutManoDeObraInput, OrdenMantenimientoUpdateWithoutManoDeObraInput>, OrdenMantenimientoUncheckedUpdateWithoutManoDeObraInput>
+  }
+
+  export type VehiculoCreateNestedOneWithoutAsignacionesInput = {
+    create?: XOR<VehiculoCreateWithoutAsignacionesInput, VehiculoUncheckedCreateWithoutAsignacionesInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutAsignacionesInput
+    connect?: VehiculoWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutAsignacionesInput = {
+    create?: XOR<UsuarioCreateWithoutAsignacionesInput, UsuarioUncheckedCreateWithoutAsignacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAsignacionesInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type VehiculoUpdateOneRequiredWithoutAsignacionesNestedInput = {
+    create?: XOR<VehiculoCreateWithoutAsignacionesInput, VehiculoUncheckedCreateWithoutAsignacionesInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutAsignacionesInput
+    upsert?: VehiculoUpsertWithoutAsignacionesInput
+    connect?: VehiculoWhereUniqueInput
+    update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutAsignacionesInput, VehiculoUpdateWithoutAsignacionesInput>, VehiculoUncheckedUpdateWithoutAsignacionesInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutAsignacionesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutAsignacionesInput, UsuarioUncheckedCreateWithoutAsignacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAsignacionesInput
+    upsert?: UsuarioUpsertWithoutAsignacionesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAsignacionesInput, UsuarioUpdateWithoutAsignacionesInput>, UsuarioUncheckedUpdateWithoutAsignacionesInput>
   }
 
   export type VehiculoCreateNestedOneWithoutMovimientosDiariosInput = {
@@ -33969,6 +35569,13 @@ export namespace Prisma {
     connect?: ResumenKpisVehiculoWhereUniqueInput | ResumenKpisVehiculoWhereUniqueInput[]
   }
 
+  export type AsignacionVehiculoCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutVehiculoInput, AsignacionVehiculoUncheckedCreateWithoutVehiculoInput> | AsignacionVehiculoCreateWithoutVehiculoInput[] | AsignacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutVehiculoInput | AsignacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: AsignacionVehiculoCreateManyVehiculoInputEnvelope
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+  }
+
   export type MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -34007,6 +35614,13 @@ export namespace Prisma {
 
   export type ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput = {
     connect?: ResumenKpisVehiculoWhereUniqueInput | ResumenKpisVehiculoWhereUniqueInput[]
+  }
+
+  export type AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutVehiculoInput, AsignacionVehiculoUncheckedCreateWithoutVehiculoInput> | AsignacionVehiculoCreateWithoutVehiculoInput[] | AsignacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutVehiculoInput | AsignacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: AsignacionVehiculoCreateManyVehiculoInputEnvelope
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
   }
 
   export type EnumCategoriaVehiculoFieldUpdateOperationsInput = {
@@ -34111,6 +35725,20 @@ export namespace Prisma {
     deleteMany?: ResumenKpisVehiculoScalarWhereInput | ResumenKpisVehiculoScalarWhereInput[]
   }
 
+  export type AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutVehiculoInput, AsignacionVehiculoUncheckedCreateWithoutVehiculoInput> | AsignacionVehiculoCreateWithoutVehiculoInput[] | AsignacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutVehiculoInput | AsignacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: AsignacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | AsignacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: AsignacionVehiculoCreateManyVehiculoInputEnvelope
+    set?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    disconnect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    delete?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    update?: AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput | AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
+  }
+
   export type MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput = {
     create?: XOR<MovimientoDiarioCreateWithoutVehiculoInput, MovimientoDiarioUncheckedCreateWithoutVehiculoInput> | MovimientoDiarioCreateWithoutVehiculoInput[] | MovimientoDiarioUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: MovimientoDiarioCreateOrConnectWithoutVehiculoInput | MovimientoDiarioCreateOrConnectWithoutVehiculoInput[]
@@ -34195,6 +35823,20 @@ export namespace Prisma {
     update?: ResumenKpisVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | ResumenKpisVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
     updateMany?: ResumenKpisVehiculoUpdateManyWithWhereWithoutVehiculoInput | ResumenKpisVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
     deleteMany?: ResumenKpisVehiculoScalarWhereInput | ResumenKpisVehiculoScalarWhereInput[]
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<AsignacionVehiculoCreateWithoutVehiculoInput, AsignacionVehiculoUncheckedCreateWithoutVehiculoInput> | AsignacionVehiculoCreateWithoutVehiculoInput[] | AsignacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: AsignacionVehiculoCreateOrConnectWithoutVehiculoInput | AsignacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: AsignacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | AsignacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: AsignacionVehiculoCreateManyVehiculoInputEnvelope
+    set?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    disconnect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    delete?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    connect?: AsignacionVehiculoWhereUniqueInput | AsignacionVehiculoWhereUniqueInput[]
+    update?: AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput | AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -35102,6 +36744,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AsignacionVehiculoCreateWithoutConductorInput = {
+    id?: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+    vehiculo: VehiculoCreateNestedOneWithoutAsignacionesInput
+  }
+
+  export type AsignacionVehiculoUncheckedCreateWithoutConductorInput = {
+    id?: string
+    vehiculoId: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type AsignacionVehiculoCreateOrConnectWithoutConductorInput = {
+    where: AsignacionVehiculoWhereUniqueInput
+    create: XOR<AsignacionVehiculoCreateWithoutConductorInput, AsignacionVehiculoUncheckedCreateWithoutConductorInput>
+  }
+
+  export type AsignacionVehiculoCreateManyConductorInputEnvelope = {
+    data: AsignacionVehiculoCreateManyConductorInput | AsignacionVehiculoCreateManyConductorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PermisoUsuarioUpsertWithWhereUniqueWithoutUsuarioInput = {
     where: PermisoUsuarioWhereUniqueInput
     update: XOR<PermisoUsuarioUpdateWithoutUsuarioInput, PermisoUsuarioUncheckedUpdateWithoutUsuarioInput>
@@ -35383,6 +37057,37 @@ export namespace Prisma {
     actualizadoEn?: DateTimeFilter<"OrdenMantenimiento"> | Date | string
   }
 
+  export type AsignacionVehiculoUpsertWithWhereUniqueWithoutConductorInput = {
+    where: AsignacionVehiculoWhereUniqueInput
+    update: XOR<AsignacionVehiculoUpdateWithoutConductorInput, AsignacionVehiculoUncheckedUpdateWithoutConductorInput>
+    create: XOR<AsignacionVehiculoCreateWithoutConductorInput, AsignacionVehiculoUncheckedCreateWithoutConductorInput>
+  }
+
+  export type AsignacionVehiculoUpdateWithWhereUniqueWithoutConductorInput = {
+    where: AsignacionVehiculoWhereUniqueInput
+    data: XOR<AsignacionVehiculoUpdateWithoutConductorInput, AsignacionVehiculoUncheckedUpdateWithoutConductorInput>
+  }
+
+  export type AsignacionVehiculoUpdateManyWithWhereWithoutConductorInput = {
+    where: AsignacionVehiculoScalarWhereInput
+    data: XOR<AsignacionVehiculoUpdateManyMutationInput, AsignacionVehiculoUncheckedUpdateManyWithoutConductorInput>
+  }
+
+  export type AsignacionVehiculoScalarWhereInput = {
+    AND?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
+    OR?: AsignacionVehiculoScalarWhereInput[]
+    NOT?: AsignacionVehiculoScalarWhereInput | AsignacionVehiculoScalarWhereInput[]
+    id?: StringFilter<"AsignacionVehiculo"> | string
+    vehiculoId?: StringFilter<"AsignacionVehiculo"> | string
+    conductorId?: StringFilter<"AsignacionVehiculo"> | string
+    sectorAsignado?: StringFilter<"AsignacionVehiculo"> | string
+    fechaAsignacion?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+    fechaFin?: DateTimeNullableFilter<"AsignacionVehiculo"> | Date | string | null
+    activa?: BoolFilter<"AsignacionVehiculo"> | boolean
+    observaciones?: StringNullableFilter<"AsignacionVehiculo"> | string | null
+    creadoEn?: DateTimeFilter<"AsignacionVehiculo"> | Date | string
+  }
+
   export type VehiculoCreateWithoutOrdenesCombustibleInput = {
     id?: string
     clasePatrimonial: string
@@ -35442,6 +37147,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesCombustibleInput = {
@@ -35503,6 +37209,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesCombustibleInput = {
@@ -35535,6 +37242,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutConductorInput
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutOrdenesCombustibleInput = {
@@ -35562,6 +37270,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutConductorInput
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutOrdenesCombustibleInput = {
@@ -35639,6 +37348,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesCombustibleInput = {
@@ -35700,6 +37410,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesCombustibleInput = {
@@ -35738,6 +37449,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUpdateManyWithoutConductorNestedInput
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutOrdenesCombustibleInput = {
@@ -35765,6 +37477,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutConductorNestedInput
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type VehiculoCreateWithoutControlLlantasInput = {
@@ -35826,6 +37539,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutControlLlantasInput = {
@@ -35887,6 +37601,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutControlLlantasInput = {
@@ -35964,6 +37679,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutControlLlantasInput = {
@@ -36025,6 +37741,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateWithoutOrdenesMantenimientoInput = {
@@ -36086,6 +37803,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutOrdenesMantenimientoInput = {
@@ -36147,6 +37865,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutOrdenesMantenimientoInput = {
@@ -36179,6 +37898,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutConductorInput
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutOrdenesMantenimientoInput = {
@@ -36206,6 +37926,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutConductorInput
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutOrdenesMantenimientoInput = {
@@ -36349,6 +38070,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutOrdenesMantenimientoInput = {
@@ -36410,6 +38132,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutOrdenesMantenimientoInput = {
@@ -36448,6 +38171,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUpdateManyWithoutConductorNestedInput
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutOrdenesMantenimientoInput = {
@@ -36475,6 +38199,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutConductorNestedInput
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type DetalleRepuestoUpsertWithWhereUniqueWithoutOrdenMantenimientoInput = {
@@ -36828,6 +38553,398 @@ export namespace Prisma {
     repuestos?: DetalleRepuestoUncheckedUpdateManyWithoutOrdenMantenimientoNestedInput
   }
 
+  export type VehiculoCreateWithoutAsignacionesInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoUncheckedCreateWithoutAsignacionesInput = {
+    id?: string
+    clasePatrimonial: string
+    categoriaPatrimonial: $Enums.CategoriaVehiculo
+    secuencial: string
+    codigoPatrimonial: string
+    placa: string
+    marca: string
+    modelo: string
+    anioFabricacion: number
+    color?: string | null
+    numeroMotor?: string | null
+    numeroChasis?: string | null
+    potenciaHp?: number | null
+    cilindraje?: Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: number | null
+    tipoCombustible: $Enums.TipoCombustible
+    capacidadTanqueGal?: Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: number | null
+    pesoNetoKg?: Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: string | null
+    bateriaCeldas?: number | null
+    bateriaVoltios?: number | null
+    bateriaAmperios?: number | null
+    numeroBaterias?: number | null
+    numeroEjes?: number | null
+    configuracionEjes?: string | null
+    totalLlantas?: number | null
+    dimensionLlantaEstandar?: string | null
+    presionLlantaDelantera?: Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: $Enums.EstadoFisico | null
+    estadoFaros?: $Enums.EstadoFisico | null
+    estadoLunas?: $Enums.EstadoFisico | null
+    estadoEspejos?: $Enums.EstadoFisico | null
+    estadoCarroceria?: $Enums.EstadoFisico | null
+    inventarioHerramientas?: string | null
+    observacionesFisicas?: string | null
+    valorAdquisicion?: Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: number | null
+    kmAnualesReferencia?: number | null
+    seguroAnual?: Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: number | null
+    periodicidadMantenimientoKm?: number | null
+    estado?: $Enums.EstadoVehiculo
+    fechaIngreso?: Date | string
+    fechaBaja?: Date | string | null
+    motivoBaja?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutVehiculoInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutVehiculoInput
+    controlLlantas?: ControlLlantaUncheckedCreateNestedManyWithoutVehiculoInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
+    desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoCreateOrConnectWithoutAsignacionesInput = {
+    where: VehiculoWhereUniqueInput
+    create: XOR<VehiculoCreateWithoutAsignacionesInput, VehiculoUncheckedCreateWithoutAsignacionesInput>
+  }
+
+  export type UsuarioCreateWithoutAsignacionesInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    email: string
+    password?: string | null
+    rol?: $Enums.RolUsuario
+    activo?: boolean
+    telefono?: string | null
+    licenciaConducir?: string | null
+    categoriaLicencia?: string | null
+    vencimientoLicencia?: Date | string | null
+    especialidad?: string | null
+    ultimoAcceso?: Date | string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    bloqueadoHasta?: Date | string | null
+    intentosFallidos?: number
+    permisos?: PermisoUsuarioCreateNestedManyWithoutUsuarioInput
+    sesionesAuth?: SesionAuthCreateNestedManyWithoutUsuarioInput
+    auditoria?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    tokensConfirmacion?: TokenConfirmacionCreateNestedManyWithoutUsuarioInput
+    movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutConductorInput
+    revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
+    ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
+    ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutAsignacionesInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    email: string
+    password?: string | null
+    rol?: $Enums.RolUsuario
+    activo?: boolean
+    telefono?: string | null
+    licenciaConducir?: string | null
+    categoriaLicencia?: string | null
+    vencimientoLicencia?: Date | string | null
+    especialidad?: string | null
+    ultimoAcceso?: Date | string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    bloqueadoHasta?: Date | string | null
+    intentosFallidos?: number
+    permisos?: PermisoUsuarioUncheckedCreateNestedManyWithoutUsuarioInput
+    sesionesAuth?: SesionAuthUncheckedCreateNestedManyWithoutUsuarioInput
+    auditoria?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    tokensConfirmacion?: TokenConfirmacionUncheckedCreateNestedManyWithoutUsuarioInput
+    movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutConductorInput
+    revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
+    ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutAsignacionesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutAsignacionesInput, UsuarioUncheckedCreateWithoutAsignacionesInput>
+  }
+
+  export type VehiculoUpsertWithoutAsignacionesInput = {
+    update: XOR<VehiculoUpdateWithoutAsignacionesInput, VehiculoUncheckedUpdateWithoutAsignacionesInput>
+    create: XOR<VehiculoCreateWithoutAsignacionesInput, VehiculoUncheckedCreateWithoutAsignacionesInput>
+    where?: VehiculoWhereInput
+  }
+
+  export type VehiculoUpdateToOneWithWhereWithoutAsignacionesInput = {
+    where?: VehiculoWhereInput
+    data: XOR<VehiculoUpdateWithoutAsignacionesInput, VehiculoUncheckedUpdateWithoutAsignacionesInput>
+  }
+
+  export type VehiculoUpdateWithoutAsignacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type VehiculoUncheckedUpdateWithoutAsignacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clasePatrimonial?: StringFieldUpdateOperationsInput | string
+    categoriaPatrimonial?: EnumCategoriaVehiculoFieldUpdateOperationsInput | $Enums.CategoriaVehiculo
+    secuencial?: StringFieldUpdateOperationsInput | string
+    codigoPatrimonial?: StringFieldUpdateOperationsInput | string
+    placa?: StringFieldUpdateOperationsInput | string
+    marca?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    anioFabricacion?: IntFieldUpdateOperationsInput | number
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroMotor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroChasis?: NullableStringFieldUpdateOperationsInput | string | null
+    potenciaHp?: NullableIntFieldUpdateOperationsInput | number | null
+    cilindraje?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    numeroCilindros?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoCombustible?: EnumTipoCombustibleFieldUpdateOperationsInput | $Enums.TipoCombustible
+    capacidadTanqueGal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadCargaKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadPasajeros?: NullableIntFieldUpdateOperationsInput | number | null
+    pesoNetoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pesoBrutoKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    bateriaTipo?: NullableStringFieldUpdateOperationsInput | string | null
+    bateriaCeldas?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaVoltios?: NullableIntFieldUpdateOperationsInput | number | null
+    bateriaAmperios?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroBaterias?: NullableIntFieldUpdateOperationsInput | number | null
+    numeroEjes?: NullableIntFieldUpdateOperationsInput | number | null
+    configuracionEjes?: NullableStringFieldUpdateOperationsInput | string | null
+    totalLlantas?: NullableIntFieldUpdateOperationsInput | number | null
+    dimensionLlantaEstandar?: NullableStringFieldUpdateOperationsInput | string | null
+    presionLlantaDelantera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    presionLlantaTrasera?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    estadoPintura?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoFaros?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoLunas?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoEspejos?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    estadoCarroceria?: NullableEnumEstadoFisicoFieldUpdateOperationsInput | $Enums.EstadoFisico | null
+    inventarioHerramientas?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesFisicas?: NullableStringFieldUpdateOperationsInput | string | null
+    valorAdquisicion?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    vidaUtilAnios?: NullableIntFieldUpdateOperationsInput | number | null
+    kmAnualesReferencia?: NullableIntFieldUpdateOperationsInput | number | null
+    seguroAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    licenciamientoAnual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kmAlertaMantenimiento?: NullableIntFieldUpdateOperationsInput | number | null
+    periodicidadMantenimientoKm?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: EnumEstadoVehiculoFieldUpdateOperationsInput | $Enums.EstadoVehiculo
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaBaja?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoBaja?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutVehiculoNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutVehiculoNestedInput
+    controlLlantas?: ControlLlantaUncheckedUpdateManyWithoutVehiculoNestedInput
+    reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
+    desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
+    resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type UsuarioUpsertWithoutAsignacionesInput = {
+    update: XOR<UsuarioUpdateWithoutAsignacionesInput, UsuarioUncheckedUpdateWithoutAsignacionesInput>
+    create: XOR<UsuarioCreateWithoutAsignacionesInput, UsuarioUncheckedCreateWithoutAsignacionesInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutAsignacionesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutAsignacionesInput, UsuarioUncheckedUpdateWithoutAsignacionesInput>
+  }
+
+  export type UsuarioUpdateWithoutAsignacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    licenciaConducir?: NullableStringFieldUpdateOperationsInput | string | null
+    categoriaLicencia?: NullableStringFieldUpdateOperationsInput | string | null
+    vencimientoLicencia?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    especialidad?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimoAcceso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    bloqueadoHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    intentosFallidos?: IntFieldUpdateOperationsInput | number
+    permisos?: PermisoUsuarioUpdateManyWithoutUsuarioNestedInput
+    sesionesAuth?: SesionAuthUpdateManyWithoutUsuarioNestedInput
+    auditoria?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    tokensConfirmacion?: TokenConfirmacionUpdateManyWithoutUsuarioNestedInput
+    movimientosDiarios?: MovimientoDiarioUpdateManyWithoutConductorNestedInput
+    revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
+    ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutAsignacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    licenciaConducir?: NullableStringFieldUpdateOperationsInput | string | null
+    categoriaLicencia?: NullableStringFieldUpdateOperationsInput | string | null
+    vencimientoLicencia?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    especialidad?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimoAcceso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    bloqueadoHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    intentosFallidos?: IntFieldUpdateOperationsInput | number
+    permisos?: PermisoUsuarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    sesionesAuth?: SesionAuthUncheckedUpdateManyWithoutUsuarioNestedInput
+    auditoria?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    tokensConfirmacion?: TokenConfirmacionUncheckedUpdateManyWithoutUsuarioNestedInput
+    movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutConductorNestedInput
+    revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
+    ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
+    ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+  }
+
   export type VehiculoCreateWithoutMovimientosDiariosInput = {
     id?: string
     clasePatrimonial: string
@@ -36887,6 +39004,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutMovimientosDiariosInput = {
@@ -36948,6 +39066,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedCreateNestedManyWithoutVehiculoInput
     desempenoLlantas?: DesempenoLlantasUncheckedCreateNestedManyWithoutVehiculoInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutMovimientosDiariosInput = {
@@ -36980,6 +39099,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutMovimientosDiariosInput = {
@@ -37007,6 +39127,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutMovimientosDiariosInput = {
@@ -37039,6 +39160,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioCreateNestedManyWithoutConductorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutRevisionesChecklistInput = {
@@ -37066,6 +39188,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUncheckedCreateNestedManyWithoutConductorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutRevisionesChecklistInput = {
@@ -37226,6 +39349,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutMovimientosDiariosInput = {
@@ -37287,6 +39411,7 @@ export namespace Prisma {
     reportesMensualesCostos?: ReporteMensualCostosUncheckedUpdateManyWithoutVehiculoNestedInput
     desempenoLlantas?: DesempenoLlantasUncheckedUpdateManyWithoutVehiculoNestedInput
     resumenKpisVehiculo?: ResumenKpisVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type UsuarioUpsertWithoutMovimientosDiariosInput = {
@@ -37325,6 +39450,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutMovimientosDiariosInput = {
@@ -37352,6 +39478,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUpsertWithoutRevisionesChecklistInput = {
@@ -37390,6 +39517,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUpdateManyWithoutConductorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutRevisionesChecklistInput = {
@@ -37417,6 +39545,7 @@ export namespace Prisma {
     movimientosDiarios?: MovimientoDiarioUncheckedUpdateManyWithoutConductorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type ChecklistVerificacionUpsertWithoutMovimientoInput = {
@@ -37692,6 +39821,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPermisosInput = {
@@ -37719,6 +39849,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPermisosInput = {
@@ -37789,6 +39920,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPermisosInput = {
@@ -37816,6 +39948,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateWithoutSesionesAuthInput = {
@@ -37843,6 +39976,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutSesionesAuthInput = {
@@ -37870,6 +40004,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutSesionesAuthInput = {
@@ -37913,6 +40048,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutSesionesAuthInput = {
@@ -37940,6 +40076,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateWithoutAuditoriaInput = {
@@ -37967,6 +40104,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAuditoriaInput = {
@@ -37994,6 +40132,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAuditoriaInput = {
@@ -38037,6 +40176,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAuditoriaInput = {
@@ -38064,6 +40204,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioCreateWithoutTokensConfirmacionInput = {
@@ -38091,6 +40232,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioUncheckedCreateWithoutTokensConfirmacionInput = {
@@ -38118,6 +40260,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedCreateNestedManyWithoutInspectorInput
     ordenesCombustible?: OrdenCombustibleUncheckedCreateNestedManyWithoutConductorInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedCreateNestedManyWithoutTecnicoInput
+    asignaciones?: AsignacionVehiculoUncheckedCreateNestedManyWithoutConductorInput
   }
 
   export type UsuarioCreateOrConnectWithoutTokensConfirmacionInput = {
@@ -38161,6 +40304,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUpdateManyWithoutConductorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutTokensConfirmacionInput = {
@@ -38188,6 +40332,7 @@ export namespace Prisma {
     revisionesChecklist?: MovimientoDiarioUncheckedUpdateManyWithoutInspectorNestedInput
     ordenesCombustible?: OrdenCombustibleUncheckedUpdateManyWithoutConductorNestedInput
     ordenesMantenimiento?: OrdenMantenimientoUncheckedUpdateManyWithoutTecnicoNestedInput
+    asignaciones?: AsignacionVehiculoUncheckedUpdateManyWithoutConductorNestedInput
   }
 
   export type MovimientoDiarioCreateWithoutVehiculoInput = {
@@ -38450,6 +40595,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AsignacionVehiculoCreateWithoutVehiculoInput = {
+    id?: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+    conductor: UsuarioCreateNestedOneWithoutAsignacionesInput
+  }
+
+  export type AsignacionVehiculoUncheckedCreateWithoutVehiculoInput = {
+    id?: string
+    conductorId: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
+  }
+
+  export type AsignacionVehiculoCreateOrConnectWithoutVehiculoInput = {
+    where: AsignacionVehiculoWhereUniqueInput
+    create: XOR<AsignacionVehiculoCreateWithoutVehiculoInput, AsignacionVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type AsignacionVehiculoCreateManyVehiculoInputEnvelope = {
+    data: AsignacionVehiculoCreateManyVehiculoInput | AsignacionVehiculoCreateManyVehiculoInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MovimientoDiarioUpsertWithWhereUniqueWithoutVehiculoInput = {
     where: MovimientoDiarioWhereUniqueInput
     update: XOR<MovimientoDiarioUpdateWithoutVehiculoInput, MovimientoDiarioUncheckedUpdateWithoutVehiculoInput>
@@ -38613,6 +40790,22 @@ export namespace Prisma {
     viajesRealizados?: IntFilter<"ResumenKpisVehiculo"> | number
   }
 
+  export type AsignacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
+    where: AsignacionVehiculoWhereUniqueInput
+    update: XOR<AsignacionVehiculoUpdateWithoutVehiculoInput, AsignacionVehiculoUncheckedUpdateWithoutVehiculoInput>
+    create: XOR<AsignacionVehiculoCreateWithoutVehiculoInput, AsignacionVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type AsignacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput = {
+    where: AsignacionVehiculoWhereUniqueInput
+    data: XOR<AsignacionVehiculoUpdateWithoutVehiculoInput, AsignacionVehiculoUncheckedUpdateWithoutVehiculoInput>
+  }
+
+  export type AsignacionVehiculoUpdateManyWithWhereWithoutVehiculoInput = {
+    where: AsignacionVehiculoScalarWhereInput
+    data: XOR<AsignacionVehiculoUpdateManyMutationInput, AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
   export type PermisoUsuarioCreateManyUsuarioInput = {
     id?: string
     permisoId: string
@@ -38756,6 +40949,17 @@ export namespace Prisma {
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+  }
+
+  export type AsignacionVehiculoCreateManyConductorInput = {
+    id?: string
+    vehiculoId: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
   }
 
   export type PermisoUsuarioUpdateWithoutUsuarioInput = {
@@ -39201,6 +41405,39 @@ export namespace Prisma {
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AsignacionVehiculoUpdateWithoutConductorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculo?: VehiculoUpdateOneRequiredWithoutAsignacionesNestedInput
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateWithoutConductorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateManyWithoutConductorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type DetalleRepuestoCreateManyOrdenMantenimientoInput = {
     id?: string
     descripcion: string
@@ -39422,6 +41659,17 @@ export namespace Prisma {
     observaciones?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+  }
+
+  export type AsignacionVehiculoCreateManyVehiculoInput = {
+    id?: string
+    conductorId: string
+    sectorAsignado: string
+    fechaAsignacion?: Date | string
+    fechaFin?: Date | string | null
+    activa?: boolean
+    observaciones?: string | null
+    creadoEn?: Date | string
   }
 
   export type MovimientoDiarioUpdateWithoutVehiculoInput = {
@@ -39877,6 +42125,39 @@ export namespace Prisma {
     costoCombustible?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     costoMantenimiento?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     viajesRealizados?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type AsignacionVehiculoUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    conductor?: UsuarioUpdateOneRequiredWithoutAsignacionesNestedInput
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AsignacionVehiculoUncheckedUpdateManyWithoutVehiculoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    conductorId?: StringFieldUpdateOperationsInput | string
+    sectorAsignado?: StringFieldUpdateOperationsInput | string
+    fechaAsignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaFin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
