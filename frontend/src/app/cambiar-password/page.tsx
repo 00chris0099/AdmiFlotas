@@ -3,6 +3,7 @@
 import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PasswordForm from "@/components/PasswordForm";
+import Icon from "@/components/ui/Icon";
 
 function CambiarPasswordInner() {
   const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ function CambiarPasswordInner() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-100 p-4">
         <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 text-center space-y-4">
-          <div className="text-4xl">⚠️</div>
+          <div className="text-4xl"><Icon name="warning" size={40} /></div>
           <h2 className="text-xl font-black text-white">Token no válido</h2>
           <p className="text-xs text-slate-400">
             Este enlace no es válido o está incompleto. Solicita uno nuevo desde tu perfil.
@@ -28,7 +29,7 @@ function CambiarPasswordInner() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-100 p-4">
         <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 text-center space-y-4">
-          <div className="text-4xl">✅</div>
+          <div className="text-4xl"><Icon name="check" size={40} /></div>
           <h2 className="text-xl font-black text-white">Contraseña actualizada</h2>
           <p className="text-xs text-slate-400">{message}</p>
           <a
@@ -48,7 +49,7 @@ function CambiarPasswordInner() {
       apiEndpoint="/api/auth/cambiar-password"
       title="Cambia tu contraseña"
       subtitle="Establece una nueva contraseña segura"
-      icon="🔒"
+      icon="lock"
       buttonLabel="Cambiar contraseña"
       onSuccess={(msg) => { setMessage(msg); setDone(true); }}
       onError={() => {}}

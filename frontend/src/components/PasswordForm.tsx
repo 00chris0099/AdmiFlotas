@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { validatePassword, getPasswordStrength } from "@/lib/tokens";
+import Icon from "@/components/ui/Icon";
 
 interface PasswordFormProps {
   token: string;
@@ -80,7 +81,7 @@ export default function PasswordForm({
       <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl relative z-10 space-y-6">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-3xl mb-2">
-            {icon}
+            <Icon name={icon} size={32} />
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight">{title}</h2>
           <p className="text-xs text-slate-400">{subtitle}</p>
@@ -106,7 +107,7 @@ export default function PasswordForm({
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 text-xs"
               >
-                {showPassword ? "🙈" : "👁"}
+                {showPassword ? <Icon name="eye-hide" size={14} /> : <Icon name="eye" size={14} />}
               </button>
             </div>
           </div>

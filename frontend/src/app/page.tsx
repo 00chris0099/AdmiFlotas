@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
+import Icon from "@/components/ui/Icon";
 
 interface TaskItem {
   name: string;
@@ -36,7 +37,7 @@ const MODULES: ModuleData[] = [
       {
         name: "Inventario de Flota",
         href: "/vehiculos",
-        icon: "🚛",
+    icon: "truck",
         description: "Ficha técnica patrimonial y estado de cada vehículo",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
       },
@@ -46,7 +47,7 @@ const MODULES: ModuleData[] = [
     id: "operaciones",
     title: "Módulo Operaciones",
     description: "Registro de movimientos diarios (MA 122 01 01), combustibles (MA 122 01 02) y conductores.",
-    icon: "📋",
+    icon: "clipboard",
     gradient: "from-emerald-500/10 to-teal-500/5 hover:border-emerald-500/40 hover:from-emerald-500/20",
     hoverGradient: "border-emerald-500/30",
     roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
@@ -54,21 +55,21 @@ const MODULES: ModuleData[] = [
       {
         name: "Movimientos Diarios",
         href: "/movimientos_diarios",
-        icon: "📋",
+        icon: "clipboard",
         description: "Control pre-operacional and HUV diario (MA 122 01 01)",
         roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Control Combustible",
         href: "/control_combustible",
-        icon: "⛽",
+        icon: "fuel",
         description: "Órdenes de abastecimiento y lubricantes (MA 122 01 02)",
         roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Conductores Activos",
         href: "/conductores",
-        icon: "👤",
+        icon: "driver",
         description: "Licencias, categorías y asignación de flota",
         roles: ["JEFE_PROCESO", "ANALISTA", "ADMINISTRATIVO", "INSPECTOR"],
       },
@@ -78,7 +79,7 @@ const MODULES: ModuleData[] = [
     id: "mantenimiento",
     title: "Módulo Mantenimiento",
     description: "Gestión de Órdenes de Servicio (MA 122 02 01), inspecciones de 15 puntos y control de llantas.",
-    icon: "🔧",
+    icon: "wrench",
     gradient: "from-blue-500/10 to-indigo-500/5 hover:border-blue-500/40 hover:from-blue-500/20",
     hoverGradient: "border-blue-500/30",
     roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
@@ -86,21 +87,21 @@ const MODULES: ModuleData[] = [
       {
         name: "Órdenes de Servicio",
         href: "/control_mantenimiento",
-        icon: "🔧",
+        icon: "wrench",
         description: "Preventivo, correctivo y repuestos de almacén (MA 122 02 01)",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Checklists Control",
         href: "/movimientos_diarios/checklist",
-        icon: "✅",
+        icon: "checklist",
         description: "Inspecciones técnicas y conformidad de 15 puntos",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
       },
       {
         name: "Control de Llantas",
         href: "/control_llantas",
-        icon: "🛞",
+        icon: "tire",
         description: "Profundidad de cocada, presiones y reencauche",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
       },
@@ -110,7 +111,7 @@ const MODULES: ModuleData[] = [
     id: "administracion",
     title: "Módulo Administrativo",
     description: "Cálculo financiero de CKV, análisis de indicadores IUV y plan de sustitución vehicular.",
-    icon: "💰",
+    icon: "money",
     gradient: "from-amber-500/10 to-orange-500/5 hover:border-amber-500/40 hover:from-amber-500/20",
     hoverGradient: "border-amber-500/30",
     roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
@@ -118,28 +119,28 @@ const MODULES: ModuleData[] = [
       {
         name: "Costos Fijos y Variables",
         href: "/control_costos/costos-fijo-variable",
-        icon: "💰",
+        icon: "money",
         description: "Registro de costos prorrateables del área y amortización",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
       {
         name: "Reportes KPI (CKV/IUV)",
         href: "/control_costos/reportes-kpi",
-        icon: "📈",
+        icon: "chart",
         description: "Análisis de Costo por Kilómetro e Índice de Utilización",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
       },
       {
         name: "Sustitución Vehicular",
         href: "/control_costos/sustitucion",
-        icon: "🔄",
+        icon: "swap",
         description: "Estudio de vida útil óptima y punto de reemplazo",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
       {
         name: "Configuración de Metas",
         href: "/configuracion",
-        icon: "⚙️",
+        icon: "settings",
         description: "Configuración de metas de la flota, KPIs y límites (Settings)",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
@@ -188,7 +189,7 @@ export default function Home() {
       {/* HEADER SIMPLE */}
       <header className="h-20 border-b border-slate-900 bg-slate-900/40 backdrop-blur-md px-6 flex items-center justify-between z-45 relative">
         <div className="flex items-center space-x-3">
-          <span className="text-3xl">🚛</span>
+          <span className="text-3xl"><Icon name="truck" size={36} /></span>
           <div>
             <h1 className="text-xl font-black text-white tracking-tight">SAF ERP</h1>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Manual F1T02 Digital</p>
@@ -202,7 +203,7 @@ export default function Home() {
             className="flex items-center space-x-3 px-3 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-full transition duration-150 focus:outline-none"
           >
             <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-sm">
-              👨‍✈️
+              <Icon name="pilot" size={18} />
             </div>
             <div className="hidden sm:block text-left pr-1">
               <p className="text-[9px] text-emerald-400 font-extrabold uppercase tracking-wider">{userRole}</p>
@@ -242,7 +243,7 @@ export default function Home() {
                 onClick={logout}
                 className="w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-slate-950 font-bold rounded-xl transition duration-150 text-xs flex items-center justify-center space-x-2"
               >
-                <span>🚪</span>
+                <Icon name="logout" size={14} />
                 <span>Cerrar Sesión</span>
               </button>
             </div>
@@ -275,8 +276,8 @@ export default function Home() {
                   className={`bg-gradient-to-b ${mod.gradient} border border-slate-800/80 rounded-3xl p-8 transition duration-300 shadow-xl flex flex-col space-y-5 text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 focus:ring-emerald-500/30 group`}
                 >
                   <div className="flex items-center justify-between w-full">
-                    <span className="text-4xl p-3 bg-slate-900 rounded-2xl border border-slate-800 shadow-inner group-hover:scale-105 transition duration-300">
-                      {mod.icon}
+                      <span className="text-4xl p-3 bg-slate-900 rounded-2xl border border-slate-800 shadow-inner group-hover:scale-105 transition duration-300">
+                        <Icon name={mod.icon} size={40} />
                     </span>
                     <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">ENTRAR →</span>
                   </div>
@@ -309,7 +310,7 @@ export default function Home() {
 
             <div className="border-b border-slate-900 pb-6 space-y-3">
               <div className="flex items-center space-x-3 text-slate-400">
-                <span className="text-3xl">{activeModule.icon}</span>
+                <span className="text-3xl"><Icon name={activeModule.icon} size={32} /></span>
                 <h2 className="text-2xl font-black text-white tracking-tight">{activeModule.title}</h2>
               </div>
               <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
@@ -329,7 +330,7 @@ export default function Home() {
                     className="bg-slate-900/60 hover:bg-slate-850 border border-slate-800/60 hover:border-slate-700 rounded-3xl p-5 hover:shadow-xl transition duration-150 flex flex-col space-y-3 group"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl p-2 bg-slate-950 rounded-xl border border-slate-850">{task.icon}</span>
+                      <span className="text-2xl p-2 bg-slate-950 rounded-xl border border-slate-850"><Icon name={task.icon} size={24} /></span>
                       <span className="text-[10px] text-emerald-400 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition duration-150">
                         IR →
                       </span>

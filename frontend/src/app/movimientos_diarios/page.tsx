@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import Icon from "@/components/ui/Icon";
 
 interface MovimientoDiario {
   id: string;
@@ -303,7 +304,7 @@ export default function MovimientosPage() {
                   </select>
                   {isLicenciaVencida && (
                     <p className="text-[9px] text-rose-400 font-bold mt-1">
-                      ⚠ LICENCIA VENCIDA (Bloqueado)
+                      <Icon name="warning" size={10} /> LICENCIA VENCIDA (Bloqueado)
                     </p>
                   )}
                 </div>

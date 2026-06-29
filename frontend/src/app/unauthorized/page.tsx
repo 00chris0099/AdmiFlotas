@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
+import Icon from "@/components/ui/Icon";
 
 export default function UnauthorizedPage() {
   const { logout, user } = useAuth();
@@ -10,7 +11,7 @@ export default function UnauthorizedPage() {
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 space-y-6">
       <div className="w-20 h-20 bg-rose-500/10 border border-rose-500/20 rounded-full flex items-center justify-center text-4xl text-rose-500 animate-pulse">
-        ⚠️
+        <Icon name="warning" size={40} />
       </div>
       
       <div className="space-y-2 max-w-md">

@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthProvider";
+import Icon from "../ui/Icon";
 
 interface MenuItem {
   name: string;
@@ -24,19 +25,19 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Movimientos Diarios",
         href: "/movimientos_diarios",
-        icon: "📋",
+        icon: "clipboard",
         roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Control Combustible",
         href: "/control_combustible",
-        icon: "⛽",
+        icon: "fuel",
         roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Conductores Activos",
         href: "/conductores",
-        icon: "👤",
+        icon: "driver",
         roles: ["JEFE_PROCESO", "ANALISTA", "ADMINISTRATIVO", "INSPECTOR"],
       },
     ],
@@ -47,19 +48,19 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Órdenes de Servicio",
         href: "/control_mantenimiento",
-        icon: "🔧",
+        icon: "wrench",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Checklists Control",
         href: "/movimientos_diarios/checklist",
-        icon: "✅",
+        icon: "checklist",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
       },
       {
         name: "Control de Llantas",
         href: "/control_llantas",
-        icon: "🛞",
+        icon: "tire",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
       },
     ],
@@ -70,25 +71,25 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Costos Fijos y Variables",
         href: "/control_costos/costos-fijo-variable",
-        icon: "💰",
+        icon: "money",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
       {
         name: "Reportes KPI (CKV/IUV)",
         href: "/control_costos/reportes-kpi",
-        icon: "📈",
+        icon: "chart",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
       },
       {
         name: "Sustitución Vehicular",
         href: "/control_costos/sustitucion",
-        icon: "🔄",
+        icon: "swap",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
       {
         name: "Configuración de Metas",
         href: "/configuracion",
-        icon: "⚙️",
+        icon: "settings",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
     ],
@@ -145,7 +146,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
       <header className="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 z-40 relative">
         {/* LOGO */}
         <Link href="/" className="flex items-center space-x-3 cursor-pointer">
-          <span className="text-2xl">🚛</span>
+          <span className="text-2xl"><Icon name="truck" size={28} /></span>
           <div>
             <h1 className="font-bold text-sm text-emerald-400 tracking-tight">SAF ERP</h1>
             <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Manual F1T02</p>
@@ -166,7 +167,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 : "bg-slate-950/40 border-slate-800 text-slate-300 hover:text-white"
             }`}
           >
-            <span>📂</span>
+            <Icon name="folder" size={14} />
             <span>Navegar Módulos</span>
             <span className="text-[10px] text-slate-500">▼</span>
           </button>
@@ -196,7 +197,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                 : "hover:bg-slate-800 hover:text-white text-slate-300"
                             }`}
                           >
-                            <span>{item.icon}</span>
+                            <span><Icon name={item.icon} size={16} /></span>
                             <span className="truncate">{item.name}</span>
                           </Link>
                         </li>
@@ -216,7 +217,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             className="flex items-center space-x-3 px-3 py-1.5 bg-slate-950/40 hover:bg-slate-800 border border-slate-800 rounded-full transition duration-150 focus:outline-none"
           >
             <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-xs">
-              👨‍✈️
+              <Icon name="pilot" size={16} />
             </div>
             <div className="hidden sm:block text-left">
               <p className="text-[10px] font-bold text-white leading-none">
@@ -244,7 +245,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 }}
                 className="w-full py-2 bg-rose-500 hover:bg-rose-600 text-slate-950 font-bold rounded-xl transition duration-150 text-xs flex items-center justify-center space-x-2"
               >
-                <span>🚪</span>
+                <Icon name="logout" size={14} />
                 <span>Cerrar Sesión</span>
               </button>
             </div>

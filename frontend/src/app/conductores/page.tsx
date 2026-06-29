@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import Icon from "@/components/ui/Icon";
 
 interface Conductor {
   id: string;
@@ -118,7 +119,7 @@ export default function ConductoresPage() {
         const isVencida = row.vencimientoLicencia !== "N/D" && new Date(row.vencimientoLicencia) < new Date();
         return (
           <span className={isVencida ? "text-rose-400 font-bold" : "text-slate-300"}>
-            {row.vencimientoLicencia} {isVencida && "⚠️ (Vencida)"}
+            {row.vencimientoLicencia} {isVencida && <Icon name="warning" size={12} />} {isVencida && "(Vencida)"}
           </span>
         );
       },
@@ -173,12 +174,12 @@ export default function ConductoresPage() {
               onClick={() => setModalOpen(false)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg font-bold"
             >
-              ✕
+              <Icon name="close" size={16} />
             </button>
 
             <div>
               <h3 className="text-lg font-bold text-emerald-400 flex items-center space-x-2">
-                <span>👤</span>
+                <Icon name="driver" size={18} />
                 <span>Registrar Nuevo Conductor</span>
               </h3>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">

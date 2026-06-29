@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { exportToPDF, exportToExcel } from "@/utils/exportUtils";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import Icon from "@/components/ui/Icon";
 
 interface KPIReport {
   id: string;
@@ -299,12 +300,12 @@ export default function KPIPage() {
               onClick={() => setShowExportModal(false)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white"
             >
-              ✕
+                <Icon name="close" size={16} />
             </button>
 
             <div>
               <h3 className="text-lg font-bold text-white flex items-center space-x-2">
-                <span>📥</span>
+                <Icon name="download" size={18} />
                 <span>Exportar Reportes de KPI</span>
               </h3>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">
@@ -343,7 +344,7 @@ export default function KPIPage() {
                 className="w-full p-4 bg-slate-950 hover:bg-slate-850 border border-slate-850 hover:border-indigo-500/40 rounded-2xl text-left transition duration-150 flex items-center space-x-4 group cursor-pointer"
               >
                 <span className="text-2xl p-2.5 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-400">
-                  📕
+                  <Icon name="pdf" size={24} />
                 </span>
                 <div className="flex-1">
                   <h4 className="text-xs font-bold text-white group-hover:text-indigo-400 transition">PDF Corporativo</h4>
@@ -374,7 +375,7 @@ export default function KPIPage() {
                 className="w-full p-4 bg-slate-950 hover:bg-slate-850 border border-slate-850 hover:border-emerald-500/40 rounded-2xl text-left transition duration-150 flex items-center space-x-4 group cursor-pointer"
               >
                 <span className="text-2xl p-2.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
-                  📗
+                  <Icon name="excel" size={24} />
                 </span>
                 <div className="flex-1">
                   <h4 className="text-xs font-bold text-white group-hover:text-emerald-400 transition">Excel (XLSX)</h4>
@@ -397,7 +398,7 @@ export default function KPIPage() {
                 className="w-full p-4 bg-slate-950 hover:bg-slate-850 border border-slate-850 hover:border-slate-750 rounded-2xl text-left transition duration-150 flex items-center space-x-4 group cursor-pointer"
               >
                 <span className="text-2xl p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-slate-400">
-                  💾
+                  <Icon name="download" size={24} />
                 </span>
                 <div className="flex-1">
                   <h4 className="text-xs font-bold text-white group-hover:text-white transition">Datos JSON</h4>

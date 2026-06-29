@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Icon from "./Icon";
 
 export interface ColumnDef<T> {
   header: string;
@@ -111,7 +112,7 @@ export function DataTable<T extends { id: string | number }>({
         {searchKey && (
           <div className="relative w-full sm:w-80">
             <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 text-sm">
-              🔍
+              <Icon name="search" size={14} />
             </span>
             <input
               type="text"
@@ -174,7 +175,7 @@ export function DataTable<T extends { id: string | number }>({
                         onClick={() => setSelectedRow(row)}
                         className="px-2.5 py-1 bg-slate-850 hover:bg-slate-800 border border-slate-800 hover:border-slate-750 text-emerald-400 hover:text-emerald-300 font-semibold rounded-lg text-xs transition cursor-pointer"
                       >
-                        👁️ Ver Ficha
+                        <Icon name="eye" size={12} /> Ver Ficha
                       </button>
                     </td>
                   )}
@@ -230,12 +231,12 @@ export function DataTable<T extends { id: string | number }>({
               onClick={() => setSelectedRow(null)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white"
             >
-              ✕
+              <Icon name="close" size={16} />
             </button>
 
             <div>
               <h3 className="text-lg font-bold text-emerald-400 flex items-center space-x-2">
-                <span>📋</span>
+                <Icon name="clipboard" size={18} />
                 <span>Ficha de Resumen del Registro</span>
               </h3>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">
@@ -276,14 +277,14 @@ export function DataTable<T extends { id: string | number }>({
                 onClick={() => downloadTXT(selectedRow)}
                 className="py-2.5 bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 font-bold rounded-xl text-xs transition duration-150 flex items-center justify-center space-x-1.5 cursor-pointer"
               >
-                <span>📄</span>
+                <Icon name="download" size={14} />
                 <span>Descargar Ficha (TXT)</span>
               </button>
               <button
                 onClick={() => downloadJSON(selectedRow)}
                 className="py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-xs transition duration-150 flex items-center justify-center space-x-1.5 cursor-pointer"
               >
-                <span>💾</span>
+                <Icon name="download" size={14} />
                 <span>Descargar Datos (JSON)</span>
               </button>
             </div>

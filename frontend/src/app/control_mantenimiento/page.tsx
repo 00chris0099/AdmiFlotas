@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import Icon from "@/components/ui/Icon";
 
 interface DetalleManoObra {
   id: string;
@@ -242,7 +243,7 @@ export default function OrdenesMantenimientoPage() {
       {/* ALERTAS PREVENTIVAS POR ODÓMETRO */}
       {alertasPredictivas.length > 0 && (
         <div className="bg-rose-500/10 border border-rose-500/20 p-4 rounded-2xl space-y-2">
-          <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider">⚠ Alerta Preventiva de Mantenimiento por Odómetro</h4>
+          <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider"><Icon name="warning" size={12} /> Alerta Preventiva de Mantenimiento por Odómetro</h4>
           <p className="text-[11px] text-slate-350">
             Los siguientes vehículos han superado los **5,000 km** de recorrido acumulado desde su última revisión y tienen alertas autogeneradas:
           </p>

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "../providers/AuthProvider";
+import Icon from "../ui/Icon";
 
 interface MenuItem {
   name: string;
@@ -24,7 +25,7 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Inventario de Flota",
         href: "/vehiculos",
-        icon: "🚛",
+        icon: "truck",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
       },
     ],
@@ -35,19 +36,19 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Movimientos Diarios",
         href: "/movimientos_diarios",
-        icon: "📋",
+        icon: "clipboard",
         roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Control Combustible",
         href: "/control_combustible",
-        icon: "⛽",
+        icon: "fuel",
         roles: ["JEFE_PROCESO", "CONDUCTOR", "INSPECTOR", "ANALISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Conductores Activos",
         href: "/conductores",
-        icon: "👤",
+        icon: "driver",
         roles: ["JEFE_PROCESO", "ANALISTA", "ADMINISTRATIVO", "INSPECTOR"],
       },
     ],
@@ -58,19 +59,19 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Órdenes de Servicio",
         href: "/control_mantenimiento",
-        icon: "🔧",
+        icon: "wrench",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "ADMINISTRATIVO"],
       },
       {
         name: "Checklists Control",
         href: "/movimientos_diarios/checklist",
-        icon: "✅",
+        icon: "checklist",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
       },
       {
         name: "Control de Llantas",
         href: "/control_llantas",
-        icon: "🛞",
+        icon: "tire",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
       },
     ],
@@ -81,19 +82,19 @@ const MENU_SECTIONS: MenuSection[] = [
       {
         name: "Costos Fijos y Variables",
         href: "/control_costos/costos-fijo-variable",
-        icon: "💰",
+        icon: "money",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
       {
         name: "Reportes KPI (CKV/IUV)",
         href: "/control_costos/reportes-kpi",
-        icon: "📈",
+        icon: "chart",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
       },
       {
         name: "Sustitución Vehicular",
         href: "/control_costos/sustitucion",
-        icon: "🔄",
+        icon: "swap",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
     ],
@@ -119,7 +120,7 @@ export const Sidebar: React.FC = () => {
     <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full text-slate-300">
       <div className="p-6 border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <span className="text-2xl">🚛</span>
+          <span className="text-2xl"><Icon name="truck" size={28} /></span>
           <div>
             <h1 className="font-bold text-base text-emerald-400 tracking-tight">SAF ERP</h1>
             <span className="text-[10px] text-slate-400">Manual F1T02 Digital</span>
@@ -146,7 +147,7 @@ export const Sidebar: React.FC = () => {
                           : "hover:bg-slate-800 hover:text-white"
                       }`}
                     >
-                      <span>{item.icon}</span>
+                      <span><Icon name={item.icon} size={16} /></span>
                       <span>{item.name}</span>
                     </Link>
                   </li>
@@ -161,7 +162,7 @@ export const Sidebar: React.FC = () => {
         <div className="flex items-center justify-between p-2 rounded-xl bg-slate-850">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-sm">
-              {userRole === "JEFE_PROCESO" ? "👑" : userRole === "CONDUCTOR" ? "👨‍✈️" : "🔧"}
+              <Icon name={userRole === "JEFE_PROCESO" ? "crown" : userRole === "CONDUCTOR" ? "pilot" : "wrench"} size={18} />
             </div>
             <div className="truncate max-w-[120px]">
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{userRole}</p>
@@ -175,7 +176,7 @@ export const Sidebar: React.FC = () => {
             title="Cerrar Sesión"
             className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-rose-400 transition"
           >
-            🚪
+            <Icon name="logout" size={16} />
           </button>
         </div>
       </div>

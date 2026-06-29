@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/components/providers/AuthProvider";
+import Icon from "@/components/ui/Icon";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -35,7 +36,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl relative z-10 space-y-6">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-3xl mb-2">
-            🚛
+            <Icon name="truck" size={36} />
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight">SAF ERP</h2>
           <p className="text-xs text-slate-400">Sistema de Administración de Flotas | Manual F1T02</p>
