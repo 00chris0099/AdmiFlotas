@@ -31,7 +31,7 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 bg-white text-slate-900 [&.light]:bg-white [&.light]:text-slate-900">
+      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">
         <ThemeProvider>
           <AuthProvider>
             <DashboardLayout>{children}</DashboardLayout>

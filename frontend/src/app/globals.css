@@ -1,36 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1e293b;
-  --card-bg: #f8fafc;
-  --card-border: #e2e8f0;
-  --muted: #64748b;
-  --accent: #10b981;
-  --accent-hover: #059669;
-  --danger: #f43f5e;
-}
-
-html.light {
-  --background: #ffffff;
-  --foreground: #1e293b;
-  --card-bg: #f8fafc;
-  --card-border: #e2e8f0;
-  --muted: #64748b;
-  --accent: #10b981;
-  --accent-hover: #059669;
-  --danger: #f43f5e;
-}
-
-html.dark, :root {
   --background: #020617;
   --foreground: #e2e8f0;
-  --card-bg: #0f172a;
-  --card-border: #1e293b;
-  --muted: #94a3b8;
-  --accent: #10b981;
-  --accent-hover: #34d399;
-  --danger: #f43f5e;
 }
 
 @theme inline {
@@ -44,47 +16,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  transition: background-color 0.2s, color 0.2s;
 }
-
-/* Light mode overrides */
-html.light body {
-  background: #ffffff;
-  color: #1e293b;
-}
-
-html.light .bg-slate-950 { background-color: #ffffff !important; }
-html.light .bg-slate-900 { background-color: #f8fafc !important; }
-html.light .bg-slate-850 { background-color: #f1f5f9 !important; }
-html.light .bg-slate-800 { background-color: #e2e8f0 !important; }
-html.light .bg-slate-950\/40 { background-color: rgba(255,255,255,0.9) !important; }
-html.light .bg-slate-900\/40 { background-color: rgba(248,250,252,0.9) !important; }
-html.light .bg-slate-900\/60 { background-color: rgba(248,250,252,0.95) !important; }
-html.light .bg-slate-950\/80 { background-color: rgba(255,255,255,0.95) !important; }
-
-html.light .text-slate-100 { color: #1e293b !important; }
-html.light .text-slate-200 { color: #334155 !important; }
-html.light .text-slate-300 { color: #475569 !important; }
-html.light .text-slate-350 { color: #475569 !important; }
-html.light .text-slate-400 { color: #64748b !important; }
-html.light .text-slate-450 { color: #64748b !important; }
-html.light .text-slate-500 { color: #94a3b8 !important; }
-html.light .text-white { color: #1e293b !important; }
-
-html.light .border-slate-800 { border-color: #e2e8f0 !important; }
-html.light .border-slate-850 { border-color: #f1f5f9 !important; }
-html.light .border-slate-900 { border-color: #f1f5f9 !important; }
-html.light .border-slate-700 { border-color: #cbd5e1 !important; }
-html.light .border-slate-950 { border-color: #f1f5f9 !important; }
-
-html.light .hover\:bg-slate-800:hover { background-color: #e2e8f0 !important; }
-html.light .hover\:bg-slate-850:hover { background-color: #f1f5f9 !important; }
-html.light .hover\:bg-slate-750:hover { background-color: #e2e8f0 !important; }
-html.light .hover\:bg-slate-700:hover { background-color: #cbd5e1 !important; }
-html.light .hover\:text-white:hover { color: #1e293b !important; }
-html.light .hover\:text-slate-300:hover { color: #475569 !important; }
-
-html.light .divide-slate-850 > :not([hidden]) ~ :not([hidden]) { border-color: #f1f5f9 !important; }
-
-html.light .shadow-xl { box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important; }
-html.light .shadow-2xl { box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important; }
