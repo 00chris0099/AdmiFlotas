@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
+import { generateNumeroOrden } from "@/lib/orderGenerator";
 import Icon from "@/components/ui/Icon";
 import { exportToExcel } from "@/utils/exportUtils";
 
@@ -329,7 +330,7 @@ export default function OrdenesMantenimientoPage() {
           </button>
           <button
             onClick={() => {
-              setNumeroOrden(`OM-${Date.now().toString().slice(-6)}`);
+              setNumeroOrden(generateNumeroOrden("OM"));
               setModalOpen(true);
             }}
             className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"

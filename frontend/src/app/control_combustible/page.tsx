@@ -6,6 +6,7 @@ import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 import { exportToExcel } from "@/utils/exportUtils";
+import { generateNumeroOrden } from "@/lib/orderGenerator";
 import {
   TIPOS_COMBUSTIBLE_ORDEN,
   SECTORES_ORGANIZACIONALES,
@@ -302,7 +303,7 @@ export default function CombustiblePage() {
           </button>
           <button
             onClick={() => {
-              setNumeroOrden(`OC-${Date.now().toString().slice(-6)}`);
+              setNumeroOrden(generateNumeroOrden("OC"));
               resetForm();
               if (conductores.length > 0) {
                 setFirmaConductor(`${conductores[0].nombre} ${conductores[0].apellido}`);

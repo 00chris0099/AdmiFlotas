@@ -328,6 +328,103 @@ export const POSICIONES_LLANTAS = [
 ] as const;
 
 // --------------------------------------------
+// CÓDIGOS DE SERVICIO (F1T02)
+// --------------------------------------------
+export const CODIGOS_SERVICIO = {
+  TRABAJO: [
+    { value: "CT", label: "CT - Cambio Total" },
+    { value: "CP", label: "CP - Cambio Parcial" },
+    { value: "RG", label: "RG - Regulación" },
+    { value: "RP", label: "RP - Reparación" },
+    { value: "RV", label: "RV - Revisión" },
+    { value: "VR", label: "VR - Verificación" },
+  ],
+  ORGANO: [
+    { value: "01", label: "01 - Motor" },
+    { value: "02", label: "02 - Frenos" },
+    { value: "03", label: "03 - Dirección" },
+    { value: "04", label: "04 - Embrague" },
+    { value: "05", label: "05 - Suspensión" },
+    { value: "06", label: "06 - Transmisión" },
+    { value: "07", label: "07 - Diferencial" },
+    { value: "08", label: "08 - Eléctrica" },
+    { value: "09", label: "09 - Planchado" },
+    { value: "10", label: "10 - Pintura" },
+    { value: "11", label: "11 - Vidrios" },
+    { value: "12", label: "12 - Tapicería" },
+    { value: "13", label: "13 - Carrocería" },
+    { value: "14", label: "14 - Capota" },
+    { value: "15", label: "15 - Ruedas/Llantas" },
+  ],
+} as const;
+
+// --------------------------------------------
+// CONJUNTOS SUBSTITUIDOS (F1T02)
+// --------------------------------------------
+export const CONJUNTOS_SUBSTITUIDOS = [
+  "Motor",
+  "Caja de Velocidades",
+  "Diferencial",
+  "Dirección",
+  "Embrague",
+  "Suspensión Delantera",
+  "Suspensión Trasera",
+  "Frenos Delanteros",
+  "Frenos Traseros",
+  "Amortiguadores",
+  "Balatas",
+  "Discos",
+  "Bomba de Agua",
+  "Bomba de Aceite",
+  "Alternador",
+  "Marcha",
+  "Batería",
+  "Radiador",
+  "Turbo",
+  "Inyectores",
+  "Válvulas",
+  "Correas/Fajas",
+  "Filtro de Aire",
+  "Filtro de Aceite",
+  "Filtro de Combustible",
+] as const;
+
+// --------------------------------------------
+// MARCAS Y MODELOS DE VEHÍCULOS (Estándar Perú)
+// --------------------------------------------
+export const MARCAS_MODELOS: Record<string, string[]> = {
+  "TOYOTA": ["HILUX", "COROLLA", "CAMRY", "4RUNNER", "PRADO", "COASTER", "HIACE", "INNOVA", "RUSH", "FORTUNER"],
+  "HYUNDAI": ["TUCSON", "SANTA FE", "ACCENT", "i10", "i20", "HD78", "PORTER", "ELANTRA", "CRETA"],
+  "KIA": ["SPORTAGE", "SONATA", "PICANTO", "CERATO", "SORENTO", "RIO", "SELTOS"],
+  "NISSAN": ["FRONTIER", "SENTRA", "MARCH", "X-TRAIL", "NP300", "KICKS", "QASHQAI"],
+  "CHEVROLET": ["SAIL", "ONIX", "CAPTIVA", "NPR", "TORNADO", "SPARK", "TRACKER", "S10"],
+  "FORD": ["RANGER", "ESCAPE", "ECOSPORT", "TRANSIT", "TERRITORY", "MAVERICK"],
+  "MAZDA": ["MAZDA3", "MAZDA6", "CX-3", "CX-5", "CX-30", "BT-50"],
+  "MITSUBISHI": ["OUTLANDER", "L200", "MONTERO", "ASX", "ATTRAGE", "TRITON"],
+  "SUZUKI": ["SWIFT", "VITARA", "JIMNY", "CELERIO", "DZIRE", "CARRY"],
+  "ISUZU": ["D-MAX", "MU-X", "NPR", "NQR", "FRR", "FSR"],
+  "MERCEDES-BENZ": ["SPRINTER", "ACTROS", "ATEGO", "VITO", "CLASE C", "CLASE E"],
+  "VOLKSWAGEN": ["GOL", "POLO", "T-CROSS", "TIGUAN", "AMAROK", "TRANSPORTER"],
+  "FIAT": ["DUCATO", "DOBLÒ", "PUNTO", "500", "CRONOS"],
+  "HONDA": ["CIVIC", "CR-V", "HR-V", "FIT", "WR-V"],
+  "DAIHATSU": ["TERIOS", "HIJET", "MIRA", "CUORE"],
+  "CHERY": ["TIGGO", "ARRIZO", "QQ", "FULWIN"],
+  "DFM": ["RICH", "C35", "K01"],
+  "CHANGAN": ["CS35", "CS55", "CS75", "ALSVIN"],
+  "GWM": ["POER", "Haval JOLION", "Haval H6", "ORA"],
+  "HAVAL": ["JOLION", "H6", "F7"],
+  "JAC": ["S2", "S3", "T6", "REFINE"],
+  "RENAULT": ["DUSTER", "KWID", "SANDERO", "LOGAN", "KOLEOS"],
+  "PEUGEOT": ["208", "2008", "3008", "PARTNER", "RENDER"],
+  "CITROËN": ["C3", "C4", "BERLINGO", "JUMPER"],
+  "BMW": ["SERIE 3", "SERIE 5", "X1", "X3", "X5"],
+  "SUBARU": ["OUTBACK", "FORESTER", " XV"],
+  "LEXUS": ["NX", "RX", "IS", "ES"],
+  "INFINITI": ["Q50", "QX50", "QX60"],
+  "AUDI": ["A3", "A4", "Q3", "Q5"],
+} as const;
+
+// --------------------------------------------
 // FUNCIONES AUXILIARES
 // --------------------------------------------
 

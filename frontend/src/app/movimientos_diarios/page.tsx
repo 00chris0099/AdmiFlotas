@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
+import { generateNumeroOrden } from "@/lib/orderGenerator";
 import Icon from "@/components/ui/Icon";
 import { exportToExcel } from "@/utils/exportUtils";
 import {
