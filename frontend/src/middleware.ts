@@ -93,6 +93,68 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/unauthorized", request.url));
       }
     }
+
+    // 4. Mantenimiento - Almacén
+    if (pathname.startsWith("/mantenimiento/almacen")) {
+      if (
+        userRole !== "JEFE_MANTENIMIENTO" &&
+        userRole !== "ENCARGADO_TALLER" &&
+        userRole !== "MECANICO" &&
+        userRole !== "ADMINISTRATIVO"
+      ) {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
+
+    // 5. Mantenimiento - Lavado
+    if (pathname.startsWith("/mantenimiento/lavado")) {
+      if (
+        userRole !== "JEFE_MANTENIMIENTO" &&
+        userRole !== "LAVADOR" &&
+        userRole !== "ADMINISTRATIVO"
+      ) {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
+
+    // 6. Operaciones - Rutas
+    if (pathname.startsWith("/operaciones/rutas")) {
+      if (
+        userRole !== "JEFE_OPERACION" &&
+        userRole !== "CONTROLADOR_TRANSITO" &&
+        userRole !== "ADMINISTRATIVO"
+      ) {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
+
+    // 7. Flota - Asignación
+    if (pathname.startsWith("/flota/asignacion")) {
+      if (
+        userRole !== "JEFE_PROCESO" &&
+        userRole !== "JEFE_OPERACION" &&
+        userRole !== "ADMINISTRATIVO"
+      ) {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
+
+    // 8. Flota - Documentos
+    if (pathname.startsWith("/flota/documentos")) {
+      if (
+        userRole !== "JEFE_PROCESO" &&
+        userRole !== "ADMINISTRATIVO"
+      ) {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
+
+    // 9. Seguridad - solo JEFE_PROCESO
+    if (pathname.startsWith("/seguridad")) {
+      if (userRole !== "JEFE_PROCESO") {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
   } catch (error) {
     console.error("Middleware Auth Decode Error:", error);
     // En caso de token inválido, borrar cookies y redirigir al login
