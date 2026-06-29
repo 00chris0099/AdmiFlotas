@@ -57,6 +57,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
       licenciamientoAnual,
       numeroEjes,
       totalLlantas,
+      periodicidadMantenimientoKm,
     } = body;
 
     if (!placa || !marca || !modelo || !anioFabricacion || !tipoCombustible) {
@@ -104,6 +105,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
         licenciamientoAnual: licenciamientoAnual ? parseFloat(licenciamientoAnual) : null,
         numeroEjes: numeroEjes ? parseInt(numeroEjes) : null,
         totalLlantas: totalLlantas ? parseInt(totalLlantas) : 4,
+        periodicidadMantenimientoKm: periodicidadMantenimientoKm ? parseInt(periodicidadMantenimientoKm) : 5000,
         estado: "OPERATIVO",
       },
     });

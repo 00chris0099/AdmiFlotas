@@ -50,6 +50,7 @@ export default function VehiculosPage() {
   const [vidaUtilAnios, setVidaUtilAnios] = useState("10");
   const [seguroAnual, setSeguroAnual] = useState("");
   const [licenciamientoAnual, setLicenciamientoAnual] = useState("");
+  const [periodicidadMantenimientoKm, setPeriodicidadMantenimientoKm] = useState("5000");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const cargarVehiculos = async () => {
@@ -86,6 +87,7 @@ export default function VehiculosPage() {
     setVidaUtilAnios("10");
     setSeguroAnual("");
     setLicenciamientoAnual("");
+    setPeriodicidadMantenimientoKm("5000");
     setEditingId(null);
   };
 
@@ -113,6 +115,7 @@ export default function VehiculosPage() {
         vidaUtilAnios: parseInt(vidaUtilAnios),
         seguroAnual: seguroAnual ? parseFloat(seguroAnual) : undefined,
         licenciamientoAnual: licenciamientoAnual ? parseFloat(licenciamientoAnual) : undefined,
+        periodicidadMantenimientoKm: parseInt(periodicidadMantenimientoKm) || 5000,
       };
 
       let res;
@@ -321,6 +324,10 @@ export default function VehiculosPage() {
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Licenciamiento Anual (S/.)</label>
                   <input type="number" step="0.01" value={licenciamientoAnual} onChange={(e) => setLicenciamientoAnual(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" />
+                </div>
+                <div>
+                  <label className="text-xs text-slate-400 font-semibold">Periodicidad Mant. Preventivo (Km)</label>
+                  <input type="number" value={periodicidadMantenimientoKm} onChange={(e) => setPeriodicidadMantenimientoKm(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" />
                 </div>
               </div>
               <div className="flex justify-end gap-3 pt-4">
