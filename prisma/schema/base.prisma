@@ -10,11 +10,6 @@ generator client {
   previewFeatures = ["views", "prismaSchemaFolder"]
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-  output   = "../../ERD.svg"
-}
-
 datasource db {
   provider = "postgresql"
 }
