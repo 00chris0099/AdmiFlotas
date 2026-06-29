@@ -130,6 +130,17 @@ const MENU_SECTIONS: MenuSection[] = [
       },
     ],
   },
+  {
+    title: "Módulo Seguridad",
+    items: [
+      {
+        name: "Auditoría del Sistema",
+        href: "/seguridad/audit",
+        icon: "eye",
+        roles: ["JEFE_PROCESO"],
+      },
+    ],
+  },
 ];
 
 export const Sidebar: React.FC = () => {
