@@ -13,6 +13,8 @@ model OrdenCombustible {
   conductorId       String               @map("conductor_id")
   sectorSolicitante String               @map("sector_solicitante") @db.VarChar(150)
   tipoCombustible   TipoCombustibleOrden @map("tipo_combustible")
+  /// Subtipo de combustible (ej. DIESEL_UBA, GASOLINA_95)
+  subtipoCombustible String?             @map("subtipo_combustible") @db.VarChar(50)
 
   // â”€â”€ Combustible â”€â”€
   cantidadGalones  Decimal? @map("cantidad_galones") @db.Decimal(8, 2)

@@ -5,6 +5,15 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { exportToExcel } from "@/utils/exportUtils";
+import {
+  MARCAS_VEHICULOS,
+  COLORES_VEHICULOS,
+  TIPOS_COMBUSTIBLE,
+  SUBTIPOS_COMBUSTIBLE,
+  CATEGORIAS_VEHICULO,
+  getSubtiposCombustible,
+  tieneSubtipos,
+} from "@/lib/constants";
 
 interface Vehiculo {
   id: string;
@@ -32,6 +41,7 @@ export default function VehiculosPage() {
   const [modelo, setModelo] = useState("");
   const [anioFabricacion, setAnioFabricacion] = useState(new Date().getFullYear().toString());
   const [tipoCombustible, setTipoCombustible] = useState("DIESEL");
+  const [subtipoCombustible, setSubtipoCombustible] = useState("");
   const [categoriaPatrimonial, setCategoriaPatrimonial] = useState("PASAJEROS");
   const [color, setColor] = useState("");
   const [capacidadPasajeros, setCapacidadPasajeros] = useState("");
@@ -67,6 +77,7 @@ export default function VehiculosPage() {
     setModelo("");
     setAnioFabricacion(new Date().getFullYear().toString());
     setTipoCombustible("DIESEL");
+    setSubtipoCombustible("");
     setCategoriaPatrimonial("PASAJEROS");
     setColor("");
     setCapacidadPasajeros("");
@@ -93,6 +104,7 @@ export default function VehiculosPage() {
         modelo,
         anioFabricacion: parseInt(anioFabricacion),
         tipoCombustible,
+        subtipoCombustible: subtipoCombustible || undefined,
         categoriaPatrimonial,
         color: color || undefined,
         capacidadPasajeros: capacidadPasajeros ? parseInt(capacidadPasajeros) : undefined,
@@ -232,11 +244,16 @@ export default function VehiculosPage() {
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Marca *</label>
-                  <input type="text" value={marca} onChange={(e) => setMarca(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required />
+                  <select value={marca} onChange={(e) => setMarca(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required>
+                    <option value="">Seleccionar marca...</option>
+                    {MARCAS_VEHICULOS.map((m) => (
+                      <option key={m} value={m}>{m}</option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Modelo *</label>
-                  <input type="text" value={modelo} onChange={(e) => setModelo(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required />
+                  <input type="text" value={modelo} onChange={(e) => setModelo(e.target.value)} placeholder="Ej: Hilux, Corolla..." className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required />
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Año Fabricación *</label>
@@ -244,25 +261,42 @@ export default function VehiculosPage() {
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Tipo Combustible *</label>
-                  <select value={tipoCombustible} onChange={(e) => setTipoCombustible(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
-                    <option value="DIESEL">Diésel</option>
-                    <option value="GASOLINA">Gasolina</option>
-                    <option value="GLP">GLP</option>
-                    <option value="ELECTRICO">Eléctrico</option>
-                    <option value="HIBRIDO">Híbrido</option>
+                  <select value={tipoCombustible} onChange={(e) => {
+                    setTipoCombustible(e.target.value);
+                    setSubtipoCombustible("");
+                  }} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
+                    {TIPOS_COMBUSTIBLE.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
                   </select>
                 </div>
+                {tieneSubtipos(tipoCombustible) && (
+                  <div>
+                    <label className="text-xs text-slate-400 font-semibold">Subtipo Combustible</label>
+                    <select value={subtipoCombustible} onChange={(e) => setSubtipoCombustible(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
+                      <option value="">Seleccionar subtipo...</option>
+                      {getSubtiposCombustible(tipoCombustible).map((st) => (
+                        <option key={st.value} value={st.value}>{st.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Categoría</label>
                   <select value={categoriaPatrimonial} onChange={(e) => setCategoriaPatrimonial(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
-                    <option value="PASAJEROS">Pasajeros</option>
-                    <option value="CARGA">Carga</option>
-                    <option value="ESPECIAL">Especial</option>
+                    {CATEGORIAS_VEHICULO.map((c) => (
+                      <option key={c.value} value={c.value}>{c.label}</option>
+                    ))}
                   </select>
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Color</label>
-                  <input type="text" value={color} onChange={(e) => setColor(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" />
+                  <select value={color} onChange={(e) => setColor(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
+                    <option value="">Seleccionar color...</option>
+                    {COLORES_VEHICULOS.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Cap. Pasajeros</label>

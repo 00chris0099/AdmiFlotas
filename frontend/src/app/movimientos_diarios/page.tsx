@@ -7,6 +7,17 @@ import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
 import { exportToExcel } from "@/utils/exportUtils";
+import {
+  SECTORES_ORGANIZACIONALES,
+  ESTADOS_CHECKLIST,
+} from "@/lib/constants";
+
+interface Ruta {
+  id: string;
+  nombre: string;
+  origen: string;
+  destino: string;
+}
 
 interface MovimientoDiario {
   id: string;
@@ -47,6 +58,7 @@ export default function MovimientosPage() {
   const [movimientos, setMovimientos] = useState<MovimientoDiario[]>([]);
   const [vehiculos, setVehiculos] = useState<DbVehiculo[]>([]);
   const [conductores, setConductores] = useState<DbConductor[]>([]);
+  const [rutas, setRutas] = useState<Ruta[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -96,12 +108,14 @@ export default function MovimientosPage() {
 
   const cargarCatalogos = async () => {
     try {
-      const [resVeh, resCond] = await Promise.all([
+      const [resVeh, resCond, resRutas] = await Promise.all([
         fetchWithAuth("/api/vehiculos"),
-        fetchWithAuth("/api/conductores")
+        fetchWithAuth("/api/conductores"),
+        fetchWithAuth("/api/rutas").catch(() => ({ ok: false, json: () => [] })),
       ]);
       const dataVeh = await resVeh.json();
       const dataCond = await resCond.json();
+      const dataRutas = resRutas.ok ? await resRutas.json() : [];
       
       if (Array.isArray(dataVeh)) {
         setVehiculos(dataVeh);
@@ -110,6 +124,9 @@ export default function MovimientosPage() {
       if (Array.isArray(dataCond)) {
         setConductores(dataCond);
         if (dataCond.length > 0) setConductorId(dataCond[0].id);
+      }
+      if (Array.isArray(dataRutas)) {
+        setRutas(dataRutas);
       }
     } catch (err) {
       console.error("Error al cargar catálogos:", err);
@@ -403,7 +420,7 @@ export default function MovimientosPage() {
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Hora Llegada</label>
                   <input
-                    type="text"
+                    type="time"
                     value={horaLlegada}
                     onChange={(e) => setHoraLlegada(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
@@ -413,7 +430,8 @@ export default function MovimientosPage() {
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">HUV</label>
                   <input
-                    type="text"
+                    type="number"
+                    step="0.1"
                     value={horasUtilizacion}
                     onChange={(e) => setHorasUtilizacion(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
@@ -541,7 +559,7 @@ export default function MovimientosPage() {
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Hora Salida</label>
                   <input
-                    type="text"
+                    type="time"
                     value={horaSalida}
                     onChange={(e) => setHoraSalida(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
@@ -553,23 +571,42 @@ export default function MovimientosPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Destino</label>
-                  <input
-                    type="text"
+                  <select
                     value={destino}
                     onChange={(e) => setDestino(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
                     required
-                  />
+                  >
+                    <option value="">Seleccionar destino...</option>
+                    {rutas.length > 0 ? (
+                      rutas.map((r) => (
+                        <option key={r.id} value={r.nombre}>{r.nombre} ({r.origen} → {r.destino})</option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="Sector Industrial">Sector Industrial</option>
+                        <option value="Almacén Central">Almacén Central</option>
+                        <option value="Sede Central">Sede Central</option>
+                        <option value="Planta Purificadora">Planta Purificadora</option>
+                        <option value="Taller Central">Taller Central</option>
+                        <option value="Otro">Otro</option>
+                      </>
+                    )}
+                  </select>
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Sector Solicitante</label>
-                  <input
-                    type="text"
+                  <select
                     value={sectorSolicitante}
                     onChange={(e) => setSectorSolicitante(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
                     required
-                  />
+                  >
+                    <option value="">Seleccionar sector...</option>
+                    {SECTORES_ORGANIZACIONALES.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 

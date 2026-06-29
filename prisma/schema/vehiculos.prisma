@@ -31,6 +31,8 @@ model Vehiculo {
   cilindraje         Decimal?        @db.Decimal(5, 2)
   numeroCilindros    Int?            @map("numero_cilindros")
   tipoCombustible    TipoCombustible @map("tipo_combustible")
+  /// Subtipo de combustible (ej. DIESEL_UBA, GASOLINA_95)
+  subtipoCombustible String?         @map("subtipo_combustible") @db.VarChar(50)
   capacidadTanqueGal Decimal?        @map("capacidad_tanque_gal") @db.Decimal(8, 2)
 
   // â”€â”€ Capacidades de Carga y Pasajeros â”€â”€

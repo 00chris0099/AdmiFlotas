@@ -6,6 +6,15 @@ import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 import { exportToExcel } from "@/utils/exportUtils";
+import {
+  TIPOS_COMBUSTIBLE_ORDEN,
+  SECTORES_ORGANIZACIONALES,
+  LOCALIDADES,
+  SERVICENTROS,
+  SUBTIPOS_COMBUSTIBLE,
+  getSubtiposCombustible,
+  tieneSubtipos,
+} from "@/lib/constants";
 
 interface OrdenCombustible {
   id: string;
@@ -69,6 +78,7 @@ export default function CombustiblePage() {
 
   // Form states — Tipo de Abastecimiento
   const [tipoCombustible, setTipoCombustible] = useState("DIESEL");
+  const [subtipoCombustible, setSubtipoCombustible] = useState("");
 
   // Form states — Cantidad
   const [cantidadGalones, setCantidadGalones] = useState("");
@@ -190,6 +200,8 @@ export default function CombustiblePage() {
     setCantidadGalones("");
     setSectorSolicitante("");
     setLocalidadSolicitante("");
+    setTipoCombustible("DIESEL");
+    setSubtipoCombustible("");
     setNombreServiccentro("");
     setNumeroTicketServiccentro("");
     setResponsableServiccentro("");
@@ -397,11 +409,21 @@ export default function CombustiblePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Sector *</label>
-                    <input type="text" value={sectorSolicitante} onChange={(e) => setSectorSolicitante(e.target.value)} placeholder="Ej: Logística, Operaciones..." className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none" required />
+                    <select value={sectorSolicitante} onChange={(e) => setSectorSolicitante(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none" required>
+                      <option value="">Seleccionar sector...</option>
+                      {SECTORES_ORGANIZACIONALES.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Localidad</label>
-                    <input type="text" value={localidadSolicitante} onChange={(e) => setLocalidadSolicitante(e.target.value)} placeholder="Ej: Sede Central, Almacén..." className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none" />
+                    <select value={localidadSolicitante} onChange={(e) => setLocalidadSolicitante(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none">
+                      <option value="">Seleccionar localidad...</option>
+                      {LOCALIDADES.map((l) => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -410,12 +432,26 @@ export default function CombustiblePage() {
               <div className="bg-slate-950/50 border border-slate-800/50 rounded-xl p-4 space-y-3">
                 <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider">4. Tipo de Abastecimiento</h4>
                 <div className="grid grid-cols-3 gap-2">
-                  {["GASOLINA", "DIESEL", "GLP", "ACEITE_MOTOR", "ACEITE_CAJA", "MIXTO"].map((tipo) => (
-                    <button key={tipo} type="button" onClick={() => setTipoCombustible(tipo)} className={`px-3 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider border transition ${tipoCombustible === tipo ? "bg-indigo-600/20 border-indigo-500 text-indigo-400" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700"}`}>
-                      {tipo.replace("_", " ")}
+                  {TIPOS_COMBUSTIBLE_ORDEN.map((tipo) => (
+                    <button key={tipo.value} type="button" onClick={() => {
+                      setTipoCombustible(tipo.value);
+                      setSubtipoCombustible("");
+                    }} className={`px-3 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider border transition ${tipoCombustible === tipo.value ? "bg-indigo-600/20 border-indigo-500 text-indigo-400" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700"}`}>
+                      {tipo.label}
                     </button>
                   ))}
                 </div>
+                {tieneSubtipos(tipoCombustible) && (
+                  <div className="pt-2">
+                    <label className="text-[10px] font-semibold text-slate-400 uppercase">Subtipo de Combustible</label>
+                    <select value={subtipoCombustible} onChange={(e) => setSubtipoCombustible(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none">
+                      <option value="">Seleccionar subtipo...</option>
+                      {getSubtiposCombustible(tipoCombustible).map((st) => (
+                        <option key={st.value} value={st.value}>{st.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
 
               {/* SECCIÓN 5: CANTIDAD */}
@@ -449,7 +485,12 @@ export default function CombustiblePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Nombre del Servicentro</label>
-                    <input type="text" value={nombreServiccentro} onChange={(e) => setNombreServiccentro(e.target.value)} placeholder="Ej: Repsol, Primax..." className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none" />
+                    <select value={nombreServiccentro} onChange={(e) => setNombreServiccentro(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none">
+                      <option value="">Seleccionar servicentro...</option>
+                      {SERVICENTROS.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">N° Ticket / Factura</label>
