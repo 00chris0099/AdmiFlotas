@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthProvider";
 import Icon from "../ui/Icon";
+import ThemeToggle from "../ui/ThemeToggle";
 
 interface MenuItem {
   name: string;
@@ -209,6 +210,9 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             </div>
           )}
         </div>
+
+        {/* THEME TOGGLE */}
+        <ThemeToggle />
 
         {/* PERFIL ESQUINA DERECHA */}
         <div className="relative h-full flex items-center" ref={profileRef}>

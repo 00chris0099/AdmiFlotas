@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +31,12 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">
-        <AuthProvider>
-          <DashboardLayout>{children}</DashboardLayout>
-        </AuthProvider>
+      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 bg-white text-slate-900 [&.light]:bg-white [&.light]:text-slate-900">
+        <ThemeProvider>
+          <AuthProvider>
+            <DashboardLayout>{children}</DashboardLayout>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

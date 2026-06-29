@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "../providers/AuthProvider";
 import Icon from "../ui/Icon";
+import ThemeToggle from "../ui/ThemeToggle";
 
 interface MenuItem {
   name: string;
@@ -27,6 +28,18 @@ const MENU_SECTIONS: MenuSection[] = [
         href: "/vehiculos",
         icon: "truck",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
+      },
+      {
+        name: "Asignación Vehicular",
+        href: "/flota/asignacion",
+        icon: "swap",
+        roles: ["JEFE_PROCESO", "JEFE_OPERACION", "ADMINISTRATIVO"],
+      },
+      {
+        name: "Documentos Flota",
+        href: "/flota/documentos",
+        icon: "document",
+        roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
       },
     ],
   },
@@ -51,6 +64,12 @@ const MENU_SECTIONS: MenuSection[] = [
         icon: "driver",
         roles: ["JEFE_PROCESO", "ANALISTA", "ADMINISTRATIVO", "INSPECTOR"],
       },
+      {
+        name: "Rutas",
+        href: "/operaciones/rutas",
+        icon: "route",
+        roles: ["JEFE_PROCESO", "JEFE_OPERACION", "CONTROLADOR_TRANSITO", "ADMINISTRATIVO"],
+      },
     ],
   },
   {
@@ -73,6 +92,18 @@ const MENU_SECTIONS: MenuSection[] = [
         href: "/control_llantas",
         icon: "tire",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
+      },
+      {
+        name: "Almacén",
+        href: "/mantenimiento/almacen",
+        icon: "warehouse",
+        roles: ["JEFE_PROCESO", "JEFE_MANTENIMIENTO", "ENCARGADO_TALLER", "MECANICO", "ADMINISTRATIVO"],
+      },
+      {
+        name: "Lavado",
+        href: "/mantenimiento/lavado",
+        icon: "clean",
+        roles: ["JEFE_PROCESO", "JEFE_MANTENIMIENTO", "LAVADOR", "ADMINISTRATIVO"],
       },
     ],
   },
@@ -171,13 +202,16 @@ export const Sidebar: React.FC = () => {
               </p>
             </div>
           </div>
-          <button
-            onClick={logout}
-            title="Cerrar Sesión"
-            className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-rose-400 transition"
-          >
-            <Icon name="logout" size={16} />
-          </button>
+          <div className="flex items-center space-x-1">
+            <ThemeToggle />
+            <button
+              onClick={logout}
+              title="Cerrar Sesión"
+              className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-rose-400 transition"
+            >
+              <Icon name="logout" size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </aside>

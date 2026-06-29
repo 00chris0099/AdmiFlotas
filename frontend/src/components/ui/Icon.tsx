@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useTheme } from "../providers/ThemeProvider";
 
 const ICONS: Record<string, string> = {
   truck: "/icons/truck.svg",
@@ -35,19 +38,44 @@ interface IconProps {
   name: string;
   size?: number;
   className?: string;
+  color?: string;
 }
 
-export default function Icon({ name, size = 16, className = "" }: IconProps) {
-  const src = ICONS[name];
-  if (!src) return null;
+export default function Icon({ name, size = 16, className = "", color }: IconProps) {
+  const { theme } = useTheme();
+  const [svgContent, setSvgContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const src = ICONS[name];
+    if (!src) return;
+
+    fetch(src)
+      .then((res) => res.text())
+      .then((text) => setSvgContent(text))
+      .catch(() => {});
+  }, [name]);
+
+  if (!svgContent) return null;
+
+  const fillColor = color || (theme === "dark" ? "white" : "#1e293b");
+  const strokeColor = color || (theme === "dark" ? "white" : "#1e293b");
+
+  const colored = svgContent
+    .replace(/stroke="currentColor"/g, `stroke="${strokeColor}"`)
+    .replace(/fill="currentColor"/g, `fill="${fillColor}"`)
+    .replace(/fill="none"/g, `fill="none"`)
+    .replace(/fill="white"/g, `fill="${fillColor}"`);
+
   return (
-    <img
-      src={src}
-      alt=""
-      width={size}
-      height={size}
+    <span
       className={className}
-      style={{ display: "inline-block", verticalAlign: "middle" }}
+      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+      dangerouslySetInnerHTML={{
+        __html: colored.replace(
+          /<svg/,
+          `<svg width="${size}" height="${size}"`
+        ),
+      }}
     />
   );
 }
