@@ -145,6 +145,12 @@ const MENU_SECTIONS: MenuSection[] = [
         icon: "lock",
         roles: ["JEFE_PROCESO"],
       },
+      {
+        name: "Gestión de Permisos",
+        href: "/seguridad/permisos",
+        icon: "key-lock",
+        roles: ["JEFE_PROCESO"],
+      },
     ],
   },
 ];
