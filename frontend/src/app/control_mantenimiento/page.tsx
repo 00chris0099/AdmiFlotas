@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
-import { generateNumeroOrden } from "@/lib/orderGenerator";
 import Icon from "@/components/ui/Icon";
 import { exportToExcel } from "@/utils/exportUtils";
 import { CODIGOS_SERVICIO, CONJUNTOS_SUBSTITUIDOS } from "@/lib/constants";
@@ -82,12 +81,10 @@ export default function OrdenesMantenimientoPage() {
 
   const cargarCatalogos = async () => {
     try {
-      const res = await fetchWithAuth("/api/vehiculos");
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setVehiculos(data);
-        if (data.length > 0) setVehiculoId(data[0].id);
-      }
+      const data = await api.getVehiculos();
+      const items = Array.isArray(data) ? data : data?.vehiculos ?? [];
+      setVehiculos(items);
+      if (items.length > 0) setVehiculoId(items[0].id);
     } catch (err) {
       console.error("Error al cargar vehículos:", err);
     }
@@ -96,11 +93,9 @@ export default function OrdenesMantenimientoPage() {
   const cargarOrdenes = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/control_mantenimiento");
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setOrdenes(data);
-      }
+      const data = await api.getOrdenesMantenimiento();
+      const items = Array.isArray(data) ? data : data?.ordenes ?? [];
+      setOrdenes(items);
     } catch (err) {
       console.error("Error al cargar órdenes:", err);
     } finally {
@@ -136,36 +131,28 @@ export default function OrdenesMantenimientoPage() {
     }
 
     try {
-      const res = await fetchWithAuth("/api/control_mantenimiento", {
-        method: "POST",
-        body: JSON.stringify({
-          numeroOrden,
-          vehiculoId,
-          tipoMantenimiento,
-          tipoTaller,
-          codigoServicio: `${codigoServicio}-${organoServicio}`,
-          descripcionServicio,
-          conjuntosSubstituidos,
-          costoManoObraPropia: 0,
-          costoPiezasRepuestos: parseFloat(costoRepuestos),
-          costoOtros: parseFloat(costoOtros),
-        }),
+      await api.createOrdenMantenimiento({
+        numeroOrden,
+        vehiculoId,
+        tipoMantenimiento,
+        tipoTaller,
+        codigoServicio: `${codigoServicio}-${organoServicio}`,
+        descripcionServicio,
+        conjuntosSubstituidos,
+        costoManoObraPropia: 0,
+        costoPiezasRepuestos: parseFloat(costoRepuestos),
+        costoOtros: parseFloat(costoOtros),
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        setNumeroOrden("");
-        setDescripcionServicio("");
-        setCostoRepuestos("0");
-        setCostoOtros("0");
-        cargarOrdenes();
-        alert("¡Orden de mantenimiento creada con éxito!");
-      } else {
-        alert("Error: " + data.error);
-      }
+      setModalOpen(false);
+      setNumeroOrden("");
+      setDescripcionServicio("");
+      setCostoRepuestos("0");
+      setCostoOtros("0");
+      cargarOrdenes();
+      alert("¡Orden de mantenimiento creada con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -178,29 +165,21 @@ export default function OrdenesMantenimientoPage() {
 
     setSavingLabor(true);
     try {
-      const res = await fetchWithAuth("/api/control_mantenimiento/mano-obra", {
-        method: "POST",
-        body: JSON.stringify({
-          ordenMantenimientoId: selectedOrderId,
-          descripcionTarea,
-          horasTrabajadas: parseFloat(horasTrabajadas),
-          costoHora: parseFloat(costoHora),
-          nombreTecnico,
-        }),
+      await api.addManoDeObra({
+        ordenMantenimientoId: selectedOrderId,
+        descripcionTarea,
+        horasTrabajadas: parseFloat(horasTrabajadas),
+        costoHora: parseFloat(costoHora),
+        nombreTecnico,
       });
 
-      if (res.ok) {
-        setDescripcionTarea("");
-        setHorasTrabajadas("");
-        setNombreTecnico("");
-        cargarOrdenes(); // Recargar todas las órdenes
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al agregar tarea");
-      }
-    } catch (err) {
+      setDescripcionTarea("");
+      setHorasTrabajadas("");
+      setNombreTecnico("");
+      cargarOrdenes();
+    } catch (err: any) {
       console.error(err);
-      alert("Error de red");
+      alert("Error: " + err.message);
     } finally {
       setSavingLabor(false);
     }
@@ -214,28 +193,19 @@ export default function OrdenesMantenimientoPage() {
     }
     setSavingFirma(true);
     try {
-      const res = await fetchWithAuth("/api/control_mantenimiento", {
-        method: "PUT",
-        body: JSON.stringify({
-          id: ordenId,
-          firma: firmaNombre.trim(),
-          tipoFirma,
-        }),
+      const data = await api.updateOrdenMantenimiento(ordenId, {
+        firma: firmaNombre.trim(),
+        tipoFirma,
       });
 
-      if (res.ok) {
-        setSigningOrderId(null);
-        setSigningRole("");
-        setFirmaNombre("");
-        cargarOrdenes();
-        alert("Firma registrada con éxito");
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al firmar");
-      }
+      setSigningOrderId(null);
+      setSigningRole("");
+      setFirmaNombre("");
+      cargarOrdenes();
+      alert("Firma registrada con éxito");
     } catch (err) {
       console.error(err);
-      alert("Error de red al firmar");
+      alert("Error al firmar");
     } finally {
       setSavingFirma(false);
     }
@@ -314,7 +284,12 @@ export default function OrdenesMantenimientoPage() {
 
   const handleDownloadPDF = async (ordenId: string) => {
     try {
-      const res = await fetchWithAuth(`/api/reportes/pdf?tipo=orden_mantenimiento&id=${ordenId}`);
+      const token = api.getToken();
+      const res = await fetch(`/api/reportes/pdf?tipo=orden_mantenimiento&id=${ordenId}`, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
       const data = await res.json();
       if (res.ok) {
         generateOrdenMantenimientoPDF(data);
@@ -354,7 +329,6 @@ export default function OrdenesMantenimientoPage() {
           </button>
           <button
             onClick={() => {
-              setNumeroOrden(generateNumeroOrden("OM"));
               setModalOpen(true);
             }}
             className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition duration-150 shadow-md"
@@ -390,7 +364,7 @@ export default function OrdenesMantenimientoPage() {
         {/* TABLA PRINCIPAL */}
         <div className={selectedOrderId ? "lg:col-span-2" : "lg:col-span-3"}>
           {isLoading ? (
-            <div className="text-center py-12 text-slate-400 text-sm">Cargando órdenes reales de Supabase...</div>
+            <div className="text-center py-12 text-slate-400 text-sm">Cargando órdenes...</div>
           ) : (
             <DataTable
               data={ordenes}
@@ -757,7 +731,7 @@ export default function OrdenesMantenimientoPage() {
                 disabled={isSubmitting}
                 className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 text-white font-bold rounded-xl transition duration-150 shadow-lg text-sm"
               >
-                {isSubmitting ? "Creando en Supabase..." : "Registrar Orden"}
+                {isSubmitting ? "Guardando..." : "Registrar Orden"}
               </button>
             </form>
           </div>

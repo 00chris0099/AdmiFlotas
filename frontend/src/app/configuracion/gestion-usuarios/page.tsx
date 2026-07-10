@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useAuth } from "@/components/providers/AuthProvider";
+import { api } from "@/lib/api";
 
 interface Usuario {
   id: string;
@@ -52,7 +52,6 @@ const ROLE_COLORS: Record<string, string> = {
 };
 
 export default function GestionUsuariosPage() {
-  const { token } = useAuth();
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -75,13 +74,8 @@ export default function GestionUsuariosPage() {
 
   const fetchUsuarios = async () => {
     try {
-      const res = await fetch("/api/admin/usuarios", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setUsuarios(data);
-      }
+      const data = await api.getUsuarios();
+      setUsuarios(Array.isArray(data) ? data : data.usuarios || []);
     } catch {
       console.error("Error fetching usuarios");
     } finally {
@@ -96,30 +90,16 @@ export default function GestionUsuariosPage() {
     setTokenResult("");
 
     try {
-      const res = await fetch("/api/admin/usuarios", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage({ type: "success", text: data.message });
-        if (data.token) {
-          setTokenResult(data.token);
-        }
-        setForm({ nombre: "", apellido: "", email: "", rol: "CONDUCTOR", telefono: "", especialidad: "" });
-        setShowForm(false);
-        fetchUsuarios();
-      } else {
-        setMessage({ type: "error", text: data.message });
+      const data = await api.createUsuario(form);
+      setMessage({ type: "success", text: data.message });
+      if (data.token) {
+        setTokenResult(data.token);
       }
-    } catch {
-      setMessage({ type: "error", text: "Error de conexión" });
+      setForm({ nombre: "", apellido: "", email: "", rol: "CONDUCTOR", telefono: "", especialidad: "" });
+      setShowForm(false);
+      fetchUsuarios();
+    } catch (err: any) {
+      setMessage({ type: "error", text: err.message || "Error de conexión" });
     } finally {
       setSubmitting(false);
     }
@@ -129,21 +109,11 @@ export default function GestionUsuariosPage() {
     if (!confirm(`¿Eliminar al usuario ${nombre}? Esta acción no se puede deshacer.`)) return;
 
     try {
-      const res = await fetch(`/api/admin/usuarios/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage({ type: "success", text: data.message });
-        fetchUsuarios();
-      } else {
-        setMessage({ type: "error", text: data.message });
-      }
-    } catch {
-      setMessage({ type: "error", text: "Error de conexión" });
+      const data = await api.deleteUsuario(id);
+      setMessage({ type: "success", text: data.message });
+      fetchUsuarios();
+    } catch (err: any) {
+      setMessage({ type: "error", text: err.message || "Error de conexión" });
     }
   };
 

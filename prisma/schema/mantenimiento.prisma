@@ -1,7 +1,7 @@
 // ============================================================
 // SAF - Sistema de Administración de Flotas
 // Manual F1T02 — Procedimientos Básicos de Operación y Control
-// Archivo: mantenimiento.prisma — Almacén de Mantenimiento
+// Archivo: mantenimiento.prisma — Almacén de Mantenimiento (Normalizado)
 // ============================================================
 
 /// Repuesto del Almacén de Mantenimiento — MA 122 02 01
@@ -10,15 +10,17 @@ model Repuesto {
   /// Código único del repuesto en el almacén
   codigo          String   @unique @db.VarChar(50)
   descripcion     String   @db.VarChar(255)
-  categoria       String   @db.VarChar(50)
+  categoriaId     String?  @map("categoria_id")
   unidadMedida    String   @default("unidad") @map("unidad_medida") @db.VarChar(30)
   stockActual     Int      @default(0) @map("stock_actual")
   stockMinimo     Int      @default(0) @map("stock_minimo")
   precioUnitario  Decimal? @map("precio_unitario") @db.Decimal(10, 2)
   creadoEn        DateTime @default(now()) @map("creado_en")
 
+  categoria   CategoriaRepuesto? @relation(fields: [categoriaId], references: [id], onDelete: SetNull)
   movimientos MovimientoAlmacen[]
 
+  @@index([categoriaId])
   @@map("repuestos")
 }
 
@@ -26,16 +28,18 @@ model Repuesto {
 model MovimientoAlmacen {
   id                      String   @id @default(uuid())
   repuestoId              String   @map("repuesto_id")
-  tipoMovimiento          String   @map("tipo_movimiento")
+  tipoMovimientoAlmacenId String?  @map("tipo_movimiento_almacen_id")
   cantidad                Int
   ordenMantenimientoId    String?  @map("orden_mantenimiento_id")
   responsable             String   @db.VarChar(100)
   fecha                   DateTime @default(now())
   observaciones           String?
 
-  repuesto Repuesto @relation(fields: [repuestoId], references: [id])
+  repuesto        Repuesto                @relation(fields: [repuestoId], references: [id])
+  tipoMovimiento  TipoMovimientoAlmacen?  @relation(fields: [tipoMovimientoAlmacenId], references: [id], onDelete: SetNull)
 
   @@index([repuestoId])
+  @@index([tipoMovimientoAlmacenId])
   @@index([fecha])
   @@map("movimientos_almacen")
 }
@@ -44,16 +48,18 @@ model Lavado {
   id              String   @id @default(uuid())
   vehiculoId      String   @map("vehiculo_id")
   fecha           DateTime @db.Date
-  tipoLavado      String   @map("tipo_lavado")
+  tipoLavadoId    String?  @map("tipo_lavado_id")
   costo           Decimal? @db.Decimal(8, 2)
   proveedor       String?  @db.VarChar(150)
   responsable     String?  @db.VarChar(100)
   observaciones   String?
   creadoEn        DateTime @default(now()) @map("creado_en")
 
-  vehiculo Vehiculo @relation(fields: [vehiculoId], references: [id])
+  vehiculo   Vehiculo     @relation(fields: [vehiculoId], references: [id])
+  tipoLavado TipoLavado?  @relation(fields: [tipoLavadoId], references: [id], onDelete: SetNull)
 
   @@index([vehiculoId])
+  @@index([tipoLavadoId])
   @@index([fecha])
   @@map("lavados")
 }

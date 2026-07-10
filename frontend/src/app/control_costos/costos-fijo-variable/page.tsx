@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import { exportToExcel } from "@/utils/exportUtils";
 
 interface CostoItem {
@@ -35,8 +35,7 @@ export default function CostosPage() {
   const [submitting, setSubmitting] = useState(false);
 
   const loadData = () => {
-    fetchWithAuth("/api/control_costos/costos-fijo-variable")
-      .then((res) => res.json())
+    api.getCostos()
       .then((data) => {
         setCostos(data.costosFijos || []);
         setResumen(data.resumenCostos || { totalFijo: 0, totalCombustible: 0, totalMantenimiento: 0 });
@@ -55,19 +54,11 @@ export default function CostosPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("¿Estás seguro de eliminar este costo fijo?")) return;
     try {
-      const res = await fetchWithAuth("/api/control_costos/costos-fijo-variable", {
-        method: "DELETE",
-        body: JSON.stringify({ id }),
-      });
-      if (res.ok) {
-        loadData();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al eliminar costo");
-      }
-    } catch (err) {
+      await api.deleteCosto(id);
+      loadData();
+    } catch (err: any) {
       console.error(err);
-      alert("Error de conexión");
+      alert("Error: " + err.message);
     }
   };
 
@@ -77,24 +68,16 @@ export default function CostosPage() {
     
     setSubmitting(true);
     try {
-      const res = await fetchWithAuth("/api/control_costos/costos-fijo-variable", {
-        method: "POST",
-        body: JSON.stringify({
-          periodo,
-          tipo,
-          descripcion,
-          montoMensual: parseFloat(montoMensual),
-        }),
+      await api.createCosto({
+        periodo,
+        tipo,
+        descripcion,
+        montoMensual: parseFloat(montoMensual),
       });
-      if (res.ok) {
-        setShowModal(false);
-        setDescripcion("");
-        setMontoMensual("");
-        loadData();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al guardar costo");
-      }
+      setShowModal(false);
+      setDescripcion("");
+      setMontoMensual("");
+      loadData();
     } catch (err) {
       console.error(err);
       alert("Error de conexión");

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import { exportToExcel } from "@/utils/exportUtils";
 import {
   MARCAS_VEHICULOS,
@@ -56,8 +56,7 @@ export default function VehiculosPage() {
   const cargarVehiculos = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/vehiculos");
-      const data = await res.json();
+      const data = await api.getVehiculos();
       if (Array.isArray(data)) {
         setVehiculos(data);
       }
@@ -118,30 +117,18 @@ export default function VehiculosPage() {
         periodicidadMantenimientoKm: parseInt(periodicidadMantenimientoKm) || 5000,
       };
 
-      let res;
       if (editingId) {
-        res = await fetchWithAuth(`/api/vehiculos/${editingId}`, {
-          method: "PUT",
-          body: JSON.stringify(payload),
-        });
+        await api.updateVehiculo(editingId, payload);
       } else {
-        res = await fetchWithAuth("/api/vehiculos", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        await api.createVehiculo(payload);
       }
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        resetForm();
-        cargarVehiculos();
-        alert(editingId ? "¡Vehículo actualizado!" : "¡Vehículo registrado con éxito!");
-      } else {
-        alert("Error: " + (data.error || data.message));
-      }
+      setModalOpen(false);
+      resetForm();
+      cargarVehiculos();
+      alert(editingId ? "¡Vehículo actualizado!" : "¡Vehículo registrado con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + (err.message || "Error de red"));
     } finally {
       setIsSubmitting(false);
     }
@@ -161,14 +148,9 @@ export default function VehiculosPage() {
   const handleDelete = async (id: string, placa: string) => {
     if (!confirm(`¿Está seguro de eliminar el vehículo ${placa}?`)) return;
     try {
-      const res = await fetchWithAuth(`/api/vehiculos/${id}`, { method: "DELETE" });
-      const data = await res.json();
-      if (res.ok) {
-        cargarVehiculos();
-        alert("Vehículo eliminado.");
-      } else {
-        alert(data.error || "Error al eliminar");
-      }
+      await api.deleteVehiculo(id);
+      cargarVehiculos();
+      alert("Vehículo eliminado.");
     } catch {
       alert("Error de conexión");
     }

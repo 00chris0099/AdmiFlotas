@@ -126,7 +126,7 @@ exports.Prisma.UsuarioScalarFieldEnum = {
   apellido: 'apellido',
   email: 'email',
   password: 'password',
-  rol: 'rol',
+  rolId: 'rolId',
   activo: 'activo',
   telefono: 'telefono',
   licenciaConducir: 'licenciaConducir',
@@ -156,7 +156,7 @@ exports.Prisma.OrdenCombustibleScalarFieldEnum = {
   fecha: 'fecha',
   vehiculoId: 'vehiculoId',
   conductorId: 'conductorId',
-  sectorSolicitante: 'sectorSolicitante',
+  sectorSolicitanteId: 'sectorSolicitanteId',
   tipoCombustible: 'tipoCombustible',
   subtipoCombustible: 'subtipoCombustible',
   cantidadGalones: 'cantidadGalones',
@@ -174,15 +174,14 @@ exports.Prisma.OrdenCombustibleScalarFieldEnum = {
   costoAceiteCaja: 'costoAceiteCaja',
   costoTotal: 'costoTotal',
   kilometrajeActual: 'kilometrajeActual',
-  nombreServiccentro: 'nombreServiccentro',
-  direccionServiccentro: 'direccionServiccentro',
+  centroServicioId: 'centroServicioId',
   numeroTicketServiccentro: 'numeroTicketServiccentro',
   responsableServiccentro: 'responsableServiccentro',
   selloServiccentro: 'selloServiccentro',
   localidadSolicitante: 'localidadSolicitante',
   firmaEncargadoGaraje: 'firmaEncargadoGaraje',
   firmaConductor: 'firmaConductor',
-  firmaServicentro: 'firmaServicentro',
+  firmaServiccentro: 'firmaServiccentro',
   observaciones: 'observaciones',
   creadoEn: 'creadoEn',
   actualizadoEn: 'actualizadoEn'
@@ -203,8 +202,8 @@ exports.Prisma.ControlLlantaScalarFieldEnum = {
   id: 'id',
   codigoEps: 'codigoEps',
   vehiculoId: 'vehiculoId',
-  fabricante: 'fabricante',
-  dimension: 'dimension',
+  fabricanteId: 'fabricanteId',
+  dimensionId: 'dimensionId',
   modeloLlanta: 'modeloLlanta',
   posicionVehiculo: 'posicionVehiculo',
   descripcionPosicion: 'descripcionPosicion',
@@ -227,7 +226,7 @@ exports.Prisma.OrdenMantenimientoScalarFieldEnum = {
   fechaEmision: 'fechaEmision',
   vehiculoId: 'vehiculoId',
   tecnicoId: 'tecnicoId',
-  sectorSolicitante: 'sectorSolicitante',
+  sectorSolicitanteId: 'sectorSolicitanteId',
   tipoMantenimiento: 'tipoMantenimiento',
   tipoTaller: 'tipoTaller',
   nombreTallerExterno: 'nombreTallerExterno',
@@ -309,7 +308,7 @@ exports.Prisma.RepuestoScalarFieldEnum = {
   id: 'id',
   codigo: 'codigo',
   descripcion: 'descripcion',
-  categoria: 'categoria',
+  categoriaId: 'categoriaId',
   unidadMedida: 'unidadMedida',
   stockActual: 'stockActual',
   stockMinimo: 'stockMinimo',
@@ -320,7 +319,7 @@ exports.Prisma.RepuestoScalarFieldEnum = {
 exports.Prisma.MovimientoAlmacenScalarFieldEnum = {
   id: 'id',
   repuestoId: 'repuestoId',
-  tipoMovimiento: 'tipoMovimiento',
+  tipoMovimientoAlmacenId: 'tipoMovimientoAlmacenId',
   cantidad: 'cantidad',
   ordenMantenimientoId: 'ordenMantenimientoId',
   responsable: 'responsable',
@@ -332,7 +331,7 @@ exports.Prisma.LavadoScalarFieldEnum = {
   id: 'id',
   vehiculoId: 'vehiculoId',
   fecha: 'fecha',
-  tipoLavado: 'tipoLavado',
+  tipoLavadoId: 'tipoLavadoId',
   costo: 'costo',
   proveedor: 'proveedor',
   responsable: 'responsable',
@@ -342,11 +341,12 @@ exports.Prisma.LavadoScalarFieldEnum = {
 
 exports.Prisma.MovimientoDiarioScalarFieldEnum = {
   id: 'id',
+  numeroOrden: 'numeroOrden',
   vehiculoId: 'vehiculoId',
   conductorId: 'conductorId',
   inspectorId: 'inspectorId',
   fecha: 'fecha',
-  sectorSolicitante: 'sectorSolicitante',
+  sectorSolicitanteId: 'sectorSolicitanteId',
   destino: 'destino',
   proposito: 'proposito',
   kilometrajeSalida: 'kilometrajeSalida',
@@ -405,6 +405,124 @@ exports.Prisma.ChecklistVerificacionScalarFieldEnum = {
   firmaConductor: 'firmaConductor',
   firmaInspector: 'firmaInspector',
   fechaRegistro: 'fechaRegistro'
+};
+
+exports.Prisma.MarcaVehiculoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  pais: 'pais',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.ModeloVehiculoScalarFieldEnum = {
+  id: 'id',
+  marcaId: 'marcaId',
+  nombre: 'nombre',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.ColorVehiculoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  codigoHex: 'codigoHex',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.TipoCombustibleScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.EstadoVehiculoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  codigo: 'codigo',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.CategoriaVehiculoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  codigo: 'codigo',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.RolScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  codigo: 'codigo',
+  descripcion: 'descripcion',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.SectorOrganizacionalScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.LocalidadScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.CentroServicioScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  direccion: 'direccion',
+  telefono: 'telefono',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.FabricanteLlantaScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  pais: 'pais',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.DimensionLlantaScalarFieldEnum = {
+  id: 'id',
+  dimension: 'dimension',
+  descripcion: 'descripcion',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.CategoriaRepuestoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.TipoLavadoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  codigo: 'codigo',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.TipoMovimientoAlmacenScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  codigo: 'codigo',
+  activo: 'activo',
+  creadoEn: 'creadoEn'
 };
 
 exports.Prisma.RutaScalarFieldEnum = {
@@ -485,20 +603,20 @@ exports.Prisma.TokenConfirmacionScalarFieldEnum = {
 exports.Prisma.VehiculoScalarFieldEnum = {
   id: 'id',
   clasePatrimonial: 'clasePatrimonial',
-  categoriaPatrimonial: 'categoriaPatrimonial',
+  categoriaPatrimonialId: 'categoriaPatrimonialId',
   secuencial: 'secuencial',
   codigoPatrimonial: 'codigoPatrimonial',
   placa: 'placa',
-  marca: 'marca',
-  modelo: 'modelo',
+  marcaId: 'marcaId',
+  modeloId: 'modeloId',
   anioFabricacion: 'anioFabricacion',
-  color: 'color',
+  colorId: 'colorId',
   numeroMotor: 'numeroMotor',
   numeroChasis: 'numeroChasis',
   potenciaHp: 'potenciaHp',
   cilindraje: 'cilindraje',
   numeroCilindros: 'numeroCilindros',
-  tipoCombustible: 'tipoCombustible',
+  tipoCombustibleId: 'tipoCombustibleId',
   subtipoCombustible: 'subtipoCombustible',
   capacidadTanqueGal: 'capacidadTanqueGal',
   capacidadCargaKg: 'capacidadCargaKg',
@@ -531,7 +649,7 @@ exports.Prisma.VehiculoScalarFieldEnum = {
   kmAlertaMantenimiento: 'kmAlertaMantenimiento',
   periodicidadMantenimientoKm: 'periodicidadMantenimientoKm',
   kilometrajeActual: 'kilometrajeActual',
-  estado: 'estado',
+  estadoId: 'estadoId',
   fechaIngreso: 'fechaIngreso',
   fechaBaja: 'fechaBaja',
   motivoBaja: 'motivoBaja',
@@ -588,23 +706,6 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.RolUsuario = exports.$Enums.RolUsuario = {
-  JEFE_PROCESO: 'JEFE_PROCESO',
-  JEFE_OPERACION: 'JEFE_OPERACION',
-  ENCARGADO_GARAJE: 'ENCARGADO_GARAJE',
-  INSPECTOR: 'INSPECTOR',
-  CONTROLADOR_TRANSITO: 'CONTROLADOR_TRANSITO',
-  ANALISTA: 'ANALISTA',
-  CONDUCTOR: 'CONDUCTOR',
-  JEFE_MANTENIMIENTO: 'JEFE_MANTENIMIENTO',
-  ENCARGADO_TALLER: 'ENCARGADO_TALLER',
-  MECANICO: 'MECANICO',
-  ELECTRICISTA: 'ELECTRICISTA',
-  REENCAUCHADOR: 'REENCAUCHADOR',
-  LAVADOR: 'LAVADOR',
-  ADMINISTRATIVO: 'ADMINISTRATIVO'
-};
-
 exports.TipoCombustibleOrden = exports.$Enums.TipoCombustibleOrden = {
   GASOLINA: 'GASOLINA',
   DIESEL: 'DIESEL',
@@ -694,31 +795,10 @@ exports.TipoToken = exports.$Enums.TipoToken = {
   CAMBIO_PASSWORD: 'CAMBIO_PASSWORD'
 };
 
-exports.CategoriaVehiculo = exports.$Enums.CategoriaVehiculo = {
-  PASAJEROS: 'PASAJEROS',
-  CARGA: 'CARGA',
-  ESPECIAL: 'ESPECIAL'
-};
-
-exports.TipoCombustible = exports.$Enums.TipoCombustible = {
-  GASOLINA: 'GASOLINA',
-  DIESEL: 'DIESEL',
-  GLP: 'GLP',
-  ELECTRICO: 'ELECTRICO',
-  HIBRIDO: 'HIBRIDO'
-};
-
 exports.EstadoFisico = exports.$Enums.EstadoFisico = {
   BUENO: 'BUENO',
   REGULAR: 'REGULAR',
   MALO: 'MALO'
-};
-
-exports.EstadoVehiculo = exports.$Enums.EstadoVehiculo = {
-  OPERATIVO: 'OPERATIVO',
-  EN_MANTENIMIENTO: 'EN_MANTENIMIENTO',
-  INOPERATIVO: 'INOPERATIVO',
-  DADO_DE_BAJA: 'DADO_DE_BAJA'
 };
 
 exports.Prisma.ModelName = {
@@ -737,6 +817,21 @@ exports.Prisma.ModelName = {
   Lavado: 'Lavado',
   MovimientoDiario: 'MovimientoDiario',
   ChecklistVerificacion: 'ChecklistVerificacion',
+  MarcaVehiculo: 'MarcaVehiculo',
+  ModeloVehiculo: 'ModeloVehiculo',
+  ColorVehiculo: 'ColorVehiculo',
+  TipoCombustible: 'TipoCombustible',
+  EstadoVehiculo: 'EstadoVehiculo',
+  CategoriaVehiculo: 'CategoriaVehiculo',
+  Rol: 'Rol',
+  SectorOrganizacional: 'SectorOrganizacional',
+  Localidad: 'Localidad',
+  CentroServicio: 'CentroServicio',
+  FabricanteLlanta: 'FabricanteLlanta',
+  DimensionLlanta: 'DimensionLlanta',
+  CategoriaRepuesto: 'CategoriaRepuesto',
+  TipoLavado: 'TipoLavado',
+  TipoMovimientoAlmacen: 'TipoMovimientoAlmacen',
   Ruta: 'Ruta',
   ProgramacionRuta: 'ProgramacionRuta',
   Permiso: 'Permiso',

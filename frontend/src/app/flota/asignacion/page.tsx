@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 
 interface Asignacion {
   id: string;
@@ -61,14 +61,11 @@ export default function AsignacionPage() {
   const cargarDatos = async () => {
     try {
       setIsLoading(true);
-      const [resAsig, resVeh, resCond] = await Promise.all([
-        fetchWithAuth("/api/flota/asignacion"),
-        fetchWithAuth("/api/vehiculos"),
-        fetchWithAuth("/api/conductores"),
+      const [dataAsig, dataVeh, dataCond] = await Promise.all([
+        api.getAsignaciones(),
+        api.getVehiculos(),
+        api.getUsuarios(),
       ]);
-      const dataAsig = await resAsig.json();
-      const dataVeh = await resVeh.json();
-      const dataCond = await resCond.json();
 
       if (Array.isArray(dataAsig)) setAsignaciones(dataAsig);
       if (Array.isArray(dataVeh)) {
@@ -102,21 +99,13 @@ export default function AsignacionPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetchWithAuth("/api/flota/asignacion", {
-        method: "POST",
-        body: JSON.stringify({ vehiculoId, conductorId, sectorAsignado, observaciones }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        resetForm();
-        cargarDatos();
-        alert("Asignación registrada con éxito");
-      } else {
-        alert("Error: " + (data.error || data.message));
-      }
+      await api.createAsignacion({ vehiculoId, conductorId, sectorAsignado, observaciones });
+      setModalOpen(false);
+      resetForm();
+      cargarDatos();
+      alert("Asignación registrada con éxito");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }

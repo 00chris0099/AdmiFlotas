@@ -3,6 +3,7 @@
 import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PasswordForm from "@/components/PasswordForm";
+import { api } from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 function ConfirmarUsuarioInner() {
@@ -46,7 +47,7 @@ function ConfirmarUsuarioInner() {
   return (
     <PasswordForm
       token={token}
-      apiEndpoint="/api/auth/confirmar-usuario"
+      onSubmit={(t, p) => api.confirmarUsuario(t, p)}
       title="Crea tu contraseña"
       subtitle="Establece una contraseña segura para tu cuenta"
       icon="key-lock"

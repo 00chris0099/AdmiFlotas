@@ -1,12 +1,35 @@
 "use client";
 
 import React, { useState } from "react";
-import { validatePassword, getPasswordStrength } from "@/lib/tokens";
 import Icon from "@/components/ui/Icon";
+
+function validatePassword(password: string): { valid: boolean; errors: string[] } {
+  const errors: string[] = [];
+  if (password.length < 8) errors.push("Mínimo 8 caracteres");
+  if (!/[A-Z]/.test(password)) errors.push("Al menos 1 mayúscula");
+  if (!/[a-z]/.test(password)) errors.push("Al menos 1 minúscula");
+  if (!/[0-9]/.test(password)) errors.push("Al menos 1 número");
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) errors.push("Al menos 1 carácter especial");
+  return { valid: errors.length === 0, errors };
+}
+
+function getPasswordStrength(password: string): { score: number; label: string; color: string } {
+  let score = 0;
+  if (password.length >= 8) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) score++;
+  if (password.length >= 12) score++;
+
+  if (score <= 2) return { score, label: "Débil", color: "rose" };
+  if (score <= 4) return { score, label: "Media", color: "amber" };
+  return { score, label: "Fuerte", color: "emerald" };
+}
 
 interface PasswordFormProps {
   token: string;
-  apiEndpoint: string;
+  onSubmit: (token: string, password: string) => Promise<{ message: string }>;
   title: string;
   subtitle: string;
   icon: string;
@@ -17,7 +40,7 @@ interface PasswordFormProps {
 
 export default function PasswordForm({
   token,
-  apiEndpoint,
+  onSubmit,
   title,
   subtitle,
   icon,
@@ -50,24 +73,10 @@ export default function PasswordForm({
 
     setSubmitting(true);
     try {
-      const res = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        onSuccess(data.message);
-      } else {
-        onError(data.message);
-        if (data.errors) {
-          setErrors(data.errors);
-        }
-      }
-    } catch {
-      onError("Error de conexión");
+      const data = await onSubmit(token, password);
+      onSuccess(data.message);
+    } catch (err: any) {
+      onError(err.message || "Error de conexión");
     } finally {
       setSubmitting(false);
     }

@@ -1,52 +1,52 @@
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: control_mantenimiento.prisma â€” Esquema de Control de Mantenimiento
+// SAF - Sistema de Administración de Flotas
+// Archivo: control_mantenimiento.prisma — Esquema de Control de Mantenimiento (Normalizado)
 // ============================================================
 
-/// Orden de mantenimiento preventivo o correctivo â€” MA 122 02 01
+/// Orden de mantenimiento preventivo o correctivo — MA 122 02 01
 model OrdenMantenimiento {
   id                String            @id @default(uuid())
-  /// NÃºmero de orden correlativo de mantenimiento
+  /// Número de orden correlativo de mantenimiento
   numeroOrden       String            @unique @map("numero_orden") @db.VarChar(20)
   fechaEmision      DateTime          @map("fecha_emision") @db.Date
   vehiculoId        String            @map("vehiculo_id")
-  /// TÃ©cnico responsable de ejecutar el mantenimiento
+  /// Técnico responsable de ejecutar el mantenimiento
   tecnicoId         String?           @map("tecnico_id")
-  sectorSolicitante String            @map("sector_solicitante") @db.VarChar(150)
+  sectorSolicitanteId String?         @map("sector_solicitante_id")
   tipoMantenimiento TipoMantenimiento @map("tipo_mantenimiento")
 
-  // â”€â”€ Tipo de Taller â”€â”€
+  // ─── Tipo de Taller ───
   /// Origen del servicio: Taller Propio (con Tarjeta de Mano de Obra)
-  /// o Taller de Terceros (con AutorizaciÃ³n de Servicio Externo)
+  /// o Taller de Terceros (con Autorización de Servicio Externo)
   tipoTaller                TipoTaller @map("tipo_taller")
   /// Nombre del taller de terceros (si aplica)
   nombreTallerExterno       String?    @map("nombre_taller_externo") @db.VarChar(150)
-  /// NÃºmero de autorizaciÃ³n de servicio externo (si aplica)
+  /// Número de autorización de servicio externo (si aplica)
   numeroAutorizacionExterna String?    @map("numero_autorizacion_externa") @db.VarChar(50)
 
-  // â”€â”€ Entrada y Salida del Taller â”€â”€
+  // ─── Entrada y Salida del Taller ───
   fechaEntradaTaller DateTime? @map("fecha_entrada_taller") @db.Date
   horaEntradaTaller  String?   @map("hora_entrada_taller") @db.VarChar(5)
   fechaSalidaTaller  DateTime? @map("fecha_salida_taller") @db.Date
   horaSalidaTaller   String?   @map("hora_salida_taller") @db.VarChar(5)
 
-  // â”€â”€ OdÃ³metro â”€â”€
+  // ─── Odómetro ───
   kilometrajeEntrada Int? @map("kilometraje_entrada")
   kilometrajeSalida  Int? @map("kilometraje_salida")
 
-  // â”€â”€ DescripciÃ³n del Servicio â”€â”€
+  // ─── Descripción del Servicio ───
   descripcionServicio String
   /// Falla reportada por el conductor (para correctivo)
   fallaReportada      String? @map("falla_reportada")
-  /// DiagnÃ³stico del tÃ©cnico
+  /// Diagnóstico del técnico
   diagnosticoTecnico  String? @map("diagnostico_tecnico")
 
-  // â”€â”€ Desglose de Costos (Taller Propio) â”€â”€
+  // ─── Desglose de Costos (Taller Propio) ───
   /// Costo de mano de obra propia (en base a Tarjeta de Mano de Obra)
   costoManoObraPropia   Decimal? @map("costo_mano_obra_propia") @db.Decimal(12, 2)
   /// Costo de mano de obra de terceros (factura del taller externo)
   costoManoObraTerceros Decimal? @map("costo_mano_obra_terceros") @db.Decimal(12, 2)
-  /// Costo total de piezas y repuestos del AlmacÃ©n de Mantenimiento
+  /// Costo total de piezas y repuestos del Almacén de Mantenimiento
   costoPiezasRepuestos  Decimal? @default(0) @map("costo_piezas_repuestos") @db.Decimal(12, 2)
   /// Otros costos (traslado, peritaje, etc.)
   costoOtros            Decimal? @default(0) @map("costo_otros") @db.Decimal(12, 2)
@@ -59,39 +59,42 @@ model OrdenMantenimiento {
   firmaJefeMantenimiento String?    @map("firma_jefe_mantenimiento") @db.VarChar(100)
   fechaFirmaTecnico      DateTime?  @map("fecha_firma_tecnico")
 
-  // â”€â”€ Estado â”€â”€
+  // ─── Estado ───
   estado        EstadoMantenimiento @default(PENDIENTE)
   observaciones String?
   creadoEn      DateTime            @default(now()) @map("creado_en")
   actualizadoEn DateTime            @updatedAt @map("actualizado_en")
 
-  // â”€â”€ Relaciones â”€â”€
-  vehiculo   Vehiculo          @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
-  tecnico    Usuario?          @relation(fields: [tecnicoId], references: [id], onDelete: Restrict)
-  repuestos  DetalleRepuesto[]
-  manoDeObra DetalleManoObra[]
+  // ─── Relaciones ───
+  vehiculo         Vehiculo          @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  tecnico          Usuario?          @relation(fields: [tecnicoId], references: [id], onDelete: Restrict)
+  sectorSolicitante SectorOrganizacional? @relation(fields: [sectorSolicitanteId], references: [id], onDelete: SetNull)
+  repuestos        DetalleRepuesto[]
+  manoDeObra       DetalleManoObra[]
 
   @@index([vehiculoId])
   @@index([vehiculoId, fechaEmision])
+  @@index([tecnicoId])
+  @@index([sectorSolicitanteId])
   @@index([tipoMantenimiento])
   @@index([tipoTaller])
   @@index([estado])
   @@index([fechaEmision])
   @@map("ordenes_mantenimiento")
-  }
+}
 
-/// Detalle de repuestos y piezas por orden de mantenimiento (AlmacÃ©n de Mantenimiento)
+/// Detalle de repuestos y piezas por orden de mantenimiento (Almacén de Mantenimiento)
 model DetalleRepuesto {
   id                   String   @id @default(uuid())
   ordenMantenimientoId String   @map("orden_mantenimiento_id")
   descripcion          String   @db.VarChar(255)
-  /// NÃºmero de parte segÃºn catÃ¡logo del fabricante
+  /// Número de parte según catálogo del fabricante
   numeroParteCatalogo  String?  @map("numero_parte_catalogo") @db.VarChar(80)
   unidadMedida         String   @default("unidad") @map("unidad_medida") @db.VarChar(30)
   cantidad             Decimal  @db.Decimal(10, 3)
   precioUnitario       Decimal  @map("precio_unitario") @db.Decimal(10, 2)
   subtotal             Decimal  @db.Decimal(12, 2)
-  /// Indica si el repuesto proviene del AlmacÃ©n de Mantenimiento propio
+  /// Indica si el repuesto proviene del Almacén de Mantenimiento propio
   esAlmacenPropio      Boolean  @default(true) @map("es_almacen_propio")
   proveedor            String?  @db.VarChar(150)
   creadoEn             DateTime @default(now()) @map("creado_en")
@@ -100,9 +103,9 @@ model DetalleRepuesto {
 
   @@index([ordenMantenimientoId])
   @@map("detalle_repuestos")
-  }
+}
 
-/// Detalle de mano de obra por tÃ©cnico â€” vinculado a Tarjeta de Mano de Obra
+/// Detalle de mano de obra por técnico — vinculado a Tarjeta de Mano de Obra
 model DetalleManoObra {
   id                   String   @id @default(uuid())
   ordenMantenimientoId String   @map("orden_mantenimiento_id")
@@ -110,7 +113,7 @@ model DetalleManoObra {
   horasTrabajadas      Decimal  @map("horas_trabajadas") @db.Decimal(6, 2)
   costoHora            Decimal  @map("costo_hora") @db.Decimal(8, 2)
   subtotal             Decimal  @db.Decimal(10, 2)
-  /// Nombre del tÃ©cnico ejecutor (puede ser de taller propio o externo)
+  /// Nombre del técnico ejecutor (puede ser de taller propio o externo)
   nombreTecnico        String?  @map("nombre_tecnico") @db.VarChar(100)
   creadoEn             DateTime @default(now()) @map("creado_en")
 
@@ -118,23 +121,19 @@ model DetalleManoObra {
 
   @@index([ordenMantenimientoId])
   @@map("detalle_mano_obra")
-  }
+}
 
 /// Tipo de mantenimiento (MA 122 02 01)
 enum TipoMantenimiento {
   PREVENTIVO
   CORRECTIVO
-
-  }
+}
 
 /// Origen del servicio de mantenimiento
-/// PROPIO: Taller propio (vinculado a Tarjeta de Mano de Obra)
-/// TERCEROS: Taller externo (vinculado a AutorizaciÃ³n de Servicio Externo)
 enum TipoTaller {
   PROPIO
   TERCEROS
-
-  }
+}
 
 /// Estado de la orden de mantenimiento
 enum EstadoMantenimiento {
@@ -142,5 +141,4 @@ enum EstadoMantenimiento {
   EN_PROCESO
   COMPLETADO
   CANCELADO
-
-  }
+}

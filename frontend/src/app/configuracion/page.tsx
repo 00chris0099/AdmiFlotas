@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { api } from "@/lib/api";
 
 export default function ConfiguracionPage() {
   const { token, user } = useAuth();
@@ -18,9 +18,8 @@ export default function ConfiguracionPage() {
   const [passwordMessage, setPasswordMessage] = useState("");
 
   useEffect(() => {
-    fetchWithAuth("/api/configuracion")
-      .then((res) => res.json())
-      .then((data) => {
+    api.getConfiguracion()
+      .then((data: any) => {
         if (data.configMap) {
           setCkvMeta(data.configMap["CKV_META"] || "3.50");
           setKrpDiario(data.configMap["KRP_DIARIO"] || "50");
@@ -29,7 +28,7 @@ export default function ConfiguracionPage() {
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.error("Error al cargar configuración:", err);
         setLoading(false);
       });
@@ -40,25 +39,16 @@ export default function ConfiguracionPage() {
     setSaving(true);
 
     try {
-      const res = await fetchWithAuth("/api/configuracion", {
-        method: "POST",
-        body: JSON.stringify({
-          CKV_META: ckvMeta,
-          KRP_DIARIO: krpDiario,
-          HUP_DIARIO: hupDiario,
-          METAS_MANTENIMIENTO: metasMantenimiento,
-        }),
+      await api.saveConfiguracion({
+        CKV_META: ckvMeta,
+        KRP_DIARIO: krpDiario,
+        HUP_DIARIO: hupDiario,
+        METAS_MANTENIMIENTO: metasMantenimiento,
       });
-
-      if (res.ok) {
-        alert("Configuraciones de la flota actualizadas con éxito.");
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al guardar configuraciones");
-      }
-    } catch (err) {
+      alert("Configuraciones de la flota actualizadas con éxito.");
+    } catch (err: any) {
       console.error(err);
-      alert("Error de red");
+      alert(err.message || "Error de red");
     } finally {
       setSaving(false);
     }
@@ -68,10 +58,7 @@ export default function ConfiguracionPage() {
     setRequestingPasswordChange(true);
     setPasswordMessage("");
     try {
-      const res = await fetchWithAuth("/api/auth/solicitar-cambio-password", {
-        method: "POST",
-      });
-      const data = await res.json();
+      const data = await api.solicitarCambioPassword();
       setPasswordMessage(data.message);
     } catch {
       setPasswordMessage("Error de conexión");

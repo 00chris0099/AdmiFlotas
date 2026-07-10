@@ -1,23 +1,23 @@
 // ============================================================
 // SAF - Sistema de Administracion de Flotas
-// Archivo: vehiculos.prisma - Esquema de Vehiculos
+// Archivo: vehiculos.prisma - Esquema de Vehiculos (Normalizado)
 // ============================================================
 
 model Vehiculo {
   id String @id @default(uuid())
 
   // Identificacion Patrimonial
-  clasePatrimonial     String            @map("clase_patrimonial") @db.VarChar(2)
-  categoriaPatrimonial CategoriaVehiculo @map("categoria_patrimonial")
-  secuencial           String            @db.VarChar(3)
-  codigoPatrimonial    String            @unique @map("codigo_patrimonial") @db.VarChar(20)
+  clasePatrimonial          String           @map("clase_patrimonial") @db.VarChar(2)
+  categoriaPatrimonialId    String?          @map("categoria_patrimonial_id")
+  secuencial                String           @db.VarChar(3)
+  codigoPatrimonial         String           @unique @map("codigo_patrimonial") @db.VarChar(20)
 
-  // Datos de Registro
-  placa           String  @unique @db.VarChar(10)
-  marca           String  @db.VarChar(80)
-  modelo          String  @db.VarChar(80)
-  anioFabricacion Int     @map("anio_fabricacion")
-  color           String? @db.VarChar(50)
+  // Datos de Registro (Normalizados)
+  placa                String  @unique @db.VarChar(10)
+  marcaId              String? @map("marca_id")
+  modeloId             String? @map("modelo_id")
+  anioFabricacion      Int     @map("anio_fabricacion")
+  colorId              String? @map("color_id")
 
   // Especificaciones del Motor y Chasis
   numeroMotor        String?         @unique @map("numero_motor") @db.VarChar(50)
@@ -25,7 +25,7 @@ model Vehiculo {
   potenciaHp         Int?            @map("potencia_hp")
   cilindraje         Decimal?        @db.Decimal(5, 2)
   numeroCilindros    Int?            @map("numero_cilindros")
-  tipoCombustible    TipoCombustible @map("tipo_combustible")
+  tipoCombustibleId  String?         @map("tipo_combustible_id")
   subtipoCombustible String?         @map("subtipo_combustible") @db.VarChar(50)
   capacidadTanqueGal Decimal?        @map("capacidad_tanque_gal") @db.Decimal(8, 2)
 
@@ -50,7 +50,7 @@ model Vehiculo {
   presionLlantaDelantera  Decimal? @map("presion_llanta_delantera") @db.Decimal(5, 2)
   presionLlantaTrasera    Decimal? @map("presion_llanta_trasera") @db.Decimal(5, 2)
 
-  // Inventario Fisico del Vehiculo
+  // Inventario Fisico del Vehiculo (EstadoFisico se mantiene como ENUM - 3 valores fijos)
   estadoPintura          EstadoFisico? @map("estado_pintura")
   estadoFaros            EstadoFisico? @map("estado_faros")
   estadoLunas            EstadoFisico? @map("estado_lunas")
@@ -69,15 +69,23 @@ model Vehiculo {
   periodicidadMantenimientoKm Int?     @default(5000) @map("periodicidad_mantenimiento_km")
   kilometrajeActual           Int?     @map("kilometraje_actual")
 
-  // Estado Operativo
-  estado        EstadoVehiculo @default(OPERATIVO)
-  fechaIngreso  DateTime       @default(now()) @map("fecha_ingreso")
-  fechaBaja     DateTime?      @map("fecha_baja")
-  motivoBaja    String?        @map("motivo_baja")
-  creadoEn      DateTime       @default(now()) @map("creado_en")
-  actualizadoEn DateTime       @updatedAt @map("actualizado_en")
+  // Estado Operativo (Normalizado)
+  estadoId          String?   @map("estado_id")
+  fechaIngreso      DateTime  @default(now()) @map("fecha_ingreso")
+  fechaBaja         DateTime? @map("fecha_baja")
+  motivoBaja        String?   @map("motivo_baja")
+  creadoEn          DateTime  @default(now()) @map("creado_en")
+  actualizadoEn     DateTime  @updatedAt @map("actualizado_en")
 
-  // Relaciones
+  // Relaciones (Normalizadas)
+  categoriaPatrimonial CategoriaVehiculo? @relation(fields: [categoriaPatrimonialId], references: [id], onDelete: Restrict)
+  marca                MarcaVehiculo?     @relation(fields: [marcaId], references: [id], onDelete: Restrict)
+  modelo               ModeloVehiculo?    @relation(fields: [modeloId], references: [id], onDelete: Restrict)
+  color                ColorVehiculo?     @relation(fields: [colorId], references: [id], onDelete: SetNull)
+  tipoCombustible      TipoCombustible?   @relation(fields: [tipoCombustibleId], references: [id], onDelete: Restrict)
+  estado               EstadoVehiculo?    @relation(fields: [estadoId], references: [id], onDelete: Restrict)
+
+  // Relaciones existentes
   movimientosDiarios      MovimientoDiario[]
   ordenesCombustible      OrdenCombustible[]
   ordenesMantenimiento    OrdenMantenimiento[]
@@ -91,35 +99,15 @@ model Vehiculo {
   lavados                 Lavado[]
 
   @@index([placa])
-  @@index([estado])
-  @@index([categoriaPatrimonial])
+  @@index([estadoId])
+  @@index([categoriaPatrimonialId])
   @@index([codigoPatrimonial])
-  @@index([tipoCombustible])
-  @@index([marca, modelo])
+  @@index([tipoCombustibleId])
+  @@index([marcaId, modeloId])
   @@map("vehiculos")
 }
 
-enum CategoriaVehiculo {
-  PASAJEROS
-  CARGA
-  ESPECIAL
-}
-
-enum TipoCombustible {
-  GASOLINA
-  DIESEL
-  GLP
-  ELECTRICO
-  HIBRIDO
-}
-
-enum EstadoVehiculo {
-  OPERATIVO
-  EN_MANTENIMIENTO
-  INOPERATIVO
-  DADO_DE_BAJA
-}
-
+// ENUMs que se MANTIENEN (domain-specific F1T02, valores fijos)
 enum EstadoFisico {
   BUENO
   REGULAR

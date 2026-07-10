@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { exportToPDF, exportToExcel } from "@/utils/exportUtils";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface KPIReport {
@@ -37,8 +37,7 @@ export default function KPIPage() {
   const [showExportModal, setShowExportModal] = useState(false);
 
   useEffect(() => {
-    fetchWithAuth("/api/control_costos/reportes-kpi")
-      .then((res) => res.json())
+    api.getKpis()
       .then((data) => {
         setReportes(data.reportes || []);
         setResumen(data.resumenFlota || { ckvMedio: 0, iuvMedio: 0, metaTasa: 0 });

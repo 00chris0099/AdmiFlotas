@@ -1,25 +1,25 @@
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: conductores.prisma â€” Esquema de Conductores y Personal
+// SAF - Sistema de Administración de Flotas
+// Archivo: conductores.prisma — Esquema de Conductores y Personal (Normalizado)
 // ============================================================
 
-/// Personal del sistema de flotas F1T02 con roles jerÃ¡rquicos segÃºn organigrama
+/// Personal del sistema de flotas F1T02 con roles jerárquicos según organigrama
 model Usuario {
   id                  String     @id @default(uuid())
   nombre              String     @db.VarChar(100)
   apellido            String     @db.VarChar(100)
   email               String     @unique @db.VarChar(150)
   password            String?    @db.VarChar(255)
-  rol                 RolUsuario @default(ADMINISTRATIVO)
+  rolId               String?    @map("rol_id")
   activo              Boolean    @default(true)
   telefono            String?    @db.VarChar(20)
-  /// NÃºmero de licencia de conducir (requerido para conductores)
+  /// Número de licencia de conducir (requerido para conductores)
   licenciaConducir    String?    @map("licencia_conducir") @db.VarChar(30)
-  /// CategorÃ­a de licencia (A, B, C, D â€” requerida para conductores)
+  /// Categoría de licencia (A, B, C, D — requerida para conductores)
   categoriaLicencia   String?    @map("categoria_licencia") @db.VarChar(5)
   /// Fecha de vencimiento de la licencia
   vencimientoLicencia DateTime?  @map("vencimiento_licencia")
-  /// Especialidad tÃ©cnica (para mecÃ¡nicos y electricistas)
+  /// Especialidad técnica (para mecánicos y electricistas)
   especialidad        String?    @db.VarChar(100)
   ultimoAcceso        DateTime?  @map("ultimo_acceso")
   creadoEn            DateTime   @default(now()) @map("creado_en")
@@ -28,6 +28,7 @@ model Usuario {
   intentosFallidos    Int        @default(0) @map("intentos_fallidos")
 
   // Relaciones
+  rol                  Rol?       @relation(fields: [rolId], references: [id], onDelete: Restrict)
   permisos             PermisoUsuario[]
   sesionesAuth         SesionAuth[]
   auditoria            Auditoria[]
@@ -40,41 +41,6 @@ model Usuario {
   programaciones       ProgramacionRuta[]
 
   @@map("usuarios")
-  @@index([rol])
+  @@index([rolId])
   @@index([activo])
-  }
-
-/// Roles jerárquicos del organigrama F1T02 (13 roles)
-/// JEFE_PROCESO: máxima autoridad del proceso de gestión de flotas
-///
-/// Equipo de Operación:
-///   JEFE_OPERACION, ENCARGADO_GARAJE, INSPECTOR, CONTROLADOR_TRANSITO, ANALISTA, CONDUCTOR
-///
-/// Equipo de Mantenimiento:
-///   JEFE_MANTENIMIENTO, ENCARGADO_TALLER, MECANICO, ELECTRICISTA, REENCAUCHADOR, LAVADOR
-///
-/// Apoyo Administrativo:
-///   ADMINISTRATIVO
-enum RolUsuario {
-  // General
-  JEFE_PROCESO
-
-  // Equipo de Operación
-  JEFE_OPERACION
-  ENCARGADO_GARAJE
-  INSPECTOR
-  CONTROLADOR_TRANSITO
-  ANALISTA
-  CONDUCTOR
-
-  // Equipo de Mantenimiento
-  JEFE_MANTENIMIENTO
-  ENCARGADO_TALLER
-  MECANICO
-  ELECTRICISTA
-  REENCAUCHADOR
-  LAVADOR
-
-  // Apoyo Administrativo
-  ADMINISTRATIVO
 }

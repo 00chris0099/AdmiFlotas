@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface Conductor {
@@ -36,18 +36,15 @@ export default function ConductoresPage() {
   const cargarConductores = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/conductores");
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        // Formatear las fechas antes de almacenarlas en el estado
-        const formatted = data.map((c: any) => ({
-          ...c,
-          vencimientoLicencia: c.vencimientoLicencia 
-            ? c.vencimientoLicencia.split("T")[0]
-            : "N/D",
-        }));
-        setConductores(formatted);
-      }
+      const data = await api.getUsuarios();
+      const items = Array.isArray(data) ? data : data?.usuarios ?? [];
+      const formatted = items.map((c: any) => ({
+        ...c,
+        vencimientoLicencia: c.vencimientoLicencia 
+          ? c.vencimientoLicencia.split("T")[0]
+          : "N/D",
+      }));
+      setConductores(formatted);
     } catch (err) {
       console.error("Error al cargar conductores:", err);
     } finally {
@@ -68,37 +65,28 @@ export default function ConductoresPage() {
 
     try {
       setIsSubmitting(true);
-      const res = await fetchWithAuth("/api/conductores", {
-        method: "POST",
-        body: JSON.stringify({
-          nombre,
-          apellido,
-          email,
-          telefono: telefono || undefined,
-          licenciaConducir,
-          categoriaLicencia,
-          vencimientoLicencia,
-        }),
+      await api.createUsuario({
+        nombre,
+        apellido,
+        email,
+        telefono: telefono || undefined,
+        licenciaConducir,
+        categoriaLicencia,
+        vencimientoLicencia,
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        alert("¡Conductor registrado con éxito!");
-        setModalOpen(false);
-        // Reset form
-        setNombre("");
-        setApellido("");
-        setEmail("");
-        setTelefono("");
-        setLicenciaConducir("");
-        setCategoriaLicencia("AI");
-        setVencimientoLicencia("");
-        cargarConductores();
-      } else {
-        alert("Error: " + data.error);
-      }
+      alert("¡Conductor registrado con éxito!");
+      setModalOpen(false);
+      setNombre("");
+      setApellido("");
+      setEmail("");
+      setTelefono("");
+      setLicenciaConducir("");
+      setCategoriaLicencia("AI");
+      setVencimientoLicencia("");
+      cargarConductores();
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -154,7 +142,7 @@ export default function ConductoresPage() {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-12 text-slate-450 text-sm">Cargando conductores de Supabase...</div>
+        <div className="text-center py-12 text-slate-450 text-sm">Cargando conductores...</div>
       ) : (
         <DataTable
           data={conductores}

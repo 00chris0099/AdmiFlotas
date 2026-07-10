@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
-import { generateNumeroOrden } from "@/lib/orderGenerator";
 import Icon from "@/components/ui/Icon";
 import { exportToExcel } from "@/utils/exportUtils";
 import {
@@ -109,15 +108,18 @@ export default function MovimientosPage() {
 
   const cargarCatalogos = async () => {
     try {
-      const [resVeh, resCond, resRutas] = await Promise.all([
-        fetchWithAuth("/api/vehiculos"),
-        fetchWithAuth("/api/conductores"),
-        fetchWithAuth("/api/rutas").catch(() => ({ ok: false, json: () => [] })),
+      const [dataVeh, dataCond] = await Promise.all([
+        api.getVehiculos(),
+        api.getUsuarios(),
       ]);
-      const dataVeh = await resVeh.json();
-      const dataCond = await resCond.json();
-      const dataRutas = resRutas.ok ? await resRutas.json() : [];
-      
+
+      let dataRutas: Ruta[] = [];
+      try {
+        dataRutas = await api.getRutas() || [];
+      } catch {
+        dataRutas = [];
+      }
+
       if (Array.isArray(dataVeh)) {
         setVehiculos(dataVeh);
         if (dataVeh.length > 0) setVehiculoId(dataVeh[0].id);
@@ -137,8 +139,7 @@ export default function MovimientosPage() {
   const cargarMovimientos = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/movimientos_diarios");
-      const data = await res.json();
+      const data = await api.getMovimientos();
       if (Array.isArray(data)) {
         setMovimientos(data);
       }
@@ -171,28 +172,19 @@ export default function MovimientosPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetchWithAuth("/api/movimientos_diarios", {
-        method: "PATCH",
-        body: JSON.stringify({
-          id: movimientoACerrar.id,
-          kilometrajeLlegada: parseInt(kmLlegada),
-          horaLlegada,
-          horasUtilizacion,
-          firmaConductor: firmaConductorInput || undefined,
-          firmaInspector: firmaInspectorInput || undefined,
-          firmaEncargadoGaraje: firmaEncargadoGarajeInput || undefined,
-        }),
+      await api.updateMovimiento(movimientoACerrar.id, {
+        kilometrajeLlegada: parseInt(kmLlegada),
+        horaLlegada,
+        horasUtilizacion,
+        firmaConductor: firmaConductorInput || undefined,
+        firmaInspector: firmaInspectorInput || undefined,
+        firmaEncargadoGaraje: firmaEncargadoGarajeInput || undefined,
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setCierreModalOpen(false);
-        setMovimientoACerrar(null);
-        cargarMovimientos();
-        alert("Movimiento completado con éxito!");
-      } else {
-        alert("Error: " + data.error);
-      }
+      setCierreModalOpen(false);
+      setMovimientoACerrar(null);
+      cargarMovimientos();
+      alert("Movimiento completado con éxito!");
     } catch (err: any) {
       alert("Error de red: " + err.message);
     } finally {
@@ -206,42 +198,34 @@ export default function MovimientosPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetchWithAuth("/api/movimientos_diarios", {
-        method: "POST",
-        body: JSON.stringify({
-          vehiculoId,
-          conductorId,
-          fecha: new Date().toISOString(),
-          sectorSolicitante,
-          destino,
-          kilometrajeSalida: parseInt(kilometrajeSalida),
-          horaSalida,
-          documentos,
-          aceiteMotor,
-          agua,
-          bateria,
-          frenos,
-          embrague,
-          fajas,
-          faros,
-          lunas,
-          plumillas,
-          llantas,
-          espejos,
-          herramientas,
-          extintorBotiquin,
-          manchasFugas,
-        }),
+      await api.createMovimiento({
+        vehiculoId,
+        conductorId,
+        fecha: new Date().toISOString(),
+        sectorSolicitante,
+        destino,
+        kilometrajeSalida: parseInt(kilometrajeSalida),
+        horaSalida,
+        documentos,
+        aceiteMotor,
+        agua,
+        bateria,
+        frenos,
+        embrague,
+        fajas,
+        faros,
+        lunas,
+        plumillas,
+        llantas,
+        espejos,
+        herramientas,
+        extintorBotiquin,
+        manchasFugas,
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        cargarMovimientos();
-        alert("¡Movimiento registrado con éxito!");
-      } else {
-        alert("Error: " + data.error);
-      }
+      setModalOpen(false);
+      cargarMovimientos();
+      alert("¡Movimiento registrado con éxito!");
     } catch (err: any) {
       alert("Error de red: " + err.message);
     } finally {
@@ -376,7 +360,7 @@ export default function MovimientosPage() {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-12 text-slate-450 text-sm">Cargando movimientos reales de Supabase...</div>
+        <div className="text-center py-12 text-slate-450 text-sm">Cargando movimientos diarios...</div>
       ) : (
         <DataTable
           data={movimientos}
@@ -683,7 +667,7 @@ export default function MovimientosPage() {
                 className="w-full py-3 bg-indigo-650 hover:bg-indigo-600 disabled:bg-slate-800 text-white font-bold rounded-xl transition duration-150 shadow-lg text-xs cursor-pointer"
               >
                 {isSubmitting 
-                  ? "Guardando en Supabase..." 
+                  ? "Guardando..." 
                   : isLicenciaVencida 
                     ? "Bloqueado: Conductor Inhabilitado" 
                     : "Confirmar y Iniciar Viaje"}

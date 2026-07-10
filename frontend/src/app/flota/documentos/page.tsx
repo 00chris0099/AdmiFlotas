@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 
 interface DocumentoVehiculo {
   id: string;
@@ -81,15 +81,10 @@ export default function DocumentosPage() {
   const cargarDatos = async () => {
     try {
       setIsLoading(true);
-      const url = filtroVehiculo
-        ? `/api/flota/documentos?vehiculoId=${filtroVehiculo}`
-        : "/api/flota/documentos";
-      const [resDoc, resVeh] = await Promise.all([
-        fetchWithAuth(url),
-        fetchWithAuth("/api/vehiculos"),
+      const [dataDoc, dataVeh] = await Promise.all([
+        api.getDocumentos(filtroVehiculo ? { vehiculoId: filtroVehiculo } : undefined),
+        api.getVehiculos(),
       ]);
-      const dataDoc = await resDoc.json();
-      const dataVeh = await resVeh.json();
 
       if (Array.isArray(dataDoc)) setDocumentos(dataDoc);
       if (Array.isArray(dataVeh)) {
@@ -125,29 +120,22 @@ export default function DocumentosPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetchWithAuth("/api/flota/documentos", {
-        method: "POST",
-        body: JSON.stringify({
-          vehiculoId,
-          tipoDocumento,
-          numeroDocumento,
-          fechaEmision,
-          fechaVencimiento: fechaVencimiento || null,
-          entidadEmisora: entidadEmisora || null,
-          observaciones: observaciones || null,
-        }),
+      await api.createDocumento({
+        vehiculoId,
+        tipoDocumento,
+        numeroDocumento,
+        fechaEmision,
+        fechaVencimiento: fechaVencimiento || null,
+        entidadEmisora: entidadEmisora || null,
+        observaciones: observaciones || null,
       });
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        resetForm();
-        cargarDatos();
-        alert("Documento registrado con éxito");
-      } else {
-        alert("Error: " + (data.error || data.message));
-      }
+
+      setModalOpen(false);
+      resetForm();
+      cargarDatos();
+      alert("Documento registrado con éxito");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -157,18 +145,11 @@ export default function DocumentosPage() {
     if (!confirm("¿Está seguro de eliminar este documento?")) return;
 
     try {
-      const res = await fetchWithAuth(`/api/flota/documentos?id=${id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (res.ok) {
-        cargarDatos();
-        alert("Documento eliminado correctamente");
-      } else {
-        alert("Error: " + (data.error || data.message));
-      }
+      await api.deleteDocumento(id);
+      cargarDatos();
+      alert("Documento eliminado correctamente");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     }
   };
 

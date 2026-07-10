@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 
 interface Repuesto {
   id: string;
@@ -58,8 +58,7 @@ export default function AlmacenPage() {
   const cargarRepuestos = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/mantenimiento/almacen");
-      const data = await res.json();
+      const data = await api.getRepuestos();
       if (Array.isArray(data)) {
         setRepuestos(data);
       }
@@ -72,11 +71,7 @@ export default function AlmacenPage() {
 
   const cargarMovimientos = async (repuestoId?: string) => {
     try {
-      const url = repuestoId
-        ? `/api/mantenimiento/almacen/movimientos?repuestoId=${repuestoId}`
-        : "/api/mantenimiento/almacen/movimientos";
-      const res = await fetchWithAuth(url);
-      const data = await res.json();
+      const data = await api.getMovimientosAlmacen(repuestoId);
       if (Array.isArray(data)) {
         setMovimientos(data);
       }
@@ -106,40 +101,24 @@ export default function AlmacenPage() {
 
       if (editingRepuesto) {
         payload.id = editingRepuesto.id;
-        const res = await fetchWithAuth("/api/mantenimiento/almacen", {
-          method: "PUT",
-          body: JSON.stringify(payload),
-        });
-        if (res.ok) {
-          setModalRepuestoOpen(false);
-          setEditingRepuesto(null);
-          cargarRepuestos();
-          alert("Repuesto actualizado con éxito");
-        } else {
-          const data = await res.json();
-          alert("Error: " + data.error);
-        }
+        const data = await api.updateRepuesto(editingRepuesto.id, payload);
+        setModalRepuestoOpen(false);
+        setEditingRepuesto(null);
+        cargarRepuestos();
+        alert("Repuesto actualizado con éxito");
       } else {
         payload.stockActual = 0;
-        const res = await fetchWithAuth("/api/mantenimiento/almacen", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-        if (res.ok) {
-          setModalRepuestoOpen(false);
-          setCodigo("");
-          setDescripcion("");
-          setPrecioUnitario("");
-          setStockMinimo("0");
-          cargarRepuestos();
-          alert("Repuesto registrado con éxito");
-        } else {
-          const data = await res.json();
-          alert("Error: " + data.error);
-        }
+        const data = await api.createRepuesto(payload);
+        setModalRepuestoOpen(false);
+        setCodigo("");
+        setDescripcion("");
+        setPrecioUnitario("");
+        setStockMinimo("0");
+        cargarRepuestos();
+        alert("Repuesto registrado con éxito");
       }
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -150,34 +129,26 @@ export default function AlmacenPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetchWithAuth("/api/mantenimiento/almacen/movimientos", {
-        method: "POST",
-        body: JSON.stringify({
-          repuestoId: movRepuestoId,
-          tipoMovimiento: movTipo,
-          cantidad: parseInt(movCantidad),
-          responsable: movResponsable,
-          ordenMantenimientoId: movOrdenId || null,
-          observaciones: movObservaciones || null,
-        }),
+      const data = await api.createMovimientoAlmacen({
+        repuestoId: movRepuestoId,
+        tipoMovimiento: movTipo,
+        cantidad: parseInt(movCantidad),
+        responsable: movResponsable,
+        ordenMantenimientoId: movOrdenId || null,
+        observaciones: movObservaciones || null,
       });
 
-      if (res.ok) {
-        setModalMovimientoOpen(false);
-        setMovRepuestoId("");
-        setMovCantidad("");
-        setMovResponsable("");
-        setMovOrdenId("");
-        setMovObservaciones("");
-        cargarRepuestos();
-        cargarMovimientos();
-        alert("Movimiento registrado con éxito");
-      } else {
-        const data = await res.json();
-        alert("Error: " + data.error);
-      }
+      setModalMovimientoOpen(false);
+      setMovRepuestoId("");
+      setMovCantidad("");
+      setMovResponsable("");
+      setMovOrdenId("");
+      setMovObservaciones("");
+      cargarRepuestos();
+      cargarMovimientos();
+      alert("Movimiento registrado con éxito");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -187,18 +158,11 @@ export default function AlmacenPage() {
     if (!confirm("¿Está seguro de eliminar este repuesto?")) return;
 
     try {
-      const res = await fetchWithAuth(`/api/mantenimiento/almacen?id=${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        cargarRepuestos();
-        alert("Repuesto eliminado");
-      } else {
-        const data = await res.json();
-        alert("Error: " + data.error);
-      }
-    } catch (err) {
-      alert("Error de red");
+      await api.deleteRepuesto(id);
+      cargarRepuestos();
+      alert("Repuesto eliminado");
+    } catch (err: any) {
+      alert("Error: " + err.message);
     }
   };
 

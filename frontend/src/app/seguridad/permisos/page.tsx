@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { api } from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface PermisoUsuario {
@@ -75,9 +75,7 @@ export default function PermisosPage() {
   const cargarDatos = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/admin/permisos");
-      const data = await res.json();
-
+      const data = await api.getPermisos();
       if (data.permisos && data.usuarios) {
         setPermisos(data.permisos);
         setUsuarios(data.usuarios);
@@ -115,35 +113,17 @@ export default function PermisosPage() {
 
     try {
       if (assigned) {
-        const res = await fetchWithAuth(
-          `/api/admin/permisos?usuarioId=${selectedUserId}&permisoId=${permiso.id}`,
-          { method: "DELETE" }
-        );
-        const data = await res.json();
-
-        if (res.ok) {
-          setMessage({ type: "success", text: data.message });
-          await cargarDatos();
-        } else {
-          setMessage({ type: "error", text: data.message || "Error al remover permiso" });
-        }
+        const data = await api.removePermiso(selectedUserId, permiso.id);
+        setMessage({ type: "success", text: data.message });
+        await cargarDatos();
       } else {
-        const res = await fetchWithAuth("/api/admin/permisos", {
-          method: "POST",
-          body: JSON.stringify({ usuarioId: selectedUserId, permisoId: permiso.id }),
-        });
-        const data = await res.json();
-
-        if (res.ok) {
-          setMessage({ type: "success", text: data.message });
-          await cargarDatos();
-        } else {
-          setMessage({ type: "error", text: data.message || "Error al asignar permiso" });
-        }
+        const data = await api.assignPermiso(selectedUserId, permiso.id);
+        setMessage({ type: "success", text: data.message });
+        await cargarDatos();
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error al modificar permiso:", err);
-      setMessage({ type: "error", text: "Error de conexión" });
+      setMessage({ type: "error", text: err.message || "Error de conexión" });
     } finally {
       setIsSaving(false);
     }

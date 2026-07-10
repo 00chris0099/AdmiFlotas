@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 
 interface ChecklistItem {
   id: string;
@@ -24,8 +24,7 @@ export default function ChecklistPage() {
   const cargarChecklists = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/movimientos_diarios/checklist");
-      const data = await res.json();
+      const data = await api.getChecklists();
       if (Array.isArray(data)) {
         setChecklists(data);
       }
@@ -82,7 +81,7 @@ export default function ChecklistPage() {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-12 text-slate-400 text-sm">Cargando checklists reales de Supabase...</div>
+        <div className="text-center py-12 text-slate-400 text-sm">Cargando checklists...</div>
       ) : (
         <DataTable
           data={checklists}

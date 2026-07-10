@@ -1,5 +1,3 @@
-// File removed: content migrated to separate schema files
-
 // ============================================================
 // SAF - Sistema de Administracion de Flotas
 // Manual F1T02 — Procedimientos Basicos de Operacion y Control
@@ -9,7 +7,7 @@
 generator client {
   provider        = "prisma-client-js"
   output          = "../../generated/prisma"
-  previewFeatures = ["views", "prismaSchemaFolder"]
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -17,35 +15,36 @@ datasource db {
 }
 
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: conductores.prisma â€” Esquema de Conductores y Personal
+// SAF - Sistema de Administración de Flotas
+// Archivo: conductores.prisma — Esquema de Conductores y Personal (Normalizado)
 // ============================================================
 
-/// Personal del sistema de flotas F1T02 con roles jerÃ¡rquicos segÃºn organigrama
+/// Personal del sistema de flotas F1T02 con roles jerárquicos según organigrama
 model Usuario {
-  id                  String     @id @default(uuid())
-  nombre              String     @db.VarChar(100)
-  apellido            String     @db.VarChar(100)
-  email               String     @unique @db.VarChar(150)
-  password            String?    @db.VarChar(255)
-  rol                 RolUsuario @default(ADMINISTRATIVO)
-  activo              Boolean    @default(true)
-  telefono            String?    @db.VarChar(20)
-  /// NÃºmero de licencia de conducir (requerido para conductores)
-  licenciaConducir    String?    @map("licencia_conducir") @db.VarChar(30)
-  /// CategorÃ­a de licencia (A, B, C, D â€” requerida para conductores)
-  categoriaLicencia   String?    @map("categoria_licencia") @db.VarChar(5)
+  id                  String    @id @default(uuid())
+  nombre              String    @db.VarChar(100)
+  apellido            String    @db.VarChar(100)
+  email               String    @unique @db.VarChar(150)
+  password            String?   @db.VarChar(255)
+  rolId               String?   @map("rol_id")
+  activo              Boolean   @default(true)
+  telefono            String?   @db.VarChar(20)
+  /// Número de licencia de conducir (requerido para conductores)
+  licenciaConducir    String?   @map("licencia_conducir") @db.VarChar(30)
+  /// Categoría de licencia (A, B, C, D — requerida para conductores)
+  categoriaLicencia   String?   @map("categoria_licencia") @db.VarChar(5)
   /// Fecha de vencimiento de la licencia
-  vencimientoLicencia DateTime?  @map("vencimiento_licencia")
-  /// Especialidad tÃ©cnica (para mecÃ¡nicos y electricistas)
-  especialidad        String?    @db.VarChar(100)
-  ultimoAcceso        DateTime?  @map("ultimo_acceso")
-  creadoEn            DateTime   @default(now()) @map("creado_en")
-  actualizadoEn       DateTime   @updatedAt @map("actualizado_en")
-  bloqueadoHasta      DateTime?  @map("bloqueado_hasta")
-  intentosFallidos    Int        @default(0) @map("intentos_fallidos")
+  vencimientoLicencia DateTime? @map("vencimiento_licencia")
+  /// Especialidad técnica (para mecánicos y electricistas)
+  especialidad        String?   @db.VarChar(100)
+  ultimoAcceso        DateTime? @map("ultimo_acceso")
+  creadoEn            DateTime  @default(now()) @map("creado_en")
+  actualizadoEn       DateTime  @updatedAt @map("actualizado_en")
+  bloqueadoHasta      DateTime? @map("bloqueado_hasta")
+  intentosFallidos    Int       @default(0) @map("intentos_fallidos")
 
   // Relaciones
+  rol                  Rol?                 @relation(fields: [rolId], references: [id], onDelete: Restrict)
   permisos             PermisoUsuario[]
   sesionesAuth         SesionAuth[]
   auditoria            Auditoria[]
@@ -57,44 +56,9 @@ model Usuario {
   asignaciones         AsignacionVehiculo[]
   programaciones       ProgramacionRuta[]
 
-  @@index([rol])
+  @@index([rolId])
   @@index([activo])
   @@map("usuarios")
-}
-
-/// Roles jerárquicos del organigrama F1T02 (13 roles)
-/// JEFE_PROCESO: máxima autoridad del proceso de gestión de flotas
-///
-/// Equipo de Operación:
-///   JEFE_OPERACION, ENCARGADO_GARAJE, INSPECTOR, CONTROLADOR_TRANSITO, ANALISTA, CONDUCTOR
-///
-/// Equipo de Mantenimiento:
-///   JEFE_MANTENIMIENTO, ENCARGADO_TALLER, MECANICO, ELECTRICISTA, REENCAUCHADOR, LAVADOR
-///
-/// Apoyo Administrativo:
-///   ADMINISTRATIVO
-enum RolUsuario {
-  // General
-  JEFE_PROCESO
-
-  // Equipo de Operación
-  JEFE_OPERACION
-  ENCARGADO_GARAJE
-  INSPECTOR
-  CONTROLADOR_TRANSITO
-  ANALISTA
-  CONDUCTOR
-
-  // Equipo de Mantenimiento
-  JEFE_MANTENIMIENTO
-  ENCARGADO_TALLER
-  MECANICO
-  ELECTRICISTA
-  REENCAUCHADOR
-  LAVADOR
-
-  // Apoyo Administrativo
-  ADMINISTRATIVO
 }
 
 // ============================================================
@@ -116,37 +80,37 @@ model ConfiguracionFlota {
 }
 
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: control_combustible.prisma â€” Esquema de Control de Combustible
+// SAF - Sistema de Administración de Flotas
+// Archivo: control_combustible.prisma — Esquema de Control de Combustible (Normalizado)
 // ============================================================
 
-/// Orden de abastecimiento de combustible y lubricantes â€” MA 122 01 02
+/// Orden de abastecimiento de combustible y lubricantes — MA 122 01 02
 model OrdenCombustible {
-  id                 String               @id @default(uuid())
-  /// NÃºmero de orden correlativo
-  numeroOrden        String               @unique @map("numero_orden") @db.VarChar(20)
-  fecha              DateTime             @db.Date
-  vehiculoId         String               @map("vehiculo_id")
-  conductorId        String               @map("conductor_id")
-  sectorSolicitante  String               @map("sector_solicitante") @db.VarChar(150)
-  tipoCombustible    TipoCombustibleOrden @map("tipo_combustible")
+  id                  String               @id @default(uuid())
+  /// Número de orden correlativo
+  numeroOrden         String               @unique @map("numero_orden") @db.VarChar(20)
+  fecha               DateTime             @db.Date
+  vehiculoId          String               @map("vehiculo_id")
+  conductorId         String               @map("conductor_id")
+  sectorSolicitanteId String?              @map("sector_solicitante_id")
+  tipoCombustible     TipoCombustibleOrden @map("tipo_combustible")
   /// Subtipo de combustible (ej. DIESEL_UBA, GASOLINA_95)
-  subtipoCombustible String?              @map("subtipo_combustible") @db.VarChar(50)
+  subtipoCombustible  String?              @map("subtipo_combustible") @db.VarChar(50)
 
-  // â”€â”€ Combustible â”€â”€
+  // ─── Combustible ───
   cantidadGalones  Decimal? @map("cantidad_galones") @db.Decimal(8, 2)
   costoGalon       Decimal? @map("costo_galon") @db.Decimal(8, 3)
   costoCombustible Decimal? @map("costo_combustible") @db.Decimal(10, 2)
 
-  // â”€â”€ Lubricante â€” Aceite de Motor (registrado por separado) â”€â”€
-  /// Indica si esta orden incluye cambio/adiciÃ³n de aceite de motor
+  // ─── Lubricante — Aceite de Motor (registrado por separado) ───
+  /// Indica si esta orden incluye cambio/adición de aceite de motor
   incluyeAceiteMotor    Boolean  @default(false) @map("incluye_aceite_motor")
   cantidadAceiteMotorLt Decimal? @map("cantidad_aceite_motor_lt") @db.Decimal(6, 2)
   marcaAceiteMotor      String?  @map("marca_aceite_motor") @db.VarChar(80)
   viscosidadAceiteMotor String?  @map("viscosidad_aceite_motor") @db.VarChar(20)
   costoAceiteMotor      Decimal? @map("costo_aceite_motor") @db.Decimal(10, 2)
 
-  // â”€â”€ Lubricante â€” Aceite de Caja/TransmisiÃ³n (registrado por separado) â”€â”€
+  // ─── Lubricante — Aceite de Caja/Transmisión (registrado por separado) ───
   /// Indica si esta orden incluye cambio de aceite de caja
   incluyeAceiteCaja    Boolean  @default(false) @map("incluye_aceite_caja")
   cantidadAceiteCajaLt Decimal? @map("cantidad_aceite_caja_lt") @db.Decimal(6, 2)
@@ -154,44 +118,48 @@ model OrdenCombustible {
   viscosidadAceiteCaja String?  @map("viscosidad_aceite_caja") @db.VarChar(20)
   costoAceiteCaja      Decimal? @map("costo_aceite_caja") @db.Decimal(10, 2)
 
-  // â”€â”€ Costo Total de la Orden â”€â”€
+  // ─── Costo Total de la Orden ───
   costoTotal Decimal @default(0) @map("costo_total") @db.Decimal(12, 2)
 
-  // â”€â”€ OdÃ³metro al momento del abastecimiento â”€â”€
+  // ─── Odómetro al momento del abastecimiento ───
   kilometrajeActual Int @map("kilometraje_actual")
 
-  // â”€â”€ Datos del Servicentro Acreditado â”€â”€
-  nombreServiccentro       String? @map("nombre_serviccentro") @db.VarChar(150)
-  direccionServiccentro    String? @map("direccion_serviccentro")
-  /// NÃºmero de ticket o factura del servicentro
+  // ─── Datos del Servicentro Acreditado (Normalizado) ───
+  centroServicioId         String? @map("centro_servicio_id")
+  /// Número de ticket o factura del servicentro
   numeroTicketServiccentro String? @map("numero_ticket_serviccentro") @db.VarChar(50)
   /// Nombre del responsable que firma/sella en el servicentro
   responsableServiccentro  String? @map("responsable_serviccentro") @db.VarChar(100)
-  /// Indica si se recibiÃ³ el sello del servicentro
+  /// Indica si se recibió el sello del servicentro
   selloServiccentro        Boolean @default(false) @map("sello_serviccentro")
 
-  // â"€â"€ Solicitante â"€â"€
-  /// Localidad donde estÃ¡ ubicado el sector del solicitante
+  // ─── Solicitante ───
+  /// Localidad donde está ubicado el sector del solicitante
   localidadSolicitante String? @map("localidad_solicitante") @db.VarChar(150)
 
-  // â"€â"€ Firmas (MA 122 01 02 - F1T02) â"€â"€
+  // ─── Firmas (MA 122 01 02 - F1T02) ───
   /// Firma del Encargado del Garaje
   firmaEncargadoGaraje String? @map("firma_encargado_garaje") @db.VarChar(100)
-  /// Firma del Conductor del vehÃ­culo
+  /// Firma del Conductor del vehículo
   firmaConductor       String? @map("firma_conductor") @db.VarChar(100)
   /// Firma del Representante del Servicentro
-  firmaServicentro     String? @map("firma_servicentro") @db.VarChar(100)
+  firmaServiccentro    String? @map("firma_servicentro") @db.VarChar(100)
 
   observaciones String?
   creadoEn      DateTime @default(now()) @map("creado_en")
   actualizadoEn DateTime @updatedAt @map("actualizado_en")
 
-  vehiculo  Vehiculo @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
-  conductor Usuario  @relation(fields: [conductorId], references: [id], onDelete: Restrict)
+  // Relaciones
+  vehiculo          Vehiculo              @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  conductor         Usuario               @relation(fields: [conductorId], references: [id], onDelete: Restrict)
+  sectorSolicitante SectorOrganizacional? @relation(fields: [sectorSolicitanteId], references: [id], onDelete: SetNull)
+  centroServicio    CentroServicio?       @relation(fields: [centroServicioId], references: [id], onDelete: SetNull)
 
   @@index([vehiculoId])
   @@index([vehiculoId, fecha])
   @@index([conductorId])
+  @@index([sectorSolicitanteId])
+  @@index([centroServicioId])
   @@index([fecha])
   @@index([numeroOrden])
   @@map("ordenes_combustible")
@@ -274,42 +242,48 @@ view ResumenKpisVehiculo {
 }
 
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: control_llantas.prisma â€” Esquema de Control de Llantas
+// SAF - Sistema de Administración de Flotas
+// Archivo: control_llantas.prisma — Esquema de Control de Llantas (Normalizado)
 // ============================================================
 
-/// Control individualizado de llantas: cÃ³digo EPS, posiciÃ³n, kilometraje acumulado
+/// Control individualizado de llantas: código EPS, posición, kilometraje acumulado
 model ControlLlanta {
   id                     String       @id @default(uuid())
-  /// CÃ³digo Ãºnico de la llanta (NÃºmero EPS del fabricante)
+  /// Código único de la llanta (Número EPS del fabricante)
   codigoEps              String       @unique @map("codigo_eps") @db.VarChar(50)
   vehiculoId             String       @map("vehiculo_id")
-  fabricante             String       @db.VarChar(80)
-  dimension              String       @db.VarChar(30)
+  fabricanteId           String?      @map("fabricante_id")
+  dimensionId            String?      @map("dimension_id")
   modeloLlanta           String       @map("modelo_llanta") @db.VarChar(80)
-  /// PosiciÃ³n en el vehÃ­culo segÃºn diagrama del manual (1â€“7)
+  /// Posición en el vehículo según diagrama del manual (1–7)
   posicionVehiculo       Int          @map("posicion_vehiculo")
-  /// DescripciÃ³n textual de la posiciÃ³n (ej. "Delantera Izquierda")
+  /// Descripción textual de la posición (ej. "Delantera Izquierda")
   descripcionPosicion    String?      @map("descripcion_posicion") @db.VarChar(50)
   estado                 EstadoLlanta @default(EN_USO)
   fechaInstalacion       DateTime     @map("fecha_instalacion")
   fechaRetiro            DateTime?    @map("fecha_retiro")
-  /// Kilometraje del vehÃ­culo al momento de instalar la llanta
+  /// Kilometraje del vehículo al momento de instalar la llanta
   kilometrajeInstalacion Int          @map("kilometraje_instalacion")
-  /// Kilometraje del vehÃ­culo al momento de retirar la llanta
+  /// Kilometraje del vehículo al momento de retirar la llanta
   kilometrajeRetiro      Int?         @map("kilometraje_retiro")
   /// Km recorridos con esta llanta = kmRetiro - kmInstalacion
   kilometrajeAcumulado   Int          @default(0) @map("kilometraje_acumulado")
-  /// NÃºmero de veces que ha sido reencauchada
+  /// Número de veces que ha sido reencauchada
   vecesReencauchada      Int          @default(0) @map("veces_reencauchada")
-  /// Costo de adquisiciÃ³n de la llanta
+  /// Costo de adquisición de la llanta
   costoAdquisicion       Decimal?     @map("costo_adquisicion") @db.Decimal(10, 2)
   observaciones          String?
   creadoEn               DateTime     @default(now()) @map("creado_en")
   actualizadoEn          DateTime     @updatedAt @map("actualizado_en")
-  vehiculo               Vehiculo     @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+
+  // Relaciones
+  vehiculo   Vehiculo          @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  fabricante FabricanteLlanta? @relation(fields: [fabricanteId], references: [id], onDelete: Restrict)
+  dimension  DimensionLlanta?  @relation(fields: [dimensionId], references: [id], onDelete: Restrict)
 
   @@index([vehiculoId])
+  @@index([fabricanteId])
+  @@index([dimensionId])
   @@index([estado])
   @@index([codigoEps])
   @@index([fechaInstalacion])
@@ -317,7 +291,7 @@ model ControlLlanta {
   @@map("control_llantas")
 }
 
-/// Estado de una llanta segÃºn su ciclo de vida
+/// Estado de una llanta según su ciclo de vida
 enum EstadoLlanta {
   EN_USO
   EN_ALMACEN
@@ -326,7 +300,7 @@ enum EstadoLlanta {
   DADA_DE_BAJA
 }
 
-/// Vista analÃ­tica de desempeÃ±o y coste por kilÃ³metro de neumÃ¡ticos
+/// Vista analítica de desempeño y coste por kilómetro de neumáticos
 view DesempenoLlantas {
   id                   String   @unique
   codigoEps            String   @map("codigo_eps")
@@ -343,54 +317,54 @@ view DesempenoLlantas {
 }
 
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: control_mantenimiento.prisma â€” Esquema de Control de Mantenimiento
+// SAF - Sistema de Administración de Flotas
+// Archivo: control_mantenimiento.prisma — Esquema de Control de Mantenimiento (Normalizado)
 // ============================================================
 
-/// Orden de mantenimiento preventivo o correctivo â€” MA 122 02 01
+/// Orden de mantenimiento preventivo o correctivo — MA 122 02 01
 model OrdenMantenimiento {
-  id                String            @id @default(uuid())
-  /// NÃºmero de orden correlativo de mantenimiento
-  numeroOrden       String            @unique @map("numero_orden") @db.VarChar(20)
-  fechaEmision      DateTime          @map("fecha_emision") @db.Date
-  vehiculoId        String            @map("vehiculo_id")
-  /// TÃ©cnico responsable de ejecutar el mantenimiento
-  tecnicoId         String?           @map("tecnico_id")
-  sectorSolicitante String            @map("sector_solicitante") @db.VarChar(150)
-  tipoMantenimiento TipoMantenimiento @map("tipo_mantenimiento")
+  id                  String            @id @default(uuid())
+  /// Número de orden correlativo de mantenimiento
+  numeroOrden         String            @unique @map("numero_orden") @db.VarChar(20)
+  fechaEmision        DateTime          @map("fecha_emision") @db.Date
+  vehiculoId          String            @map("vehiculo_id")
+  /// Técnico responsable de ejecutar el mantenimiento
+  tecnicoId           String?           @map("tecnico_id")
+  sectorSolicitanteId String?           @map("sector_solicitante_id")
+  tipoMantenimiento   TipoMantenimiento @map("tipo_mantenimiento")
 
-  // â”€â”€ Tipo de Taller â”€â”€
+  // ─── Tipo de Taller ───
   /// Origen del servicio: Taller Propio (con Tarjeta de Mano de Obra)
-  /// o Taller de Terceros (con AutorizaciÃ³n de Servicio Externo)
+  /// o Taller de Terceros (con Autorización de Servicio Externo)
   tipoTaller                TipoTaller @map("tipo_taller")
   /// Nombre del taller de terceros (si aplica)
   nombreTallerExterno       String?    @map("nombre_taller_externo") @db.VarChar(150)
-  /// NÃºmero de autorizaciÃ³n de servicio externo (si aplica)
+  /// Número de autorización de servicio externo (si aplica)
   numeroAutorizacionExterna String?    @map("numero_autorizacion_externa") @db.VarChar(50)
 
-  // â”€â”€ Entrada y Salida del Taller â”€â”€
+  // ─── Entrada y Salida del Taller ───
   fechaEntradaTaller DateTime? @map("fecha_entrada_taller") @db.Date
   horaEntradaTaller  String?   @map("hora_entrada_taller") @db.VarChar(5)
   fechaSalidaTaller  DateTime? @map("fecha_salida_taller") @db.Date
   horaSalidaTaller   String?   @map("hora_salida_taller") @db.VarChar(5)
 
-  // â”€â”€ OdÃ³metro â”€â”€
+  // ─── Odómetro ───
   kilometrajeEntrada Int? @map("kilometraje_entrada")
   kilometrajeSalida  Int? @map("kilometraje_salida")
 
-  // â”€â”€ DescripciÃ³n del Servicio â”€â”€
+  // ─── Descripción del Servicio ───
   descripcionServicio String
   /// Falla reportada por el conductor (para correctivo)
   fallaReportada      String? @map("falla_reportada")
-  /// DiagnÃ³stico del tÃ©cnico
+  /// Diagnóstico del técnico
   diagnosticoTecnico  String? @map("diagnostico_tecnico")
 
-  // â”€â”€ Desglose de Costos (Taller Propio) â”€â”€
+  // ─── Desglose de Costos (Taller Propio) ───
   /// Costo de mano de obra propia (en base a Tarjeta de Mano de Obra)
   costoManoObraPropia   Decimal? @map("costo_mano_obra_propia") @db.Decimal(12, 2)
   /// Costo de mano de obra de terceros (factura del taller externo)
   costoManoObraTerceros Decimal? @map("costo_mano_obra_terceros") @db.Decimal(12, 2)
-  /// Costo total de piezas y repuestos del AlmacÃ©n de Mantenimiento
+  /// Costo total de piezas y repuestos del Almacén de Mantenimiento
   costoPiezasRepuestos  Decimal? @default(0) @map("costo_piezas_repuestos") @db.Decimal(12, 2)
   /// Otros costos (traslado, peritaje, etc.)
   costoOtros            Decimal? @default(0) @map("costo_otros") @db.Decimal(12, 2)
@@ -403,20 +377,23 @@ model OrdenMantenimiento {
   firmaJefeMantenimiento String?   @map("firma_jefe_mantenimiento") @db.VarChar(100)
   fechaFirmaTecnico      DateTime? @map("fecha_firma_tecnico")
 
-  // â”€â”€ Estado â”€â”€
+  // ─── Estado ───
   estado        EstadoMantenimiento @default(PENDIENTE)
   observaciones String?
   creadoEn      DateTime            @default(now()) @map("creado_en")
   actualizadoEn DateTime            @updatedAt @map("actualizado_en")
 
-  // â”€â”€ Relaciones â”€â”€
-  vehiculo   Vehiculo          @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
-  tecnico    Usuario?          @relation(fields: [tecnicoId], references: [id], onDelete: Restrict)
-  repuestos  DetalleRepuesto[]
-  manoDeObra DetalleManoObra[]
+  // ─── Relaciones ───
+  vehiculo          Vehiculo              @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  tecnico           Usuario?              @relation(fields: [tecnicoId], references: [id], onDelete: Restrict)
+  sectorSolicitante SectorOrganizacional? @relation(fields: [sectorSolicitanteId], references: [id], onDelete: SetNull)
+  repuestos         DetalleRepuesto[]
+  manoDeObra        DetalleManoObra[]
 
   @@index([vehiculoId])
   @@index([vehiculoId, fechaEmision])
+  @@index([tecnicoId])
+  @@index([sectorSolicitanteId])
   @@index([tipoMantenimiento])
   @@index([tipoTaller])
   @@index([estado])
@@ -424,18 +401,18 @@ model OrdenMantenimiento {
   @@map("ordenes_mantenimiento")
 }
 
-/// Detalle de repuestos y piezas por orden de mantenimiento (AlmacÃ©n de Mantenimiento)
+/// Detalle de repuestos y piezas por orden de mantenimiento (Almacén de Mantenimiento)
 model DetalleRepuesto {
   id                   String   @id @default(uuid())
   ordenMantenimientoId String   @map("orden_mantenimiento_id")
   descripcion          String   @db.VarChar(255)
-  /// NÃºmero de parte segÃºn catÃ¡logo del fabricante
+  /// Número de parte según catálogo del fabricante
   numeroParteCatalogo  String?  @map("numero_parte_catalogo") @db.VarChar(80)
   unidadMedida         String   @default("unidad") @map("unidad_medida") @db.VarChar(30)
   cantidad             Decimal  @db.Decimal(10, 3)
   precioUnitario       Decimal  @map("precio_unitario") @db.Decimal(10, 2)
   subtotal             Decimal  @db.Decimal(12, 2)
-  /// Indica si el repuesto proviene del AlmacÃ©n de Mantenimiento propio
+  /// Indica si el repuesto proviene del Almacén de Mantenimiento propio
   esAlmacenPropio      Boolean  @default(true) @map("es_almacen_propio")
   proveedor            String?  @db.VarChar(150)
   creadoEn             DateTime @default(now()) @map("creado_en")
@@ -446,7 +423,7 @@ model DetalleRepuesto {
   @@map("detalle_repuestos")
 }
 
-/// Detalle de mano de obra por tÃ©cnico â€” vinculado a Tarjeta de Mano de Obra
+/// Detalle de mano de obra por técnico — vinculado a Tarjeta de Mano de Obra
 model DetalleManoObra {
   id                   String   @id @default(uuid())
   ordenMantenimientoId String   @map("orden_mantenimiento_id")
@@ -454,7 +431,7 @@ model DetalleManoObra {
   horasTrabajadas      Decimal  @map("horas_trabajadas") @db.Decimal(6, 2)
   costoHora            Decimal  @map("costo_hora") @db.Decimal(8, 2)
   subtotal             Decimal  @db.Decimal(10, 2)
-  /// Nombre del tÃ©cnico ejecutor (puede ser de taller propio o externo)
+  /// Nombre del técnico ejecutor (puede ser de taller propio o externo)
   nombreTecnico        String?  @map("nombre_tecnico") @db.VarChar(100)
   creadoEn             DateTime @default(now()) @map("creado_en")
 
@@ -471,8 +448,6 @@ enum TipoMantenimiento {
 }
 
 /// Origen del servicio de mantenimiento
-/// PROPIO: Taller propio (vinculado a Tarjeta de Mano de Obra)
-/// TERCEROS: Taller externo (vinculado a AutorizaciÃ³n de Servicio Externo)
 enum TipoTaller {
   PROPIO
   TERCEROS
@@ -537,7 +512,7 @@ enum TipoDocumento {
 // ============================================================
 // SAF - Sistema de Administración de Flotas
 // Manual F1T02 — Procedimientos Básicos de Operación y Control
-// Archivo: mantenimiento.prisma — Almacén de Mantenimiento
+// Archivo: mantenimiento.prisma — Almacén de Mantenimiento (Normalizado)
 // ============================================================
 
 /// Repuesto del Almacén de Mantenimiento — MA 122 02 01
@@ -546,32 +521,36 @@ model Repuesto {
   /// Código único del repuesto en el almacén
   codigo         String   @unique @db.VarChar(50)
   descripcion    String   @db.VarChar(255)
-  categoria      String   @db.VarChar(50)
+  categoriaId    String?  @map("categoria_id")
   unidadMedida   String   @default("unidad") @map("unidad_medida") @db.VarChar(30)
   stockActual    Int      @default(0) @map("stock_actual")
   stockMinimo    Int      @default(0) @map("stock_minimo")
   precioUnitario Decimal? @map("precio_unitario") @db.Decimal(10, 2)
   creadoEn       DateTime @default(now()) @map("creado_en")
 
+  categoria   CategoriaRepuesto?  @relation(fields: [categoriaId], references: [id], onDelete: SetNull)
   movimientos MovimientoAlmacen[]
 
+  @@index([categoriaId])
   @@map("repuestos")
 }
 
 /// Movimiento de entrada/salida en el Almacén de Mantenimiento
 model MovimientoAlmacen {
-  id                   String   @id @default(uuid())
-  repuestoId           String   @map("repuesto_id")
-  tipoMovimiento       String   @map("tipo_movimiento")
-  cantidad             Int
-  ordenMantenimientoId String?  @map("orden_mantenimiento_id")
-  responsable          String   @db.VarChar(100)
-  fecha                DateTime @default(now())
-  observaciones        String?
+  id                      String   @id @default(uuid())
+  repuestoId              String   @map("repuesto_id")
+  tipoMovimientoAlmacenId String?  @map("tipo_movimiento_almacen_id")
+  cantidad                Int
+  ordenMantenimientoId    String?  @map("orden_mantenimiento_id")
+  responsable             String   @db.VarChar(100)
+  fecha                   DateTime @default(now())
+  observaciones           String?
 
-  repuesto Repuesto @relation(fields: [repuestoId], references: [id])
+  repuesto       Repuesto               @relation(fields: [repuestoId], references: [id])
+  tipoMovimiento TipoMovimientoAlmacen? @relation(fields: [tipoMovimientoAlmacenId], references: [id], onDelete: SetNull)
 
   @@index([repuestoId])
+  @@index([tipoMovimientoAlmacenId])
   @@index([fecha])
   @@map("movimientos_almacen")
 }
@@ -580,49 +559,52 @@ model Lavado {
   id            String   @id @default(uuid())
   vehiculoId    String   @map("vehiculo_id")
   fecha         DateTime @db.Date
-  tipoLavado    String   @map("tipo_lavado")
+  tipoLavadoId  String?  @map("tipo_lavado_id")
   costo         Decimal? @db.Decimal(8, 2)
   proveedor     String?  @db.VarChar(150)
   responsable   String?  @db.VarChar(100)
   observaciones String?
   creadoEn      DateTime @default(now()) @map("creado_en")
 
-  vehiculo Vehiculo @relation(fields: [vehiculoId], references: [id])
+  vehiculo   Vehiculo    @relation(fields: [vehiculoId], references: [id])
+  tipoLavado TipoLavado? @relation(fields: [tipoLavadoId], references: [id], onDelete: SetNull)
 
   @@index([vehiculoId])
+  @@index([tipoLavadoId])
   @@index([fecha])
   @@map("lavados")
 }
 
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: movimientos_diarios.prisma â€” Esquema de Movimientos Diarios y Checklist
+// SAF - Sistema de Administración de Flotas
+// Archivo: movimientos_diarios.prisma — Esquema de Movimientos Diarios y Checklist (Normalizado)
 // ============================================================
 
-/// Registro de uso diario del vehÃ­culo â€” Formulario MA 122 01 01
+/// Registro de uso diario del vehículo — Formulario MA 122 01 01
 model MovimientoDiario {
-  id                String   @id @default(uuid())
-  vehiculoId        String   @map("vehiculo_id")
-  conductorId       String   @map("conductor_id")
+  id                  String   @id @default(uuid())
+  numeroOrden         String?  @unique @map("numero_orden") @db.VarChar(30)
+  vehiculoId          String   @map("vehiculo_id")
+  conductorId         String   @map("conductor_id")
   /// Inspector que valida el checklist pre-operacional
-  inspectorId       String?  @map("inspector_id")
-  fecha             DateTime @db.Date
-  sectorSolicitante String   @map("sector_solicitante") @db.VarChar(150)
-  destino           String   @db.VarChar(200)
-  proposito         String?  @db.VarChar(255)
+  inspectorId         String?  @map("inspector_id")
+  fecha               DateTime @db.Date
+  sectorSolicitanteId String?  @map("sector_solicitante_id")
+  destino             String   @db.VarChar(200)
+  proposito           String?  @db.VarChar(255)
 
-  // â”€â”€ OdÃ³metro â”€â”€
+  // ─── Odómetro ───
   kilometrajeSalida    Int  @map("kilometraje_salida")
   kilometrajeLlegada   Int? @map("kilometraje_llegada")
-  /// Km recorridos en el dÃ­a = kmLlegada - kmSalida (calculado)
+  /// Km recorridos en el día = kmLlegada - kmSalida (calculado)
   kilometrajeRecorrido Int? @map("kilometraje_recorrido")
 
-  // â”€â”€ Horas de UtilizaciÃ³n del VehÃ­culo (HUV) â”€â”€
-  /// Hora de salida del vehÃ­culo (formato HH:MM)
+  // ─── Horas de Utilización del Vehículo (HUV) ───
+  /// Hora de salida del vehículo (formato HH:MM)
   horaSalida       String   @map("hora_salida") @db.VarChar(5)
-  /// Hora de llegada del vehÃ­culo (formato HH:MM)
+  /// Hora de llegada del vehículo (formato HH:MM)
   horaLlegada      String?  @map("hora_llegada") @db.VarChar(5)
-  /// Horas efectivas de utilizaciÃ³n del vehÃ­culo en el dÃ­a
+  /// Horas efectivas de utilización del vehículo en el día
   horasUtilizacion Decimal? @map("horas_utilizacion") @db.Decimal(5, 2)
 
   // ── Firmas Digitales ──
@@ -632,96 +614,98 @@ model MovimientoDiario {
   fechaFirmaConductor  DateTime? @map("fecha_firma_conductor")
   fechaFirmaInspector  DateTime? @map("fecha_firma_inspector")
 
-  // â”€â”€ Estado â”€â”€
+  // ─── Estado ───
   estado        EstadoMovimiento @default(EN_RUTA)
   observaciones String?
   rutaId        String?          @map("ruta_id")
   creadoEn      DateTime         @default(now()) @map("creado_en")
   actualizadoEn DateTime         @updatedAt @map("actualizado_en")
 
-  // â”€â”€ Relaciones â”€â”€
-  vehiculo  Vehiculo               @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
-  conductor Usuario                @relation("ConductorMovimiento", fields: [conductorId], references: [id], onDelete: Restrict)
-  inspector Usuario?               @relation("InspectorMovimiento", fields: [inspectorId], references: [id], onDelete: Restrict)
-  checklist ChecklistVerificacion?
-  ruta      Ruta?                  @relation(fields: [rutaId], references: [id], onDelete: SetNull)
+  // ─── Relaciones ───
+  vehiculo          Vehiculo               @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  conductor         Usuario                @relation("ConductorMovimiento", fields: [conductorId], references: [id], onDelete: Restrict)
+  inspector         Usuario?               @relation("InspectorMovimiento", fields: [inspectorId], references: [id], onDelete: Restrict)
+  sectorSolicitante SectorOrganizacional?  @relation(fields: [sectorSolicitanteId], references: [id], onDelete: SetNull)
+  checklist         ChecklistVerificacion?
+  ruta              Ruta?                  @relation(fields: [rutaId], references: [id], onDelete: SetNull)
 
   @@index([vehiculoId])
   @@index([vehiculoId, fecha])
   @@index([vehiculoId, estado])
   @@index([conductorId])
   @@index([conductorId, fecha])
+  @@index([sectorSolicitanteId])
   @@index([fecha])
   @@index([estado])
   @@map("movimientos_diarios")
 }
 
-/// Checklist de verificaciÃ³n diaria pre-operacional (15 puntos â€” MA 122 01 01)
+/// Checklist de verificación diaria pre-operacional (15 puntos — MA 122 01 01)
 model ChecklistVerificacion {
   id           String @id @default(uuid())
   movimientoId String @unique @map("movimiento_id")
 
-  // â”€â”€ Punto 1: Documentos del vehÃ­culo â”€â”€
+  // ─── Punto 1: Documentos del vehículo ───
   documentos       EstadoChecklist @default(OK)
   observDocumentos String?         @map("observ_documentos")
 
-  // â”€â”€ Punto 2: Nivel de aceite de motor â”€â”€
+  // ─── Punto 2: Nivel de aceite de motor ───
   aceiteMotor       EstadoChecklist @default(OK) @map("aceite_motor")
   observAceiteMotor String?         @map("observ_aceite_motor")
 
-  // â”€â”€ Punto 3: Nivel de agua del radiador â”€â”€
+  // ─── Punto 3: Nivel de agua del radiador ───
   agua       EstadoChecklist @default(OK)
   observAgua String?         @map("observ_agua")
 
-  // â”€â”€ Punto 4: BaterÃ­a (nivel de electrolito, bornes) â”€â”€
+  // ─── Punto 4: Batería (nivel de electrolito, bornes) ───
   bateria       EstadoChecklist @default(OK)
   observBateria String?         @map("observ_bateria")
 
-  // â”€â”€ Punto 5: Sistema de frenos (lÃ­quido y funcionamiento) â”€â”€
+  // ─── Punto 5: Sistema de frenos (líquido y funcionamiento) ───
   frenos       EstadoChecklist @default(OK)
   observFrenos String?         @map("observ_frenos")
 
-  // â”€â”€ Punto 6: Embrague (lÃ­quido y funcionamiento) â”€â”€
+  // ─── Punto 6: Embrague (líquido y funcionamiento) ───
   embrague       EstadoChecklist @default(OK)
   observEmbrague String?         @map("observ_embrague")
 
-  // â”€â”€ Punto 7: Fajas / Correas (alternador, distribuciÃ³n) â”€â”€
+  // ─── Punto 7: Fajas / Correas (alternador, distribución) ───
   fajas       EstadoChecklist @default(OK)
   observFajas String?         @map("observ_fajas")
 
-  // â”€â”€ Punto 8: Faros (delanteros, traseros, de freno) â”€â”€
+  // ─── Punto 8: Faros (delanteros, traseros, de freno) ───
   faros       EstadoChecklist @default(OK)
   observFaros String?         @map("observ_faros")
 
-  // â”€â”€ Punto 9: Lunas / Vidrios â”€â”€
+  // ─── Punto 9: Lunas / Vidrios ───
   lunas       EstadoChecklist @default(OK)
   observLunas String?         @map("observ_lunas")
 
-  // â”€â”€ Punto 10: Plumillas / Limpiaparabrisas â”€â”€
+  // ─── Punto 10: Plumillas / Limpiaparabrisas ───
   plumillas       EstadoChecklist @default(OK)
   observPlumillas String?         @map("observ_plumillas")
 
-  // â”€â”€ Punto 11: PresiÃ³n y estado de llantas â”€â”€
+  // ─── Punto 11: Presión y estado de llantas ───
   llantas       EstadoChecklist @default(OK)
   observLlantas String?         @map("observ_llantas")
 
-  // â”€â”€ Punto 12: Espejos retrovisores â”€â”€
+  // ─── Punto 12: Espejos retrovisores ───
   espejos       EstadoChecklist @default(OK)
   observEspejos String?         @map("observ_espejos")
 
-  // â”€â”€ Punto 13: Herramientas y equipo de emergencia â”€â”€
+  // ─── Punto 13: Herramientas y equipo de emergencia ───
   herramientas       EstadoChecklist @default(OK)
   observHerramientas String?         @map("observ_herramientas")
 
-  // â”€â”€ Punto 14: Extintor y botiquÃ­n â”€â”€
+  // ─── Punto 14: Extintor y botiquín ───
   extintorBotiquin       EstadoChecklist @default(OK) @map("extintor_botiquin")
   observExtintorBotiquin String?         @map("observ_extintor_botiquin")
 
-  // â”€â”€ Punto 15: Manchas por fugas en el estacionamiento â”€â”€
+  // ─── Punto 15: Manchas por fugas en el estacionamiento ───
   manchasFugas       EstadoChecklist @default(OK) @map("manchas_fugas")
   observManchasFugas String?         @map("observ_manchas_fugas")
 
-  // â”€â”€ Resultado General â”€â”€
+  // ─── Resultado General ───
   aptoParaOperar         Boolean  @default(true) @map("apto_para_operar")
   observacionesGenerales String?  @map("observaciones_generales")
   firmaConductor         String?  @map("firma_conductor") @db.VarChar(100)
@@ -733,7 +717,7 @@ model ChecklistVerificacion {
   @@map("checklist_verificacion")
 }
 
-/// Estado del movimiento diario del vehÃ­culo
+/// Estado del movimiento diario del vehículo
 enum EstadoMovimiento {
   PROGRAMADO
   EN_RUTA
@@ -741,11 +725,217 @@ enum EstadoMovimiento {
   CANCELADO
 }
 
-/// Estado de cada punto del checklist de verificaciÃ³n
+/// Estado de cada punto del checklist de verificación
 enum EstadoChecklist {
   OK
   OBSERVADO
   FALLADO
+}
+
+// ============================================================
+// SAF - Sistema de Administracion de Flotas
+// Archivo: normalizacion.prisma - Tablas de Normalización (Lookup Tables)
+// Reemplazan campos de texto libre por Foreign Keys
+// ============================================================
+
+// ─── MARCAS DE VEHÍCULOS ───
+model MarcaVehiculo {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(80)
+  pais     String?  @db.VarChar(50)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  modelos   ModeloVehiculo[]
+  vehiculos Vehiculo[]
+
+  @@map("marcas_vehiculo")
+}
+
+// ─── MODELOS DE VEHÍCULOS (depende de Marca) ───
+model ModeloVehiculo {
+  id       String   @id @default(uuid())
+  marcaId  String   @map("marca_id")
+  nombre   String   @db.VarChar(80)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  marca     MarcaVehiculo @relation(fields: [marcaId], references: [id], onDelete: Restrict)
+  vehiculos Vehiculo[]
+
+  @@unique([marcaId, nombre])
+  @@index([marcaId])
+  @@map("modelos_vehiculo")
+}
+
+// ─── COLORES DE VEHÍCULOS ───
+model ColorVehiculo {
+  id        String   @id @default(uuid())
+  nombre    String   @unique @db.VarChar(50)
+  codigoHex String?  @map("codigo_hex") @db.VarChar(7)
+  activo    Boolean  @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("colores_vehiculo")
+}
+
+// ─── TIPOS DE COMBUSTIBLE ───
+model TipoCombustible {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(50)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("tipos_combustible")
+}
+
+// ─── ESTADOS DEL VEHÍCULO ───
+model EstadoVehiculo {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(50)
+  codigo   String   @unique @db.VarChar(30)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("estados_vehiculo")
+}
+
+// ─── CATEGORÍAS DE VEHÍCULOS (F1T02) ───
+model CategoriaVehiculo {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(50)
+  codigo   String   @unique @db.VarChar(20)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("categorias_vehiculo")
+}
+
+// ─── ESTADOS FÍSICOS (se mantiene como ENUM - 3 valores fijos F1T02) ───
+// Definido en vehiculos.prisma como enum EstadoFisico
+
+// ─── ROLES DE USUARIO ───
+model Rol {
+  id          String   @id @default(uuid())
+  nombre      String   @unique @db.VarChar(50)
+  codigo      String   @unique @db.VarChar(30)
+  descripcion String?  @db.VarChar(255)
+  activo      Boolean  @default(true)
+  creadoEn    DateTime @default(now()) @map("creado_en")
+
+  usuarios Usuario[]
+
+  @@map("roles")
+}
+
+// ─── SECTORES ORGANIZACIONALES ───
+model SectorOrganizacional {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(150)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  ordenesCombustible   OrdenCombustible[]
+  ordenesMantenimiento OrdenMantenimiento[]
+  movimientosDiarios   MovimientoDiario[]
+
+  @@map("sectores_organizacionales")
+}
+
+// ─── LOCALIDADES / SEDES ───
+model Localidad {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(150)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  @@map("localidades")
+}
+
+// ─── CENTROS DE SERVICIO (Servicentros Acreditados) ───
+model CentroServicio {
+  id        String   @id @default(uuid())
+  nombre    String   @db.VarChar(150)
+  direccion String?  @db.VarChar(255)
+  telefono  String?  @db.VarChar(20)
+  activo    Boolean  @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  ordenesCombustible OrdenCombustible[]
+
+  @@map("centros_servicio")
+}
+
+// ─── FABRICANTES DE LLANTAS ───
+model FabricanteLlanta {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(80)
+  pais     String?  @db.VarChar(50)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  llantas ControlLlanta[]
+
+  @@map("fabricantes_llanta")
+}
+
+// ─── DIMENSIONES DE LLANTAS ───
+model DimensionLlanta {
+  id          String   @id @default(uuid())
+  dimension   String   @unique @db.VarChar(30)
+  descripcion String?  @db.VarChar(100)
+  activo      Boolean  @default(true)
+  creadoEn    DateTime @default(now()) @map("creado_en")
+
+  llantas ControlLlanta[]
+
+  @@map("dimensiones_llanta")
+}
+
+// ─── CATEGORÍAS DE REPUESTOS ───
+model CategoriaRepuesto {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(50)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  repuestos Repuesto[]
+
+  @@map("categorias_repuesto")
+}
+
+// ─── TIPOS DE LAVADO ───
+model TipoLavado {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(50)
+  codigo   String   @unique @db.VarChar(20)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  lavados Lavado[]
+
+  @@map("tipos_lavado")
+}
+
+// ─── TIPOS DE MOVIMIENTO DE ALMACÉN ───
+model TipoMovimientoAlmacen {
+  id       String   @id @default(uuid())
+  nombre   String   @unique @db.VarChar(50)
+  codigo   String   @unique @db.VarChar(20)
+  activo   Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  movimientos MovimientoAlmacen[]
+
+  @@map("tipos_movimiento_almacen")
 }
 
 // ============================================================
@@ -929,34 +1119,34 @@ enum TipoToken {
 
 // ============================================================
 // SAF - Sistema de Administracion de Flotas
-// Archivo: vehiculos.prisma - Esquema de Vehiculos
+// Archivo: vehiculos.prisma - Esquema de Vehiculos (Normalizado)
 // ============================================================
 
 model Vehiculo {
   id String @id @default(uuid())
 
   // Identificacion Patrimonial
-  clasePatrimonial     String            @map("clase_patrimonial") @db.VarChar(2)
-  categoriaPatrimonial CategoriaVehiculo @map("categoria_patrimonial")
-  secuencial           String            @db.VarChar(3)
-  codigoPatrimonial    String            @unique @map("codigo_patrimonial") @db.VarChar(20)
+  clasePatrimonial       String  @map("clase_patrimonial") @db.VarChar(2)
+  categoriaPatrimonialId String? @map("categoria_patrimonial_id")
+  secuencial             String  @db.VarChar(3)
+  codigoPatrimonial      String  @unique @map("codigo_patrimonial") @db.VarChar(20)
 
-  // Datos de Registro
+  // Datos de Registro (Normalizados)
   placa           String  @unique @db.VarChar(10)
-  marca           String  @db.VarChar(80)
-  modelo          String  @db.VarChar(80)
+  marcaId         String? @map("marca_id")
+  modeloId        String? @map("modelo_id")
   anioFabricacion Int     @map("anio_fabricacion")
-  color           String? @db.VarChar(50)
+  colorId         String? @map("color_id")
 
   // Especificaciones del Motor y Chasis
-  numeroMotor        String?         @unique @map("numero_motor") @db.VarChar(50)
-  numeroChasis       String?         @unique @map("numero_chasis") @db.VarChar(50)
-  potenciaHp         Int?            @map("potencia_hp")
-  cilindraje         Decimal?        @db.Decimal(5, 2)
-  numeroCilindros    Int?            @map("numero_cilindros")
-  tipoCombustible    TipoCombustible @map("tipo_combustible")
-  subtipoCombustible String?         @map("subtipo_combustible") @db.VarChar(50)
-  capacidadTanqueGal Decimal?        @map("capacidad_tanque_gal") @db.Decimal(8, 2)
+  numeroMotor        String?  @unique @map("numero_motor") @db.VarChar(50)
+  numeroChasis       String?  @unique @map("numero_chasis") @db.VarChar(50)
+  potenciaHp         Int?     @map("potencia_hp")
+  cilindraje         Decimal? @db.Decimal(5, 2)
+  numeroCilindros    Int?     @map("numero_cilindros")
+  tipoCombustibleId  String?  @map("tipo_combustible_id")
+  subtipoCombustible String?  @map("subtipo_combustible") @db.VarChar(50)
+  capacidadTanqueGal Decimal? @map("capacidad_tanque_gal") @db.Decimal(8, 2)
 
   // Capacidades de Carga y Pasajeros
   capacidadCargaKg   Decimal? @map("capacidad_carga_kg") @db.Decimal(10, 2)
@@ -979,7 +1169,7 @@ model Vehiculo {
   presionLlantaDelantera  Decimal? @map("presion_llanta_delantera") @db.Decimal(5, 2)
   presionLlantaTrasera    Decimal? @map("presion_llanta_trasera") @db.Decimal(5, 2)
 
-  // Inventario Fisico del Vehiculo
+  // Inventario Fisico del Vehiculo (EstadoFisico se mantiene como ENUM - 3 valores fijos)
   estadoPintura          EstadoFisico? @map("estado_pintura")
   estadoFaros            EstadoFisico? @map("estado_faros")
   estadoLunas            EstadoFisico? @map("estado_lunas")
@@ -998,15 +1188,23 @@ model Vehiculo {
   periodicidadMantenimientoKm Int?     @default(5000) @map("periodicidad_mantenimiento_km")
   kilometrajeActual           Int?     @map("kilometraje_actual")
 
-  // Estado Operativo
-  estado        EstadoVehiculo @default(OPERATIVO)
-  fechaIngreso  DateTime       @default(now()) @map("fecha_ingreso")
-  fechaBaja     DateTime?      @map("fecha_baja")
-  motivoBaja    String?        @map("motivo_baja")
-  creadoEn      DateTime       @default(now()) @map("creado_en")
-  actualizadoEn DateTime       @updatedAt @map("actualizado_en")
+  // Estado Operativo (Normalizado)
+  estadoId      String?   @map("estado_id")
+  fechaIngreso  DateTime  @default(now()) @map("fecha_ingreso")
+  fechaBaja     DateTime? @map("fecha_baja")
+  motivoBaja    String?   @map("motivo_baja")
+  creadoEn      DateTime  @default(now()) @map("creado_en")
+  actualizadoEn DateTime  @updatedAt @map("actualizado_en")
 
-  // Relaciones
+  // Relaciones (Normalizadas)
+  categoriaPatrimonial CategoriaVehiculo? @relation(fields: [categoriaPatrimonialId], references: [id], onDelete: Restrict)
+  marca                MarcaVehiculo?     @relation(fields: [marcaId], references: [id], onDelete: Restrict)
+  modelo               ModeloVehiculo?    @relation(fields: [modeloId], references: [id], onDelete: Restrict)
+  color                ColorVehiculo?     @relation(fields: [colorId], references: [id], onDelete: SetNull)
+  tipoCombustible      TipoCombustible?   @relation(fields: [tipoCombustibleId], references: [id], onDelete: Restrict)
+  estado               EstadoVehiculo?    @relation(fields: [estadoId], references: [id], onDelete: Restrict)
+
+  // Relaciones existentes
   movimientosDiarios      MovimientoDiario[]
   ordenesCombustible      OrdenCombustible[]
   ordenesMantenimiento    OrdenMantenimiento[]
@@ -1020,35 +1218,15 @@ model Vehiculo {
   lavados                 Lavado[]
 
   @@index([placa])
-  @@index([estado])
-  @@index([categoriaPatrimonial])
+  @@index([estadoId])
+  @@index([categoriaPatrimonialId])
   @@index([codigoPatrimonial])
-  @@index([tipoCombustible])
-  @@index([marca, modelo])
+  @@index([tipoCombustibleId])
+  @@index([marcaId, modeloId])
   @@map("vehiculos")
 }
 
-enum CategoriaVehiculo {
-  PASAJEROS
-  CARGA
-  ESPECIAL
-}
-
-enum TipoCombustible {
-  GASOLINA
-  DIESEL
-  GLP
-  ELECTRICO
-  HIBRIDO
-}
-
-enum EstadoVehiculo {
-  OPERATIVO
-  EN_MANTENIMIENTO
-  INOPERATIVO
-  DADO_DE_BAJA
-}
-
+// ENUMs que se MANTIENEN (domain-specific F1T02, valores fijos)
 enum EstadoFisico {
   BUENO
   REGULAR

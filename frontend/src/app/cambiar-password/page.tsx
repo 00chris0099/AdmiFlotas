@@ -3,6 +3,7 @@
 import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PasswordForm from "@/components/PasswordForm";
+import { api } from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 function CambiarPasswordInner() {
@@ -46,7 +47,7 @@ function CambiarPasswordInner() {
   return (
     <PasswordForm
       token={token}
-      apiEndpoint="/api/auth/cambiar-password"
+      onSubmit={(t, p) => api.cambiarPassword(t, p)}
       title="Cambia tu contraseña"
       subtitle="Establece una nueva contraseña segura"
       icon="lock"

@@ -1,0 +1,11 @@
+{
+  "name": "saf-shared",
+  "version": "1.0.0",
+  "description": "Tipos y constantes compartidos entre backend y frontend - SAF",
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

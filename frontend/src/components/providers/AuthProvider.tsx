@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import api from "@/lib/api";
 
 export interface User {
   id: string;
@@ -28,7 +29,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // Inicializar estado desde localStorage/cookies al cargar
   useEffect(() => {
     const storedToken = localStorage.getItem("saf_token");
     const storedUser = localStorage.getItem("saf_user");
@@ -41,53 +41,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, passwordPlaintxt: string): Promise<boolean> => {
     try {
-      // Intentamos llamar a la API del backend o un handler interno
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password: passwordPlaintxt }),
-      });
+      const data = await api.login(email, passwordPlaintxt);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al iniciar sesión");
-      }
-
-      const data = await response.json();
-      
-      // Guardar token en localStorage
-      localStorage.setItem("saf_token", data.token);
       localStorage.setItem("saf_user", JSON.stringify(data.usuario));
-      
-      // Guardar en cookie para que el middleware de Next.js pueda leerlo
+
       document.cookie = `saf_token=${data.token}; path=/; max-age=28800; SameSite=Lax`;
       document.cookie = `saf_role=${data.usuario.rol}; path=/; max-age=28800; SameSite=Lax`;
 
       setToken(data.token);
       setUser(data.usuario);
-      
-      // Redirigir al home o dashboard principal
+
       router.push("/");
       router.refresh();
       return true;
     } catch (error: any) {
       console.error("Login failed:", error);
-      // Error handled by UI
       return false;
     }
   };
 
   const logout = async () => {
     try {
-      const storedToken = localStorage.getItem("saf_token");
-      if (storedToken) {
-        await fetch("/api/auth/logout", {
-          method: "POST",
-          headers: { Authorization: `Bearer ${storedToken}` },
-        });
-      }
+      await api.logout();
     } catch {
-      // Ignore errors on logout
     }
 
     localStorage.removeItem("saf_token");

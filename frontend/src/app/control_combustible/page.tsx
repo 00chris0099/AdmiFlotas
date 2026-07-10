@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 import { exportToExcel } from "@/utils/exportUtils";
-import { generateNumeroOrden } from "@/lib/orderGenerator";
 import {
   TIPOS_COMBUSTIBLE_ORDEN,
   SECTORES_ORGANIZACIONALES,
@@ -105,12 +104,10 @@ export default function CombustiblePage() {
 
   const cargarCatalogos = async () => {
     try {
-      const [resVeh, resCond] = await Promise.all([
-        fetchWithAuth("/api/vehiculos"),
-        fetchWithAuth("/api/conductores")
+      const [dataVeh, dataCond] = await Promise.all([
+        api.getVehiculos(),
+        api.getUsuarios()
       ]);
-      const dataVeh = await resVeh.json();
-      const dataCond = await resCond.json();
 
       if (Array.isArray(dataVeh)) {
         setVehiculos(dataVeh);
@@ -131,8 +128,7 @@ export default function CombustiblePage() {
   const cargarOrdenes = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/control_combustible");
-      const data = await res.json();
+      const data = await api.getOrdenesCombustible();
       if (Array.isArray(data)) {
         setOrdenes(data);
       }
@@ -182,41 +178,33 @@ export default function CombustiblePage() {
     }
 
     try {
-      const res = await fetchWithAuth("/api/control_combustible", {
-        method: "POST",
-        body: JSON.stringify({
-          numeroOrden,
-          vehiculoId,
-          conductorId,
-          sectorSolicitante,
-          localidadSolicitante,
-          tipoCombustible,
-          cantidadGalones: parseFloat(cantidadGalones) || 0,
-          costoGalon: parseFloat(costoGalon) || 0,
-          kilometrajeActual: parseInt(kilometrajeActual),
-          nombreServiccentro,
-          numeroTicketServiccentro,
-          responsableServiccentro,
-          selloServiccentro,
-          incluyeAceiteMotor,
-          cantidadAceiteMotorLt: incluyeAceiteMotor ? parseFloat(cantidadAceiteMotorLt) : 0,
-          firmaEncargadoGaraje,
-          firmaConductor,
-          firmaServicentro,
-        }),
+      const data = await api.createOrdenCombustible({
+        numeroOrden,
+        vehiculoId,
+        conductorId,
+        sectorSolicitante,
+        localidadSolicitante,
+        tipoCombustible,
+        cantidadGalones: parseFloat(cantidadGalones) || 0,
+        costoGalon: parseFloat(costoGalon) || 0,
+        kilometrajeActual: parseInt(kilometrajeActual),
+        nombreServiccentro,
+        numeroTicketServiccentro,
+        responsableServiccentro,
+        selloServiccentro,
+        incluyeAceiteMotor,
+        cantidadAceiteMotorLt: incluyeAceiteMotor ? parseFloat(cantidadAceiteMotorLt) : 0,
+        firmaEncargadoGaraje,
+        firmaConductor,
+        firmaServicentro,
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        resetForm();
-        cargarOrdenes();
-        alert("¡Orden de abastecimiento registrada con éxito!");
-      } else {
-        alert("Error: " + data.error);
-      }
+      setModalOpen(false);
+      resetForm();
+      cargarOrdenes();
+      alert("¡Orden de abastecimiento registrada con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -330,7 +318,6 @@ export default function CombustiblePage() {
           </button>
           <button
             onClick={() => {
-              setNumeroOrden(generateNumeroOrden("OC"));
               resetForm();
               if (conductores.length > 0) {
                 setFirmaConductor(`${conductores[0].nombre} ${conductores[0].apellido}`);

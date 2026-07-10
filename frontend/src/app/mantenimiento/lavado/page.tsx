@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 
 interface Vehiculo {
   id: string;
@@ -50,8 +50,7 @@ export default function LavadoPage() {
   const cargarLavados = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/mantenimiento/lavado");
-      const data = await res.json();
+      const data = await api.getLavados();
       if (Array.isArray(data)) {
         setLavados(data);
       }
@@ -64,8 +63,7 @@ export default function LavadoPage() {
 
   const cargarVehiculos = async () => {
     try {
-      const res = await fetchWithAuth("/api/vehiculos");
-      const data = await res.json();
+      const data = await api.getVehiculos();
       if (Array.isArray(data)) {
         setVehiculos(data);
       }
@@ -84,30 +82,22 @@ export default function LavadoPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetchWithAuth("/api/mantenimiento/lavado", {
-        method: "POST",
-        body: JSON.stringify({
-          vehiculoId,
-          fecha,
-          tipoLavado,
-          costo: costo ? parseFloat(costo) : null,
-          proveedor: proveedor || null,
-          responsable: responsable || null,
-          observaciones: observaciones || null,
-        }),
+      await api.createLavado({
+        vehiculoId,
+        fecha,
+        tipoLavado,
+        costo: costo ? parseFloat(costo) : null,
+        proveedor: proveedor || null,
+        responsable: responsable || null,
+        observaciones: observaciones || null,
       });
 
-      if (res.ok) {
-        setModalOpen(false);
-        resetForm();
-        cargarLavados();
-        alert("Lavado registrado con éxito");
-      } else {
-        const data = await res.json();
-        alert("Error: " + data.error);
-      }
+      setModalOpen(false);
+      resetForm();
+      cargarLavados();
+      alert("Lavado registrado con éxito");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -117,18 +107,11 @@ export default function LavadoPage() {
     if (!confirm("¿Está seguro de eliminar este registro de lavado?")) return;
 
     try {
-      const res = await fetchWithAuth(`/api/mantenimiento/lavado?id=${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        cargarLavados();
-        alert("Lavado eliminado");
-      } else {
-        const data = await res.json();
-        alert("Error: " + data.error);
-      }
-    } catch (err) {
-      alert("Error de red");
+      await api.deleteLavado(id);
+      cargarLavados();
+      alert("Lavado eliminado");
+    } catch (err: any) {
+      alert("Error: " + err.message);
     }
   };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { api } from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface Sesion {
@@ -44,9 +44,7 @@ export default function SesionesPage() {
   const cargarSesiones = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth("/api/admin/sesiones");
-      const data = await res.json();
-
+      const data = await api.getSesiones();
       if (Array.isArray(data)) {
         setSesiones(data);
       }
@@ -65,13 +63,8 @@ export default function SesionesPage() {
     if (!confirm("¿Está seguro que desea cerrar esta sesión?")) return;
 
     try {
-      const res = await fetchWithAuth(`/api/admin/sesiones?id=${sesionId}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        setSesiones((prev) => prev.filter((s) => s.id !== sesionId));
-      }
+      await api.cerrarSesion(sesionId);
+      setSesiones((prev) => prev.filter((s) => s.id !== sesionId));
     } catch (err) {
       console.error("Error al cerrar sesión:", err);
     }

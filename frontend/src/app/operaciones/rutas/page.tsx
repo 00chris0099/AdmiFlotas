@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface Ruta {
@@ -92,17 +92,12 @@ export default function RutasPage() {
   const cargarDatos = async () => {
     try {
       setIsLoading(true);
-      const [rutasRes, progRes, vehRes, condRes] = await Promise.all([
-        fetchWithAuth("/api/operaciones/rutas"),
-        fetchWithAuth("/api/operaciones/programaciones"),
-        fetchWithAuth("/api/vehiculos"),
-        fetchWithAuth("/api/conductores"),
+      const [rutasData, progData, vehData, condData] = await Promise.all([
+        api.getRutas(),
+        api.getProgramaciones(),
+        api.getVehiculos(),
+        api.getUsuarios(),
       ]);
-
-      const rutasData = await rutasRes.json();
-      const progData = await progRes.json();
-      const vehData = await vehRes.json();
-      const condData = await condRes.json();
 
       if (Array.isArray(rutasData)) setRutas(rutasData);
       if (Array.isArray(progData)) setProgramaciones(progData);
@@ -139,7 +134,6 @@ export default function RutasPage() {
     setIsSubmitting(true);
     try {
       const payload = {
-        id: editingRutaId || undefined,
         nombre,
         origen,
         destino,
@@ -147,30 +141,18 @@ export default function RutasPage() {
         tiempoEstimado: tiempoEstimado || undefined,
       };
 
-      let res;
       if (editingRutaId) {
-        res = await fetchWithAuth("/api/operaciones/rutas", {
-          method: "PUT",
-          body: JSON.stringify(payload),
-        });
+        await api.updateRuta(editingRutaId, payload);
       } else {
-        res = await fetchWithAuth("/api/operaciones/rutas", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        await api.createRuta(payload);
       }
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalRutaOpen(false);
-        resetRutaForm();
-        cargarDatos();
-        alert(editingRutaId ? "¡Ruta actualizada!" : "¡Ruta registrada con éxito!");
-      } else {
-        alert("Error: " + (data.error || data.message));
-      }
+      setModalRutaOpen(false);
+      resetRutaForm();
+      cargarDatos();
+      alert(editingRutaId ? "¡Ruta actualizada!" : "¡Ruta registrada con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -188,10 +170,7 @@ export default function RutasPage() {
 
   const handleToggleRuta = async (id: string, activa: boolean) => {
     try {
-      await fetchWithAuth("/api/operaciones/rutas", {
-        method: "PUT",
-        body: JSON.stringify({ id, activa: !activa }),
-      });
+      await api.updateRuta(id, { activa: !activa });
       cargarDatos();
     } catch {
       alert("Error al actualizar estado");
@@ -201,14 +180,9 @@ export default function RutasPage() {
   const handleDeleteRuta = async (id: string, nombre: string) => {
     if (!confirm(`¿Está seguro de eliminar la ruta "${nombre}"?`)) return;
     try {
-      const res = await fetchWithAuth(`/api/operaciones/rutas?id=${id}`, { method: "DELETE" });
-      const data = await res.json();
-      if (res.ok) {
-        cargarDatos();
-        alert("Ruta eliminada.");
-      } else {
-        alert(data.error || "Error al eliminar");
-      }
+      await api.deleteRuta(id);
+      cargarDatos();
+      alert("Ruta eliminada.");
     } catch {
       alert("Error de conexión");
     }
@@ -236,7 +210,6 @@ export default function RutasPage() {
     setIsSubmitting(true);
     try {
       const payload: any = {
-        id: editingProgId || undefined,
         rutaId: progRutaId,
         vehiculoId: progVehiculoId,
         conductorId: progConductorId,
@@ -246,30 +219,18 @@ export default function RutasPage() {
         observaciones: progObservaciones || undefined,
       };
 
-      let res;
       if (editingProgId) {
-        res = await fetchWithAuth("/api/operaciones/programaciones", {
-          method: "PUT",
-          body: JSON.stringify(payload),
-        });
+        await api.updateProgramacion(editingProgId, payload);
       } else {
-        res = await fetchWithAuth("/api/operaciones/programaciones", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        await api.createProgramacion(payload);
       }
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalProgOpen(false);
-        resetProgForm();
-        cargarDatos();
-        alert(editingProgId ? "¡Programación actualizada!" : "¡Programación creada con éxito!");
-      } else {
-        alert("Error: " + (data.error || data.message));
-      }
+      setModalProgOpen(false);
+      resetProgForm();
+      cargarDatos();
+      alert(editingProgId ? "¡Programación actualizada!" : "¡Programación creada con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -290,14 +251,9 @@ export default function RutasPage() {
   const handleCancelProg = async (id: string) => {
     if (!confirm("¿Está seguro de cancelar esta programación?")) return;
     try {
-      const res = await fetchWithAuth(`/api/operaciones/programaciones?id=${id}`, { method: "DELETE" });
-      const data = await res.json();
-      if (res.ok) {
-        cargarDatos();
-        alert("Programación cancelada.");
-      } else {
-        alert(data.error || "Error al cancelar");
-      }
+      await api.deleteProgramacion(id);
+      cargarDatos();
+      alert("Programación cancelada.");
     } catch {
       alert("Error de conexión");
     }

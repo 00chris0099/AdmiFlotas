@@ -1,0 +1,205 @@
+// ============================================================
+// SAF - Sistema de Administracion de Flotas
+// Archivo: normalizacion.prisma - Tablas de Normalización (Lookup Tables)
+// Reemplazan campos de texto libre por Foreign Keys
+// ============================================================
+
+// ─── MARCAS DE VEHÍCULOS ───
+model MarcaVehiculo {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(80)
+  pais      String? @db.VarChar(50)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  modelos   ModeloVehiculo[]
+  vehiculos Vehiculo[]
+
+  @@map("marcas_vehiculo")
+}
+
+// ─── MODELOS DE VEHÍCULOS (depende de Marca) ───
+model ModeloVehiculo {
+  id        String  @id @default(uuid())
+  marcaId   String  @map("marca_id")
+  nombre    String  @db.VarChar(80)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  marca     MarcaVehiculo @relation(fields: [marcaId], references: [id], onDelete: Restrict)
+  vehiculos Vehiculo[]
+
+  @@unique([marcaId, nombre])
+  @@index([marcaId])
+  @@map("modelos_vehiculo")
+}
+
+// ─── COLORES DE VEHÍCULOS ───
+model ColorVehiculo {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  codigoHex String? @map("codigo_hex") @db.VarChar(7)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("colores_vehiculo")
+}
+
+// ─── TIPOS DE COMBUSTIBLE ───
+model TipoCombustible {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("tipos_combustible")
+}
+
+// ─── ESTADOS DEL VEHÍCULO ───
+model EstadoVehiculo {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  codigo    String  @unique @db.VarChar(30)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("estados_vehiculo")
+}
+
+// ─── CATEGORÍAS DE VEHÍCULOS (F1T02) ───
+model CategoriaVehiculo {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  codigo    String  @unique @db.VarChar(20)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  vehiculos Vehiculo[]
+
+  @@map("categorias_vehiculo")
+}
+
+// ─── ESTADOS FÍSICOS (se mantiene como ENUM - 3 valores fijos F1T02) ───
+// Definido en vehiculos.prisma como enum EstadoFisico
+
+// ─── ROLES DE USUARIO ───
+model Rol {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  codigo    String  @unique @db.VarChar(30)
+  descripcion String? @db.VarChar(255)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  usuarios  Usuario[]
+
+  @@map("roles")
+}
+
+// ─── SECTORES ORGANIZACIONALES ───
+model SectorOrganizacional {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(150)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  ordenesCombustible    OrdenCombustible[]
+  ordenesMantenimiento  OrdenMantenimiento[]
+  movimientosDiarios    MovimientoDiario[]
+
+  @@map("sectores_organizacionales")
+}
+
+// ─── LOCALIDADES / SEDES ───
+model Localidad {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(150)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  @@map("localidades")
+}
+
+// ─── CENTROS DE SERVICIO (Servicentros Acreditados) ───
+model CentroServicio {
+  id        String  @id @default(uuid())
+  nombre    String  @db.VarChar(150)
+  direccion String? @db.VarChar(255)
+  telefono  String? @db.VarChar(20)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  ordenesCombustible OrdenCombustible[]
+
+  @@map("centros_servicio")
+}
+
+// ─── FABRICANTES DE LLANTAS ───
+model FabricanteLlanta {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(80)
+  pais      String? @db.VarChar(50)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  llantas   ControlLlanta[]
+
+  @@map("fabricantes_llanta")
+}
+
+// ─── DIMENSIONES DE LLANTAS ───
+model DimensionLlanta {
+  id          String  @id @default(uuid())
+  dimension   String  @unique @db.VarChar(30)
+  descripcion String? @db.VarChar(100)
+  activo      Boolean @default(true)
+  creadoEn    DateTime @default(now()) @map("creado_en")
+
+  llantas     ControlLlanta[]
+
+  @@map("dimensiones_llanta")
+}
+
+// ─── CATEGORÍAS DE REPUESTOS ───
+model CategoriaRepuesto {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  repuestos Repuesto[]
+
+  @@map("categorias_repuesto")
+}
+
+// ─── TIPOS DE LAVADO ───
+model TipoLavado {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  codigo    String  @unique @db.VarChar(20)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  lavados   Lavado[]
+
+  @@map("tipos_lavado")
+}
+
+// ─── TIPOS DE MOVIMIENTO DE ALMACÉN ───
+model TipoMovimientoAlmacen {
+  id        String  @id @default(uuid())
+  nombre    String  @unique @db.VarChar(50)
+  codigo    String  @unique @db.VarChar(20)
+  activo    Boolean @default(true)
+  creadoEn  DateTime @default(now()) @map("creado_en")
+
+  movimientos MovimientoAlmacen[]
+
+  @@map("tipos_movimiento_almacen")
+}

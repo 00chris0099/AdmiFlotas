@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface TaskItem {
@@ -187,22 +187,15 @@ export default function Home() {
     async function loadDashboard() {
       setDashboardLoading(true);
       try {
-        const [vehiculosRes, movimientosRes, mantenimientoRes, combustibleRes, documentosRes, almacenRes] =
+        const [vehiculos, movimientos, ordenesMant, ordenesComb, documentos, repuestos] =
           await Promise.all([
-            fetchWithAuth("/api/vehiculos"),
-            fetchWithAuth("/api/movimientos_diarios"),
-            fetchWithAuth("/api/control_mantenimiento"),
-            fetchWithAuth("/api/control_combustible"),
-            fetchWithAuth("/api/flota/documentos"),
-            fetchWithAuth("/api/mantenimiento/almacen").catch(() => null),
+            api.getVehiculos().catch(() => []),
+            api.getMovimientos().catch(() => []),
+            api.getOrdenesMantenimiento().catch(() => []),
+            api.getOrdenesCombustible().catch(() => []),
+            api.getDocumentos().catch(() => []),
+            api.getRepuestos().catch(() => []),
           ]);
-
-        const vehiculos = vehiculosRes.ok ? await vehiculosRes.json() : [];
-        const movimientos = movimientosRes.ok ? await movimientosRes.json() : [];
-        const ordenesMant = mantenimientoRes.ok ? await mantenimientoRes.json() : [];
-        const ordenesComb = combustibleRes.ok ? await combustibleRes.json() : [];
-        const documentos = documentosRes.ok ? await documentosRes.json() : [];
-        const repuestos = almacenRes && almacenRes.ok ? await almacenRes.json() : [];
 
         const today = new Date().toISOString().split("T")[0];
         const now = new Date();

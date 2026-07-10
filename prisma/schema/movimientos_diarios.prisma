@@ -1,32 +1,33 @@
 // ============================================================
-// SAF - Sistema de AdministraciÃ³n de Flotas
-// Archivo: movimientos_diarios.prisma â€” Esquema de Movimientos Diarios y Checklist
+// SAF - Sistema de Administración de Flotas
+// Archivo: movimientos_diarios.prisma — Esquema de Movimientos Diarios y Checklist (Normalizado)
 // ============================================================
 
-/// Registro de uso diario del vehÃ­culo â€” Formulario MA 122 01 01
+/// Registro de uso diario del vehículo — Formulario MA 122 01 01
 model MovimientoDiario {
   id                String   @id @default(uuid())
+  numeroOrden       String?  @unique @map("numero_orden") @db.VarChar(30)
   vehiculoId        String   @map("vehiculo_id")
   conductorId       String   @map("conductor_id")
   /// Inspector que valida el checklist pre-operacional
   inspectorId       String?  @map("inspector_id")
   fecha             DateTime @db.Date
-  sectorSolicitante String   @map("sector_solicitante") @db.VarChar(150)
+  sectorSolicitanteId String? @map("sector_solicitante_id")
   destino           String   @db.VarChar(200)
   proposito         String?  @db.VarChar(255)
 
-  // â”€â”€ OdÃ³metro â”€â”€
+  // ─── Odómetro ───
   kilometrajeSalida    Int  @map("kilometraje_salida")
   kilometrajeLlegada   Int? @map("kilometraje_llegada")
-  /// Km recorridos en el dÃ­a = kmLlegada - kmSalida (calculado)
+  /// Km recorridos en el día = kmLlegada - kmSalida (calculado)
   kilometrajeRecorrido Int? @map("kilometraje_recorrido")
 
-  // â”€â”€ Horas de UtilizaciÃ³n del VehÃ­culo (HUV) â”€â”€
-  /// Hora de salida del vehÃ­culo (formato HH:MM)
+  // ─── Horas de Utilización del Vehículo (HUV) ───
+  /// Hora de salida del vehículo (formato HH:MM)
   horaSalida       String   @map("hora_salida") @db.VarChar(5)
-  /// Hora de llegada del vehÃ­culo (formato HH:MM)
+  /// Hora de llegada del vehículo (formato HH:MM)
   horaLlegada      String?  @map("hora_llegada") @db.VarChar(5)
-  /// Horas efectivas de utilizaciÃ³n del vehÃ­culo en el dÃ­a
+  /// Horas efectivas de utilización del vehículo en el día
   horasUtilizacion Decimal? @map("horas_utilizacion") @db.Decimal(5, 2)
 
   // ── Firmas Digitales ──
@@ -36,96 +37,98 @@ model MovimientoDiario {
   fechaFirmaConductor  DateTime? @map("fecha_firma_conductor")
   fechaFirmaInspector  DateTime? @map("fecha_firma_inspector")
 
-  // â”€â”€ Estado â”€â”€
+  // ─── Estado ───
   estado        EstadoMovimiento @default(EN_RUTA)
   observaciones String?
   rutaId        String?          @map("ruta_id")
   creadoEn      DateTime         @default(now()) @map("creado_en")
   actualizadoEn DateTime         @updatedAt @map("actualizado_en")
 
-  // â”€â”€ Relaciones â”€â”€
-  vehiculo  Vehiculo               @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
-  conductor Usuario                @relation("ConductorMovimiento", fields: [conductorId], references: [id], onDelete: Restrict)
-  inspector Usuario?               @relation("InspectorMovimiento", fields: [inspectorId], references: [id], onDelete: Restrict)
-  checklist ChecklistVerificacion?
-  ruta      Ruta?                  @relation(fields: [rutaId], references: [id], onDelete: SetNull)
+  // ─── Relaciones ───
+  vehiculo         Vehiculo               @relation(fields: [vehiculoId], references: [id], onDelete: Restrict)
+  conductor        Usuario                @relation("ConductorMovimiento", fields: [conductorId], references: [id], onDelete: Restrict)
+  inspector        Usuario?               @relation("InspectorMovimiento", fields: [inspectorId], references: [id], onDelete: Restrict)
+  sectorSolicitante SectorOrganizacional?  @relation(fields: [sectorSolicitanteId], references: [id], onDelete: SetNull)
+  checklist        ChecklistVerificacion?
+  ruta             Ruta?                  @relation(fields: [rutaId], references: [id], onDelete: SetNull)
 
   @@index([vehiculoId])
   @@index([vehiculoId, fecha])
   @@index([vehiculoId, estado])
   @@index([conductorId])
   @@index([conductorId, fecha])
+  @@index([sectorSolicitanteId])
   @@index([fecha])
   @@index([estado])
   @@map("movimientos_diarios")
-  }
+}
 
-/// Checklist de verificaciÃ³n diaria pre-operacional (15 puntos â€” MA 122 01 01)
+/// Checklist de verificación diaria pre-operacional (15 puntos — MA 122 01 01)
 model ChecklistVerificacion {
   id           String @id @default(uuid())
   movimientoId String @unique @map("movimiento_id")
 
-  // â”€â”€ Punto 1: Documentos del vehÃ­culo â”€â”€
+  // ─── Punto 1: Documentos del vehículo ───
   documentos       EstadoChecklist @default(OK)
   observDocumentos String?         @map("observ_documentos")
 
-  // â”€â”€ Punto 2: Nivel de aceite de motor â”€â”€
+  // ─── Punto 2: Nivel de aceite de motor ───
   aceiteMotor       EstadoChecklist @default(OK) @map("aceite_motor")
   observAceiteMotor String?         @map("observ_aceite_motor")
 
-  // â”€â”€ Punto 3: Nivel de agua del radiador â”€â”€
+  // ─── Punto 3: Nivel de agua del radiador ───
   agua       EstadoChecklist @default(OK)
   observAgua String?         @map("observ_agua")
 
-  // â”€â”€ Punto 4: BaterÃ­a (nivel de electrolito, bornes) â”€â”€
+  // ─── Punto 4: Batería (nivel de electrolito, bornes) ───
   bateria       EstadoChecklist @default(OK)
   observBateria String?         @map("observ_bateria")
 
-  // â”€â”€ Punto 5: Sistema de frenos (lÃ­quido y funcionamiento) â”€â”€
+  // ─── Punto 5: Sistema de frenos (líquido y funcionamiento) ───
   frenos       EstadoChecklist @default(OK)
   observFrenos String?         @map("observ_frenos")
 
-  // â”€â”€ Punto 6: Embrague (lÃ­quido y funcionamiento) â”€â”€
+  // ─── Punto 6: Embrague (líquido y funcionamiento) ───
   embrague       EstadoChecklist @default(OK)
   observEmbrague String?         @map("observ_embrague")
 
-  // â”€â”€ Punto 7: Fajas / Correas (alternador, distribuciÃ³n) â”€â”€
+  // ─── Punto 7: Fajas / Correas (alternador, distribución) ───
   fajas       EstadoChecklist @default(OK)
   observFajas String?         @map("observ_fajas")
 
-  // â”€â”€ Punto 8: Faros (delanteros, traseros, de freno) â”€â”€
+  // ─── Punto 8: Faros (delanteros, traseros, de freno) ───
   faros       EstadoChecklist @default(OK)
   observFaros String?         @map("observ_faros")
 
-  // â”€â”€ Punto 9: Lunas / Vidrios â”€â”€
+  // ─── Punto 9: Lunas / Vidrios ───
   lunas       EstadoChecklist @default(OK)
   observLunas String?         @map("observ_lunas")
 
-  // â”€â”€ Punto 10: Plumillas / Limpiaparabrisas â”€â”€
+  // ─── Punto 10: Plumillas / Limpiaparabrisas ───
   plumillas       EstadoChecklist @default(OK)
   observPlumillas String?         @map("observ_plumillas")
 
-  // â”€â”€ Punto 11: PresiÃ³n y estado de llantas â”€â”€
+  // ─── Punto 11: Presión y estado de llantas ───
   llantas       EstadoChecklist @default(OK)
   observLlantas String?         @map("observ_llantas")
 
-  // â”€â”€ Punto 12: Espejos retrovisores â”€â”€
+  // ─── Punto 12: Espejos retrovisores ───
   espejos       EstadoChecklist @default(OK)
   observEspejos String?         @map("observ_espejos")
 
-  // â”€â”€ Punto 13: Herramientas y equipo de emergencia â”€â”€
+  // ─── Punto 13: Herramientas y equipo de emergencia ───
   herramientas       EstadoChecklist @default(OK)
   observHerramientas String?         @map("observ_herramientas")
 
-  // â”€â”€ Punto 14: Extintor y botiquÃ­n â”€â”€
+  // ─── Punto 14: Extintor y botiquín ───
   extintorBotiquin       EstadoChecklist @default(OK) @map("extintor_botiquin")
   observExtintorBotiquin String?         @map("observ_extintor_botiquin")
 
-  // â”€â”€ Punto 15: Manchas por fugas en el estacionamiento â”€â”€
+  // ─── Punto 15: Manchas por fugas en el estacionamiento ───
   manchasFugas       EstadoChecklist @default(OK) @map("manchas_fugas")
   observManchasFugas String?         @map("observ_manchas_fugas")
 
-  // â”€â”€ Resultado General â”€â”€
+  // ─── Resultado General ───
   aptoParaOperar         Boolean  @default(true) @map("apto_para_operar")
   observacionesGenerales String?  @map("observaciones_generales")
   firmaConductor         String?  @map("firma_conductor") @db.VarChar(100)
@@ -135,21 +138,19 @@ model ChecklistVerificacion {
   movimiento MovimientoDiario @relation(fields: [movimientoId], references: [id], onDelete: Cascade)
 
   @@map("checklist_verificacion")
-  }
+}
 
-/// Estado del movimiento diario del vehÃ­culo
+/// Estado del movimiento diario del vehículo
 enum EstadoMovimiento {
   PROGRAMADO
   EN_RUTA
   COMPLETADO
   CANCELADO
+}
 
-  }
-
-/// Estado de cada punto del checklist de verificaciÃ³n
+/// Estado de cada punto del checklist de verificación
 enum EstadoChecklist {
   OK
   OBSERVADO
   FALLADO
-
-  }
+}

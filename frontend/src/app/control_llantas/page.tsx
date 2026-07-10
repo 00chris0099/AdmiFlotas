@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 
 interface Llanta {
   id: string;
@@ -51,8 +51,7 @@ export default function LlantasPage() {
 
   const cargarVehiculos = async () => {
     try {
-      const res = await fetchWithAuth("/api/vehiculos");
-      const data = await res.json();
+      const data = await api.getVehiculos();
       if (Array.isArray(data)) {
         setVehiculos(data);
         if (data.length > 0) {
@@ -68,8 +67,7 @@ export default function LlantasPage() {
     if (!selectedVehiculoId) return;
     try {
       setIsLoading(true);
-      const res = await fetchWithAuth(`/api/control_llantas?vehiculoId=${selectedVehiculoId}`);
-      const data = await res.json();
+      const data = await api.getControlLlantas();
       if (Array.isArray(data)) {
         setLlantas(data);
       }
@@ -95,32 +93,24 @@ export default function LlantasPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetchWithAuth("/api/control_llantas", {
-        method: "POST",
-        body: JSON.stringify({
-          codigoEps,
-          vehiculoId: selectedVehiculoId,
-          posicionVehiculo: selectedPosicion,
-          descripcionPosicion: getPosicionLabel(selectedPosicion),
-          fabricante,
-          dimension,
-          modeloLlanta,
-          costoAdquisicion: parseFloat(costoAdquisicion),
-          kilometrajeInstalacion: parseInt(kilometrajeInstalacion),
-        }),
+      const data = await api.createControlLlanta({
+        codigoEps,
+        vehiculoId: selectedVehiculoId,
+        posicionVehiculo: selectedPosicion,
+        descripcionPosicion: getPosicionLabel(selectedPosicion),
+        fabricante,
+        dimension,
+        modeloLlanta,
+        costoAdquisicion: parseFloat(costoAdquisicion),
+        kilometrajeInstalacion: parseInt(kilometrajeInstalacion),
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setModalOpen(false);
-        setCodigoEps("");
-        cargarLlantas();
-        alert("¡Llanta registrada y montada con éxito!");
-      } else {
-        alert("Error: " + data.error);
-      }
+      setModalOpen(false);
+      setCodigoEps("");
+      cargarLlantas();
+      alert("¡Llanta registrada y montada con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      alert("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -138,26 +128,13 @@ export default function LlantasPage() {
 
     setRotating(true);
     try {
-      const res = await fetchWithAuth("/api/control_llantas", {
-        method: "PATCH",
-        body: JSON.stringify({
-          action: "ROTAR",
-          llantaId1: origenLlanta.id,
-          llantaId2: destinoLlanta.id,
-        }),
-      });
-
-      if (res.ok) {
-        alert("Rotación completada.");
-        setTargetRotarPosicion("");
-        cargarLlantas();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al realizar rotación");
-      }
-    } catch (err) {
+      await api.rotarLlantas(origenLlanta.id, destinoLlanta.id);
+      alert("Rotación completada.");
+      setTargetRotarPosicion("");
+      cargarLlantas();
+    } catch (err: any) {
       console.error(err);
-      alert("Error de conexión");
+      alert(err.message || "Error de conexión");
     } finally {
       setRotating(false);
     }
@@ -167,23 +144,12 @@ export default function LlantasPage() {
   const handleReencauchar = async (llantaId: string) => {
     setUpdatingLifecycle(true);
     try {
-      const res = await fetchWithAuth("/api/control_llantas", {
-        method: "PATCH",
-        body: JSON.stringify({
-          action: "REENCAUCHAR",
-          llantaId,
-        }),
-      });
-
-      if (res.ok) {
-        alert("Reencauche registrado con éxito.");
-        cargarLlantas();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al reencauchar");
-      }
-    } catch (err) {
+      await api.reencaucharLlanta(llantaId);
+      alert("Reencauche registrado con éxito.");
+      cargarLlantas();
+    } catch (err: any) {
       console.error(err);
+      alert(err.message || "Error al reencauchar");
     } finally {
       setUpdatingLifecycle(false);
     }
@@ -194,24 +160,13 @@ export default function LlantasPage() {
     if (!confirm("¿Está seguro de retirar y dar de baja esta llanta permanentemente?")) return;
     setUpdatingLifecycle(true);
     try {
-      const res = await fetchWithAuth("/api/control_llantas", {
-        method: "PATCH",
-        body: JSON.stringify({
-          action: "DAR_DE_BAJA",
-          llantaId,
-        }),
-      });
-
-      if (res.ok) {
-        alert("Llanta dada de baja.");
-        setSelectedPosicion(null);
-        cargarLlantas();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al dar de baja");
-      }
-    } catch (err) {
+      await api.bajaLlanta(llantaId);
+      alert("Llanta dada de baja.");
+      setSelectedPosicion(null);
+      cargarLlantas();
+    } catch (err: any) {
       console.error(err);
+      alert(err.message || "Error al dar de baja");
     } finally {
       setUpdatingLifecycle(false);
     }
@@ -604,7 +559,7 @@ export default function LlantasPage() {
                 disabled={isSubmitting}
                 className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 text-white font-bold rounded-xl transition duration-150 shadow-lg text-sm"
               >
-                {isSubmitting ? "Registrando en Supabase..." : "Confirmar y Montar"}
+                {isSubmitting ? "Registrando..." : "Confirmar y Montar"}
               </button>
             </form>
           </div>

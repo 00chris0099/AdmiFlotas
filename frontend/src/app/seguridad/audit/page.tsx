@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { api } from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface AuditLog {
@@ -62,15 +62,11 @@ export default function AuditPage() {
   const cargarAuditorias = async () => {
     try {
       setIsLoading(true);
-      const params = new URLSearchParams();
-      if (filtroModulo) params.set("modulo", filtroModulo);
-      if (fechaInicio) params.set("fechaInicio", fechaInicio);
-      if (fechaFin) params.set("fechaFin", fechaFin);
-
-      const url = `/api/admin/audit${params.toString() ? `?${params.toString()}` : ""}`;
-      const res = await fetchWithAuth(url);
-      const data = await res.json();
-
+      const data = await api.getAuditLogs({
+        modulo: filtroModulo || undefined,
+        fechaInicio: fechaInicio || undefined,
+        fechaFin: fechaFin || undefined,
+      });
       if (Array.isArray(data)) {
         setLogs(data);
       }

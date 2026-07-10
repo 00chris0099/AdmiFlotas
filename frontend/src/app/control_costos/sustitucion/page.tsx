@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import { exportToPDF, exportToExcel } from "@/utils/exportUtils";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
 
 interface CurvaPunto {
@@ -35,19 +35,20 @@ export default function SustitucionPage() {
   const [showExportModal, setShowExportModal] = useState(false);
 
   useEffect(() => {
-    fetchWithAuth("/api/control_costos/sustitucion")
-      .then((res) => res.json())
-      .then((data) => {
+    const loadData = async () => {
+      try {
+        const data = await api.getSustitucion();
         setVehiculosBajas(data || []);
         if (data && data.length > 0) {
           setSelectedVehiculoId(data[0].vehiculoId);
         }
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Error al cargar sustituciones:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    loadData();
   }, []);
 
   const activeVeh = vehiculosBajas.find((v) => v.vehiculoId === selectedVehiculoId) || vehiculosBajas[0];
@@ -245,7 +246,7 @@ export default function SustitucionPage() {
                 </div>
 
                 <div className="text-[10px] text-slate-400 italic">
-                  * La simulación considera un desgaste y aumento de conservación real extraído del historial de mantenimiento del vehículo en Supabase.
+                  * La simulación considera un desgaste y aumento de conservación real extraído del historial de mantenimiento del vehículo en la base de datos.
                 </div>
               </div>
             )}

@@ -6,15 +6,9 @@ COPY frontend/package*.json ./
 RUN npm install
 
 COPY frontend/ .
-COPY package*.json ../
-COPY generated/ ../generated/
 
-ARG DATABASE_URL
-ARG JWT_SECRET
-ARG NEXT_PUBLIC_APP_URL
-ENV DATABASE_URL=$DATABASE_URL
-ENV JWT_SECRET=$JWT_SECRET
-ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
@@ -33,9 +27,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 
-EXPOSE 3003
+EXPOSE 3000
 
-ENV PORT=3003
+ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 CMD ["npm", "start"]
