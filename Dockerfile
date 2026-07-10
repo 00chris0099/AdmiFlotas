@@ -8,12 +8,17 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY backend/package*.json ./
-RUN npm install
+RUN npm install --ignore-scripts
 
 COPY shared/ ../shared/
 COPY prisma/ ../prisma/
 COPY generated/ ../generated/
 COPY backend/ .
+
+# Link Prisma client manually (postinstall skipped)
+RUN mkdir -p node_modules/@prisma && \
+    rm -rf node_modules/@prisma/client && \
+    ln -s /app/../generated/prisma node_modules/@prisma/client
 
 ARG DATABASE_URL
 ARG JWT_SECRET
@@ -49,6 +54,11 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY shared/ ../shared/
 COPY generated/ ../generated/
 COPY prisma/ ../prisma/
+
+# Link Prisma client manually
+RUN mkdir -p node_modules/@prisma && \
+    rm -rf node_modules/@prisma/client && \
+    ln -s /app/../generated/prisma node_modules/@prisma/client
 
 ARG DATABASE_URL
 ARG JWT_SECRET
