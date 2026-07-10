@@ -42,7 +42,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY backend/package*.json ./
-RUN npm install --omit=dev
+RUN npm install --omit=dev --ignore-scripts
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
