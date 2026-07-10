@@ -182,7 +182,7 @@ router.put("/:id", validate(updateUsuarioSchema), async (req, res, next) => {
     }
 
     const usuario = await prisma.usuario.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: updateData,
       include: { rol: true },
     });
