@@ -17,7 +17,7 @@ const envSchema = z.object({
   SMTP_PORT: z.coerce.number().default(587),
   SMTP_USER: z.string().email(),
   SMTP_PASS: z.string().min(1),
-  SMTP_FROM: z.string().email(),
+  SMTP_FROM: z.string(),
   CORS_ORIGIN: z.string().default("http://localhost:3000"),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(100),
