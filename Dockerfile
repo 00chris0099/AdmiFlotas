@@ -15,10 +15,9 @@ COPY prisma/ ../prisma/
 COPY generated/ ../generated/
 COPY backend/ .
 
-# Link Prisma client manually (postinstall skipped)
-RUN mkdir -p node_modules/@prisma && \
-    rm -rf node_modules/@prisma/client && \
-    ln -s /app/../generated/prisma node_modules/@prisma/client
+# Copy Prisma client into node_modules (postinstall skipped)
+RUN mkdir -p node_modules/@prisma/client && \
+    cp -r ../generated/prisma/* node_modules/@prisma/client/
 
 ARG DATABASE_URL
 ARG JWT_SECRET
@@ -55,10 +54,9 @@ COPY shared/ ../shared/
 COPY generated/ ../generated/
 COPY prisma/ ../prisma/
 
-# Link Prisma client manually
-RUN mkdir -p node_modules/@prisma && \
-    rm -rf node_modules/@prisma/client && \
-    ln -s /app/../generated/prisma node_modules/@prisma/client
+# Copy Prisma client into node_modules
+RUN mkdir -p node_modules/@prisma/client && \
+    cp -r ../generated/prisma/* node_modules/@prisma/client/
 
 ARG DATABASE_URL
 ARG JWT_SECRET
