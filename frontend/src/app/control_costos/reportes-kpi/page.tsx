@@ -54,7 +54,7 @@ export default function KPIPage() {
 
   const columns: ColumnDef<KPIReport>[] = [
     { header: "Período", accessorKey: "periodo", className: "font-mono" },
-    { header: "Vehículo", accessorKey: (row) => `${row.placa} (${row.marcaVehiculo || ""} ${row.modeloVehiculo || ""})` },
+    { header: "Vehículo", accessorKey: (row: any) => `${row.placa} (${row.marcaVehiculo || ""} ${row.modeloVehiculo || ""})` },
     { header: "IUV (Utilización)", accessorKey: (row) => `${row.iuv}%` },
     { header: "CKV (Costo/Km)", accessorKey: (row) => `S/. ${row.ckv.toFixed(2)}`, className: "font-semibold text-white" },
     {
@@ -205,7 +205,7 @@ export default function KPIPage() {
                       }`}
                     >
                       <p className="text-[10px] font-bold font-mono">{rep.placa}</p>
-                      <p className="text-xs font-semibold truncate">{rep.marcaVehiculo || ""} {rep.modeloVehiculo || ""}</p>
+                      <p className="text-xs font-semibold truncate">{(rep as any).marcaVehiculo || ""} {(rep as any).modeloVehiculo || ""}</p>
                     </button>
                   ))}
                 </div>
