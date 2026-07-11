@@ -130,11 +130,11 @@ router.post("/login", validate(loginSchema), async (req, res, next) => {
       options
     );
 
-    const { password: _, ...usuarioSinPassword } = usuario;
+    const { password: _, rol: rolObj, ...rest } = usuario;
 
     sendSuccess(res, {
       token,
-      usuario: usuarioSinPassword,
+      usuario: { ...rest, rol: rolObj?.codigo ?? rolObj ?? null },
     });
   } catch (error) {
     next(error);
@@ -202,8 +202,8 @@ router.get("/me", authenticate, async (req, res, next) => {
       throw new AppError("Usuario no encontrado", 404);
     }
 
-    const { password: _, ...usuarioSinPassword } = usuario;
-    sendSuccess(res, usuarioSinPassword);
+    const { password: _, rol: rolObj, ...rest } = usuario;
+    sendSuccess(res, { ...rest, rol: rolObj?.codigo ?? rolObj ?? null });
   } catch (error) {
     next(error);
   }
