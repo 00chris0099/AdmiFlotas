@@ -315,7 +315,7 @@ export default function CombustiblePage() {
     const galons = galonesPorVehiculo[placa] || 1;
     const kmGalon = diffKm / galons;
     const eficiencia = Math.min(100, Math.round((kmGalon / 35) * 100));
-    return { placa, kmGalon: Number(kmGalon.toFixed(1)), eficiencia };
+    return { placa, kmGalon: Number(Number(kmGalon).toFixed(1)), eficiencia };
   });
 
   const columns: ColumnDef<OrdenCombustible>[] = [
@@ -335,7 +335,7 @@ export default function CombustiblePage() {
     { header: "Galones", accessorKey: (row) => `${row.cantidadGalones} Gal`, className: "font-mono" },
     { header: "Km", accessorKey: (row) => `${row.kilometrajeActual} km`, className: "font-mono" },
     { header: "Servicentro", accessorKey: "nombreServiccentro", className: "text-xs" },
-    { header: "Costo Total", accessorKey: (row) => `S/. ${row.costoTotal.toFixed(2)}`, className: "text-right font-bold text-white" },
+    { header: "Costo Total", accessorKey: (row: any) => `S/. ${Number(row.costoTotal || 0).toFixed(2)}`, className: "text-right font-bold text-white" },
     {
       header: "Firmas",
       accessorKey: (row) => (
@@ -401,16 +401,16 @@ export default function CombustiblePage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-slate-950 border border-slate-850/80 p-5 rounded-2xl shadow-lg">
           <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Combustible Despachado</p>
-          <h3 className="text-3xl font-black text-white mt-2">{totalGalones.toFixed(1)} Galones</h3>
+          <h3 className="text-3xl font-black text-white mt-2">{Number(totalGalones || 0).toFixed(1)} Galones</h3>
         </div>
         <div className="bg-slate-950 border border-slate-850/80 p-5 rounded-2xl shadow-lg">
           <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Costo Acumulado</p>
-          <h3 className="text-3xl font-black text-white mt-2">S/. {totalCosto.toFixed(2)}</h3>
+          <h3 className="text-3xl font-black text-white mt-2">S/. {Number(totalCosto || 0).toFixed(2)}</h3>
         </div>
         <div className="bg-slate-950 border border-slate-850/80 p-5 rounded-2xl shadow-lg">
           <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Rendimiento Promedio</p>
           <h3 className="text-3xl font-black text-emerald-400 mt-2">
-            {rendimientos.length > 0 ? (rendimientos.reduce((sum, r) => sum + r.kmGalon, 0) / rendimientos.length).toFixed(1) : "0"} Km/Gal
+            {rendimientos.length > 0 ? Number((rendimientos.reduce((sum, r) => sum + r.kmGalon, 0) / rendimientos.length)).toFixed(1) : "0"} Km/Gal
           </h3>
           <p className="text-[10px] text-emerald-400 mt-1">Meta F1T02: 35 km/galón</p>
         </div>
