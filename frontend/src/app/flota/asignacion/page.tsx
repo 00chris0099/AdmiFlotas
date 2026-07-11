@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
 
 interface Asignacion {
   id: string;
@@ -52,6 +53,7 @@ export default function AsignacionPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
 
   const [vehiculoId, setVehiculoId] = useState("");
   const [conductorId, setConductorId] = useState("");
@@ -93,7 +95,7 @@ export default function AsignacionPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!vehiculoId || !conductorId || !sectorAsignado) {
-      alert("Vehículo, conductor y sector son requeridos.");
+      toast.warning("Vehículo, conductor y sector son requeridos.");
       return;
     }
 
@@ -103,9 +105,9 @@ export default function AsignacionPage() {
       setModalOpen(false);
       resetForm();
       cargarDatos();
-      alert("Asignación registrada con éxito");
+      toast.success("Asignación registrada con éxito");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }

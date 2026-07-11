@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Usuario {
   id: string;
@@ -58,6 +59,7 @@ export default function GestionUsuariosPage() {
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
   const [tokenResult, setTokenResult] = useState("");
+  const { confirm } = useConfirm();
 
   const [form, setForm] = useState({
     nombre: "",
@@ -106,7 +108,8 @@ export default function GestionUsuariosPage() {
   };
 
   const handleDelete = async (id: string, nombre: string) => {
-    if (!confirm(`¿Eliminar al usuario ${nombre}? Esta acción no se puede deshacer.`)) return;
+    const ok = await confirm({ message: `¿Eliminar al usuario ${nombre}? Esta acción no se puede deshacer.`, variant: "danger" });
+    if (!ok) return;
 
     try {
       const data = await api.deleteUsuario(id);

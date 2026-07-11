@@ -5,6 +5,8 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Ruta {
   id: string;
@@ -61,6 +63,8 @@ export default function RutasPage() {
   const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
   const [conductores, setConductores] = useState<Conductor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   // Modal states
   const [modalRutaOpen, setModalRutaOpen] = useState(false);
@@ -127,7 +131,7 @@ export default function RutasPage() {
   const handleRutaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nombre || !origen || !destino) {
-      alert("Nombre, origen y destino son requeridos.");
+      toast.warning("Nombre, origen y destino son requeridos.");
       return;
     }
 
@@ -150,9 +154,9 @@ export default function RutasPage() {
       setModalRutaOpen(false);
       resetRutaForm();
       cargarDatos();
-      alert(editingRutaId ? "¡Ruta actualizada!" : "¡Ruta registrada con éxito!");
+      toast.success(editingRutaId ? "¡Ruta actualizada!" : "¡Ruta registrada con éxito!");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -173,18 +177,19 @@ export default function RutasPage() {
       await api.updateRuta(id, { activa: !activa });
       cargarDatos();
     } catch {
-      alert("Error al actualizar estado");
+      toast.error("Error al actualizar estado");
     }
   };
 
   const handleDeleteRuta = async (id: string, nombre: string) => {
-    if (!confirm(`¿Está seguro de eliminar la ruta "${nombre}"?`)) return;
+    const ok = await confirm({ message: `¿Está seguro de eliminar la ruta "${nombre}"?`, variant: "danger" });
+    if (!ok) return;
     try {
       await api.deleteRuta(id);
       cargarDatos();
-      alert("Ruta eliminada.");
+      toast.success("Ruta eliminada.");
     } catch {
-      alert("Error de conexión");
+      toast.error("Error de conexión");
     }
   };
 
@@ -203,7 +208,7 @@ export default function RutasPage() {
   const handleProgSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!progRutaId || !progVehiculoId || !progConductorId || !progFecha || !progHoraSalida) {
-      alert("Ruta, vehículo, conductor, fecha y hora de salida son requeridos.");
+      toast.warning("Ruta, vehículo, conductor, fecha y hora de salida son requeridos.");
       return;
     }
 
@@ -228,9 +233,9 @@ export default function RutasPage() {
       setModalProgOpen(false);
       resetProgForm();
       cargarDatos();
-      alert(editingProgId ? "¡Programación actualizada!" : "¡Programación creada con éxito!");
+      toast.success(editingProgId ? "¡Programación actualizada!" : "¡Programación creada con éxito!");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -249,13 +254,14 @@ export default function RutasPage() {
   };
 
   const handleCancelProg = async (id: string) => {
-    if (!confirm("¿Está seguro de cancelar esta programación?")) return;
+    const ok = await confirm({ message: "¿Está seguro de cancelar esta programación?", variant: "warning" });
+    if (!ok) return;
     try {
       await api.deleteProgramacion(id);
       cargarDatos();
-      alert("Programación cancelada.");
+      toast.success("Programación cancelada.");
     } catch {
-      alert("Error de conexión");
+      toast.error("Error de conexión");
     }
   };
 

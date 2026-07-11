@@ -417,7 +417,7 @@ class ApiClient {
   }
 
   async deleteLavado(id: string) {
-    return this.request(`/mantenimiento/lavado?id=${id}`, { method: "DELETE" });
+    return this.request(`/mantenimiento/lavado/${id}`, { method: "DELETE" });
   }
 
   // ─── Operaciones ───

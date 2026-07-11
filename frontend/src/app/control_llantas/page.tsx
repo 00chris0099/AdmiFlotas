@@ -5,6 +5,8 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Llanta {
   id: string;
@@ -35,6 +37,8 @@ export default function LlantasPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPosicion, setSelectedPosicion] = useState<number | null>(null);
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   // Estados Formulario de Registro
   const [codigoEps, setCodigoEps] = useState("");
@@ -168,9 +172,9 @@ export default function LlantasPage() {
       setModalOpen(false);
       setCodigoEps("");
       cargarLlantas();
-      alert("¡Llanta registrada y montada con éxito!");
+      toast.success("¡Llanta registrada y montada con éxito!");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -182,19 +186,19 @@ export default function LlantasPage() {
     const destinoLlanta = llantas.find((l) => l.posicion === parseInt(targetRotarPosicion));
     
     if (!origenLlanta || !destinoLlanta) {
-      alert("Debes seleccionar una llanta de origen y una llanta de destino montadas.");
+      toast.warning("Debes seleccionar una llanta de origen y una llanta de destino montadas.");
       return;
     }
 
     setRotating(true);
     try {
       await api.rotarLlantas(origenLlanta.id, destinoLlanta.id);
-      alert("Rotación completada.");
+      toast.success("Rotación completada.");
       setTargetRotarPosicion("");
       cargarLlantas();
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Error de conexión");
+      toast.error(err.message || "Error de conexión");
     } finally {
       setRotating(false);
     }
@@ -205,11 +209,11 @@ export default function LlantasPage() {
     setUpdatingLifecycle(true);
     try {
       await api.reencaucharLlanta(llantaId);
-      alert("Reencauche registrado con éxito.");
+      toast.success("Reencauche registrado con éxito.");
       cargarLlantas();
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Error al reencauchar");
+      toast.error(err.message || "Error al reencauchar");
     } finally {
       setUpdatingLifecycle(false);
     }
@@ -217,16 +221,17 @@ export default function LlantasPage() {
 
   // Dar de baja llanta
   const handleBaja = async (llantaId: string) => {
-    if (!confirm("¿Está seguro de retirar y dar de baja esta llanta permanentemente?")) return;
+    const ok = await confirm({ message: "¿Está seguro de retirar y dar de baja esta llanta permanentemente?", variant: "danger" });
+    if (!ok) return;
     setUpdatingLifecycle(true);
     try {
       await api.bajaLlanta(llantaId);
-      alert("Llanta dada de baja.");
+      toast.success("Llanta dada de baja.");
       setSelectedPosicion(null);
       cargarLlantas();
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Error al dar de baja");
+      toast.error(err.message || "Error al dar de baja");
     } finally {
       setUpdatingLifecycle(false);
     }

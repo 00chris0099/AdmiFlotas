@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { api } from "@/lib/api";
 import Icon from "@/components/ui/Icon";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Sesion {
   id: string;
@@ -40,6 +41,7 @@ const ROL_COLORS: Record<string, string> = {
 export default function SesionesPage() {
   const [sesiones, setSesiones] = useState<Sesion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { confirm } = useConfirm();
 
   const cargarSesiones = async () => {
     try {
@@ -60,7 +62,8 @@ export default function SesionesPage() {
   }, []);
 
   const handleCerrarSesion = async (sesionId: string) => {
-    if (!confirm("¿Está seguro que desea cerrar esta sesión?")) return;
+    const ok = await confirm({ message: "¿Está seguro que desea cerrar esta sesión?", variant: "danger" });
+    if (!ok) return;
 
     try {
       await api.cerrarSesion(sesionId);

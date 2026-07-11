@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Repuesto {
   id: string;
@@ -38,6 +40,8 @@ export default function AlmacenPage() {
   const [modalMovimientoOpen, setModalMovimientoOpen] = useState(false);
   const [editingRepuesto, setEditingRepuesto] = useState<Repuesto | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   // Formulario Repuesto
   const [codigo, setCodigo] = useState("");
@@ -105,7 +109,7 @@ export default function AlmacenPage() {
         setModalRepuestoOpen(false);
         setEditingRepuesto(null);
         cargarRepuestos();
-        alert("Repuesto actualizado con éxito");
+        toast.success("Repuesto actualizado con éxito");
       } else {
         payload.stockActual = 0;
         const data = await api.createRepuesto(payload);
@@ -115,10 +119,10 @@ export default function AlmacenPage() {
         setPrecioUnitario("");
         setStockMinimo("0");
         cargarRepuestos();
-        alert("Repuesto registrado con éxito");
+        toast.success("Repuesto registrado con éxito");
       }
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -146,23 +150,24 @@ export default function AlmacenPage() {
       setMovObservaciones("");
       cargarRepuestos();
       cargarMovimientos();
-      alert("Movimiento registrado con éxito");
+      toast.success("Movimiento registrado con éxito");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleEliminarRepuesto = async (id: string) => {
-    if (!confirm("¿Está seguro de eliminar este repuesto?")) return;
+    const ok = await confirm({ message: "¿Está seguro de eliminar este repuesto?", variant: "danger" });
+    if (!ok) return;
 
     try {
       await api.deleteRepuesto(id);
       cargarRepuestos();
-      alert("Repuesto eliminado");
+      toast.success("Repuesto eliminado");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     }
   };
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { api } from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
 
 export default function ConfiguracionPage() {
   const { token, user } = useAuth();
@@ -16,6 +17,7 @@ export default function ConfiguracionPage() {
   const [saving, setSaving] = useState(false);
   const [requestingPasswordChange, setRequestingPasswordChange] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
+  const toast = useToast();
 
   useEffect(() => {
     api.getConfiguracion()
@@ -45,10 +47,10 @@ export default function ConfiguracionPage() {
         HUP_DIARIO: hupDiario,
         METAS_MANTENIMIENTO: metasMantenimiento,
       });
-      alert("Configuraciones de la flota actualizadas con éxito.");
+      toast.success("Configuraciones de la flota actualizadas con éxito.");
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Error de red");
+      toast.error(err.message || "Error de red");
     } finally {
       setSaving(false);
     }

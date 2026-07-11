@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
 
 interface ChecklistItem {
   id: string;
@@ -20,6 +21,7 @@ interface ChecklistItem {
 export default function ChecklistPage() {
   const [checklists, setChecklists] = useState<ChecklistItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const toast = useToast();
 
   const cargarChecklists = async () => {
     try {
@@ -89,7 +91,7 @@ export default function ChecklistPage() {
           searchKey="placa"
           searchPlaceholder="Buscar por placa..."
           newActionLabel="Auditar Vehículo"
-          onNewAction={() => alert("El checklist pre-operacional se genera automáticamente al iniciar un Movimiento Diario.")}
+          onNewAction={() => toast.warning("El checklist pre-operacional se genera automáticamente al iniciar un Movimiento Diario.")}
         />
       )}
     </div>

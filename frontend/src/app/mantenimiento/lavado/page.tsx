@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Vehiculo {
   id: string;
@@ -37,6 +39,8 @@ export default function LavadoPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   // Formulario
   const [vehiculoId, setVehiculoId] = useState("");
@@ -95,23 +99,24 @@ export default function LavadoPage() {
       setModalOpen(false);
       resetForm();
       cargarLavados();
-      alert("Lavado registrado con éxito");
+      toast.success("Lavado registrado con éxito");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleEliminar = async (id: string) => {
-    if (!confirm("¿Está seguro de eliminar este registro de lavado?")) return;
+    const ok = await confirm({ message: "¿Está seguro de eliminar este registro de lavado?", variant: "danger" });
+    if (!ok) return;
 
     try {
       await api.deleteLavado(id);
       cargarLavados();
-      alert("Lavado eliminado");
+      toast.success("Lavado eliminado");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     }
   };
 

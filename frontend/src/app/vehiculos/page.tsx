@@ -16,6 +16,8 @@ import {
   getSubtiposCombustible,
   tieneSubtipos,
 } from "@/lib/constants";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface Vehiculo {
   id: string;
@@ -36,6 +38,8 @@ export default function VehiculosPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   // Form states
   const [placa, setPlaca] = useState("");
@@ -117,7 +121,7 @@ export default function VehiculosPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!placa || !marca || !modelo || !anioFabricacion || !tipoCombustible) {
-      alert("Placa, marca, modelo, año y tipo de combustible son requeridos.");
+      toast.warning("Placa, marca, modelo, año y tipo de combustible son requeridos.");
       return;
     }
 
@@ -150,9 +154,9 @@ export default function VehiculosPage() {
       setModalOpen(false);
       resetForm();
       cargarVehiculos();
-      alert(editingId ? "¡Vehículo actualizado!" : "¡Vehículo registrado con éxito!");
+      toast.success(editingId ? "¡Vehículo actualizado!" : "¡Vehículo registrado con éxito!");
     } catch (err: any) {
-      alert("Error: " + (err.message || "Error de red"));
+      toast.error("Error: " + (err.message || "Error de red"));
     } finally {
       setIsSubmitting(false);
     }
@@ -170,13 +174,14 @@ export default function VehiculosPage() {
   };
 
   const handleDelete = async (id: string, placa: string) => {
-    if (!confirm(`¿Está seguro de eliminar el vehículo ${placa}?`)) return;
+    const ok = await confirm({ message: `¿Está seguro de eliminar el vehículo ${placa}?`, variant: "danger" });
+    if (!ok) return;
     try {
       await api.deleteVehiculo(id);
       cargarVehiculos();
-      alert("Vehículo eliminado.");
+      toast.success("Vehículo eliminado.");
     } catch {
-      alert("Error de conexión");
+      toast.error("Error de conexión");
     }
   };
 

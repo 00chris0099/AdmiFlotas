@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
 import Icon from "@/components/ui/Icon";
+import { useToast } from "@/components/ui/Toast";
 
 interface Conductor {
   id: string;
@@ -22,6 +23,7 @@ export default function ConductoresPage() {
   const [conductores, setConductores] = useState<Conductor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const toast = useToast();
 
   // Form states
   const [nombre, setNombre] = useState("");
@@ -59,7 +61,7 @@ export default function ConductoresPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nombre || !apellido || !email || !licenciaConducir || !categoriaLicencia || !vencimientoLicencia) {
-      alert("Por favor complete todos los campos obligatorios.");
+      toast.warning("Por favor complete todos los campos obligatorios.");
       return;
     }
 
@@ -75,7 +77,7 @@ export default function ConductoresPage() {
         vencimientoLicencia,
       });
 
-      alert("¡Conductor registrado con éxito!");
+      toast.success("¡Conductor registrado con éxito!");
       setModalOpen(false);
       setNombre("");
       setApellido("");
@@ -86,7 +88,7 @@ export default function ConductoresPage() {
       setVencimientoLicencia("");
       cargarConductores();
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }

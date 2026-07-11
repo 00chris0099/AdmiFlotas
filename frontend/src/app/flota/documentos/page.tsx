@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface DocumentoVehiculo {
   id: string;
@@ -69,6 +71,8 @@ export default function DocumentosPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [filtroVehiculo, setFiltroVehiculo] = useState("");
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   const [vehiculoId, setVehiculoId] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
@@ -114,7 +118,7 @@ export default function DocumentosPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!vehiculoId || !tipoDocumento || !numeroDocumento || !fechaEmision) {
-      alert("Vehículo, tipo de documento, número y fecha de emisión son requeridos.");
+      toast.warning("Vehículo, tipo de documento, número y fecha de emisión son requeridos.");
       return;
     }
 
@@ -133,23 +137,24 @@ export default function DocumentosPage() {
       setModalOpen(false);
       resetForm();
       cargarDatos();
-      alert("Documento registrado con éxito");
+      toast.success("Documento registrado con éxito");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("¿Está seguro de eliminar este documento?")) return;
+    const ok = await confirm({ message: "¿Está seguro de eliminar este documento?", variant: "danger" });
+    if (!ok) return;
 
     try {
       await api.deleteDocumento(id);
       cargarDatos();
-      alert("Documento eliminado correctamente");
+      toast.success("Documento eliminado correctamente");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     }
   };
 

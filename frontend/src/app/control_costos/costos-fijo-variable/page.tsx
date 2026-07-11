@@ -5,6 +5,8 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import api from "@/lib/api";
 import { exportToExcel } from "@/utils/exportUtils";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 
 interface CostoItem {
   id: string;
@@ -26,6 +28,8 @@ export default function CostosPage() {
   const [resumen, setResumen] = useState<ResumenCostos>({ totalFijo: 0, totalCombustible: 0, totalMantenimiento: 0 });
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const toast = useToast();
+  const { confirm } = useConfirm();
 
   // Campos del formulario
   const [periodo, setPeriodo] = useState("2026-06");
@@ -52,13 +56,14 @@ export default function CostosPage() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("¿Estás seguro de eliminar este costo fijo?")) return;
+    const ok = await confirm({ message: "¿Estás seguro de eliminar este costo fijo?", variant: "danger" });
+    if (!ok) return;
     try {
       await api.deleteCosto(id);
       loadData();
     } catch (err: any) {
       console.error(err);
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     }
   };
 
@@ -80,7 +85,7 @@ export default function CostosPage() {
       loadData();
     } catch (err) {
       console.error(err);
-      alert("Error de conexión");
+      toast.error("Error de conexión");
     } finally {
       setSubmitting(false);
     }
