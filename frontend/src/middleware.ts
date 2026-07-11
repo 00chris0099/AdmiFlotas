@@ -33,6 +33,17 @@ export function middleware(request: NextRequest) {
     const userRole = payload.rol;
 
     // Control de acceso basado en roles (RBAC)
+    // 0. Vehículos (Inventario de Flota)
+    if (pathname.startsWith("/vehiculos")) {
+      if (
+        userRole !== "JEFE_PROCESO" &&
+        userRole !== "ADMINISTRATIVO" &&
+        userRole !== "ANALISTA"
+      ) {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
+    }
+
     // 1. Configuración & Costos Fijos/Variables (Módulo Administrativo/Settings)
     if (pathname.startsWith("/configuracion")) {
       if (userRole !== "JEFE_PROCESO" && userRole !== "ADMINISTRATIVO") {

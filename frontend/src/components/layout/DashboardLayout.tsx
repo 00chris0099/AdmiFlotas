@@ -21,6 +21,29 @@ interface MenuSection {
 
 const MENU_SECTIONS: MenuSection[] = [
   {
+    title: "Módulo Flota",
+    items: [
+      {
+        name: "Inventario de Flota",
+        href: "/vehiculos",
+        icon: "truck",
+        roles: ["JEFE_PROCESO", "ADMINISTRATIVO", "ANALISTA"],
+      },
+      {
+        name: "Asignación Vehicular",
+        href: "/flota/asignacion",
+        icon: "swap",
+        roles: ["JEFE_PROCESO", "JEFE_OPERACION", "ADMINISTRATIVO"],
+      },
+      {
+        name: "Documentos Flota",
+        href: "/flota/documentos",
+        icon: "document",
+        roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
+      },
+    ],
+  },
+  {
     title: "Módulo Operaciones",
     items: [
       {
@@ -40,6 +63,12 @@ const MENU_SECTIONS: MenuSection[] = [
         href: "/conductores",
         icon: "driver",
         roles: ["JEFE_PROCESO", "ANALISTA", "ADMINISTRATIVO", "INSPECTOR"],
+      },
+      {
+        name: "Rutas",
+        href: "/operaciones/rutas",
+        icon: "route",
+        roles: ["JEFE_PROCESO", "JEFE_OPERACION", "CONTROLADOR_TRANSITO", "ADMINISTRATIVO"],
       },
     ],
   },
@@ -63,6 +92,18 @@ const MENU_SECTIONS: MenuSection[] = [
         href: "/control_llantas",
         icon: "tire",
         roles: ["JEFE_PROCESO", "MECANICO", "ELECTRICISTA", "INSPECTOR", "ADMINISTRATIVO"],
+      },
+      {
+        name: "Almacén",
+        href: "/mantenimiento/almacen",
+        icon: "warehouse",
+        roles: ["JEFE_PROCESO", "JEFE_MANTENIMIENTO", "ENCARGADO_TALLER", "MECANICO", "ADMINISTRATIVO"],
+      },
+      {
+        name: "Lavado",
+        href: "/mantenimiento/lavado",
+        icon: "clean",
+        roles: ["JEFE_PROCESO", "JEFE_MANTENIMIENTO", "LAVADOR", "ADMINISTRATIVO"],
       },
     ],
   },
@@ -92,6 +133,29 @@ const MENU_SECTIONS: MenuSection[] = [
         href: "/configuracion",
         icon: "settings",
         roles: ["JEFE_PROCESO", "ADMINISTRATIVO"],
+      },
+    ],
+  },
+  {
+    title: "Módulo Seguridad",
+    items: [
+      {
+        name: "Auditoría del Sistema",
+        href: "/seguridad/audit",
+        icon: "eye",
+        roles: ["JEFE_PROCESO"],
+      },
+      {
+        name: "Control de Sesiones",
+        href: "/seguridad/sesiones",
+        icon: "lock",
+        roles: ["JEFE_PROCESO"],
+      },
+      {
+        name: "Gestión de Permisos",
+        href: "/seguridad/permisos",
+        icon: "key-lock",
+        roles: ["JEFE_PROCESO"],
       },
     ],
   },
