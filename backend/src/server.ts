@@ -51,6 +51,16 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customSiteTitle: "SAF API Docs",
 }));
 
+// ─── Root Response ───
+app.get("/", (_req, res) => {
+  res.json({
+    name: "SAF - Sistema de Administración de Flotas",
+    version: "1.0.0",
+    docs: "/api/docs",
+    health: "/api/health",
+  });
+});
+
 // ─── Health Check ───
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });

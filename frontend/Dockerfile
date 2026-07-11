@@ -2,6 +2,7 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Contexto: raíz del repo
 COPY frontend/package*.json ./
 RUN npm install
 

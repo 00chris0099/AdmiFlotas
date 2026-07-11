@@ -1,0 +1,75 @@
+# ============================================================
+# SAF - Docker Compose para EasyPanel
+# ============================================================
+
+services:
+  # ─── PostgreSQL ───
+  db:
+    image: postgres:16-alpine
+    container_name: saf_db
+    restart: always
+    environment:
+      POSTGRES_DB: flotas
+      POSTGRES_USER: flotas
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flotas"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Backend API (Express) ───
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: saf_backend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_URL=postgresql://flotas:${DB_PASSWORD}@db:5432/flotas
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=8h
+      - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_FROM=${SMTP_FROM:-SAF Flotas <noreply@saf.local>}
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://aimachristian-administraciondeflotas.ajcxjb.easypanel.host}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ─── Frontend (Next.js) ───
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: /api
+    container_name: saf_frontend
+    restart: always
+    environment:
+      - NEXT_PUBLIC_API_URL=/api
+      - NEXT_PUBLIC_APP_URL=${CORS_ORIGIN:-https://aimachristian-administraciondeflotas.ajcxjb.easypanel.host}
+    depends_on:
+      - backend
+
+  # ─── Nginx Gateway ───
+  nginx:
+    image: nginx:alpine
+    container_name: saf_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  pgdata:
