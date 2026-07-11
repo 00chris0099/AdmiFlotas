@@ -34,22 +34,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const storedUser = localStorage.getItem("saf_user");
     if (storedToken && storedUser) {
       setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      setUser(normalizeUser(JSON.parse(storedUser)));
     }
     setIsLoading(false);
   }, []);
 
+  const normalizeUser = (raw: any): User => ({
+    ...raw,
+    rol: typeof raw.rol === "object" && raw.rol !== null ? raw.rol.codigo : raw.rol,
+  });
+
   const login = async (email: string, passwordPlaintxt: string): Promise<boolean> => {
     try {
       const data = await api.login(email, passwordPlaintxt);
+      const normalized = normalizeUser(data.usuario);
 
-      localStorage.setItem("saf_user", JSON.stringify(data.usuario));
+      localStorage.setItem("saf_user", JSON.stringify(normalized));
 
       document.cookie = `saf_token=${data.token}; path=/; max-age=28800; SameSite=Lax`;
-      document.cookie = `saf_role=${data.usuario.rol}; path=/; max-age=28800; SameSite=Lax`;
+      document.cookie = `saf_role=${normalized.rol}; path=/; max-age=28800; SameSite=Lax`;
 
       setToken(data.token);
-      setUser(data.usuario);
+      setUser(normalized);
 
       router.push("/");
       router.refresh();
