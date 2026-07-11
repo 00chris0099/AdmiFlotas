@@ -127,9 +127,9 @@ export default function AsignacionPage() {
     },
     {
       header: "Conductor",
-      accessorKey: (row) => (
+      accessorKey: (row: any) => (
         <div>
-          <span className="text-white">{row.conductor}</span>
+          <span className="text-white">{typeof row.conductor === "string" ? row.conductor : row.conductor?.nombre ? `${row.conductor.nombre} ${row.conductor.apellido}` : ""}</span>
         </div>
       ),
     },
