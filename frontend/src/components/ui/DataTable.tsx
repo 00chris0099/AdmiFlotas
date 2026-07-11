@@ -87,6 +87,8 @@ export function DataTable<T extends { id: string | number }>({
           formattedVal = obj.nombre ?? obj.codigo ?? obj.placa ?? obj.label ?? JSON.stringify(val);
         } else if (typeof val === "boolean") {
           formattedVal = val ? "SÍ" : "NO";
+        } else {
+          formattedVal = String(val);
         }
         textContent += `${title.padEnd(20)}: ${formattedVal}\n`;
       }
