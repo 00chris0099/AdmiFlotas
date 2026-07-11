@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import SearchSelect from "@/components/ui/SearchSelect";
+import { useAuth } from "@/components/providers/AuthProvider";
 import api from "@/lib/api";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
@@ -68,7 +69,7 @@ export default function MovimientosPage() {
   const [conductorId, setConductorId] = useState("");
   const [destino, setDestino] = useState("Sector Industrial");
   const [sectorSolicitante, setSectorSolicitante] = useState("Logística");
-  const [kilometrajeSalida, setKilometrajeSalida] = useState("10500");
+  const [kilometrajeSalida, setKilometrajeSalida] = useState("");
   const [horaSalida, setHoraSalida] = useState("08:00");
 
   // 15 Puntos Checklist
@@ -89,6 +90,7 @@ export default function MovimientosPage() {
   const [manchasFugas, setManchasFugas] = useState("OK");
 
   // Firmas
+  const { user } = useAuth();
   const [firmaConductorInput, setFirmaConductorInput] = useState("");
   const [firmaInspectorInput, setFirmaInspectorInput] = useState("");
   const [firmaEncargadoGarajeInput, setFirmaEncargadoGarajeInput] = useState("");
@@ -145,6 +147,35 @@ export default function MovimientosPage() {
     () => SECTORES_ORGANIZACIONALES.map((s) => ({ value: s, label: s })),
     []
   );
+
+  // Auto-fill km de salida cuando se selecciona un vehículo
+  useEffect(() => {
+    if (!vehiculoId) return;
+    const cargarKmVehiculo = async () => {
+      try {
+        const movimientos = await api.getMovimientos({ vehiculoId, limit: 1 });
+        const items = Array.isArray(movimientos) ? movimientos : [];
+        if (items.length > 0 && items[0].kilometrajeLlegada) {
+          setKilometrajeSalida(String(items[0].kilometrajeLlegada));
+        } else {
+          setKilometrajeSalida("");
+        }
+      } catch {
+        setKilometrajeSalida("");
+      }
+    };
+    cargarKmVehiculo();
+  }, [vehiculoId]);
+
+  // Auto-fill firmas con el usuario logueado
+  useEffect(() => {
+    if (user) {
+      const nombreCompleto = `${user.nombre} ${user.apellido}`;
+      if (!firmaConductorInput) setFirmaConductorInput(nombreCompleto);
+      if (!firmaInspectorInput) setFirmaInspectorInput(nombreCompleto);
+      if (!firmaEncargadoGarajeInput) setFirmaEncargadoGarajeInput(nombreCompleto);
+    }
+  }, [user]);
 
   const cargarCatalogos = async () => {
     try {

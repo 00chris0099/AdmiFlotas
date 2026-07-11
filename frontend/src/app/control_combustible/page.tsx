@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import SearchSelect from "@/components/ui/SearchSelect";
+import { useAuth } from "@/components/providers/AuthProvider";
 import api from "@/lib/api";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 import { exportToExcel } from "@/utils/exportUtils";
@@ -97,11 +98,33 @@ export default function CombustiblePage() {
   const [cantidadAceiteMotorLt, setCantidadAceiteMotorLt] = useState("0.5");
 
   // Form states — Firmas
+  const { user } = useAuth();
   const [firmaEncargadoGaraje, setFirmaEncargadoGaraje] = useState("");
   const [firmaConductor, setFirmaConductor] = useState("");
   const [firmaServicentro, setFirmaServicentro] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Auto-fill firma encargado con el usuario logueado
+  useEffect(() => {
+    if (user && !firmaEncargadoGaraje) {
+      setFirmaEncargadoGaraje(`${user.nombre} ${user.apellido}`);
+    }
+  }, [user]);
+
+  // Auto-fill km cuando se selecciona vehículo
+  useEffect(() => {
+    if (!vehiculoId) return;
+    const cargarKm = async () => {
+      try {
+        const data = await api.getVehiculo(vehiculoId);
+        if (data?.kilometrajeActual) {
+          setKilometrajeActual(String(data.kilometrajeActual));
+        }
+      } catch {}
+    };
+    cargarKm();
+  }, [vehiculoId]);
 
   // Opciones para SearchSelect
   const vehiculoOptions = useMemo(
@@ -134,6 +157,14 @@ export default function CombustiblePage() {
     () => SERVICENTROS.map((s) => ({ value: s, label: s })),
     []
   );
+
+  // Auto-fill firma conductor cuando se selecciona
+  useEffect(() => {
+    if (conductorId) {
+      const c = conductores.find((x) => x.id === conductorId);
+      if (c) setFirmaConductor(`${c.nombre} ${c.apellido}`);
+    }
+  }, [conductorId, conductores]);
 
   const cargarCatalogos = async () => {
     try {
@@ -412,8 +443,10 @@ export default function CombustiblePage() {
                 <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider">1. Orden</h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[10px] font-semibold text-slate-400 uppercase">N° de Orden *</label>
-                    <input type="text" value={numeroOrden} onChange={(e) => setNumeroOrden(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none font-mono" required />
+                    <label className="text-[10px] font-semibold text-slate-400 uppercase">N° de Orden</label>
+                    <div className="w-full mt-1 px-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-500 font-mono">
+                      Se genera automáticamente al guardar
+                    </div>
                   </div>
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Fecha</label>

@@ -613,13 +613,9 @@ export default function OrdenesMantenimientoPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-350">N° de Orden</label>
-                  <input
-                    type="text"
-                    value={numeroOrden}
-                    onChange={(e) => setNumeroOrden(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                    required
-                  />
+                  <div className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl px-3 py-2 text-sm text-slate-500 font-mono">
+                    Se genera automáticamente al guardar
+                  </div>
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Vehículo</label>

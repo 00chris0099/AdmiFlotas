@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 
 interface Llanta {
@@ -48,6 +49,65 @@ export default function LlantasPage() {
   const [targetRotarPosicion, setTargetRotarPosicion] = useState<string>("");
   const [rotating, setRotating] = useState(false);
   const [updatingLifecycle, setUpdatingLifecycle] = useState(false);
+
+  // Opciones para SearchSelect de vehículo
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v) => ({
+      value: v.id,
+      label: `${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
+
+  // Auto-load km del vehículo cuando cambia la selección
+  useEffect(() => {
+    if (!selectedVehiculoId) return;
+    const cargarKm = async () => {
+      try {
+        const data = await api.getVehiculo(selectedVehiculoId);
+        if (data?.kilometrajeActual) {
+          setKilometrajeInstalacion(String(data.kilometrajeActual));
+        }
+      } catch {}
+    };
+    cargarKm();
+  }, [selectedVehiculoId]);
+
+  // Opciones para SearchSelect de llantas
+  const fabricanteOptions = useMemo(() => [
+    { value: "MICHELIN", label: "MICHELIN" },
+    { value: "BRIDGESTONE", label: "BRIDGESTONE" },
+    { value: "GOODYEAR", label: "GOODYEAR" },
+    { value: "CONTINENTAL", label: "CONTINENTAL" },
+    { value: "FIRESTONE", label: "FIRESTONE" },
+    { value: "PIRELLI", label: "PIRELLI" },
+    { value: "DUNLOP", label: "DUNLOP" },
+    { value: "YOKOHAMA", label: "YOKOHAMA" },
+    { value: "HANKOOK", label: "HANKOOK" },
+    { value: "KUMHO", label: "KUMHO" },
+    { value: "TOYO", label: "TOYO" },
+    { value: "COOPER", label: "COOPER" },
+    { value: "FATE", label: "FATE" },
+    { value: "CEAT", label: "CEAT" },
+  ], []);
+
+  const dimensionOptions = useMemo(() => [
+    { value: "295/80R22.5", label: "295/80R22.5" },
+    { value: "11R22.5", label: "11R22.5" },
+    { value: "12R22.5", label: "12R22.5" },
+    { value: "315/80R22.5", label: "315/80R22.5" },
+    { value: "275/80R22.5", label: "275/80R22.5" },
+    { value: "265/70R19.5", label: "265/70R19.5" },
+    { value: "225/75R17.5", label: "225/75R17.5" },
+    { value: "8.25R20", label: "8.25R20" },
+    { value: "7.50R16", label: "7.50R16" },
+    { value: "7.00R16", label: "7.00R16" },
+    { value: "7.00R15", label: "7.00R15" },
+    { value: "6.50R16", label: "6.50R16" },
+    { value: "6.00R16", label: "6.00R16" },
+    { value: "185/75R16", label: "185/75R16" },
+    { value: "175/75R16", label: "175/75R16" },
+  ], []);
 
   const cargarVehiculos = async () => {
     try {
@@ -229,17 +289,15 @@ export default function LlantasPage() {
 
         {/* SELECTOR DE VEHÍCULO */}
         {vehiculos.length > 0 && (
-          <select
-            value={selectedVehiculoId}
-            onChange={(e) => setSelectedVehiculoId(e.target.value)}
-            className="px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-600 max-w-[220px]"
-          >
-            {vehiculos.map((v) => (
-              <option key={v.id} value={v.id}>
-                {v.placa} - {v.marca} {v.modelo}
-              </option>
-            ))}
-          </select>
+          <div className="max-w-[280px]">
+            <SearchSelect
+              options={vehiculoOptions}
+              value={selectedVehiculoId}
+              onChange={setSelectedVehiculoId}
+              placeholder="Seleccionar vehículo..."
+              searchPlaceholder="Buscar por placa..."
+            />
+          </div>
         )}
       </div>
 
@@ -499,12 +557,12 @@ export default function LlantasPage() {
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Fabricante</label>
-                  <input
-                    type="text"
+                  <SearchSelect
+                    options={fabricanteOptions}
                     value={fabricante}
-                    onChange={(e) => setFabricante(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                    required
+                    onChange={setFabricante}
+                    placeholder="Buscar fabricante..."
+                    searchPlaceholder="Marca de llanta..."
                   />
                 </div>
               </div>
@@ -512,12 +570,12 @@ export default function LlantasPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Medida (Dimensión)</label>
-                  <input
-                    type="text"
+                  <SearchSelect
+                    options={dimensionOptions}
                     value={dimension}
-                    onChange={(e) => setDimension(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                    required
+                    onChange={setDimension}
+                    placeholder="Buscar medida..."
+                    searchPlaceholder="Ej: 295/80R22.5..."
                   />
                 </div>
                 <div>
