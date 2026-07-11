@@ -5,7 +5,7 @@
 import { Router } from "express";
 import { authenticate } from "../middleware/auth.js";
 import { requireRole } from "../middleware/rbac.js";
-import { sendSuccess, sendCreated, sendPaginated } from "../utils/apiResponse.js";
+import { sendSuccess, sendCreated, sendPaginated, sendError } from "../utils/apiResponse.js";
 import { flattenVehiculo } from "../utils/flatten.js";
 import { validate } from "../middleware/validate.js";
 import { createVehiculoSchema, updateVehiculoSchema } from "../schemas/vehiculo.schema.js";
