@@ -48,6 +48,45 @@ app.use("/api/", limiter);
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
+// ─── Flatten Prisma nested objects in JSON responses ───
+function flattenObject(obj: any): any {
+  if (Array.isArray(obj)) return obj.map(flattenObject);
+  if (obj === null || typeof obj !== "object") return obj;
+  const result: any = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value && typeof value === "object" && !Array.isArray(value) && "nombre" in value && "id" in value && value.constructor?.name !== "Date") {
+      const nested = value as any;
+      if (key === "vehiculo") {
+        result[key] = nested.placa ?? "";
+        result.vehiculoLabel = `${nested.marca?.nombre ?? nested.marca ?? ""} ${nested.modelo?.nombre ?? nested.modelo ?? ""}`.trim();
+        result.placa = nested.placa ?? "";
+        result.marcaVehiculo = nested.marca?.nombre ?? "";
+        result.modeloVehiculo = nested.modelo?.nombre ?? "";
+      } else if (key === "rol") {
+        result[key] = nested.codigo ?? nested.nombre ?? "";
+      } else {
+        result[key] = nested.codigo ?? nested.nombre ?? "";
+      }
+    } else if (value && typeof value === "object" && !Array.isArray(value)) {
+      result[key] = flattenObject(value);
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+}
+
+app.use((_req, res, next) => {
+  const originalJson = res.json.bind(res);
+  res.json = function (body: any) {
+    if (body && typeof body === "object") {
+      body = flattenObject(body);
+    }
+    return originalJson(body);
+  };
+  next();
+});
+
 // ─── Swagger UI ───
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCss: ".swagger-ui .topbar { display: none }",
