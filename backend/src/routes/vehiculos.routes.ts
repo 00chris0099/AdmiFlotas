@@ -6,6 +6,7 @@ import { Router } from "express";
 import { authenticate } from "../middleware/auth.js";
 import { requireRole } from "../middleware/rbac.js";
 import { sendSuccess, sendCreated, sendPaginated } from "../utils/apiResponse.js";
+import { flattenVehiculo } from "../utils/flatten.js";
 import { validate } from "../middleware/validate.js";
 import { createVehiculoSchema, updateVehiculoSchema } from "../schemas/vehiculo.schema.js";
 import prisma from "../config/database.js";
@@ -88,7 +89,7 @@ router.get("/", async (req, res, next) => {
       prisma.vehiculo.count({ where }),
     ]);
 
-    sendPaginated(res, items, total, pageNum, limitNum);
+    sendPaginated(res, items.map(flattenVehiculo), total, pageNum, limitNum);
   } catch (error) {
     next(error);
   }
@@ -126,7 +127,7 @@ router.get("/:id", async (req, res, next) => {
       where: { id: req.params.id },
       include: { marca: true, modelo: true, color: true, tipoCombustible: true, estado: true },
     });
-    sendSuccess(res, vehiculo);
+    sendSuccess(res, flattenVehiculo(vehiculo));
   } catch (error) {
     next(error);
   }

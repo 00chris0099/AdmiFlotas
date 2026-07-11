@@ -4,6 +4,66 @@
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "/api";
 
+// Client-side flatten: convierte objetos Prisma anidados a strings primitivos
+// para evitar React error #31 (Objects are not valid as React child)
+function safeStr(v: any): string {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "number" || typeof v === "boolean") return String(v);
+  if (v instanceof Date) return v.toISOString();
+  if (typeof v === "object") return v.codigo ?? v.nombre ?? v.placa ?? v.email ?? v.label ?? "";
+  return String(v);
+}
+
+function flattenResponse(obj: any): any {
+  if (obj == null || typeof obj !== "object") return obj;
+  if (Array.isArray(obj)) return obj.map(flattenResponse);
+  if (obj instanceof Date) return obj.toISOString();
+
+  // Keys que contienen objetos tipo lookup (solo tienen id+nombre, no datos propios)
+  const LOOKUP_KEYS = new Set(["marca", "modelo", "color", "tipoCombustible", "estado",
+    "categoriaVehiculo", "sectorOrganizacional", "fabricante", "dimension", "tipoLavado",
+    "rol", "centroServicio", "sectorSolicitante"]);
+  // Keys que NUNCA se aplastan a string (son entidades principales con campos propios)
+  const PRESERVE_KEYS = new Set(["usuario", "conductor", "tecnico", "tecnicoAsignado", "vehiculo"]);
+
+  const result: any = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value && typeof value === "object" && !Array.isArray(value) && !(value instanceof Date)) {
+      if (LOOKUP_KEYS.has(key)) {
+        // Lookup tables: extraer solo el nombre/codigo como string
+        result[key] = safeStr(value);
+      } else if (key === "vehiculo") {
+        // Vehiculo: mantener como objeto pero aplanar sus relaciones internas
+        const v = flattenResponse(value);
+        result[key] = v;
+        result.vehiculoLabel = `${safeStr(v.marca)} ${safeStr(v.modelo)}`.trim();
+        result.placa = v.placa ?? "";
+        result.marcaVehiculo = safeStr(v.marca);
+        result.modeloVehiculo = safeStr(v.modelo);
+        result.codigoPatrimonial = v.codigoPatrimonial ?? "";
+      } else if (key === "conductor" || key === "tecnico" || key === "tecnicoAsignado") {
+        // Conductor: mantener como objeto pero aplanar sus relaciones
+        const c = flattenResponse(value);
+        result[key] = c;
+        result.conductorLabel = `${c.nombre ?? ""} ${c.apellido ?? ""}`.trim();
+      } else if (PRESERVE_KEYS.has(key)) {
+        // Entidades principales: recursion sin aplastar
+        result[key] = flattenResponse(value);
+      } else if ("id" in value && ("nombre" in value || "codigo" in value) && Object.keys(value).length <= 6) {
+        // Objeto lookup generico (pocos campos, tiene id+nombre/codigo)
+        result[key] = safeStr(value);
+      } else {
+        // Objetos complejos: recursion normal
+        result[key] = flattenResponse(value);
+      }
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+}
+
 class ApiClient {
   private token: string | null = null;
 
@@ -57,7 +117,8 @@ class ApiClient {
     if (res.status === 204) return undefined as T;
 
     const data = await res.json();
-    return data.data ?? data;
+    const payload = data.data ?? data;
+    return flattenResponse(payload) as T;
   }
 
   // ─── Auth ───
