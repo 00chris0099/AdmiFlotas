@@ -158,7 +158,7 @@ export default function PermisosPage() {
               <option value="">-- Seleccionar usuario --</option>
               {usuarios.map((u) => (
                 <option key={u.id} value={u.id}>
-                  {u.nombre} {u.apellido} ({u.rol.replace(/_/g, " ")})
+                  {u.nombre} {u.apellido} ({typeof u.rol === "object" ? (u.rol as any)?.codigo ?? (u.rol as any)?.nombre ?? "" : (u.rol ?? "").replace(/_/g, " ")})
                 </option>
               ))}
             </select>

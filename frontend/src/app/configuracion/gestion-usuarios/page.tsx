@@ -274,9 +274,14 @@ export default function GestionUsuariosPage() {
                       </td>
                       <td className="px-4 py-3 text-slate-300">{u.email}</td>
                       <td className="px-4 py-3">
-                        <span className={`inline-block px-2 py-0.5 rounded-lg text-[10px] font-bold border ${ROLE_COLORS[u.rol] || "bg-slate-500/10 text-slate-400 border-slate-500/20"}`}>
-                          {ROLES.find(r => r.value === u.rol)?.label || u.rol}
-                        </span>
+                        {(() => {
+                          const rolStr = typeof u.rol === "object" ? (u.rol as any)?.codigo ?? (u.rol as any)?.nombre ?? "" : u.rol ?? "";
+                          return (
+                            <span className={`inline-block px-2 py-0.5 rounded-lg text-[10px] font-bold border ${ROLE_COLORS[rolStr] || "bg-slate-500/10 text-slate-400 border-slate-500/20"}`}>
+                              {ROLES.find(r => r.value === rolStr)?.label || rolStr}
+                            </span>
+                          );
+                        })()}
                       </td>
                       <td className="px-4 py-3">
                         <span className={`inline-block px-2 py-0.5 rounded-lg text-[10px] font-bold ${
