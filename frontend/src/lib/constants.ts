@@ -4,39 +4,24 @@
 // ============================================
 
 // --------------------------------------------
-// MARCAS DE VEHÍCULOS (Estándar Perú)
+// MARCAS DE VEHÍCULOS (Mercado Peruano Completo)
 // --------------------------------------------
 export const MARCAS_VEHICULOS = [
-  "TOYOTA",
-  "HYUNDAI",
-  "KIA",
-  "NISSAN",
-  "CHEVROLET",
-  "FORD",
-  "MAZDA",
-  "MITSUBISHI",
-  "SUZUKI",
-  "ISUZU",
-  "MERCEDES-BENZ",
-  "VOLKSWAGEN",
-  "FIAT",
-  "HONDA",
-  "DAIHATSU",
-  "CHERY",
-  "MOTORS",
-  "DFM",
-  "CHANGAN",
-  "GWM",
-  "HAVAL",
-  "JAC",
-  "RENAULT",
-  "PEUGEOT",
-  "CITROËN",
-  "BMW",
-  "SUBARU",
-  "LEXUS",
-  "INFINITI",
-  "AUDI",
+  // Japonesas
+  "TOYOTA", "NISSAN", "MAZDA", "MITSUBISHI", "SUZUKI", "ISUZU", "HONDA", "DAIHATSU", "SUBARU", "LEXUS", "INFINITI",
+  // Coreanas
+  "HYUNDAI", "KIA", "GENESIS", "SSANGYONG",
+  // Europeas
+  "MERCEDES-BENZ", "VOLKSWAGEN", "BMW", "AUDI", "RENAULT", "PEUGEOT", "CITROËN", "FIAT", "VOLVO", "FIAT",
+  // Americanas
+  "CHEVROLET", "FORD", "DODGE", "RAM", "JEEP",
+  // Chinas
+  "CHERY", "CHANGAN", "GWM", "HAVAL", "JAC", "BYD", "MG", "GEELY", "FOTON", "DONGFENG", "DFM", "GREAT WALL",
+  "LIFAN", "JMEV", "BAIC", "MAXUS", "TANK", "JETOUR", "OMODA", "JACOO", "CAOA CHERY", "JAC MOTORS",
+  // Brasileñas/Indianas
+  "FIAT", "TATA",
+  // Comercial/Pesada
+  "HINO", "SCANIA", "MAN", "FUSO",
 ] as const;
 
 export type MarcaVehiculo = typeof MARCAS_VEHICULOS[number];
@@ -393,36 +378,81 @@ export const CONJUNTOS_SUBSTITUIDOS = [
 // MARCAS Y MODELOS DE VEHÍCULOS (Estándar Perú)
 // --------------------------------------------
 export const MARCAS_MODELOS: Record<string, string[]> = {
-  "TOYOTA": ["HILUX", "COROLLA", "CAMRY", "4RUNNER", "PRADO", "COASTER", "HIACE", "INNOVA", "RUSH", "FORTUNER"],
-  "HYUNDAI": ["TUCSON", "SANTA FE", "ACCENT", "i10", "i20", "HD78", "PORTER", "ELANTRA", "CRETA"],
-  "KIA": ["SPORTAGE", "SONATA", "PICANTO", "CERATO", "SORENTO", "RIO", "SELTOS"],
-  "NISSAN": ["FRONTIER", "SENTRA", "MARCH", "X-TRAIL", "NP300", "KICKS", "QASHQAI"],
-  "CHEVROLET": ["SAIL", "ONIX", "CAPTIVA", "NPR", "TORNADO", "SPARK", "TRACKER", "S10"],
-  "FORD": ["RANGER", "ESCAPE", "ECOSPORT", "TRANSIT", "TERRITORY", "MAVERICK"],
-  "MAZDA": ["MAZDA3", "MAZDA6", "CX-3", "CX-5", "CX-30", "BT-50"],
-  "MITSUBISHI": ["OUTLANDER", "L200", "MONTERO", "ASX", "ATTRAGE", "TRITON"],
-  "SUZUKI": ["SWIFT", "VITARA", "JIMNY", "CELERIO", "DZIRE", "CARRY"],
-  "ISUZU": ["D-MAX", "MU-X", "NPR", "NQR", "FRR", "FSR"],
-  "MERCEDES-BENZ": ["SPRINTER", "ACTROS", "ATEGO", "VITO", "CLASE C", "CLASE E"],
-  "VOLKSWAGEN": ["GOL", "POLO", "T-CROSS", "TIGUAN", "AMAROK", "TRANSPORTER"],
-  "FIAT": ["DUCATO", "DOBLÒ", "PUNTO", "500", "CRONOS"],
-  "HONDA": ["CIVIC", "CR-V", "HR-V", "FIT", "WR-V"],
-  "DAIHATSU": ["TERIOS", "HIJET", "MIRA", "CUORE"],
-  "CHERY": ["TIGGO", "ARRIZO", "QQ", "FULWIN"],
-  "DFM": ["RICH", "C35", "K01"],
-  "CHANGAN": ["CS35", "CS55", "CS75", "ALSVIN"],
-  "GWM": ["POER", "Haval JOLION", "Haval H6", "ORA"],
-  "HAVAL": ["JOLION", "H6", "F7"],
-  "JAC": ["S2", "S3", "T6", "REFINE"],
-  "RENAULT": ["DUSTER", "KWID", "SANDERO", "LOGAN", "KOLEOS"],
-  "PEUGEOT": ["208", "2008", "3008", "PARTNER", "RENDER"],
-  "CITROËN": ["C3", "C4", "BERLINGO", "JUMPER"],
-  "BMW": ["SERIE 3", "SERIE 5", "X1", "X3", "X5"],
-  "SUBARU": ["OUTBACK", "FORESTER", " XV"],
-  "LEXUS": ["NX", "RX", "IS", "ES"],
-  "INFINITI": ["Q50", "QX50", "QX60"],
-  "AUDI": ["A3", "A4", "Q3", "Q5"],
+  // Japonesas
+  "TOYOTA": ["HILUX", "COROLLA", "CAMRY", "4RUNNER", "PRADO", "COASTER", "HIACE", "INNOVA", "RUSH", "FORTUNER", "LAND CRUISER", "YARIS", "HILUX SW4", "RAV4", "DYNA", "HIACE COMBI", "GR SUPRA", "C-HR", "SIENNA", "PREVIA", "AVENSIS", "RAV4 PRIME"],
+  "NISSAN": ["FRONTIER", "SENTRA", "MARCH", "X-TRAIL", "NP300", "KICKS", "QASHQAI", "PATROL", "NAVARA", "URVAN", "VERSA", "MURANO", "ARMADA", "KING CAB", "CABSTAR", "NT450"],
+  "MAZDA": ["MAZDA3", "MAZDA6", "CX-3", "CX-5", "CX-30", "BT-50", "CX-50", "CX-60", "CX-90", "MX-5"],
+  "MITSUBISHI": ["OUTLANDER", "L200", "MONTERO", "ASX", "ATTRAGE", "TRITON", "PAJERO SPORT", "MONTERO SPORT", "COLT", "ECLIPSE CROSS", "MIRAGE", "FUSO CANTER", "FUSO fighter"],
+  "SUZUKI": ["SWIFT", "VITARA", "JIMNY", "CELERIO", "DZIRE", "CARRY", "S-PRESSO", "BALENO", "EEGUER", "XL7", "ERTIGA", "JIMNY SIERRA", "SWACE", "ACROSS"],
+  "ISUZU": ["D-MAX", "MU-X", "NPR", "NQR", "FRR", "FSR", "FVZ", "FVR", "FORWARD", "GIGA", "ELF"],
+  "HONDA": ["CIVIC", "CR-V", "HR-V", "FIT", "WR-V", "ACCORD", "PILOT", "ODYSSEY", "BR-V", "STEP WGN", "ACTY"],
+  "DAIHATSU": ["TERIOS", "HIJET", "MIRA", "CUORE", "COPEN", "MATERIA", "BOON", "MOVE", "TANTO"],
+  "SUBARU": ["OUTBACK", "FORESTER", "XV", "IMPREZA", "LEGACY", "WRX", "LEVORG", "ASCENT", "SOLTERRA"],
+  "LEXUS": ["NX", "RX", "IS", "ES", "UX", "GX", "LX", "RC", "LS", "LC"],
+  "INFINITI": ["Q50", "QX50", "QX60", "QX80", "Q60", "Q70"],
+  // Coreanas
+  "HYUNDAI": ["TUCSON", "SANTA FE", "ACCENT", "i10", "i20", "HD78", "PORTER", "ELANTRA", "CRETA", "KONA", "STAREX", "IONIQ 5", "AVANTE", "VERNA", "H1", "H350", "SONATA", "PALISADE", "VENUE", "BAYON"],
+  "KIA": ["SPORTAGE", "SONATA", "PICANTO", "CERATO", "SORENTO", "RIO", "SELTOS", "STONIC", "MORNING", "CARNIVAL", "OPTIMA", "K5", "NIRO", "EV6", "SOUL", "SELTOS", "CARENS", "PREGIO", "BONGO"],
+  "GENESIS": ["G70", "G80", "GV70", "GV80", "Electrified G80"],
+  "SSANGYONG": ["TIVOLI", "KORANDO", "REXTON", "MUSSO", "ACTYON", "KORANDO C300"],
+  // Europeas
+  "MERCEDES-BENZ": ["SPRINTER", "ACTROS", "ATEGO", "VITO", "CLASE C", "CLASE E", "CLASE A", "GLA", "GLC", "GLE", "V-CLASS", "CITAN", "ATEGO", "AXOR", "UNIMOG", "CITO"],
+  "VOLKSWAGEN": ["GOL", "POLO", "T-CROSS", "TIGUAN", "AMAROK", "TRANSPORTER", "TAOS", "T-ROC", "TOUAREG", "VIRTUS", "SAVEIRO", "CRETE", "GOL POWER", "CRAFTER", "MULTIVAN"],
+  "BMW": ["SERIE 3", "SERIE 5", "X1", "X3", "X5", "SERIE 1", "SERIE 2", "X2", "X4", "X6", "Z4", "I3", "I4", "IX", "M3", "M5"],
+  "AUDI": ["A3", "A4", "Q3", "Q5", "A1", "A5", "A6", "A7", "Q7", "Q8", "E-TRON", "TT"],
+  "RENAULT": ["DUSTER", "KWID", "SANDERO", "LOGAN", "KOLEOS", "CAPTUR", "MEGANE", "SCENIC", "TRAFIC", "MASTER", "KANGOO", "ALASKAN", "OROCH"],
+  "PEUGEOT": ["208", "2008", "3008", "PARTNER", "RENDER", "207", "301", "408", "5008", "RIFTER", "TRAVELLER", "BOXER", "EXPERT"],
+  "CITROËN": ["C3", "C4", "BERLINGO", "JUMPER", "C3 AIRCROSS", "C5 AIRCROSS", "JUMPY", "RELAY", "SPACETOURER"],
+  "FIAT": ["DUCATO", "DOBLÒ", "PUNTO", "500", "CRONOS", "ARGO", "PULSE", "STRADA", "TORO", "MULTIPLA", "ULYSSE", "DUCATO MAXI"],
+  "VOLVO": ["FH", "FM", "FMX", "FL", "FE", "XC40", "XC60", "XC90", "S60", "V40", "V60", "V90", "C40 RECHARGE"],
+  // Americanas
+  "CHEVROLET": ["SAIL", "ONIX", "CAPTIVA", "NPR", "TORNADO", "SPARK", "TRACKER", "S10", "N300", "NHR", "TRAX", "TRAVERSE", "COLORADO", "SILVERADO", "SUBURBAN", "TAHOE", "EQUINOX", "SONIC", "CRUZE", "MERIVA", "SPARK GT", "TORNADO EV"],
+  "FORD": ["RANGER", "ESCAPE", "ECOSPORT", "TRANSIT", "TERRITORY", "MAVERICK", "EXPLORER", "EDGE", "BRONCO", "BRONCO SPORT", "SUPER DUTY", "F-150", "LOBO", "SPEEDWAY", "F-600", "F-7000"],
+  "DODGE": ["JOURNEY", "DURANGO", "RAM 1500", "RAM 2500", "RAM 3500", "CHARGER", "CHALLENGER", "GRAND CARAVAN"],
+  "RAM": ["1500", "2500", "3500", "PROMASTER", "CHASSIS CAB"],
+  "JEEP": ["RENEGADE", "COMPASS", "WRANGLER", "GRAND CHEROKEE", "CHEROKEE", "GLADIATOR"],
+  // Chinas
+  "CHERY": ["TIGGO 2", "TIGGO 3", "TIGGO 4", "TIGGO 7", "TIGGO 8", "ARRIZO 5", "ARRIZO 6", "ARRIZO 8", "OMODA 5", "JACOO 7", "QQ", "FULWIN", "FOLLOW", "KARRY", "TIGGO PRO", "TIGGO 8 PRO", "ARRIZO GX"],
+  "CHANGAN": ["CS35", "CS55", "CS75", "ALSVIN", "HUNTER", "STAR MODEL", "CS95", "EADO", "UNI-T", "UNI-K", "CS35 PLUS", "CS55 PLUS", "CS75 PLUS", "Z6", "LUMIN"],
+  "GWM": ["POER", "Haval JOLION", "Haval H6", "ORA", "CANNON", "TANK 300", "TANK 500", "Haval F7", "Haval初恋", "WINGLE 7", "STEED"],
+  "HAVAL": ["JOLION", "H6", "F7", "F7X", "DARGO", "H9"],
+  "JAC": ["S2", "S3", "S4", "S5", "S7", "T6", "T8", "REFINE", "SUNRAY", "iEV", "REIN", "S2 MINI", "T8 PRO", "SUNRAY PRO", "iEV7S"],
+  "BYD": ["YUAN PLUS", "ATTO 3", "DOLPHIN", "SEAL", "SONG PLUS", "TANG", "HAN", "QIN PLUS", "SEAGULL", "DOLPHIN MINI", "SONG PRO", "TAN", "F3", "S6", "S7"],
+  "MG": ["ZS", "HS", "MG5", "MG3", "RX8", "GLOSTER", "ZS EV", "HS PHEV", "MARVEL R", "EP", "MG ONE"],
+  "GEELY": ["EMGRAND", "COOLRAY", "AZKARRA", "OKAVANGO", "MONJARO", "TUGELLA", "ATLAS", "BINRAY", "STARHILL", "PROTON"],
+  "FOTON": ["TUNLAND", "AUMARK", "VIEW", "TUNLAND G9", "TOANO", "SAPU", "BJ40", "SAUVANA", "GRAND TUNLAND", "拓陆者"],
+  "DONGFENG": ["AX7", "RICH", "T5 EVO", "GLORY 580", "AEOLUS", "BOX", "SERES", "FENGON 500", "FENGON 7", "MAXUS V80"],
+  "DFM": ["RICH", "C35", "K01", "S30", "A9", "AX7", "H30", "E70", "BOX"],
+  "GREAT WALL": ["STEED", "WINGLE 7", "POER", "HAVAL H6", "HAVAL JOLION", "ORA GOOD CAT"],
+  "LIFAN": ["330", "520", "620", "X60", "MYWAY", "820", "KPV"],
+  "JMEV": ["EV30", "E200", "E400", "RAY", "EX5"],
+  "BAIC": ["X35", "X55", "X65", "BJ20", "BJ40", "BJ80", "EU5", "EC5", "EX360"],
+  "MAXUS": ["V80", "V90", "T60", "T70", "G10", "G20", "D90", "MIFA 9", "EV30", "EV90"],
+  "TANK": ["300", "400", "500", "700", "800"],
+  "JETOUR": ["X70", "X70 PLUS", "X90", "DASHING", "T2"],
+  "OMODA": ["5", "5 GT", "C5"],
+  "JACOO": ["7", "8"],
+  "CAOA CHERY": ["TIGGO 2", "TIGGO 3X", "TIGGO 4", "TIGGO 7", "TIGGO 8"],
+  "JAC MOTORS": ["S2", "S3", "T6", "REFINE", "SUNRAY"],
+  // Brasileñas/Indianas
+  "TATA": ["NEXON", "HARBOR", "TIAGO", "TIGOR", "PUNCH", "ALTROZ", "SAFARI", "HARRIER", "NEXON EV"],
+  // Comercial/Pesada
+  "HINO": ["300", "500", "700", "PROFIA", "RANGER", "PONTO", "DUTRO"],
+  "SCANIA": ["R-SERIE", "S-SERIE", "G-SERIE", "P-SERIE", "TUBULAR", "F-SERIE"],
+  "MAN": ["TGX", "TGL", "TGM", "TGS", "CITATION"],
+  "FUSO": ["CANTER", "FIKER", "SUPER GREAT", "COLT", "FEAR", "FIGHTER"],
 } as const;
+
+// --------------------------------------------
+// AÑOS DE FABRICACIÓN VÁLIDOS (Perú - Decreto Supremo)
+// --------------------------------------------
+export const ANIOS_FABRICACION: { value: string; label: string }[] = Array.from(
+  { length: 2026 - 1990 + 1 },
+  (_, i) => {
+    const year = 2026 - i;
+    return { value: String(year), label: String(year) };
+  }
+);
 
 // --------------------------------------------
 // FUNCIONES AUXILIARES

@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { exportToExcel } from "@/utils/exportUtils";
 import {
   MARCAS_VEHICULOS,
+  MARCAS_MODELOS,
+  ANIOS_FABRICACION,
   COLORES_VEHICULOS,
   TIPOS_COMBUSTIBLE,
-  SUBTIPOS_COMBUSTIBLE,
   CATEGORIAS_VEHICULO,
   getSubtiposCombustible,
   tieneSubtipos,
@@ -70,6 +72,28 @@ export default function VehiculosPage() {
   useEffect(() => {
     cargarVehiculos();
   }, []);
+
+  // Opciones para SearchSelect de Marca
+  const marcaOptions = useMemo(
+    () => MARCAS_VEHICULOS.map((m) => ({ value: m, label: m })),
+    []
+  );
+
+  // Opciones para SearchSelect de Modelo (filtradas por marca seleccionada)
+  const modeloOptions = useMemo(() => {
+    if (!marca) return [];
+    const modelos = MARCAS_MODELOS[marca] ?? [];
+    return modelos.map((m) => ({ value: m, label: m }));
+  }, [marca]);
+
+  // Opciones para SearchSelect de Año
+  const anioOptions = ANIOS_FABRICACION;
+
+  // Opciones para SearchSelect de Color
+  const colorOptions = useMemo(
+    () => COLORES_VEHICULOS.map((c) => ({ value: c, label: c })),
+    []
+  );
 
   const resetForm = () => {
     setPlaca("");
@@ -229,20 +253,37 @@ export default function VehiculosPage() {
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Marca *</label>
-                  <select value={marca} onChange={(e) => setMarca(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required>
-                    <option value="">Seleccionar marca...</option>
-                    {MARCAS_VEHICULOS.map((m) => (
-                      <option key={m} value={m}>{m}</option>
-                    ))}
-                  </select>
+                  <SearchSelect
+                    options={marcaOptions}
+                    value={marca}
+                    onChange={(v) => { setMarca(v); setModelo(""); }}
+                    placeholder="Buscar marca..."
+                    searchPlaceholder="Escriba para buscar marca..."
+                    className="mt-1"
+                  />
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Modelo *</label>
-                  <input type="text" value={modelo} onChange={(e) => setModelo(e.target.value)} placeholder="Ej: Hilux, Corolla..." className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required />
+                  <SearchSelect
+                    options={modeloOptions}
+                    value={modelo}
+                    onChange={setModelo}
+                    placeholder={marca ? "Buscar modelo..." : "Primero seleccione una marca"}
+                    searchPlaceholder="Escriba para buscar modelo..."
+                    disabled={!marca}
+                    className="mt-1"
+                  />
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Año Fabricación *</label>
-                  <input type="number" value={anioFabricacion} onChange={(e) => setAnioFabricacion(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm" required />
+                  <SearchSelect
+                    options={anioOptions}
+                    value={anioFabricacion}
+                    onChange={setAnioFabricacion}
+                    placeholder="Seleccionar año..."
+                    searchPlaceholder="Escriba el año..."
+                    className="mt-1"
+                  />
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Tipo Combustible *</label>
@@ -276,12 +317,14 @@ export default function VehiculosPage() {
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Color</label>
-                  <select value={color} onChange={(e) => setColor(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
-                    <option value="">Seleccionar color...</option>
-                    {COLORES_VEHICULOS.map((c) => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
+                  <SearchSelect
+                    options={colorOptions}
+                    value={color}
+                    onChange={setColor}
+                    placeholder="Buscar color..."
+                    searchPlaceholder="Escriba para buscar color..."
+                    className="mt-1"
+                  />
                 </div>
                 <div>
                   <label className="text-xs text-slate-400 font-semibold">Cap. Pasajeros</label>
