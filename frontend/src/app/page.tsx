@@ -246,23 +246,29 @@ export default function Home() {
           },
         ]);
 
+        const getLabel = (v: any): string => {
+          if (!v) return "N/A";
+          if (typeof v === "string") return v;
+          return v.placa || v.nombre || v.marca?.nombre || "N/A";
+        };
+
         const recentMoves: ActivityItem[] = movimientos.slice(0, 5).map((m: any) => ({
-          label: `${m.vehiculo} (${m.placa})`,
+          label: `${getLabel(m.vehiculo)} (${m.placa || ""})`,
           detail: m.destino || "Sin destino",
           time: m.fecha,
           type: "movimiento" as const,
         }));
 
         const recentFuel: ActivityItem[] = ordenesComb.slice(0, 5).map((o: any) => ({
-          label: `${o.vehiculoLabel} (${o.placa})`,
-          detail: `${o.cantidadGalones || 0} gal - $${(o.costoTotal || 0).toFixed(2)}`,
+          label: `${getLabel(o.vehiculo) || o.vehiculoLabel || "N/A"} (${o.placa || ""})`,
+          detail: `${o.cantidadGalones || 0} gal - $${Number(o.costoTotal || 0).toFixed(2)}`,
           time: o.fecha,
           type: "combustible" as const,
         }));
 
         const recentMant: ActivityItem[] = ordenesMant.slice(0, 5).map((o: any) => ({
-          label: `${o.numeroOrden} (${o.placa})`,
-          detail: `${o.tipoMantenimiento} - ${o.estado}`,
+          label: `${o.numeroOrden || ""} (${o.placa || ""})`,
+          detail: `${o.tipoMantenimiento || ""} - ${o.estado || ""}`,
           time: o.numeroOrden,
           type: "mantenimiento" as const,
         }));
