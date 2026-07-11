@@ -11,7 +11,7 @@ import prisma from "../config/database.js";
 
 const router = Router();
 router.use(authenticate);
-router.use(requireRole("ADMINISTRADOR"));
+router.use(requireRole("ADMINISTRADOR", "JEFE_PROCESO"));
 
 // ─── Permisos ───
 

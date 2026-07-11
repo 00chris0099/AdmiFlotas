@@ -265,14 +265,14 @@ function createLookupRoutes(modelName: string, displayName: string) {
     } catch (error) { next(error); }
   });
 
-  router.post(`/${displayName}`, requireRole("ADMINISTRADOR"), async (req, res, next) => {
+  router.post(`/${displayName}`, requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
     try {
       const item = await model.create({ data: req.body });
       sendCreated(res, item);
     } catch (error) { next(error); }
   });
 
-  router.put(`/${displayName}/:id`, requireRole("ADMINISTRADOR"), async (req, res, next) => {
+  router.put(`/${displayName}/:id`, requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
     try {
       const item = await model.update({
         where: { id: req.params.id },
@@ -282,7 +282,7 @@ function createLookupRoutes(modelName: string, displayName: string) {
     } catch (error) { next(error); }
   });
 
-  router.delete(`/${displayName}/:id`, requireRole("ADMINISTRADOR"), async (req, res, next) => {
+  router.delete(`/${displayName}/:id`, requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
     try {
       await model.update({
         where: { id: req.params.id },

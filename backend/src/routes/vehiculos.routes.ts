@@ -248,7 +248,7 @@ router.put("/:id", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(update
  *       403:
  *         description: Sin permisos (solo ADMINISTRADOR)
  */
-router.delete("/:id", requireRole("ADMINISTRADOR"), async (req, res, next) => {
+router.delete("/:id", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
   try {
     await prisma.vehiculo.delete({ where: { id: req.params.id as string } });
     sendSuccess(res, { message: "Vehículo eliminado" });

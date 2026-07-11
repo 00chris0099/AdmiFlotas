@@ -108,7 +108,7 @@ router.get("/:clave", async (req, res, next) => {
  *       200:
  *         description: Parámetro actualizado
  */
-router.put("/:clave", requireRole("ADMINISTRADOR"), async (req, res, next) => {
+router.put("/:clave", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
   try {
     const clave = req.params.clave as string;
     const { valor, descripcion, grupo } = req.body;
@@ -150,7 +150,7 @@ router.put("/:clave", requireRole("ADMINISTRADOR"), async (req, res, next) => {
  *       201:
  *         description: Parámetro creado
  */
-router.post("/", requireRole("ADMINISTRADOR"), async (req, res, next) => {
+router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
   try {
     const item = await prisma.configuracionFlota.create({ data: req.body });
     sendCreated(res, item);
@@ -176,7 +176,7 @@ router.post("/", requireRole("ADMINISTRADOR"), async (req, res, next) => {
  *       204:
  *         description: Parámetro eliminado
  */
-router.delete("/:clave", requireRole("ADMINISTRADOR"), async (req, res, next) => {
+router.delete("/:clave", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
   try {
     await prisma.configuracionFlota.delete({ where: { clave: req.params.clave as string } });
     res.status(204).end();
