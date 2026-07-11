@@ -97,6 +97,7 @@ export function middleware(request: NextRequest) {
     // 4. Mantenimiento - Almacén
     if (pathname.startsWith("/mantenimiento/almacen")) {
       if (
+        userRole !== "JEFE_PROCESO" &&
         userRole !== "JEFE_MANTENIMIENTO" &&
         userRole !== "ENCARGADO_TALLER" &&
         userRole !== "MECANICO" &&
@@ -109,6 +110,7 @@ export function middleware(request: NextRequest) {
     // 5. Mantenimiento - Lavado
     if (pathname.startsWith("/mantenimiento/lavado")) {
       if (
+        userRole !== "JEFE_PROCESO" &&
         userRole !== "JEFE_MANTENIMIENTO" &&
         userRole !== "LAVADOR" &&
         userRole !== "ADMINISTRATIVO"
@@ -120,6 +122,7 @@ export function middleware(request: NextRequest) {
     // 6. Operaciones - Rutas
     if (pathname.startsWith("/operaciones/rutas")) {
       if (
+        userRole !== "JEFE_PROCESO" &&
         userRole !== "JEFE_OPERACION" &&
         userRole !== "CONTROLADOR_TRANSITO" &&
         userRole !== "ADMINISTRATIVO"
