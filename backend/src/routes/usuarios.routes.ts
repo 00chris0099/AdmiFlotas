@@ -79,7 +79,13 @@ router.get("/", async (req, res, next) => {
       prisma.usuario.count({ where }),
     ]);
 
-    sendPaginated(res, items, total, pageNum, limitNum);
+    // Aplanar: quitar password y convertir rol anidado a string
+    const safeItems = items.map(({ password: _, rol, ...rest }) => ({
+      ...rest,
+      rol: rol?.codigo ?? null,
+    }));
+
+    sendPaginated(res, safeItems, total, pageNum, limitNum);
   } catch (error) {
     next(error);
   }
