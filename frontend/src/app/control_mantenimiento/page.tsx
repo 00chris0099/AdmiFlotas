@@ -82,6 +82,17 @@ export default function OrdenesMantenimientoPage() {
   const [firmaNombre, setFirmaNombre] = useState("");
   const [savingFirma, setSavingFirma] = useState(false);
 
+  // Técnicos para SearchSelect
+  const [tecnicos, setTecnicos] = useState<{id: string; nombre: string; apellido: string}[]>([]);
+
+  const tecnicoOptions = useMemo(
+    () => tecnicos.map((t: any) => ({
+      value: `${t.nombre} ${t.apellido}`,
+      label: `${t.nombre} ${t.apellido}`,
+    })),
+    [tecnicos]
+  );
+
   // Opciones para SearchSelect
   const vehiculoOptions = useMemo(
     () => vehiculos.map((v) => ({
@@ -91,15 +102,22 @@ export default function OrdenesMantenimientoPage() {
     [vehiculos]
   );
 
-  const codigoTrabajoOptions = useMemo(
-    () => CODIGOS_SERVICIO.TRABAJO.map((t) => ({ value: t.value, label: t.label })),
-    []
-  );
+  const codigoTrabajoOptions = useMemo(() => {
+    const filtered = tipoMantenimiento === "PREVENTIVO"
+      ? CODIGOS_SERVICIO.TRABAJO.filter((t) => ["CT", "RG", "VR"].includes(t.value))
+      : CODIGOS_SERVICIO.TRABAJO.filter((t) => ["CP", "RP"].includes(t.value));
+    return filtered.map((t) => ({ value: t.value, label: t.label }));
+  }, [tipoMantenimiento]);
 
   const organoOptions = useMemo(
     () => CODIGOS_SERVICIO.ORGANO.map((o) => ({ value: o.value, label: o.label })),
     []
   );
+
+  // Reset codigoServicio when tipoMantenimiento changes
+  useEffect(() => {
+    setCodigoServicio("");
+  }, [tipoMantenimiento]);
 
   const cargarCatalogos = async () => {
     try {
@@ -107,6 +125,14 @@ export default function OrdenesMantenimientoPage() {
       const items = Array.isArray(data) ? data : data?.vehiculos ?? [];
       setVehiculos(items);
       if (items.length > 0) setVehiculoId(items[0].id);
+
+      // Cargar técnicos (MECANICO, ELECTRICISTA, ENCARGADO_TALLER)
+      try {
+        const usuariosData = await api.getUsuarios();
+        const itemsUsers = Array.isArray(usuariosData) ? usuariosData : [];
+        const rolesTecnicos = ["MECANICO", "ELECTRICISTA", "ENCARGADO_TALLER"];
+        setTecnicos(itemsUsers.filter((u: any) => rolesTecnicos.includes(u.rol?.nombre) || rolesTecnicos.includes(u.rolId)));
+      } catch {}
     } catch (err) {
       console.error("Error al cargar vehículos:", err);
     }
@@ -573,12 +599,12 @@ export default function OrdenesMantenimientoPage() {
                   />
                 </div>
                 <div>
-                  <input
-                    type="text"
-                    placeholder="Nombre del Técnico"
+                  <SearchSelect
+                    options={tecnicoOptions}
                     value={nombreTecnico}
-                    onChange={(e) => setNombreTecnico(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+                    onChange={setNombreTecnico}
+                    placeholder="Seleccionar técnico..."
+                    searchPlaceholder="Nombre del técnico..."
                   />
                 </div>
                 <button

@@ -137,8 +137,23 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", validate(createOrdenCombustibleSchema), async (req, res, next) => {
   try {
     const numeroOrden = await generateNumeroOrden("OC");
+    const body = req.body;
+
+    // Calcular costos automáticamente
+    const galones = Number(body.cantidadGalones || body.galones || 0);
+    const costoGalon = Number(body.costoGalon || 0);
+    const costoCombustible = galones * costoGalon;
+    const costoAceiteMotor = Number(body.costoAceiteMotor || 0);
+    const costoAceiteCaja = Number(body.costoAceiteCaja || 0);
+    const costoTotal = costoCombustible + costoAceiteMotor + costoAceiteCaja;
+
     const orden = await prisma.ordenCombustible.create({
-      data: { ...req.body, numeroOrden },
+      data: {
+        ...body,
+        numeroOrden,
+        costoCombustible,
+        costoTotal,
+      },
       include: { vehiculo: true, centroServicio: true, sectorSolicitante: true },
     });
     sendCreated(res, orden);
@@ -181,9 +196,24 @@ router.post("/", validate(createOrdenCombustibleSchema), async (req, res, next) 
  */
 router.put("/:id", async (req, res, next) => {
   try {
+    const body = req.body;
+
+    // Recalcular costos si se actualizaron campos relacionados
+    const updateData: any = { ...body };
+    if (body.cantidadGalones !== undefined || body.costoGalon !== undefined || body.costoAceiteMotor !== undefined || body.costoAceiteCaja !== undefined) {
+      const existing = await prisma.ordenCombustible.findUnique({ where: { id: req.params.id as string } });
+      const galones = Number(body.cantidadGalones ?? existing?.cantidadGalones ?? 0);
+      const costoGalon = Number(body.costoGalon ?? existing?.costoGalon ?? 0);
+      const costoCombustible = galones * costoGalon;
+      const costoAceiteMotor = Number(body.costoAceiteMotor ?? existing?.costoAceiteMotor ?? 0);
+      const costoAceiteCaja = Number(body.costoAceiteCaja ?? existing?.costoAceiteCaja ?? 0);
+      updateData.costoCombustible = costoCombustible;
+      updateData.costoTotal = costoCombustible + costoAceiteMotor + costoAceiteCaja;
+    }
+
     const item = await prisma.ordenCombustible.update({
       where: { id: req.params.id as string },
-      data: req.body,
+      data: updateData,
       include: { vehiculo: true, centroServicio: true, sectorSolicitante: true },
     });
     sendSuccess(res, item);

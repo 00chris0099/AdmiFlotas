@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
@@ -82,6 +83,25 @@ export default function DocumentosPage() {
   const [entidadEmisora, setEntidadEmisora] = useState("");
   const [observaciones, setObservaciones] = useState("");
 
+  // Opciones para SearchSelect
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v: any) => ({
+      value: v.id,
+      label: `${v.codigoPatrimonial} — ${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
+
+  const entidadEmisoraOptions = useMemo(() => [
+    { value: "SUTRAN", label: "SUTRAN" },
+    { value: "OSITRAN", label: "OSITRAN" },
+    { value: "MTC", label: "MTC" },
+    { value: "POLICIA NACIONAL", label: "POLICIA NACIONAL" },
+    { value: "MUNICIPALIDAD", label: "MUNICIPALIDAD" },
+    { value: "SUNAT", label: "SUNAT" },
+    { value: "OTROS", label: "OTROS" },
+  ], []);
+
   const cargarDatos = async () => {
     try {
       setIsLoading(true);
@@ -109,7 +129,7 @@ export default function DocumentosPage() {
     setVehiculoId("");
     setTipoDocumento("");
     setNumeroDocumento("");
-    setFechaEmision("");
+    setFechaEmision(new Date().toISOString().split("T")[0]);
     setFechaVencimiento("");
     setEntidadEmisora("");
     setObservaciones("");
@@ -272,18 +292,15 @@ export default function DocumentosPage() {
 
       <div className="flex items-center gap-3">
         <label className="text-xs text-slate-400 font-semibold">Filtrar por vehículo:</label>
-        <select
-          value={filtroVehiculo}
-          onChange={(e) => setFiltroVehiculo(e.target.value)}
-          className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
-        >
-          <option value="">Todos los vehículos</option>
-          {vehiculos.map((v) => (
-            <option key={v.id} value={v.id}>
-              {v.codigoPatrimonial} — {v.placa} — {v.marca} {v.modelo}
-            </option>
-          ))}
-        </select>
+        <div className="max-w-xs">
+          <SearchSelect
+            options={[{ value: "", label: "Todos los vehículos" }, ...vehiculoOptions]}
+            value={filtroVehiculo}
+            onChange={setFiltroVehiculo}
+            placeholder="Todos los vehículos"
+            searchPlaceholder="Buscar vehículo..."
+          />
+        </div>
       </div>
 
       {isLoading ? (
@@ -299,19 +316,14 @@ export default function DocumentosPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="text-xs text-slate-400 font-semibold">Vehículo *</label>
-                <select
+                <SearchSelect
+                  options={vehiculoOptions}
                   value={vehiculoId}
-                  onChange={(e) => setVehiculoId(e.target.value)}
-                  className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
-                  required
-                >
-                  <option value="">Seleccionar vehículo...</option>
-                  {vehiculos.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.codigoPatrimonial} — {v.placa} — {v.marca} {v.modelo}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setVehiculoId}
+                  placeholder="Buscar vehículo..."
+                  searchPlaceholder="Placa, código o marca..."
+                  className="mt-1"
+                />
               </div>
               <div>
                 <label className="text-xs text-slate-400 font-semibold">Tipo de Documento *</label>
@@ -361,12 +373,13 @@ export default function DocumentosPage() {
               </div>
               <div>
                 <label className="text-xs text-slate-400 font-semibold">Entidad Emisora</label>
-                <input
-                  type="text"
+                <SearchSelect
+                  options={entidadEmisoraOptions}
                   value={entidadEmisora}
-                  onChange={(e) => setEntidadEmisora(e.target.value)}
-                  placeholder="Ej: SUTRAN, Aseguradora XYZ..."
-                  className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
+                  onChange={setEntidadEmisora}
+                  placeholder="Seleccionar entidad..."
+                  searchPlaceholder="Buscar entidad..."
+                  className="mt-1"
                 />
               </div>
               <div>

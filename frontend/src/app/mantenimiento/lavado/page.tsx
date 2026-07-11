@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
@@ -50,6 +51,15 @@ export default function LavadoPage() {
   const [proveedor, setProveedor] = useState("");
   const [responsable, setResponsable] = useState("");
   const [observaciones, setObservaciones] = useState("");
+
+  // Opciones para SearchSelect
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v: any) => ({
+      value: v.id,
+      label: `${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
 
   const cargarLavados = async () => {
     try {
@@ -247,19 +257,13 @@ export default function LavadoPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="text-xs font-semibold text-slate-350">Vehículo</label>
-                <select
+                <SearchSelect
+                  options={vehiculoOptions}
                   value={vehiculoId}
-                  onChange={(e) => setVehiculoId(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                  required
-                >
-                  <option value="">Seleccionar vehículo...</option>
-                  {vehiculos.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.placa} - {v.marca} {v.modelo}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setVehiculoId}
+                  placeholder="Buscar vehículo..."
+                  searchPlaceholder="Placa o marca..."
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4">

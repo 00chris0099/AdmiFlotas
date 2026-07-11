@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { useToast } from "@/components/ui/Toast";
+import { SECTORES_ORGANIZACIONALES } from "@/lib/constants";
 
 interface Asignacion {
   id: string;
@@ -59,6 +61,28 @@ export default function AsignacionPage() {
   const [conductorId, setConductorId] = useState("");
   const [sectorAsignado, setSectorAsignado] = useState("");
   const [observaciones, setObservaciones] = useState("");
+
+  // Opciones para SearchSelect
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v: any) => ({
+      value: v.id,
+      label: `${v.codigoPatrimonial} — ${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
+
+  const conductorOptions = useMemo(
+    () => conductores.map((c: any) => ({
+      value: c.id,
+      label: `${c.nombre} ${c.apellido}${c.licenciaConducir ? ` (Lic: ${c.licenciaConducir})` : ""}`,
+    })),
+    [conductores]
+  );
+
+  const sectorOptions = useMemo(
+    () => SECTORES_ORGANIZACIONALES.map((s: any) => ({ value: s, label: s })),
+    []
+  );
 
   const cargarDatos = async () => {
     try {
@@ -187,46 +211,35 @@ export default function AsignacionPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="text-xs text-slate-400 font-semibold">Vehículo *</label>
-                <select
+                <SearchSelect
+                  options={vehiculoOptions}
                   value={vehiculoId}
-                  onChange={(e) => setVehiculoId(e.target.value)}
-                  className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
-                  required
-                >
-                  <option value="">Seleccionar vehículo...</option>
-                  {vehiculos.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.codigoPatrimonial} — {v.placa} — {v.marca} {v.modelo}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setVehiculoId}
+                  placeholder="Buscar vehículo..."
+                  searchPlaceholder="Placa, código o marca..."
+                  className="mt-1"
+                />
               </div>
               <div>
                 <label className="text-xs text-slate-400 font-semibold">Conductor *</label>
-                <select
+                <SearchSelect
+                  options={conductorOptions}
                   value={conductorId}
-                  onChange={(e) => setConductorId(e.target.value)}
-                  className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
-                  required
-                >
-                  <option value="">Seleccionar conductor...</option>
-                  {conductores.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.nombre} {c.apellido}
-                      {c.licenciaConducir ? ` (Lic: ${c.licenciaConducir})` : ""}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setConductorId}
+                  placeholder="Buscar conductor..."
+                  searchPlaceholder="Nombre o apellido..."
+                  className="mt-1"
+                />
               </div>
               <div>
                 <label className="text-xs text-slate-400 font-semibold">Sector Asignado *</label>
-                <input
-                  type="text"
+                <SearchSelect
+                  options={sectorOptions}
                   value={sectorAsignado}
-                  onChange={(e) => setSectorAsignado(e.target.value)}
-                  placeholder="Ej: Zona Norte, Sector Industrial..."
-                  className="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
-                  required
+                  onChange={setSectorAsignado}
+                  placeholder="Buscar sector..."
+                  searchPlaceholder="Nombre del sector..."
+                  className="mt-1"
                 />
               </div>
               <div>

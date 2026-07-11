@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
@@ -59,6 +60,26 @@ export default function AlmacenPage() {
   const [movOrdenId, setMovOrdenId] = useState("");
   const [movObservaciones, setMovObservaciones] = useState("");
 
+  // Órdenes de mantenimiento para SearchSelect
+  const [ordenesMantenimiento, setOrdenesMantenimiento] = useState<{id: string; numeroOrden: string; placa: string}[]>([]);
+
+  // Opciones para SearchSelect
+  const repuestoOptions = useMemo(
+    () => repuestos.map((r: any) => ({
+      value: r.id,
+      label: `${r.codigo} - ${r.descripcion} (Stock: ${r.stockActual})`,
+    })),
+    [repuestos]
+  );
+
+  const ordenOptions = useMemo(
+    () => ordenesMantenimiento.map((o: any) => ({
+      value: o.id,
+      label: `${o.numeroOrden} - ${o.placa}`,
+    })),
+    [ordenesMantenimiento]
+  );
+
   const cargarRepuestos = async () => {
     try {
       setIsLoading(true);
@@ -87,6 +108,15 @@ export default function AlmacenPage() {
   useEffect(() => {
     cargarRepuestos();
     cargarMovimientos();
+    // Cargar órdenes de mantenimiento para el SearchSelect
+    const cargarOrdenes = async () => {
+      try {
+        const data = await api.getOrdenesMantenimiento();
+        const items = Array.isArray(data) ? data : data?.ordenes ?? [];
+        setOrdenesMantenimiento(items);
+      } catch {}
+    };
+    cargarOrdenes();
   }, []);
 
   const handleSubmitRepuesto = async (e: React.FormEvent) => {
@@ -486,19 +516,13 @@ export default function AlmacenPage() {
             <form onSubmit={handleSubmitMovimiento} className="space-y-4">
               <div>
                 <label className="text-xs font-semibold text-slate-350">Repuesto</label>
-                <select
+                <SearchSelect
+                  options={repuestoOptions}
                   value={movRepuestoId}
-                  onChange={(e) => setMovRepuestoId(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                  required
-                >
-                  <option value="">Seleccionar repuesto...</option>
-                  {repuestos.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.codigo} - {r.descripcion} (Stock: {r.stockActual})
-                    </option>
-                  ))}
-                </select>
+                  onChange={setMovRepuestoId}
+                  placeholder="Buscar repuesto..."
+                  searchPlaceholder="Código o descripción..."
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -539,12 +563,12 @@ export default function AlmacenPage() {
 
               <div>
                 <label className="text-xs font-semibold text-slate-350">Orden de Mantenimiento (opcional)</label>
-                <input
-                  type="text"
+                <SearchSelect
+                  options={[{ value: "", label: "Ninguna orden" }, ...ordenOptions]}
                   value={movOrdenId}
-                  onChange={(e) => setMovOrdenId(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                  placeholder="ID de la orden si aplica"
+                  onChange={setMovOrdenId}
+                  placeholder="Ninguna orden"
+                  searchPlaceholder="Número de orden o placa..."
                 />
               </div>
 

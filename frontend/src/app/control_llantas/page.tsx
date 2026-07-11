@@ -113,6 +113,30 @@ export default function LlantasPage() {
     { value: "175/75R16", label: "175/75R16" },
   ], []);
 
+  // Modelos de llanta por fabricante
+  const MODELOS_LLANTA: Record<string, string[]> = {
+    MICHELIN: ["X Multi T", "X Multi D", "XDA 2+", "XDN 2", "X Coach", "X Works", "Energy XM2", "X Multi Energy"],
+    BRIDGESTONE: ["M749", "M748", "M729", "M726", "L311", "L297", "R154", "R168", "ERD200", "VSTEER"],
+    GOODYEAR: ["KMAX D", "KMAX T", "Regional RHD", "Regional RHT", "G159", "G275", "Fleet Max EPA", "Load Max RHT"],
+    CONTINENTAL: ["HTR 2", "HSR 2", "HDR 2", "LDR 2", "Vanco Trailer", "VancoContact 100", "Conti EcoPlus"],
+    FIRESTONE: ["FSR 11", "FSR 13", "FSR 14", "FDX 100", "Transforce HT", "Transforce AT", "T560", "T570"],
+    PIRELLI: ["G 862", "G 857", "G 871", "TR 01", "TR 02", "TR 03", "TR 06", "TH 20", "TH 22"],
+    DUNLOP: ["SP 571", "SP 572", "SP 573", "FM 400", "TR 460", "TR 470", "D693", "D699"],
+    YOKOHAMA: ["TY 301", "TY 303", "RY 01", "RY 02", "AT 600", "AT 610", "751", "752"],
+    HANKOOK: ["AH11", "AH15", "DL11", "DL06", "K715", "K735", "K111", "RF12"],
+    KUMHO: ["KRA 400", "KRA 401", "KRD 02", "KR10", "KWA 01", "KLT 01"],
+    TOYO: ["M154", "M156", "M157", "S954", "S964", "OPAT", "R201", "R210"],
+    COOPER: ["RS3 2.0", "RS3 3.0", "RD3 3.0", "CD3 2.0", "CT910", "CT920", "AT6"],
+    FATE: ["Touer 20", "Touer 30", "Quill 20", "Quill 30", "Urban ST", "Trailer ST", "A/T 850"],
+    CEAT: ["Milaze", "Gripmax", "Cargomax", "Milage LHT", "Securdrive"],
+  };
+
+  // Opciones de modelo filtradas por fabricante
+  const modeloLlantaOptions = useMemo(() => {
+    const modelos = MODELOS_LLANTA[fabricante] || [];
+    return modelos.map((m) => ({ value: m, label: m }));
+  }, [fabricante]);
+
   const cargarVehiculos = async () => {
     try {
       const data = await api.getVehiculos();
@@ -452,20 +476,17 @@ export default function LlantasPage() {
                   <div className="border-t border-slate-900 pt-4 space-y-3">
                     <span className="text-[10px] font-bold text-indigo-400 uppercase block tracking-wider">Rotar Llanta</span>
                     <div className="flex gap-2">
-                      <select
-                        value={targetRotarPosicion}
-                        onChange={(e) => setTargetRotarPosicion(e.target.value)}
-                        className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
-                      >
-                        <option value="">Selecciona destino...</option>
-                        {[1, 2, 3, 4, 5, 6, 7]
-                          .filter((p) => p !== selectedPosicion && getLlantaEnPosicion(p))
-                          .map((p) => (
-                            <option key={p} value={p}>
-                              {getPosicionLabel(p)}
-                            </option>
-                          ))}
-                      </select>
+                      <div className="flex-1">
+                        <SearchSelect
+                          options={[1, 2, 3, 4, 5, 6, 7]
+                            .filter((p) => p !== selectedPosicion && getLlantaEnPosicion(p))
+                            .map((p) => ({ value: String(p), label: getPosicionLabel(p) }))}
+                          value={targetRotarPosicion}
+                          onChange={setTargetRotarPosicion}
+                          placeholder="Selecciona destino..."
+                          searchPlaceholder="Buscar posición..."
+                        />
+                      </div>
                       <button
                         onClick={handleRotar}
                         disabled={rotating || !targetRotarPosicion}
@@ -585,12 +606,12 @@ export default function LlantasPage() {
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Modelo</label>
-                  <input
-                    type="text"
+                  <SearchSelect
+                    options={modeloLlantaOptions}
                     value={modeloLlanta}
-                    onChange={(e) => setModeloLlanta(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                    required
+                    onChange={setModeloLlanta}
+                    placeholder="Buscar modelo..."
+                    searchPlaceholder="Nombre del modelo..."
                   />
                 </div>
               </div>

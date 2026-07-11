@@ -15,6 +15,32 @@ function safeStr(v: any): string {
   return String(v);
 }
 
+// Safety net final: convierte CUALQUIER objeto restante a string seguro
+function deepSanitize(obj: any): any {
+  if (obj == null) return obj;
+  if (typeof obj !== "object") return obj;
+  if (obj instanceof Date) return obj.toISOString();
+  if (Array.isArray(obj)) return obj.map(deepSanitize);
+
+  const safe: any = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v == null) {
+      safe[k] = v;
+    } else if (typeof v === "object" && !(v instanceof Date) && !Array.isArray(v)) {
+      // Objeto anidado → extraer valor representativo o string
+      const o = v as any;
+      safe[k] = o.codigo ?? o.nombre ?? o.placa ?? o.label ?? o.email ?? o.value ?? String(JSON.stringify(v));
+    } else if (typeof v === "boolean") {
+      safe[k] = v;
+    } else if (typeof v === "number") {
+      safe[k] = v;
+    } else {
+      safe[k] = v;
+    }
+  }
+  return safe;
+}
+
 function flattenResponse(obj: any): any {
   if (obj == null || typeof obj !== "object") return obj;
   if (Array.isArray(obj)) return obj.map(flattenResponse);

@@ -181,6 +181,23 @@ export default function MovimientosPage() {
     }
   }, [user]);
 
+  // Auto-set conductorId from asignaciones when vehiculoId changes
+  useEffect(() => {
+    if (!vehiculoId) return;
+    const fetchAsignacion = async () => {
+      try {
+        const asignaciones = await api.getAsignaciones();
+        if (Array.isArray(asignaciones)) {
+          const activa = asignaciones.find((a: any) => a.vehiculoId === vehiculoId && a.activa);
+          if (activa && activa.conductorId) {
+            setConductorId(activa.conductorId);
+          }
+        }
+      } catch {}
+    };
+    fetchAsignacion();
+  }, [vehiculoId]);
+
   const cargarCatalogos = async () => {
     try {
       const [dataVeh, dataCond] = await Promise.all([
@@ -482,7 +499,17 @@ export default function MovimientosPage() {
                   <input
                     type="time"
                     value={horaLlegada}
-                    onChange={(e) => setHoraLlegada(e.target.value)}
+                    onChange={(e) => {
+                      const newHoraLlegada = e.target.value;
+                      setHoraLlegada(newHoraLlegada);
+                      // Calcular horasUtilizacion = (horaLlegada - horaSalida) en horas decimales
+                      if (movimientoACerrar && newHoraLlegada) {
+                        const [salH, salM] = ((movimientoACerrar as any).horaSalida || "08:00").split(":").map(Number);
+                        const [llegH, llegM] = newHoraLlegada.split(":").map(Number);
+                        const diffHoras = (llegH * 60 + llegM - salH * 60 - salM) / 60;
+                        setHorasUtilizacion(String(Math.max(0, diffHoras)));
+                      }
+                    }}
                     className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none font-mono"
                     required
                   />

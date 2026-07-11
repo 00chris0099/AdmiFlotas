@@ -138,11 +138,23 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", validate(createOrdenMantenimientoSchema), async (req, res, next) => {
   try {
     const numeroOrden = await generateNumeroOrden("OM");
+    const body = req.body;
+
+    // Calcular costoTotal automáticamente
+    const costoRepuestos = Number(body.costoPiezasRepuestos || body.costoRepuestos || 0);
+    const costoOtros = Number(body.costoOtros || 0);
+    const costoManoObra = Number(body.costoManoObraPropia || 0);
+    const costoTotal = costoRepuestos + costoOtros + costoManoObra;
+
     const orden = await prisma.ordenMantenimiento.create({
       data: {
-        ...req.body,
+        ...body,
         numeroOrden,
         fechaEmision: new Date(),
+        costoPiezasRepuestos: costoRepuestos,
+        costoOtros,
+        costoManoObraPropia: costoManoObra,
+        costoTotal,
       },
       include: { vehiculo: true, tecnico: true, repuestos: true, manoDeObra: true },
     });
@@ -208,6 +220,15 @@ router.put("/:id", async (req, res, next) => {
           updateData.fechaFirmaTecnico = new Date();
         }
       }
+    }
+
+    // Recalcular costos si se actualizaron campos relacionados
+    if (data.costoPiezasRepuestos !== undefined || data.costoOtros !== undefined || data.costoManoObraPropia !== undefined) {
+      const existing = await prisma.ordenMantenimiento.findUnique({ where: { id: req.params.id as string } });
+      const costoRepuestos = Number(data.costoPieprasRepuestos ?? data.costoRepuestos ?? existing?.costoPiezasRepuestos ?? 0);
+      const costoOtros = Number(data.costoOtros ?? existing?.costoOtros ?? 0);
+      const costoManoObra = Number(data.costoManoObraPropia ?? existing?.costoManoObraPropia ?? 0);
+      updateData.costoTotal = costoRepuestos + costoOtros + costoManoObra;
     }
 
     const item = await prisma.ordenMantenimiento.update({

@@ -168,6 +168,23 @@ export default function CombustiblePage() {
     }
   }, [conductorId, conductores]);
 
+  // Auto-set conductorId from asignaciones when vehiculoId changes
+  useEffect(() => {
+    if (!vehiculoId) return;
+    const fetchAsignacion = async () => {
+      try {
+        const asignaciones = await api.getAsignaciones();
+        if (Array.isArray(asignaciones)) {
+          const activa = asignaciones.find((a: any) => a.vehiculoId === vehiculoId && a.activa);
+          if (activa && activa.conductorId) {
+            setConductorId(activa.conductorId);
+          }
+        }
+      } catch {}
+    };
+    fetchAsignacion();
+  }, [vehiculoId]);
+
   const cargarCatalogos = async () => {
     try {
       const [dataVeh, dataCond] = await Promise.all([
