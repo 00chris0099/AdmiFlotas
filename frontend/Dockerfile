@@ -2,11 +2,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Contexto: raíz del repo
-COPY frontend/package*.json ./
+# El contexto de build ES la carpeta frontend/ directamente
+COPY package*.json ./
 RUN npm install
 
-COPY frontend/ .
+COPY . .
 
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
@@ -21,7 +21,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY frontend/package*.json ./
+COPY package*.json ./
 RUN npm install --omit=dev
 
 COPY --from=builder /app/public ./public

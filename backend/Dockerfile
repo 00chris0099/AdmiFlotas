@@ -2,11 +2,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Contexto: raíz del repo
+# Contexto: raíz del repo (Build Path = . )
 COPY backend/package*.json ./backend/
 COPY shared/package*.json ./shared/
-COPY prisma ./prisma/
-COPY generated ./generated/
+COPY prisma/ ./prisma/
+COPY generated/ ./generated/
 
 RUN cd backend && npm install
 
