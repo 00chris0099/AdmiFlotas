@@ -319,7 +319,7 @@ export default function MovimientosPage() {
       accessorKey: (row) => (
         <div>
           <div className="font-semibold text-white">{row.placa}</div>
-          <div className="text-xs text-slate-450">{row.vehiculo}</div>
+          <div className="text-xs text-slate-450">{row.placa}</div>
         </div>
       ),
     },
@@ -461,7 +461,7 @@ export default function MovimientosPage() {
             <div>
               <h3 className="text-lg font-bold text-emerald-400">Completar Movimiento</h3>
               <p className="text-xs text-slate-450">
-                {movimientoACerrar.placa} - {movimientoACerrar.vehiculo} - {movimientoACerrar.conductor}
+                {movimientoACerrar.placa} - {movimientoACerrar.conductor}
               </p>
             </div>
 

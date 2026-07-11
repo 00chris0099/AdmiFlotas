@@ -330,7 +330,7 @@ export default function CombustiblePage() {
         </div>
       ),
     },
-    { header: "Conductor", accessorKey: "conductor" },
+    { header: "Conductor", accessorKey: "conductorLabel" },
     { header: "Tipo", accessorKey: "tipoCombustible", className: "text-xs" },
     { header: "Galones", accessorKey: (row) => `${row.cantidadGalones} Gal`, className: "font-mono" },
     { header: "Km", accessorKey: (row) => `${row.kilometrajeActual} km`, className: "font-mono" },
