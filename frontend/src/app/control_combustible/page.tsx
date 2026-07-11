@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 import { exportToExcel } from "@/utils/exportUtils";
@@ -101,6 +102,38 @@ export default function CombustiblePage() {
   const [firmaServicentro, setFirmaServicentro] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Opciones para SearchSelect
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v) => ({
+      value: v.id,
+      label: `[${v.codigoPatrimonial}] ${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
+
+  const conductorOptions = useMemo(
+    () => conductores.map((c) => ({
+      value: c.id,
+      label: `${c.nombre} ${c.apellido}`,
+    })),
+    [conductores]
+  );
+
+  const sectorOptions = useMemo(
+    () => SECTORES_ORGANIZACIONALES.map((s) => ({ value: s, label: s })),
+    []
+  );
+
+  const localidadOptions = useMemo(
+    () => LOCALIDADES.map((l) => ({ value: l, label: l })),
+    []
+  );
+
+  const servicentroOptions = useMemo(
+    () => SERVICENTROS.map((s) => ({ value: s, label: s })),
+    []
+  );
 
   const cargarCatalogos = async () => {
     try {
@@ -394,11 +427,14 @@ export default function CombustiblePage() {
                 <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider">2. Vehículo</h4>
                 <div>
                   <label className="text-[10px] font-semibold text-slate-400 uppercase">Seleccionar Vehículo *</label>
-                  <select value={vehiculoId} onChange={(e) => setVehiculoId(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none" required>
-                    {vehiculos.map((v) => (
-                      <option key={v.id} value={v.id}>[{v.codigoPatrimonial}] {v.placa} — {v.marca} {v.modelo}</option>
-                    ))}
-                  </select>
+                  <SearchSelect
+                    options={vehiculoOptions}
+                    value={vehiculoId}
+                    onChange={setVehiculoId}
+                    placeholder="Buscar vehículo..."
+                    searchPlaceholder="Placa, código o marca..."
+                    className="mt-1"
+                  />
                 </div>
                 {vehiculoSeleccionado && (
                   <div className="flex gap-4 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
@@ -424,21 +460,25 @@ export default function CombustiblePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Sector *</label>
-                    <select value={sectorSolicitante} onChange={(e) => setSectorSolicitante(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none" required>
-                      <option value="">Seleccionar sector...</option>
-                      {SECTORES_ORGANIZACIONALES.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </select>
+                    <SearchSelect
+                      options={sectorOptions}
+                      value={sectorSolicitante}
+                      onChange={setSectorSolicitante}
+                      placeholder="Buscar sector..."
+                      searchPlaceholder="Nombre del sector..."
+                      className="mt-1"
+                    />
                   </div>
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Localidad</label>
-                    <select value={localidadSolicitante} onChange={(e) => setLocalidadSolicitante(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none">
-                      <option value="">Seleccionar localidad...</option>
-                      {LOCALIDADES.map((l) => (
-                        <option key={l} value={l}>{l}</option>
-                      ))}
-                    </select>
+                    <SearchSelect
+                      options={localidadOptions}
+                      value={localidadSolicitante}
+                      onChange={setLocalidadSolicitante}
+                      placeholder="Buscar localidad..."
+                      searchPlaceholder="Nombre de la localidad..."
+                      className="mt-1"
+                    />
                   </div>
                 </div>
               </div>
@@ -500,12 +540,14 @@ export default function CombustiblePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">Nombre del Servicentro</label>
-                    <select value={nombreServiccentro} onChange={(e) => setNombreServiccentro(e.target.value)} className="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-lg text-sm focus:outline-none">
-                      <option value="">Seleccionar servicentro...</option>
-                      {SERVICENTROS.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </select>
+                    <SearchSelect
+                      options={servicentroOptions}
+                      value={nombreServiccentro}
+                      onChange={setNombreServiccentro}
+                      placeholder="Buscar servicentro..."
+                      searchPlaceholder="Nombre del servicentro..."
+                      className="mt-1"
+                    />
                   </div>
                   <div>
                     <label className="text-[10px] font-semibold text-slate-400 uppercase">N° Ticket / Factura</label>

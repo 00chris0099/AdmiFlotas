@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
@@ -105,6 +106,45 @@ export default function MovimientosPage() {
   const isLicenciaVencida = conductorSeleccionado?.vencimientoLicencia 
     ? new Date(conductorSeleccionado.vencimientoLicencia) < new Date()
     : false;
+
+  // Opciones para SearchSelect
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v) => ({
+      value: v.id,
+      label: `${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
+
+  const conductorOptions = useMemo(
+    () => conductores.map((c) => ({
+      value: c.id,
+      label: `${c.nombre} ${c.apellido}${c.licenciaConducir ? ` (Lic: ${c.licenciaConducir})` : ""}`,
+    })),
+    [conductores]
+  );
+
+  const rutaOptions = useMemo(() => {
+    if (rutas.length > 0) {
+      return rutas.map((r) => ({
+        value: r.nombre,
+        label: `${r.nombre} (${r.origen} → ${r.destino})`,
+      }));
+    }
+    return [
+      { value: "Sector Industrial", label: "Sector Industrial" },
+      { value: "Almacén Central", label: "Almacén Central" },
+      { value: "Sede Central", label: "Sede Central" },
+      { value: "Planta Purificadora", label: "Planta Purificadora" },
+      { value: "Taller Central", label: "Taller Central" },
+      { value: "Otro", label: "Otro" },
+    ];
+  }, [rutas]);
+
+  const sectorOptions = useMemo(
+    () => SECTORES_ORGANIZACIONALES.map((s) => ({ value: s, label: s })),
+    []
+  );
 
   const cargarCatalogos = async () => {
     try {
@@ -495,33 +535,23 @@ export default function MovimientosPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Vehículo</label>
-                  <select
+                  <SearchSelect
+                    options={vehiculoOptions}
                     value={vehiculoId}
-                    onChange={(e) => setVehiculoId(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
-                    required
-                  >
-                    {vehiculos.map((v) => (
-                      <option key={v.id} value={v.id}>
-                        {v.placa} ({v.marca} {v.modelo})
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setVehiculoId}
+                    placeholder="Buscar vehículo..."
+                    searchPlaceholder="Placa, marca o modelo..."
+                  />
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Conductor</label>
-                  <select
+                  <SearchSelect
+                    options={conductorOptions}
                     value={conductorId}
-                    onChange={(e) => setConductorId(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
-                    required
-                  >
-                    {conductores.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.nombre} {c.apellido}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setConductorId}
+                    placeholder="Buscar conductor..."
+                    searchPlaceholder="Nombre o apellido..."
+                  />
                   {isLicenciaVencida && (
                     <p className="text-[9px] text-rose-400 font-bold mt-1">
                       <Icon name="warning" size={10} /> LICENCIA VENCIDA (Bloqueado)
@@ -556,42 +586,23 @@ export default function MovimientosPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Destino</label>
-                  <select
+                  <SearchSelect
+                    options={rutaOptions}
                     value={destino}
-                    onChange={(e) => setDestino(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
-                    required
-                  >
-                    <option value="">Seleccionar destino...</option>
-                    {rutas.length > 0 ? (
-                      rutas.map((r) => (
-                        <option key={r.id} value={r.nombre}>{r.nombre} ({r.origen} → {r.destino})</option>
-                      ))
-                    ) : (
-                      <>
-                        <option value="Sector Industrial">Sector Industrial</option>
-                        <option value="Almacén Central">Almacén Central</option>
-                        <option value="Sede Central">Sede Central</option>
-                        <option value="Planta Purificadora">Planta Purificadora</option>
-                        <option value="Taller Central">Taller Central</option>
-                        <option value="Otro">Otro</option>
-                      </>
-                    )}
-                  </select>
+                    onChange={setDestino}
+                    placeholder="Buscar destino..."
+                    searchPlaceholder="Nombre de ruta o destino..."
+                  />
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Sector Solicitante</label>
-                  <select
+                  <SearchSelect
+                    options={sectorOptions}
                     value={sectorSolicitante}
-                    onChange={(e) => setSectorSolicitante(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs focus:outline-none"
-                    required
-                  >
-                    <option value="">Seleccionar sector...</option>
-                    {SECTORES_ORGANIZACIONALES.map((s) => (
-                      <option key={s} value={s}>{s}</option>
-                    ))}
-                  </select>
+                    onChange={setSectorSolicitante}
+                    placeholder="Buscar sector..."
+                    searchPlaceholder="Nombre del sector..."
+                  />
                 </div>
               </div>
 

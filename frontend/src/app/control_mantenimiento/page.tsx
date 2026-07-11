@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
+import SearchSelect from "@/components/ui/SearchSelect";
 import api from "@/lib/api";
 import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
@@ -78,6 +79,25 @@ export default function OrdenesMantenimientoPage() {
   const [signingRole, setSigningRole] = useState<string>("");
   const [firmaNombre, setFirmaNombre] = useState("");
   const [savingFirma, setSavingFirma] = useState(false);
+
+  // Opciones para SearchSelect
+  const vehiculoOptions = useMemo(
+    () => vehiculos.map((v) => ({
+      value: v.id,
+      label: `${v.placa} — ${v.marca} ${v.modelo}`,
+    })),
+    [vehiculos]
+  );
+
+  const codigoTrabajoOptions = useMemo(
+    () => CODIGOS_SERVICIO.TRABAJO.map((t) => ({ value: t.value, label: t.label })),
+    []
+  );
+
+  const organoOptions = useMemo(
+    () => CODIGOS_SERVICIO.ORGANO.map((o) => ({ value: o.value, label: o.label })),
+    []
+  );
 
   const cargarCatalogos = async () => {
     try {
@@ -603,18 +623,13 @@ export default function OrdenesMantenimientoPage() {
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Vehículo</label>
-                  <select
+                  <SearchSelect
+                    options={vehiculoOptions}
                     value={vehiculoId}
-                    onChange={(e) => setVehiculoId(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                    required
-                  >
-                    {vehiculos.map((v) => (
-                      <option key={v.id} value={v.id}>
-                        {v.placa}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setVehiculoId}
+                    placeholder="Buscar vehículo..."
+                    searchPlaceholder="Placa o marca..."
+                  />
                 </div>
               </div>
 
@@ -646,29 +661,23 @@ export default function OrdenesMantenimientoPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Código Trabajo</label>
-                  <select
+                  <SearchSelect
+                    options={codigoTrabajoOptions}
                     value={codigoServicio}
-                    onChange={(e) => setCodigoServicio(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                  >
-                    <option value="">Seleccionar...</option>
-                    {CODIGOS_SERVICIO.TRABAJO.map((t) => (
-                      <option key={t.value} value={t.value}>{t.label}</option>
-                    ))}
-                  </select>
+                    onChange={setCodigoServicio}
+                    placeholder="Buscar código..."
+                    searchPlaceholder="Código o descripción..."
+                  />
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-350">Órgano/Sistema</label>
-                  <select
+                  <SearchSelect
+                    options={organoOptions}
                     value={organoServicio}
-                    onChange={(e) => setOrganoServicio(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm focus:outline-none"
-                  >
-                    <option value="">Seleccionar...</option>
-                    {CODIGOS_SERVICIO.ORGANO.map((o) => (
-                      <option key={o.value} value={o.value}>{o.label}</option>
-                    ))}
-                  </select>
+                    onChange={setOrganoServicio}
+                    placeholder="Buscar órgano..."
+                    searchPlaceholder="Número o nombre del órgano..."
+                  />
                 </div>
               </div>
 
