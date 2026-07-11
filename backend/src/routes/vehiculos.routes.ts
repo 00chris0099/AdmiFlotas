@@ -62,10 +62,15 @@ router.use(authenticate);
  */
 router.get("/", async (req, res, next) => {
   try {
-    const { page = "1", limit = "20", search, estadoId, marcaId } = req.query;
+    const { page = "1", limit = "20", search, estadoId, marcaId, includeBaja } = req.query;
     const pageNum = parseInt(page as string);
     const limitNum = parseInt(limit as string);
     const skip = (pageNum - 1) * limitNum;
+
+    // Buscar el ID del estado DADO_DE_BAJA para excluirlo por defecto
+    const estadoBaja = await prisma.estadoVehiculo.findUnique({
+      where: { codigo: "DADO_DE_BAJA" },
+    });
 
     const where: any = {
       ...(search && {
@@ -75,6 +80,9 @@ router.get("/", async (req, res, next) => {
         ],
       }),
       ...(estadoId && { estadoId: estadoId as string }),
+      ...(!estadoId && !includeBaja && estadoBaja && {
+        estadoId: { not: estadoBaja.id },
+      }),
       ...(marcaId && { marcaId: marcaId as string }),
     };
 
@@ -251,8 +259,30 @@ router.put("/:id", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(update
  */
 router.delete("/:id", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), async (req, res, next) => {
   try {
-    await prisma.vehiculo.delete({ where: { id: req.params.id as string } });
-    sendSuccess(res, { message: "Vehículo eliminado" });
+    const vehiculoId = req.params.id as string;
+
+    // Verificar que el vehículo existe
+    const vehiculo = await prisma.vehiculo.findUnique({ where: { id: vehiculoId } });
+    if (!vehiculo) {
+      return sendError(res, "Vehículo no encontrado", 404);
+    }
+
+    // Buscar el estado "DADO_DE_BAJA"
+    const estadoBaja = await prisma.estadoVehiculo.findUnique({
+      where: { codigo: "DADO_DE_BAJA" },
+    });
+
+    if (!estadoBaja) {
+      return sendError(res, "Estado DADO_DE_BAJA no configurado en el sistema", 500);
+    }
+
+    // Soft delete: cambiar estado en vez de eliminar físicamente
+    await prisma.vehiculo.update({
+      where: { id: vehiculoId },
+      data: { estadoId: estadoBaja.id },
+    });
+
+    sendSuccess(res, { message: "Vehículo dado de baja correctamente" });
   } catch (error) {
     next(error);
   }

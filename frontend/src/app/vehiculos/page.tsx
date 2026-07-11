@@ -174,14 +174,19 @@ export default function VehiculosPage() {
   };
 
   const handleDelete = async (id: string, placa: string) => {
-    const ok = await confirm({ message: `¿Está seguro de eliminar el vehículo ${placa}?`, variant: "danger" });
+    const ok = await confirm({
+      title: "Dar de Baja",
+      message: `¿Está seguro de dar de baja el vehículo ${placa}? No aparecerá en las listas pero se conservará el historial.`,
+      variant: "danger",
+      confirmText: "Dar de Baja",
+    });
     if (!ok) return;
     try {
       await api.deleteVehiculo(id);
       cargarVehiculos();
-      toast.success("Vehículo eliminado.");
-    } catch {
-      toast.error("Error de conexión");
+      toast.success("Vehículo dado de baja correctamente");
+    } catch (err: any) {
+      toast.error("Error: " + (err.message || "Error de conexión"));
     }
   };
 
@@ -213,7 +218,7 @@ export default function VehiculosPage() {
       accessorKey: (row) => (
         <div className="flex justify-end gap-2">
           <button onClick={() => handleEdit(row)} className="text-xs text-blue-400 hover:text-blue-300">Editar</button>
-          <button onClick={() => handleDelete(row.id, row.placa)} className="text-xs text-rose-400 hover:text-rose-300">Eliminar</button>
+          <button onClick={() => handleDelete(row.id, row.placa)} className="text-xs text-rose-400 hover:text-rose-300">Dar de Baja</button>
         </div>
       ),
     },
