@@ -7,9 +7,8 @@ RUN npm install
 
 COPY . .
 
-# URL del backend en producción (se puede sobreescribir con build arg)
-ARG NEXT_PUBLIC_API_URL=https://aimachristian-administraciondeflotas.ajcxjb.easypanel.host/api
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+# URL del backend - hardcodeada, no se sobreescribe con build args
+ENV NEXT_PUBLIC_API_URL=https://aimachristian-administraciondeflotas.ajcxjb.easypanel.host/api
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
