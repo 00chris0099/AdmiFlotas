@@ -109,7 +109,25 @@ function addFooter(doc: jsPDF) {
   }
 }
 
+function sanitizeFilename(name: string): string {
+  return name.replace(/[\/\\:*?"<>|]/g, "_").replace(/\s+/g, "_");
+}
+
+function safeToFixed(val: any, decimals: number = 2): string {
+  const num = Number(val);
+  return isNaN(num) ? "0.00" : num.toFixed(decimals);
+}
+
+function getFinalY(doc: jsPDF): number {
+  try {
+    return (doc as any).lastAutoTable?.finalY ?? 100;
+  } catch {
+    return 100;
+  }
+}
+
 export function generateMovimientoDiarioPDF(data: any) {
+  try {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
   let y = createHeader(doc, "MA 122 01 01", "MOVIMIENTO DIARIO");
@@ -158,7 +176,7 @@ export function generateMovimientoDiarioPDF(data: any) {
     columnStyles: { 0: { cellWidth: 10 }, 2: { cellWidth: 25, halign: "center" as const } },
   });
 
-  y = (doc as any).lastAutoTable.finalY + 10;
+  y = getFinalY(doc) + 10;
   if (y > 240) {
     doc.addPage();
     y = 20;
@@ -171,15 +189,21 @@ export function generateMovimientoDiarioPDF(data: any) {
   ]);
 
   addFooter(doc);
-  doc.save(`SAF_MA122_01_01_${data.placa || "sin_placa"}_${data.fecha || "sin_fecha"}.pdf`);
+  const filename = `SAF_MA122_01_01_${sanitizeFilename(data.placa || "sin_placa")}_${sanitizeFilename(data.fecha || "sin_fecha")}.pdf`;
+  doc.save(filename);
+  } catch (err) {
+    console.error("Error generando PDF MovimientoDiario:", err);
+    throw err;
+  }
 }
 
 export function generateOrdenAbastecimientoPDF(data: any) {
+  try {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
   let y = createHeader(doc, "MA 122 01 02", "ORDEN DE ABASTECIMIENTO");
   y = addSectionTitle(doc, y, "1. DATOS DE LA ORDEN");
-  y = addFieldRow(doc, y, "N° Orden:", data.numeroOrden);
+  y = addFieldRow(doc, y, "N° Orden:", data.numeroOrden || "Auto-generado");
   y = addFieldRow(doc, y, "Fecha:", data.fecha);
 
   y += 2;
@@ -198,9 +222,9 @@ export function generateOrdenAbastecimientoPDF(data: any) {
   y = addSectionTitle(doc, y, "4. ABASTECIMIENTO");
   y = addFieldRow(doc, y, "Tipo Combustible:", data.tipoCombustible);
   y = addFieldRow(doc, y, "Cantidad:", `${data.cantidadGalones} gal`);
-  y = addFieldRow(doc, y, "Costo/Galon:", `S/. ${Number(data.costoGalon).toFixed(2)}`);
-  y = addFieldRow(doc, y, "Costo Total:", `S/. ${Number(data.costoTotal).toFixed(2)}`);
-  y = addFieldRow(doc, y, "Kilometraje:", `${data.kilometrajeActual} km`);
+  y = addFieldRow(doc, y, "Costo/Galon:", `S/. ${safeToFixed(data.costoGalon)}`);
+  y = addFieldRow(doc, y, "Costo Total:", `S/. ${safeToFixed(data.costoTotal)}`);
+  y = addFieldRow(doc, y, "Kilometraje:", `${data.kilometrajeActual || "-"} km`);
 
   y += 2;
   y = addSectionTitle(doc, y, "5. SERVICENTRO");
@@ -223,10 +247,16 @@ export function generateOrdenAbastecimientoPDF(data: any) {
   ]);
 
   addFooter(doc);
-  doc.save(`SAF_MA122_01_02_${data.numeroOrden || "sin_orden"}.pdf`);
+  const filename = `SAF_MA122_01_02_${sanitizeFilename(data.numeroOrden || "sin_orden")}.pdf`;
+  doc.save(filename);
+  } catch (err) {
+    console.error("Error generando PDF Abastecimiento:", err);
+    throw err;
+  }
 }
 
 export function generateOrdenMantenimientoPDF(data: any) {
+  try {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
   let y = createHeader(doc, "MA 122 02 01", "ORDEN DE SERVICIO / MANTENIMIENTO");
@@ -265,7 +295,7 @@ export function generateOrdenMantenimientoPDF(data: any) {
     columnStyles: { 1: { halign: "right" as const } },
   });
 
-  y = (doc as any).lastAutoTable.finalY + 10;
+  y = getFinalY(doc) + 10;
 
   if (data.manoDeObra && data.manoDeObra.length > 0) {
     if (y > 230) { doc.addPage(); y = 20; }
@@ -276,9 +306,9 @@ export function generateOrdenMantenimientoPDF(data: any) {
       body: data.manoDeObra.map((mo: any) => [
         mo.descripcionTarea || "-",
         mo.nombreTecnico || "-",
-        `${mo.horasTrabajadas}`,
-        `S/. ${Number(mo.costoHora).toFixed(2)}`,
-        `S/. ${Number(mo.subtotal).toFixed(2)}`,
+        `${mo.horasTrabajadas || 0}`,
+        `S/. ${safeToFixed(mo.costoHora)}`,
+        `S/. ${safeToFixed(mo.subtotal)}`,
       ]),
       theme: "striped",
       headStyles: { fillColor: ACCENT_COLOR, textColor: [255, 255, 255], fontStyle: "bold" },
@@ -286,7 +316,7 @@ export function generateOrdenMantenimientoPDF(data: any) {
       alternateRowStyles: { fillColor: [248, 250, 252] },
       margin: { left: 15, right: 15 },
     });
-    y = (doc as any).lastAutoTable.finalY + 10;
+    y = getFinalY(doc) + 10;
   }
 
   if (y > 240) { doc.addPage(); y = 20; }
@@ -297,5 +327,10 @@ export function generateOrdenMantenimientoPDF(data: any) {
   ]);
 
   addFooter(doc);
-  doc.save(`SAF_MA122_02_01_${data.numeroOrden || "sin_orden"}.pdf`);
+  const filename = `SAF_MA122_02_01_${sanitizeFilename(data.numeroOrden || "sin_orden")}.pdf`;
+  doc.save(filename);
+  } catch (err) {
+    console.error("Error generando PDF Mantenimiento:", err);
+    throw err;
+  }
 }

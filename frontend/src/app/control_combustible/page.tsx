@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import SearchSelect from "@/components/ui/SearchSelect";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useToast } from "@/components/ui/Toast";
 import api from "@/lib/api";
 import { generateOrdenAbastecimientoPDF } from "@/utils/pdfGenerators";
 import { exportToExcel } from "@/utils/exportUtils";
@@ -66,6 +67,7 @@ export default function CombustiblePage() {
   const [conductores, setConductores] = useState<DbConductor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const toast = useToast();
 
   // Form states — Orden
   const [numeroOrden, setNumeroOrden] = useState("");
@@ -236,7 +238,7 @@ export default function CombustiblePage() {
     if (!firmaConductor) errors.push("La firma del Conductor es obligatoria");
 
     if (errors.length > 0) {
-      alert("Errores de validación:\n" + errors.join("\n"));
+      toast.warning("Errores de validación: " + errors.join(", "));
       setIsSubmitting(false);
       return;
     }
@@ -266,9 +268,9 @@ export default function CombustiblePage() {
       setModalOpen(false);
       resetForm();
       cargarOrdenes();
-      alert("¡Orden de abastecimiento registrada con éxito!");
+      toast.success("¡Orden de abastecimiento registrada con éxito!");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }

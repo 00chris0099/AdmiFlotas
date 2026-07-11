@@ -5,6 +5,8 @@ import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import SearchSelect from "@/components/ui/SearchSelect";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 import api from "@/lib/api";
 import { generateMovimientoDiarioPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
@@ -62,6 +64,8 @@ export default function MovimientosPage() {
   const [conductores, setConductores] = useState<DbConductor[]>([]);
   const [rutas, setRutas] = useState<Ruta[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const toast = useToast();
+  const { confirm } = useConfirm();
   const [modalOpen, setModalOpen] = useState(false);
 
   // Estados del Formulario
@@ -255,9 +259,9 @@ export default function MovimientosPage() {
       setCierreModalOpen(false);
       setMovimientoACerrar(null);
       cargarMovimientos();
-      alert("Movimiento completado con éxito!");
+      toast.success("Movimiento completado con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      toast.error("Error de red: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -296,9 +300,9 @@ export default function MovimientosPage() {
 
       setModalOpen(false);
       cargarMovimientos();
-      alert("¡Movimiento registrado con éxito!");
+      toast.success("¡Movimiento registrado con éxito!");
     } catch (err: any) {
-      alert("Error de red: " + err.message);
+      toast.error("Error de red: " + err.message);
     } finally {
       setIsSubmitting(false);
     }

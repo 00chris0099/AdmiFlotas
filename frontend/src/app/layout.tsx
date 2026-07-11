@@ -4,6 +4,8 @@ import "./globals.css";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ToastProvider } from "@/components/ui/Toast";
+import { ConfirmProvider } from "@/components/ui/ConfirmDialog";
 
 export const metadata: Metadata = {
   title: "SAF ERP - Gestión de Flotas",
@@ -20,7 +22,11 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <AuthProvider>
-            <DashboardLayout>{children}</DashboardLayout>
+            <ToastProvider>
+              <ConfirmProvider>
+                <DashboardLayout>{children}</DashboardLayout>
+              </ConfirmProvider>
+            </ToastProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

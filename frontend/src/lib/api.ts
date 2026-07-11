@@ -86,7 +86,8 @@ class ApiClient {
 
   private async request<T = any>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    timeoutMs: number = 15000
   ): Promise<T> {
     const token = this.getToken();
     const headers: Record<string, string> = {
@@ -98,27 +99,55 @@ class ApiClient {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${API_BASE}${endpoint}`, {
-      ...options,
-      headers,
-    });
+    // Timeout con AbortController
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    if (!res.ok) {
-      const error = await res.json().catch(() => ({ error: "Error desconocido" }));
-      if (res.status === 401 && !endpoint.includes("/auth/login")) {
-        this.setToken(null);
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
+    try {
+      const res = await fetch(`${API_BASE}${endpoint}`, {
+        ...options,
+        headers,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        let errorMsg = `Error ${res.status}`;
+        try {
+          const errorData = await res.json();
+          errorMsg = errorData.error || errorData.message || errorMsg;
+        } catch {
+          // Respuesta no-JSON (ej: HTML de proxy/gateway)
+          if (res.status === 502 || res.status === 503) {
+            errorMsg = "Servidor no disponible. Intente nuevamente.";
+          }
         }
+
+        if (res.status === 401 && !endpoint.includes("/auth/login")) {
+          this.setToken(null);
+          if (typeof window !== "undefined") {
+            window.location.href = "/login";
+          }
+        }
+        throw new Error(errorMsg);
       }
-      throw new Error(error.error || `Error ${res.status}`);
+
+      if (res.status === 204) return undefined as T;
+
+      const data = await res.json();
+      const payload = data.data ?? data;
+      return flattenResponse(payload) as T;
+    } catch (err: any) {
+      clearTimeout(timeoutId);
+      if (err.name === "AbortError") {
+        throw new Error("Tiempo de espera agotado. Verifique su conexión.");
+      }
+      if (err.message?.includes("Failed to fetch") || err.message?.includes("NetworkError")) {
+        throw new Error("Error de conexión. Verifique su red.");
+      }
+      throw err;
     }
-
-    if (res.status === 204) return undefined as T;
-
-    const data = await res.json();
-    const payload = data.data ?? data;
-    return flattenResponse(payload) as T;
   }
 
   // ─── Auth ───

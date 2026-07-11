@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { DataTable, ColumnDef } from "@/components/ui/DataTable";
 import SearchSelect from "@/components/ui/SearchSelect";
+import { useToast } from "@/components/ui/Toast";
 import api from "@/lib/api";
 import { generateOrdenMantenimientoPDF } from "@/utils/pdfGenerators";
 import Icon from "@/components/ui/Icon";
@@ -53,6 +54,7 @@ export default function OrdenesMantenimientoPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const toast = useToast();
 
   // Estados Formulario Orden
   const [numeroOrden, setNumeroOrden] = useState("");
@@ -145,7 +147,7 @@ export default function OrdenesMantenimientoPage() {
     if (parseFloat(costoOtros) < 0) errors.push("El costo otros no puede ser negativo");
 
     if (errors.length > 0) {
-      alert("Errores de validación:\n" + errors.join("\n"));
+      toast.warning("Errores de validación: " + errors.join(", "));
       setIsSubmitting(false);
       return;
     }
@@ -170,9 +172,9 @@ export default function OrdenesMantenimientoPage() {
       setCostoRepuestos("0");
       setCostoOtros("0");
       cargarOrdenes();
-      alert("¡Orden de mantenimiento creada con éxito!");
+      toast.success("¡Orden de mantenimiento creada con éxito!");
     } catch (err: any) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -199,7 +201,7 @@ export default function OrdenesMantenimientoPage() {
       cargarOrdenes();
     } catch (err: any) {
       console.error(err);
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setSavingLabor(false);
     }
@@ -208,7 +210,7 @@ export default function OrdenesMantenimientoPage() {
   // Firma digital
   const handleFirmar = async (ordenId: string, tipoFirma: string) => {
     if (!firmaNombre.trim()) {
-      alert("Ingrese su nombre para firmar");
+      toast.warning("Ingrese su nombre para firmar");
       return;
     }
     setSavingFirma(true);
@@ -222,10 +224,10 @@ export default function OrdenesMantenimientoPage() {
       setSigningRole("");
       setFirmaNombre("");
       cargarOrdenes();
-      alert("Firma registrada con éxito");
+      toast.success("Firma registrada con éxito");
     } catch (err) {
       console.error(err);
-      alert("Error al firmar");
+      toast.error("Error al firmar");
     } finally {
       setSavingFirma(false);
     }
@@ -314,10 +316,10 @@ export default function OrdenesMantenimientoPage() {
       if (res.ok) {
         generateOrdenMantenimientoPDF(data);
       } else {
-        alert("Error al obtener datos: " + data.error);
+        toast.error("Error al obtener datos: " + data.error);
       }
     } catch (err: any) {
-      alert("Error al generar PDF: " + err.message);
+      toast.error("Error al generar PDF: " + err.message);
     }
   };
 
