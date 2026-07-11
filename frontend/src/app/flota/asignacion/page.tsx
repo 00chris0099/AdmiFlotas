@@ -129,10 +129,7 @@ export default function AsignacionPage() {
       header: "Conductor",
       accessorKey: (row) => (
         <div>
-          <span className="text-white">{row.conductor.nombre} {row.conductor.apellido}</span>
-          {row.conductor.licenciaConducir && (
-            <div className="text-xs text-slate-500">Lic: {row.conductor.licenciaConducir}</div>
-          )}
+          <span className="text-white">{row.conductor}</span>
         </div>
       ),
     },

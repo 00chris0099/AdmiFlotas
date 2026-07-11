@@ -20,21 +20,17 @@ function flattenResponse(obj: any): any {
   if (Array.isArray(obj)) return obj.map(flattenResponse);
   if (obj instanceof Date) return obj.toISOString();
 
-  // Keys que contienen objetos tipo lookup (solo tienen id+nombre, no datos propios)
   const LOOKUP_KEYS = new Set(["marca", "modelo", "color", "tipoCombustible", "estado",
     "categoriaVehiculo", "sectorOrganizacional", "fabricante", "dimension", "tipoLavado",
     "rol", "centroServicio", "sectorSolicitante"]);
-  // Keys que NUNCA se aplastan a string (son entidades principales con campos propios)
-  const PRESERVE_KEYS = new Set(["usuario", "conductor", "tecnico", "tecnicoAsignado", "vehiculo"]);
+  const PRESERVE_KEYS = new Set(["vehiculo"]);
 
   const result: any = {};
   for (const [key, value] of Object.entries(obj)) {
     if (value && typeof value === "object" && !Array.isArray(value) && !(value instanceof Date)) {
       if (LOOKUP_KEYS.has(key)) {
-        // Lookup tables: extraer solo el nombre/codigo como string
         result[key] = safeStr(value);
       } else if (key === "vehiculo") {
-        // Vehiculo: mantener como objeto pero aplanar sus relaciones internas
         const v = flattenResponse(value);
         result[key] = v;
         result.vehiculoLabel = `${safeStr(v.marca)} ${safeStr(v.modelo)}`.trim();
@@ -42,19 +38,12 @@ function flattenResponse(obj: any): any {
         result.marcaVehiculo = safeStr(v.marca);
         result.modeloVehiculo = safeStr(v.modelo);
         result.codigoPatrimonial = v.codigoPatrimonial ?? "";
-      } else if (key === "conductor" || key === "tecnico" || key === "tecnicoAsignado") {
-        // Conductor: mantener como objeto pero aplanar sus relaciones
-        const c = flattenResponse(value);
-        result[key] = c;
-        result.conductorLabel = `${c.nombre ?? ""} ${c.apellido ?? ""}`.trim();
       } else if (PRESERVE_KEYS.has(key)) {
-        // Entidades principales: recursion sin aplastar
         result[key] = flattenResponse(value);
-      } else if ("id" in value && ("nombre" in value || "codigo" in value) && Object.keys(value).length <= 6) {
-        // Objeto lookup generico (pocos campos, tiene id+nombre/codigo)
+      } else if ("id" in value && ("nombre" in value || "codigo" in value)) {
+        // Cualquier objeto con id+nombre → extraer string (sin límite de campos)
         result[key] = safeStr(value);
       } else {
-        // Objetos complejos: recursion normal
         result[key] = flattenResponse(value);
       }
     } else {
