@@ -9,7 +9,7 @@ export interface User {
   nombre: string;
   apellido: string;
   email: string;
-  rol: "JEFE_PROCESO" | "CONDUCTOR" | "INSPECTOR" | "ANALISTA" | "MECANICO" | "ELECTRICISTA" | "ADMINISTRATIVO";
+  rol: string;
   licenciaConducir?: string | null;
 }
 
@@ -23,6 +23,14 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+function normalizeUser(raw: any): User {
+  let rol = raw.rol;
+  if (rol && typeof rol === "object") {
+    rol = rol.codigo || rol.nombre || String(rol);
+  }
+  return { ...raw, rol };
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -33,16 +41,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const storedToken = localStorage.getItem("saf_token");
     const storedUser = localStorage.getItem("saf_user");
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(normalizeUser(JSON.parse(storedUser)));
+      try {
+        setToken(storedToken);
+        setUser(normalizeUser(JSON.parse(storedUser)));
+      } catch {
+        localStorage.removeItem("saf_token");
+        localStorage.removeItem("saf_user");
+      }
     }
     setIsLoading(false);
   }, []);
-
-  const normalizeUser = (raw: any): User => ({
-    ...raw,
-    rol: typeof raw.rol === "object" && raw.rol !== null ? raw.rol.codigo : raw.rol,
-  });
 
   const login = async (email: string, passwordPlaintxt: string): Promise<boolean> => {
     try {
@@ -69,8 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     try {
       await api.logout();
-    } catch {
-    }
+    } catch {}
 
     localStorage.removeItem("saf_token");
     localStorage.removeItem("saf_user");
