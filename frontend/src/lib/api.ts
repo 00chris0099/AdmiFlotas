@@ -43,16 +43,14 @@ class ApiClient {
       headers,
     });
 
-    if (res.status === 401) {
-      this.setToken(null);
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      }
-      throw new Error("Sesión expirada");
-    }
-
     if (!res.ok) {
       const error = await res.json().catch(() => ({ error: "Error desconocido" }));
+      if (res.status === 401 && !endpoint.includes("/auth/login")) {
+        this.setToken(null);
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+      }
       throw new Error(error.error || `Error ${res.status}`);
     }
 
