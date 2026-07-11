@@ -81,9 +81,10 @@ export function DataTable<T extends { id: string | number }>({
           .replace(/([A-Z])/g, " $1")
           .replace(/^./, (str) => str.toUpperCase());
         
-        let formattedVal = val;
+        let formattedVal: string;
         if (typeof val === "object") {
-          formattedVal = JSON.stringify(val);
+          const obj = val as any;
+          formattedVal = obj.nombre ?? obj.codigo ?? obj.placa ?? obj.label ?? JSON.stringify(val);
         } else if (typeof val === "boolean") {
           formattedVal = val ? "SÍ" : "NO";
         }
@@ -256,11 +257,15 @@ export function DataTable<T extends { id: string | number }>({
                   .replace(/([A-Z])/g, " $1")
                   .replace(/^./, (str) => str.toUpperCase());
 
-                let displayVal = val;
+                let displayVal: string;
                 if (typeof val === "object") {
-                  displayVal = JSON.stringify(val);
+                  // Objetos anidados: extraer nombre/codigo/placa o stringify
+                  const obj = val as any;
+                  displayVal = obj.nombre ?? obj.codigo ?? obj.placa ?? obj.label ?? JSON.stringify(val);
                 } else if (typeof val === "boolean") {
                   displayVal = val ? "Sí" : "No";
+                } else {
+                  displayVal = String(val);
                 }
 
                 return (
