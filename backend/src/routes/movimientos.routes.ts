@@ -218,12 +218,28 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", validate(createMovimientoSchema), async (req, res, next) => {
   try {
     const numeroOrden = await generateNumeroOrden("MD");
-    const { checklist, ...movimientoData } = req.body;
+    const {
+      documentos, aceiteMotor, agua, bateria, frenos, embrague,
+      fajas, faros, lunas, plumillas, llantas, espejos,
+      herramientas, extintorBotiquin, manchasFugas,
+      sectorSolicitante,
+      ...movimientoData
+    } = req.body;
+
+    // Resolver sectorSolicitante (nombre → ID)
+    let sectorSolicitanteId: string | undefined;
+    if (sectorSolicitante) {
+      const sector = await prisma.sectorOrganizacional.findFirst({
+        where: { nombre: sectorSolicitante },
+      });
+      sectorSolicitanteId = sector?.id;
+    }
 
     const result = await prisma.$transaction(async (tx: any) => {
       const movimiento = await tx.movimientoDiario.create({
         data: {
           ...movimientoData,
+          ...(sectorSolicitanteId && { sectorSolicitanteId }),
           numeroOrden,
         },
         include: {
@@ -233,12 +249,31 @@ router.post("/", validate(createMovimientoSchema), async (req, res, next) => {
         },
       });
 
-      if (checklist && typeof checklist === "object") {
-        const { id: _id, movimientoId: _mid, fechaRegistro: _fr, ...checklistData } = checklist;
+      // Crear checklist si se enviaron datos de inspección
+      const hasChecklist = [documentos, aceiteMotor, agua, bateria, frenos, embrague,
+        fajas, faros, lunas, plumillas, llantas, espejos,
+        herramientas, extintorBotiquin, manchasFugas].some(v => v !== undefined);
+
+      if (hasChecklist) {
         await tx.checklistVerificacion.create({
           data: {
             movimientoId: movimiento.id,
-            ...checklistData,
+            documentos: documentos ?? "OK",
+            aceiteMotor: aceiteMotor ?? "OK",
+            agua: agua ?? "OK",
+            bateria: bateria ?? "OK",
+            frenos: frenos ?? "OK",
+            embrague: embrague ?? "OK",
+            fajas: fajas ?? "OK",
+            faros: faros ?? "OK",
+            lunas: lunas ?? "OK",
+            plumillas: plumillas ?? "OK",
+            llantas: llantas ?? "OK",
+            espejos: espejos ?? "OK",
+            herramientas: herramientas ?? "OK",
+            extintorBotiquin: extintorBotiquin ?? "OK",
+            manchasFugas: manchasFugas ?? "OK",
+            aptoParaOperar: true,
           },
         });
       }
