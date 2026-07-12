@@ -38,26 +38,57 @@ Validan que la base de datos rechace operaciones que violarían restricciones de
 
 ### 6.2. Resultados de las Pruebas
 
-**Resumen de pruebas ejecutadas:**
+**Resumen general de ejecución:**
 
-El proyecto cuenta con **5 archivos de pruebas** que cubren las áreas críticas del sistema:
+| Métrica | Valor |
+|---|---|
+| Total de pruebas ejecutadas | **65** |
+| Pruebas aprobadas | **62** (95,4%) |
+| Pruebas fallidas | **3** (4,6%) |
+| Archivos de prueba totales | **5** |
+| Archivos aprobados | **4** (80%) |
+| Archivos con fallos | **1** (vehiculos.test.ts) |
+| Duración total de ejecución | **~2,66 segundos** |
 
-| Archivo de Prueba | Tipo | Cantidad de Casos | Módulo |
-|---|---|---|---|
-| `auth.test.ts` | Integración | 9 | Autenticación |
-| `vehiculos.test.ts` | Integración | 7 | Vehículos |
-| `movimientos.test.ts` | Integración | 5 | Movimientos Diarios |
-| `seguridad.test.ts` | Integración + Unitaria | 11 | Seguridad y RBAC |
-| `utils.test.ts` | Unitaria | 24 | Utilidades y Esquemas |
-| **Total** | | **56** | |
+**Desglose por archivo de prueba:**
 
-**Descripción de los escenarios más significativos:**
+| Archivo de Prueba | Tipo | Aprobadas | Fallidas | Total | Módulo |
+|---|---|---|---|---|---|
+| `auth.test.ts` | Integración | 11 | 0 | 11 | Autenticación |
+| `vehiculos.test.ts` | Integración | 4 | 3 | 7 | Vehículos |
+| `movimientos.test.ts` | Integración | 5 | 0 | 5 | Movimientos Diarios |
+| `seguridad.test.ts` | Integración + Unitaria | 14 | 0 | 14 | Seguridad y RBAC |
+| `utils.test.ts` | Unitaria | 28 | 0 | 28 | Utilidades y Esquemas |
+| **Total** | | **62** | **3** | **65** | |
+
+**Escenarios aprobados más significativos:**
 
 - **Login con usuario bloqueado temporalmente (403):** Se verifica que un usuario con `bloqueadoHasta` en una fecha futura no pueda autenticarse, independientemente de que su contraseña sea correcta.
 - **Creación transaccional de movimiento con checklist:** Se valida que la creación de un movimiento diario junto con su checklist de verificación se ejecute dentro de una transacción de base de datos, asegurando atomicidad.
 - **RBAC - Rechazo de usuario no autenticado:** Se confirma que el middleware `requireRole` rechaza correctamente solicitudes donde no existe un usuario autenticado en la sesión.
 - **Paginación con cálculo de total de páginas:** Se valida que la función `sendPaginated` calcule correctamente el número total de páginas (por ejemplo, 55 registros con 20 por página = 3 páginas).
 - **Validación de esquemas Zod - Rechazo de datos inválidos:** Se verifica que los esquemas de validación rechacen emails con formato incorrecto, contraseñas demasiado cortas, placas faltantes y valores negativos para campos numéricos.
+- **Gestión de permisos RBAC:** Se validan las operaciones de asignación, eliminación y listado de permisos, incluyendo detección de duplicados (código 409).
+- **Cierre remoto de sesiones:** Se verifica que un administrador pueda cerrar sesiones activas de otros usuarios.
+- **Logs de auditoría con filtros:** Se confirma el filtrado por módulo y rango de fechas en los registros de auditoría.
+
+**Defectos encontrados durante la ejecución de pruebas:**
+
+| ID | Descripción | Severidad | Estado |
+|---|---|---|---|
+| DEF-01 | El endpoint `GET /api/vehiculos` retorna HTTP 500 en lugar de 200 al listar vehículos con paginación | Alta | Abierto |
+| DEF-02 | El endpoint `GET /api/vehiculos?page=2&limit=10` retorna HTTP 500 al recibir parámetros de paginación | Alta | Abierto |
+| DEF-03 | El endpoint `DELETE /api/vehiculos/:id` retorna HTTP 500 en lugar de 200 al eliminar un vehículo | Alta | Abierto |
+
+**Análisis de los defectos:**
+
+Los tres defectos identificados se encuentran en el archivo `vehiculos.test.ts` y comparten una causa raíz probable: los handlers de las rutas HTTP para listado paginado y eliminación de vehículos están lanzando una excepción no controlada que el middleware de errores no está capturando correctamente, resultando en una respuesta HTTP 500 (Internal Server Error) en lugar del código esperado.
+
+Los escenarios afectados son:
+- **Listado de vehículos con paginación** (GET con query params `page` y `limit`).
+- **Eliminación de vehículo** (DELETE con parámetro `:id`).
+
+Los demás módulos del sistema (autenticación, movimientos diarios, seguridad/RBAC, utilidades) funcionan correctamente con una tasa de éxito del 100%.
 
 **Métricas de cobertura de pruebas:**
 
@@ -65,19 +96,8 @@ La configuración de **Vitest** define cobertura mediante el proveedor **v8**, c
 - **Archivos incluidos:** Todos los archivos `.ts` en `src/`.
 - **Archivos excluidos:** La carpeta `src/__tests__/` y el archivo `src/config/database.ts` (capa de acceso a datos que se evalúa a través de mocks en pruebas de integración).
 - **Timeout de ejecución:** 10 segundos por prueba.
-
-La cobertura se genera con el comando `npm run test:coverage` y genera un reporte detallado de líneas, funciones, ramas y statements.
-
-**Estado de los defectos encontrados:**
-
-| ID | Descripción | Severidad | Estado |
-|---|---|---|---|
-| DEF-01 | El endpoint de login no validaba usuarios con estado `activo: false` antes de comparar contraseñas | Alta | Corregido |
-| DEF-02 | La paginación calculaba `totalPages` correctamente solo para múltiplos exactos del `limit` | Media | Corregido |
-| DEF-03 | El middleware de autenticación no retornaba código 401 cuando el token estaba expirado | Alta | Corregido |
-| DEF-04 | Los esquemas Zod no rechazaban valores negativos para campos de tipo Decimal (galones, costos) | Media | Corregido |
-
-Todos los defectos identificados han sido corregidos y validados mediante las pruebas correspondientes.
+- **Proveedor de cobertura:** V8 (integrado en Vitest).
+- **Comando de ejecución:** `npm run test:coverage`.
 
 ---
 
@@ -126,8 +146,8 @@ El aseguramiento de la calidad del software en el proyecto SAF se garantiza medi
 |---|---|---|
 | **ESLint** | Análisis estático y detección de errores de código | `npm run lint` |
 | **TypeScript Compiler** | Verificación de tipos | `npm run typecheck` |
-| **Vitest** | Ejecución de pruebas unitarias e de integración | `npm run test` |
-| **Vitest + v8** | Generación de métricas de cobertura | `npm run test:coverage` |
+| **Vitest v4.1.10** | Ejecución de pruebas unitarias e de integración | `npm run test` |
+| **@vitest/coverage-v8** | Generación de métricas de cobertura de código | `npm run test:coverage` |
 | **Zod** | Validación de esquemas de entrada en runtime | Integrado en rutas |
 | **Supertest** | Ejecución de pruebas HTTP de integración | Integrado en pruebas |
 | **Helmet** | Seguridad de cabeceras HTTP | Middleware global |
