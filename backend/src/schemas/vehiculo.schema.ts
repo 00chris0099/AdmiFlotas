@@ -12,6 +12,13 @@ export const createVehiculoSchema = z.object({
   estadoId: z.string().uuid().optional(),
   categoriaId: z.string().uuid().optional(),
   estadoFisico: z.enum(["OPERATIONAL", "MAINTENANCE", "OUT_OF_SERVICE"]).optional(),
+  // Costos fijos del vehículo
+  valorAdquisicion: z.number().positive().optional(),
+  vidaUtilAnios: z.number().int().min(1).max(50).optional(),
+  kmAnualesReferencia: z.number().int().min(0).optional(),
+  seguroAnual: z.number().min(0).optional(),
+  licenciamientoAnual: z.number().min(0).optional(),
+  periodicidadMantenimientoKm: z.number().int().min(100).optional(),
 });
 
 export const updateVehiculoSchema = createVehiculoSchema.partial();
