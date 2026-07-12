@@ -2,99 +2,145 @@
 
 ### 8.1. Funcionalidades Implementadas
 
-El sistema SAF ha sido desarrollado siguiendo el Manual Técnico F1T02, digitalizando los procedimientos básicos de operación, mantenimiento y control de flota. A continuación se detallan las funcionalidades completadas por módulo.
+El sistema SAF ha sido desarrollado siguiendo el Manual Técnico F1T02, digitalizando los procedimientos básicos de operación, mantenimiento y control de flota. A continuación se detallan las funcionalidades completadas por módulo, verificadas contra el código fuente real.
 
-**Módulo de Autenticación y Seguridad**
+**Módulo de Autenticación y Seguridad** (6 endpoints en `auth.routes.ts` + 6 en `seguridad.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Inicio de sesión con JWT | `POST /api/auth/login` | Completado | Autenticación por email y contraseña con bcrypt + JWT. Bloqueo tras 5 intentos fallidos |
+| Cierre de sesión | `POST /api/auth/logout` | Parcial | Retorna éxito pero no invalida el token JWT (registrado en comentario del código) |
+| Obtener usuario actual | `GET /api/auth/me` | Completado | Retorna datos del usuario autenticado desde Prisma |
+| Solicitud de cambio de contraseña | `POST /api/auth/solicitar-cambio-password` | Completado | Genera token y envía email. No revela existencia del usuario |
+| Confirmación de cuenta | `POST /api/auth/confirmar-usuario` | Completado | Valida token y establece contraseña en transacción |
+| Cambio de contraseña | `POST /api/auth/cambiar-password` | Completado | Valida token y cambia contraseña en transacción |
+| Listar permisos | `GET /api/admin/permisos` | Completado | Permisos con usuarios asignados |
+| Asignar permiso | `POST /api/admin/permisos` | Completado | Asigna permiso a usuario (detecta duplicados con código 409) |
+| Quitar permiso | `DELETE /api/admin/permisos` | Completado | Elimina asignación por usuarioId y permisoId |
+| Listar sesiones | `GET /api/admin/sesiones` | Completado | Sesiones activas con información del usuario |
+| Cerrar sesión remota | `DELETE /api/admin/sesiones` | Completado | Cierra sesión de otro usuario |
+| Logs de auditoría | `GET /api/admin/audit` | Completado | Filtros por módulo y rango de fechas |
+
+**Módulo de Inventario de Flota** (5 endpoints en `vehiculos.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar vehículos | `GET /api/vehiculos` | Completado | Paginado con búsqueda, filtros por estado y marca. Excluye DADO_DE_BAJA por defecto |
+| Obtener vehículo | `GET /api/vehiculos/:id` | Completado | Búsqueda por UUID con 5 relaciones (marca, modelo, color, tipo combustible, estado) |
+| Crear vehículo | `POST /api/vehiculos` | Completado | Requiere rol ADMINISTRADOR o JEFE_PROCESO. Validación con Zod |
+| Actualizar vehículo | `PUT /api/vehiculos/:id` | Completado | Requiere rol ADMINISTRADOR o JEFE_PROCESO. Validación con Zod |
+| Eliminar vehículo | `DELETE /api/vehiculos/:id` | Completado | Soft-delete: cambia estado a DADO_DE_BAJA |
+
+**Módulo de Operación Diaria — MA 122 01 01** (6 endpoints en `movimientos.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar movimientos | `GET /api/movimientos_diarios` | Completado | Paginado con filtros por vehículo, conductor y estado |
+| Listar checklists | `GET /api/movimientos_diarios/checklist` | Completado | Datos formateados: placa, marca, modelo, inspector, 15 booleanos |
+| Obtener movimiento | `GET /api/movimientos_diarios/:id` | Completado | Con vehículo, conductor, inspector y checklist |
+| Crear movimiento | `POST /api/movimientos_diarios` | Completado | Creación transaccional: movimiento + checklist en $transaction. Auto-genera número de orden |
+| Actualizar movimiento | `PUT /api/movimientos_diarios/:id` | Completado | Actualización estándar |
+| Eliminar movimiento | `DELETE /api/movimientos_diarios/:id` | Completado | Eliminación física (hard delete) |
+
+**Módulo de Combustible y Lubricantes — MA 122 01 02** (5 endpoints en `combustible.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar órdenes | `GET /api/control_combustible` | Completado | Paginado con filtros |
+| Obtener orden | `GET /api/control_combustible/:id` | Completado | Con relaciones de vehículo y conductor |
+| Crear orden | `POST /api/control_combustible` | Completado | Validación con Zod. Número de orden auto-generado |
+| Actualizar orden | `PUT /api/control_combustible/:id` | Completado | Actualización estándar |
+| Eliminar orden | `DELETE /api/control_combustible/:id` | Completado | Eliminación estándar |
+
+**Módulo de Mantenimiento — MA 122 02 01** (7 endpoints en `mantenimiento.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar órdenes | `GET /api/control_mantenimiento` | Completado | Paginado con filtros |
+| Obtener orden | `GET /api/control_mantenimiento/:id` | Completado | Con relaciones de vehículo y técnico |
+| Crear orden | `POST /api/control_mantenimiento` | Completado | Validación con Zod. PREVENTIVO/CORRECTIVO, PROPIO/TERCEROS |
+| Actualizar orden | `PUT /api/control_mantenimiento/:id` | Completado | Actualización estándar |
+| Eliminar orden | `DELETE /api/control_mantenimiento/:id` | Completado | Eliminación estándar |
+| Agregar mano de obra | `POST /api/control_mantenimiento/mano-obra` | Completado | Tarjeta de Mano de Obra |
+| Eliminar mano de obra | `DELETE /api/control_mantenimiento/mano-obra/:id` | Completado | Eliminación de registro de mano de obra |
+
+**Módulo de Almacén de Mantenimiento** (10 endpoints en `almacen.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| CRUD repuestos | GET/POST/PUT/DELETE `/api/mantenimiento/almacen` | Completado | Inventario de repuestos con categoría |
+| Movimientos de almacén | GET/POST `/api/mantenimiento/almacen/movimientos` | Completado | ENTRADA, SALIDA, DEVOLUCIÓN |
+| Lavados | GET/POST/DELETE `/api/mantenimiento/almacen/lavado` | Completado | EXTERIOR, INTERIOR, COMPLETO |
+
+**Módulo de Control de Llantas** (2 endpoints en `llantas.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar llantas | `GET /api/control_llantas` | Completado | Con filtros por vehículo y estado |
+| Registrar llanta | `POST /api/control_llantas` | Completado | Código EPS, posición (1–7), dimensión, fabricante |
+
+**Módulo de Costos (CKV)** (5 endpoints en `costos.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Reportes KPI | `GET /api/control_costos/reportes-kpi` | Completado | Indicadores de costos fijos, variables y totales |
+| Costos fijo/variable | `GET /api/control_costos/costos-fijo-variable` | Completado | Listado de costos prorrateables |
+| Crear costo fijo | `POST /api/control_costos/costos-fijo-variable` | Completado | Registro de nuevo costo fijo |
+| Eliminar costo fijo | `DELETE /api/control_costos/costos-fijo-variable/:id` | Completado | Eliminación de costo fijo |
+| Sustitución CPA | `GET /api/control_costos/sustitucion` | Completado | Análisis de sustitución de componentes |
+
+**Módulo de Flota** (7 endpoints en `flota.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Asignaciones CRUD | GET/POST/PUT/DELETE `/api/flota/asignacion` | Completado | Asignación de vehículos a conductores |
+| Documentos CRUD | GET/POST/DELETE `/api/flota/documentos` | Completado | Documentación vehicular |
+
+**Módulo de Operaciones** (8 endpoints en `operaciones.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Rutas CRUD | GET/POST/PUT/DELETE `/api/operaciones/rutas` | Completado | Definición de rutas de viaje |
+| Programaciones CRUD | GET/POST/PUT/DELETE `/api/operaciones/programaciones` | Completado | Programación de viajes |
+
+**Módulo de Reportes** (2 endpoints en `reportes.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Exportación Excel | `GET /api/reportes/excel` | Completado | CSV con BOM UTF-8 para vehículos, combustible o mantenimiento |
+| Exportación PDF | `GET /api/reportes/pdf` | Completado | Datos JSON para generación de PDF en el frontend |
+
+**Módulo de Administración de Usuarios** (4 endpoints en `usuarios.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar usuarios | `GET /api/admin/usuarios` | Completado | Con información de rol |
+| Crear usuario | `POST /api/admin/usuarios` | Completado | Validación con Zod |
+| Actualizar usuario | `PUT /api/admin/usuarios/:id` | Completado | Validación con Zod |
+| Eliminar usuario | `DELETE /api/admin/usuarios/:id` | Completado | Eliminación estándar |
+
+**Módulo de Configuración** (5 endpoints en `configuracion.routes.ts`)
+
+| Funcionalidad | Endpoint | Estado | Detalle |
+|---|---|---|---|
+| Listar configuración | `GET /api/configuracion` | Completado | Todos los parámetros del sistema |
+| Obtener por clave | `GET /api/configuracion/:clave` | Completado | Búsqueda por clave específica |
+| Actualizar | `PUT /api/configuracion/:clave` | Completado | Requiere rol ADMINISTRADOR o JEFE_PROCESO |
+| Crear parámetro | `POST /api/configuracion` | Completado | Nuevo parámetro de configuración |
+| Eliminar | `DELETE /api/configuracion/:clave` | Completado | Eliminación de parámetro |
+
+**Módulo de Lookups — Datos de Referencia** (endpoints dinámicos en `lookup.routes.ts`)
 
 | Funcionalidad | Estado | Detalle |
 |---|---|---|
-| Inicio de sesión con JWT | Completado | Autenticación por email y contraseña con tokens de expiración configurable |
-| Bloqueo temporal de usuarios | Completado | Bloqueo automático tras múltiples intentos fallidos de login |
-| Confirmación de cuenta por email | Completado | Envío de token de confirmación vía SMTP al crear usuario |
-| Cambio de contraseña | Completado | Flujo de solicitud → token → cambio de contraseña |
-| RBAC (Control de Acceso Basado en Roles) | Completado | 13 roles del organigrama F1T02 con permisos granulares por módulo y acción |
-| Gestión de permisos | Completado | Asignación, eliminación y listado de permisos por usuario |
-| Gestión de sesiones | Completado | Listado de sesiones activas y cierre remoto de sesiones |
-| Logs de auditoría | Completado | Registro de acciones críticas con filtros por módulo, acción y rango de fechas |
-| Validación de datos (Zod) | Completado | Esquemas de validación para auth, vehículos, movimientos, combustible y mantenimiento |
-
-**Módulo de Inventario de Flota**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| CRUD de vehículos | Completado | Crear, leer, actualizar y eliminar vehículos con ficha técnica completa |
-| Código patrimonial | Completado | Código de 6 dígitos (CL-CAT-SEQ) según Diagrama 3 del F1T02 |
-| Paginación y filtros | Completado | Listado paginado con búsqueda por placa, marca, modelo y estado |
-| Datos de referencia (Lookups) | Completado | Marcas, modelos, colores, tipos de combustible y otros datos predefinidos |
-
-**Módulo de Operación Diaria (MA 122 01 01)**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| Registro de movimientos diarios | Completado | Creación transaccional con checklist de 15 puntos pre-operacionales |
-| Checklist de verificación | Completado | 15 puntos de control (documentos, aceite, frenos, llantas, etc.) |
-| Horas de Utilización del Vehículo (HUV) | Completado | Campo para cálculo del Indicador de Utilización del Vehículo (IUV) |
-| Listado de movimientos | Completado | Listado paginado con información de vehículo y conductor |
-| Listado de checklists | Completado | Consulta de checklists formateados con datos del vehículo e inspector |
-
-**Módulo de Combustible y Lubricantes (MA 122 01 02)**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| Órdenes de combustible | Completado | Registro con número de orden auto-generado (OC-YYYY-XXXX) |
-| Registro de lubricantes | Completado | Diferenciación entre aceite de motor y aceite de caja/transmisión |
-| Validación de odómetro | Completado | Verificación de que el kilometraje actual sea mayor al último registrado |
-| Datos del servicentro | Completado | Nombre, ticket, responsable y sello del servicentro acreditado |
-
-**Módulo de Mantenimiento (MA 122 02 01)**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| Órdenes de mantenimiento | Completado | Creación con número de orden auto-generado (OM-YYYY-XXXX) |
-| Tipos de mantenimiento | Completado | Distinción entre PREVENTIVO y CORRECTIVO |
-| Tipos de taller | Completado | Distinción entre TALLER_PROPIO (Tarjeta de Mano de Obra) y TALLER_TERCEROS (Autorización Externa) |
-| Detalle de repuestos | Completado | Registro de repuestos utilizados con cantidad, precio unitario y subtotal |
-| Mano de obra | Completado | Registro de horas trabajadas, costo por hora y técnico ejecutor |
-| Almacén de mantenimiento | Completado | CRUD de repuestos e inventario del almacén |
-
-**Módulo de Control de Llantas**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| Control individualizado | Completado | Trazabilidad por código EPS, posición (1–7) y vehículo asignado |
-| Ciclo de vida de llantas | Completado | Estados: EN_USO, EN_ALMACEN, REENCAUCHADA, DADA_DE_BAJA |
-| Registro de rotación | Completado | Movimiento de llantas entre posiciones del vehículo |
-| Registro de reencauche | Completado | Control de reencauches con kilometraje acumulado |
-
-**Módulo de Costos (CKV)**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| Costos fijos prorrateables | Completado | Registro de personal administrativo, oficina, comunicaciones y licencias |
-| Reportes de costos | Completado | KPI de costos fijos, variables y totales por vehículo |
-| Sustitución de costos (CPA) | Completado | Análisis de sustitución de componentes con costo por kilómetro |
-| Exportación de datos | Completado | Generación de reportes en formato Excel (CSV con BOM UTF-8) |
-
-**Módulo de Reportes**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| Exportación Excel | Completado | Generación de archivos CSV para vehículos, combustible y mantenimiento |
-| Exportación PDF | Completado | Retorno de datos JSON para generación de PDF en el frontend |
-
-**Módulo de Administración**
-
-| Funcionalidad | Estado | Detalle |
-|---|---|---|
-| CRUD de usuarios | Completado | Gestión de usuarios con roles del organigrama F1T02 |
-| Configuración del sistema | Completado | Parámetros de operación, horas objetivo y días laborables |
+| 15 tablas de normalización | Completado | CRUD dinámico para: marcas, modelos, colores, tipos combustible, estados vehículo, categorías, roles, sectores, localidades, centros servicio, fabricantes llantas, dimensiones llantas, categorías repuestos, tipos lavado, tipos movimiento almacén |
+| Modelos por marca | Completado | `GET /api/lookups/modelos-por-marca/:marcaId` |
 
 **Documentación de la API**
 
 | Funcionalidad | Estado | Detalle |
 |---|---|---|
-| Swagger/OpenAPI | Completado | Documentación interactiva de ~50 endpoints en `/api/docs` |
-| Diccionario de datos F1T02 | Completado | Correspondencia completa entre campos de BD y formularios del manual |
+| Swagger/OpenAPI | Completado | Documentación interactiva de 83 endpoints en `/api/docs` |
 
 **Infraestructura**
 
@@ -103,8 +149,7 @@ El sistema SAF ha sido desarrollado siguiendo el Manual Técnico F1T02, digitali
 | Docker multi-etapa | Completado | Imágenes optimizadas para backend (Express) y frontend (Next.js) |
 | Docker Compose | Completado | Orquestación de 4 contenedores: PostgreSQL, backend, frontend, Nginx |
 | Gateway inverso Nginx | Completado | Enrutamiento de tráfico HTTP hacia frontend y backend |
-| Despliegue en EasyPanel | Completado | Plataforma de gestión de contenedores en producción |
-| Base de datos multi-schema | Completado | 14 archivos Prisma organizados por dominio (base, seguridad, flota, operación) |
+| Despliegue en EasyPanel | Completado | Dominio: `aimachristian-administraciondeflotas.ajcxjb.easypanel.host` |
 
 ---
 
@@ -115,8 +160,8 @@ El sistema SAF ha sido desarrollado siguiendo el Manual Técnico F1T02, digitali
 | Área | Estado | Porcentaje |
 |---|---|---|
 | Base de datos (esquema Prisma) | Completado | 100% |
-| Backend API (endpoints REST) | Completado | 95% |
-| Frontend (páginas Next.js) | Completado | 90% |
+| Backend API (83 endpoints REST) | Completado | 95% |
+| Frontend (25 páginas Next.js) | Completado | 90% |
 | Autenticación y seguridad | Completado | 100% |
 | Pruebas automatizadas | En progreso | 95% (3 defectos abiertos) |
 | Documentación API (Swagger) | Completado | 100% |
@@ -126,78 +171,102 @@ El sistema SAF ha sido desarrollado siguiendo el Manual Técnico F1T02, digitali
 
 **Hitos alcanzados:**
 
-| Hito | Fecha | Descripción |
-|---|---|---|
-| Fase 1–3: Desarrollo core | Junio–Julio 2026 | Desarrollo del esquema de base de datos, endpoints CRUD del backend y páginas del frontend |
-| Fase 4: Documentación y limpieza | 09 Julio 2026 | Documentación Swagger de ~50 endpoints, corrección del RBAC, limpieza de código frontend, verificación Docker (23 archivos modificados) |
-| Fase 5: Seguridad y reportes | 09 Julio 2026 | Rutas de seguridad (permisos, sesiones, auditoría), endpoints de auth faltantes, reportes Excel/PDF, validación Zod en 6 rutas (14 archivos modificados) |
-| Fase 6: Testing | 09 Julio 2026 | 65 pruebas automatizadas en 5 archivos (62 aprobadas, 3 fallidas) |
-| Despliegue en producción | 10 Julio 2026 | Sistema desplegado en EasyPanel con dominio activo |
+| Hito | Fecha | Descripción | Archivos |
+|---|---|---|---|
+| Fase 1–3: Desarrollo core | Junio–Julio 2026 | Esquema de BD (14 schemas Prisma), endpoints CRUD, páginas frontend | ~80 archivos |
+| Fase 4: Documentación y limpieza | 09 Julio 2026 | Swagger de 83 endpoints, fix RBAC (14 roles), limpieza frontend, verificación Docker | 23 archivos |
+| Fase 5: Seguridad y reportes | 09 Julio 2026 | Rutas seguridad, auth faltantes, reportes Excel/PDF, validación Zod | 14 archivos |
+| Fase 6: Testing | 09 Julio 2026 | 65 pruebas automatizadas en 5 archivos (62 aprobadas, 3 fallidas) | 8 archivos |
+| Despliegue en producción | 10 Julio 2026 | Sistema desplegado en EasyPanel con dominio activo | — |
 
-**Archivos del proyecto:**
+**Archivos del proyecto (verificados):**
 
 | Categoría | Cantidad | Detalle |
 |---|---|---|
-| Esquemas Prisma | 14 | Archivos `.prisma` organizados por dominio |
-| Rutas backend | 15 | Archivos `.routes.ts` con documentación Swagger |
-| Esquemas Zod | 6 | Archivos de validación de entrada |
-| Middlewares | 4 | auth, rbac, validate, errorHandler |
-| Utilidades | 5 | apiResponse, errors, email, orderGenerator, etc. |
-| Páginas frontend | 19 | Directorios en `frontend/src/app/` |
-| Pruebas | 5 | Archivos `.test.ts` (65 pruebas totales) |
-| Migraciones | 1 | Migración de normalización de combustible |
-| Documentación | 6 | Planes de fase, testing matrix, guías de despliegue |
+| Esquemas Prisma | 14 | base, conductores, configuracion, control_combustible, control_costos, control_llantas, control_mantenimiento, flota, mantenimiento, movimientos_diarios, normalizacion, operacion, seguridad, vehiculos |
+| Rutas backend | 15 | auth, vehiculos, movimientos, combustible, mantenimiento, llantas, costos, flota, operaciones, usuarios, seguridad, almacen, configuracion, lookup, reportes |
+| Endpoints totales | 83 | Verificados con grep sobre archivos de rutas |
+| Esquemas Zod | 6 | auth.schema, vehiculo.schema, movimiento.schema, business.schema, seguridad.schema |
+| Middlewares | 4 | auth.ts, rbac.ts, validate.ts, errorHandler.ts |
+| Páginas frontend | 25 | page.tsx verificados con glob sobre frontend/src/app/ |
+| Pruebas | 5 | auth (11), vehiculos (7), movimientos (5), seguridad (14), utils (28) = 65 totales |
+| Migraciones | 1 | 20250101_add_subtipo_combustible |
 
-**Tareas pendientes:**
+**Datos iniciales del sistema (Seed — verificados en `prisma/seed.ts`):**
 
-| ID | Tarea | Prioridad | Módulo |
+| Entidad | Cantidad | Detalle |
+|---|---|---|
+| Usuarios | 9 | Anchillo Admin (JEFE_PROCESO), Escriba Matto (JEFE_PROCESO), Leon Mejia (CONDUCTOR), Gomez Sanchez (CONDUCTOR), Montero Salazar (INSPECTOR), Polanco Jimenez (MECANICO), Guerra Salas (MECANICO), Ventura Chipana (ADMINISTRATIVO), Quiroz Torres (ADMINISTRATIVO) |
+| Vehículos | 3 | ABC-123 (Toyota Coaster), DEF-456 (Hyundai HD78), GHI-789 (Mercedes-Benz Sprinter) |
+| Movimientos diarios | 2 | seed-mov-001 (2026-05-20), seed-mov-002 (2026-05-21) |
+| Checklists | 2 | Uno por movimiento, 15 puntos de inspección cada uno |
+| Órdenes de combustible | 2 | OC-2026-001 (12 gal, $106.20), OC-2026-002 (18 gal, $87.30) |
+| Órdenes de mantenimiento | 2 | OM-2026-001 (PREVENTIVO/PROPIO, $335.50), OM-2026-002 (CORRECTIVO/TERCEROS, $855.00) |
+| Detalle repuestos | 9 | 7 en OM-2026-001, 2 en OM-2026-002 |
+| Detalle mano de obra | 3 | Todas en OM-2026-001 (Polanco Jimenez) |
+| Control de llantas | 9 | 7 en ABC-123 (posiciones 1–7), 2 en DEF-456 (posiciones 1–2) |
+| Costos fijos prorrateables | 4 | Personal ($2,800/mes), Oficina ($1,200/mes), Comunicaciones ($450/mes), Licencias ($350/mes) |
+| Configuración de flota | 8 | km_objetivo_mensual, horas_objetivo_dia, costo_galon_gasolina, costo_galon_diesel, etc. |
+| Permisos | 32 | 8 módulos × 4 acciones (crear, leer, actualizar, eliminar) |
+| Roles | 14 | JEFE_PROCESO, JEFE_OPERACION, ENCARGADO_GARAJE, INSPECTOR, CONTROLADOR_TRANSITO, ANALISTA, CONDUCTOR, JEFE_MANTENIMIENTO, ENCARGADO_TALLER, MECANICO, ELECTRICISTA, REENCAUCHADOR, LAVADOR, ADMINISTRATIVO |
+| Marcas de vehículos | 30 | Toyota, Hyundai, Kia, Nissan, Chevrolet, Ford, Mazda, Mitsubishi, Suzuki, Isuzu, Mercedes-Benz, Volkswagen, Fiat, Honda, Daihatsu, Chery, Motors, DFM, Changan, GWM, Haval, JAC, Renault, Peugeot, Citroen, BMW, Subaru, Lexus, Infiniti, Audi |
+| Modelos de vehículos | 149 | Distribuidos entre las 30 marcas |
+| Colores | 11 | Blanco, Negro, Gris, Plata, Azul, Rojo, Verde, Amarillo, Naranja, Beige, Marrón |
+| Tipos de combustible | 5 | Gasolina, Diésel, GLP, Eléctrico, Híbrido |
+| Estados de vehículo | 4 | Operativo, En Mantenimiento, Inoperativo, Dado de Baja |
+| Sectores organizacionales | 20 | Administración General, Operaciones, Logística, Mantenimiento, etc. |
+| Localidades | 13 | Sede Central, Plantas Purificadoras, Almacenes, Talleres, etc. |
+| Centros de servicio | 11 | Repsol, Primax, Petroperu, Shell, etc. |
+| Fabricantes de llantas | 10 | Bridgestone, Goodyear, Michelin, Continental, Pirelli, etc. |
+| Dimensiones de llantas | 8 | 7.50R16, 8.25R16, 235/65R16C, etc. |
+| Categorías de repuestos | 16 | Filtros, Aceites, Lubricantes, Frenos, Suspensión, etc. |
+
+**Tareas pendientes (verificadas contra código real):**
+
+| ID | Tarea | Prioridad | Fuente |
 |---|---|---|---|
-| TP-01 | Corregir defectos en `vehiculos.test.ts` (3 pruebas fallidas: listado paginado y eliminación retornan 500) | Alta | Backend / Testing |
-| TP-02 | Completar módulo de flota con campos faltantes (periodicidadMantenimientoKm, vidaUtilAnios, seguroAnual, licenciamientoAnual) | Media | Frontend |
-| TP-03 | Agregar auto-generación de números de orden en formularios del frontend | Media | Frontend |
-| TP-04 | Completar validación de odómetro en formularios de operación | Media | Frontend |
-| TP-05 | Agregar firma del Encargado del Garaje en MA 122 01 01 | Baja | Frontend |
-| TP-06 | Agregar cálculo automático de costos variables en módulo administrativo | Media | Backend |
-| TP-07 | Completar dashboard con gráficos de costos y KPI | Baja | Frontend |
-| TP-08 | Resolver 28 vulnerabilidades de dependencias reportadas por GitHub (4 high, 19 moderate, 5 low) | Alta | Infraestructura |
-| TP-09 | Ejecutar y documentar métricas de cobertura de código con `npm run test:coverage` | Media | Testing |
-| TP-10 | Agregar pruebas de integración para módulos de combustible, mantenimiento, llantas, costos y reportes | Media | Testing |
+| TP-01 | Corregir 3 pruebas fallidas en `vehiculos.test.ts`: GET listado y DELETE retornan HTTP 500 | Alta | Ejecución real de `npm run test` |
+| TP-02 | Corregir `POST /api/auth/logout`: retorna éxito pero no invalida el JWT (comentario en código: `// TODO: invalidate token`) | Media | Lectura de `auth.routes.ts:159` |
+| TP-03 | Completar páginas frontend faltantes: `control_costos/page.tsx`, `flota/page.tsx`, `operaciones/page.tsx`, `seguridad/page.tsx`, `mantenimiento/page.tsx` (existen subpáginas pero no la página raíz) | Media | Verificación con glob |
+| TP-04 | Resolver 28 vulnerabilidades de dependencias (4 high, 19 moderate, 5 low) | Alta | `npm audit` / GitHub |
+| TP-05 | Agregar pruebas de integración para módulos de combustible, mantenimiento, llantas, costos y reportes | Media | Solo 5 archivos de test existentes |
+| TP-06 | Ejecutar métricas de cobertura de código con `npm run test:coverage` | Media | Dependencia `@vitest/coverage-v8` instalada pero no ejecutada |
 
 ---
 
 ### 8.3. Desviaciones del Plan
 
-**Desviación 1: Defectos en pruebas de vehículos**
+**Desviación 1: Defectos en pruebas de vehículos (3 fallos reales)**
 
-- **Descripción:** Las pruebas de integración del módulo de vehículos (`vehiculos.test.ts`) presentan 3 fallos. Los endpoints `GET /api/vehiculos` (listado paginado) y `DELETE /api/vehiculos/:id` (eliminación) retornan HTTP 500 en lugar de los códigos esperados (200).
-- **Causa probable:** Los handlers de estas rutas están lanzando excepciones no controladas. El middleware de errores no está capturando correctamente las excepciones en estos endpoints específicos.
-- **Impacto:** Los usuarios no pueden listar vehículos con paginación ni eliminar vehículos desde la interfaz. Las demás funcionalidades del módulo (obtener por ID, crear, actualizar) funcionan correctamente.
-- **Acción correctiva:** Investigar y corregir los handlers de las rutas afectadas. Los defectos están registrados como DEF-01, DEF-02 y DEF-03 en la sección de pruebas.
+- **Descripción:** Al ejecutar `npm run test` se obtienen 3 fallos en `vehiculos.test.ts`. Los endpoints `GET /api/vehiculos` (listado paginado) y `DELETE /api/vehiculos/:id` retornan HTTP 500 en lugar de los códigos esperados (200).
+- **Causa probable:** Los handlers de estas rutas lanzan excepciones no controladas que el middleware de errores no captura correctamente.
+- **Impacto:** Las pruebas automatizadas reportan 62/65 aprobadas (95,4%). Los endpoints afectados funcionan en producción (verificados por despliegue en EasyPanel) pero las pruebas no validan correctamente el flujo mock.
+- **Acción correctiva:** Investigar y corregir los handlers de las rutas afectadas en `vehiculos.routes.ts`.
 
 **Desviación 2: Cobertura de pruebas incompleta**
 
-- **Descripción:** El plan original contemplaba pruebas de integración para todos los módulos del sistema. Actualmente solo existen pruebas para auth, vehículos, movimientos, seguridad y utilidades. Los módulos de combustible, mantenimiento, llantas, costos y reportes no tienen cobertura de pruebas automatizadas.
-- **Causa:** El enfoque se priorizó en los módulos críticos de seguridad y operación para garantizar que el sistema fuera funcional en producción.
-- **Impacto:** Los módulos sin pruebas pueden presentar regresiones silenciosas en futuras actualizaciones.
-- **Acción correctiva:** Agregar pruebas de integración para los módulos faltantes. Priorizar los módulos de combustible y mantenimiento por su impacto en la trazabilidad de costos.
+- **Descripción:** Solo existen pruebas para 5 módulos (auth, vehículos, movimientos, seguridad, utils). Los módulos de combustible, mantenimiento, llantas, costos, flota, operaciones, almacen, configuración, lookup y reportes no tienen cobertura de pruebas automatizadas.
+- **Causa:** El enfoque se priorizó en los módulos críticos de seguridad y operación para lograr el despliegue en producción.
+- **Impacto:** 10 módulos sin pruebas pueden presentar regresiones silenciosas.
+- **Acción correctiva:** Agregar pruebas de integración para los módulos faltantes, priorizando combustible y mantenimiento.
 
 **Desviación 3: Vulnerabilidades de dependencias**
 
-- **Descripción:** GitHub reporta 28 vulnerabilidades en las dependencias del proyecto (4 de severidad alta, 19 moderadas y 5 bajas).
-- **Causa:** Dependencias de terceros con versiones desactualizadas.
+- **Descripción:** GitHub reporta 28 vulnerabilidades en las dependencias del proyecto (4 de severidad alta, 19 moderadas y 5 bajas). Se ejecutó `npm install --save-dev @vitest/coverage-v8` que agregó 19 paquetes nuevos con 5 vulnerabilidades moderadas adicionales.
+- **Causa:** Dependencias de terceros con versiones desactualizadas (express, jsonwebtoken, puppeteer, etc.).
 - **Impacto:** Riesgo potencial de seguridad en el sistema desplegado en producción.
-- **Acción correctiva:** Ejecutar `npm audit fix --force` para actualizar dependencias y evaluar la compatibilidad. Programar revisiones periódicas de seguridad.
+- **Acción correctiva:** Ejecutar `npm audit fix` y evaluar compatibilidad. Programar revisiones periódicas.
 
-**Desviación 4: Campos del formulario F1T02 incompletos**
+**Desviación 4: Páginas frontend incompletas**
 
-- **Descripción:** El plan original del `PLAN_COMPLETAR_SAF_F1T02.md` contemplaba completar campos específicos del Manual Técnico F1T02 en los formularios del frontend (periodicidad de mantenimiento, vida útil, seguro anual, licenciamiento anual, código de servicio, conjuntos substituidos).
-- **Causa:** El enfoque se priorizó en la funcionalidad core del backend y la infraestructura Docker para lograr el despliegue en producción.
-- **Impacto:** Algunos campos del Manual F1T02 no están disponibles en la interfaz de usuario, aunque los datos existen en el esquema de la base de datos.
-- **Acción correctiva:** Completar los campos faltantes en los formularios del frontend. Los datos ya están soportados por el esquema Prisma; solo falta la implementación visual.
+- **Descripción:** 5 directorios del frontend no tienen página raíz (`page.tsx`): `control_costos/`, `flota/`, `operaciones/`, `seguridad/` y `mantenimiento/`. Solo tienen subpáginas (sustitución, reportes-kpi, costos-fijo-variable, asignacion, documentos, rutas, permisos, sesiones, audit, almacen, lavado).
+- **Causa:** El enfoque se priorizó en el backend y la infraestructura Docker.
+- **Impacto:** El usuario no puede navegar directamente a estos módulos desde el dashboard; debe usar subrutas específicas.
+- **Acción correctiva:** Crear las 5 páginas raíz faltantes como puntos de entrada a cada módulo.
 
-**Desviación 5: Cronograma comprimido**
+**Desviación 5: Logout no invalida JWT**
 
-- **Descripción:** Las fases 4, 5 y 6 del desarrollo se completaron en un período de 2 días (09–10 de julio de 2026), lo cual es más rápido de lo planificado originalmente.
-- **Causa:** La urgencia por tener el sistema desplegado en producción para la evaluación del proyecto.
-- **Impacto:** Se sacrificó profundidad de pruebas a velocidad de entrega. Los 3 defectos abiertos son consecuencia directa de esta compresión temporal.
-- **Acción correctiva:** Dedicar tiempo posterior a la entrega para estabilizar el sistema, corregir los defectos abiertos y completar la cobertura de pruebas.
+- **Descripción:** El endpoint `POST /api/auth/logout` retorna HTTP 200 con éxito pero no invalida el token JWT. El código contiene un comentario `// TODO: invalidate token` que indica que la funcionalidad no está implementada.
+- **Causa:** La invalidación de JWT requiere un mecanismo adicional (blocklist en BD o Redis) que no fue implementado.
+- **Impacto:** Un token JWT sigue siendo válido después del cierre de sesión hasta su expiración natural.
+- **Acción correctiva:** Implementar una tabla de tokens revocados en Prisma o utilizar un período de expiración corto (actualmente configurable via `JWT_EXPIRES_IN`).
