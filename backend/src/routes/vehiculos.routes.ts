@@ -254,9 +254,41 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
  */
 router.put("/:id", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(updateVehiculoSchema), async (req, res, next) => {
   try {
+    const {
+      marca, modelo, color, tipoCombustible, categoriaPatrimonial,
+      capacidadPasajeros, capacidadCargaKg,
+      ...rest
+    } = req.body;
+
+    const data: any = { ...rest };
+
+    // Resolver solo los campos enviados
+    if (marca) {
+      const r = await prisma.marcaVehiculo.findFirst({ where: { nombre: marca } });
+      if (r) data.marcaId = r.id;
+    }
+    if (modelo) {
+      const r = await prisma.modeloVehiculo.findFirst({ where: { nombre: modelo } });
+      if (r) data.modeloId = r.id;
+    }
+    if (color) {
+      const r = await prisma.colorVehiculo.findFirst({ where: { nombre: color } });
+      if (r) data.colorId = r.id;
+    }
+    if (tipoCombustible) {
+      const r = await prisma.tipoCombustible.findFirst({ where: { nombre: tipoCombustible } });
+      if (r) data.tipoCombustibleId = r.id;
+    }
+    if (categoriaPatrimonial) {
+      const r = await prisma.categoriaVehiculo.findFirst({ where: { codigo: categoriaPatrimonial } });
+      if (r) data.categoriaPatrimonialId = r.id;
+    }
+    if (capacidadPasajeros !== undefined) data.capacidadPasajeros = capacidadPasajeros;
+    if (capacidadCargaKg !== undefined) data.capacidadCargaKg = capacidadCargaKg;
+
     const vehiculo = await prisma.vehiculo.update({
       where: { id: req.params.id as string },
-      data: req.body,
+      data,
       include: { marca: true, modelo: true, color: true, tipoCombustible: true, estado: true },
     });
     sendSuccess(res, vehiculo);
