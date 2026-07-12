@@ -181,8 +181,37 @@ router.get("/:id", async (req, res, next) => {
  */
 router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVehiculoSchema), async (req, res, next) => {
   try {
+    const {
+      marca, modelo, color, tipoCombustible, categoriaPatrimonial,
+      capacidadPasajeros, capacidadCargaKg,
+      ...rest
+    } = req.body;
+
+    // Resolver nombres a UUIDs de tablas de normalización
+    const [marcaRecord, modeloRecord, colorRecord, tipoCombustibleRecord, categoriaRecord] = await Promise.all([
+      prisma.marcaVehiculo.findFirst({ where: { nombre: marca } }),
+      prisma.modeloVehiculo.findFirst({ where: { nombre: modelo } }),
+      color ? prisma.colorVehiculo.findFirst({ where: { nombre: color } }) : Promise.resolve(null),
+      tipoCombustible ? prisma.tipoCombustible.findFirst({ where: { nombre: tipoCombustible } }) : Promise.resolve(null),
+      categoriaPatrimonial ? prisma.categoriaVehiculo.findFirst({ where: { codigo: categoriaPatrimonial } }) : Promise.resolve(null),
+    ]);
+
+    const data: any = {
+      ...rest,
+      ...(marcaRecord && { marcaId: marcaRecord.id }),
+      ...(modeloRecord && { modeloId: modeloRecord.id }),
+      ...(colorRecord && { colorId: colorRecord.id }),
+      ...(tipoCombustibleRecord && { tipoCombustibleId: tipoCombustibleRecord.id }),
+      ...(categoriaRecord && { categoriaPatrimonialId: categoriaRecord.id }),
+      capacidadPasajeros: capacidadPasajeros ?? undefined,
+      capacidadCargaKg: capacidadCargaKg ?? undefined,
+      clasePatrimonial: rest.clasePatrimonial || "01",
+      secuencial: rest.secuencial || "001",
+      codigoPatrimonial: rest.codigoPatrimonial || `01-01-001`,
+    };
+
     const vehiculo = await prisma.vehiculo.create({
-      data: req.body,
+      data,
       include: { marca: true, modelo: true, color: true, tipoCombustible: true, estado: true },
     });
     sendCreated(res, vehiculo);
