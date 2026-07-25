@@ -181,6 +181,7 @@ router.get("/:id", async (req, res, next) => {
  */
 router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVehiculoSchema), async (req, res, next) => {
   try {
+    console.log("[VEHICULOS POST] Body recibido:", JSON.stringify(req.body));
     const {
       marca, modelo, color, tipoCombustible, categoriaPatrimonial,
       capacidadPasajeros, capacidadCargaKg,
@@ -195,6 +196,8 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
       tipoCombustible ? prisma.tipoCombustible.findFirst({ where: { nombre: tipoCombustible } }) : Promise.resolve(null),
       categoriaPatrimonial ? prisma.categoriaVehiculo.findFirst({ where: { codigo: categoriaPatrimonial } }) : Promise.resolve(null),
     ]);
+
+    console.log("[VEHICULOS POST] Resolved:", { marcaRecord: !!marcaRecord, modeloRecord: !!modeloRecord, tipoCombustibleRecord: !!tipoCombustibleRecord, categoriaRecord: !!categoriaRecord });
 
     const clase = rest.clasePatrimonial || "01";
     const secuencial = rest.secuencial || "01";
@@ -221,12 +224,15 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
       codigoPatrimonial,
     };
 
+    console.log("[VEHICULOS POST] Data final para Prisma:", JSON.stringify(data));
     const vehiculo = await prisma.vehiculo.create({
       data,
       include: { marca: true, modelo: true, color: true, tipoCombustible: true, estado: true },
     });
+    console.log("[VEHICULOS POST] Vehiculo creado:", vehiculo.id, vehiculo.codigoPatrimonial);
     sendCreated(res, vehiculo);
   } catch (error) {
+    console.error("[VEHICULOS POST] Error:", error);
     next(error);
   }
 });
