@@ -210,6 +210,12 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
       codigoPatrimonial = `${clase}-${secuencial}-${String(nextNum).padStart(3, "0")}`;
     }
 
+    // Auto-assign OPERATIVO estado if not provided
+    if (!rest.estadoId) {
+      const estadoDefault = await prisma.estadoVehiculo.findUnique({ where: { codigo: "OPERATIVO" } });
+      if (estadoDefault) rest.estadoId = estadoDefault.id;
+    }
+
     const data: any = {
       ...rest,
       ...(marcaRecord && { marcaId: marcaRecord.id }),
