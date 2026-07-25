@@ -3,9 +3,12 @@ import { z } from "zod";
 export const createVehiculoSchema = z.object({
   placa: z.string().min(1).max(20),
   codigoPatrimonial: z.string().min(1).max(50).optional(),
+  clasePatrimonial: z.string().optional(),
+  consecutivo: z.string().optional(),
+  secuencial: z.string().optional(),
   anioFabricacion: z.number().int().min(1900).max(2100).optional(),
   kilometraje: z.number().int().min(0).optional(),
-  // El frontend envía nombres de marca/modelo/color, no UUIDs
+  estadoId: z.string().uuid().optional(),
   marca: z.string().min(1),
   modelo: z.string().min(1),
   color: z.string().optional(),
@@ -14,7 +17,6 @@ export const createVehiculoSchema = z.object({
   categoriaPatrimonial: z.string().optional(),
   capacidadPasajeros: z.number().int().min(0).optional(),
   capacidadCargaKg: z.number().min(0).optional(),
-  // Costos fijos del vehículo
   valorAdquisicion: z.number().positive().optional(),
   vidaUtilAnios: z.number().int().min(1).max(50).optional(),
   kmAnualesReferencia: z.number().int().min(0).optional(),
