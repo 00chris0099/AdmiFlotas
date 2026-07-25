@@ -4,7 +4,6 @@ export const createVehiculoSchema = z.object({
   placa: z.string().min(1).max(20),
   codigoPatrimonial: z.string().min(1).max(50).optional(),
   clasePatrimonial: z.string().optional(),
-  consecutivo: z.string().optional(),
   secuencial: z.string().optional(),
   anioFabricacion: z.number().int().min(1900).max(2100).optional(),
   kilometraje: z.number().int().min(0).optional(),

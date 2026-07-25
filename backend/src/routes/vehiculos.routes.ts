@@ -197,22 +197,14 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
     ]);
 
     const clase = rest.clasePatrimonial || "01";
-    const consecutivo = rest.consecutivo || "01";
+    const secuencial = rest.secuencial || "01";
 
     // Auto-generate unique codigoPatrimonial if not provided
     let codigoPatrimonial = rest.codigoPatrimonial;
     if (!codigoPatrimonial) {
-      const lastVehicle = await prisma.vehiculo.findFirst({
-        where: { codigoPatrimonial: { startsWith: `${clase}-${consecutivo}-` } },
-        orderBy: { codigoPatrimonial: "desc" },
-        select: { codigoPatrimonial: true },
-      });
-      let nextNum = 1;
-      if (lastVehicle?.codigoPatrimonial) {
-        const parts = lastVehicle.codigoPatrimonial.split("-");
-        nextNum = parseInt(parts[2] || "0", 10) + 1;
-      }
-      codigoPatrimonial = `${clase}-${consecutivo}-${String(nextNum).padStart(3, "0")}`;
+      const count = await prisma.vehiculo.count();
+      const nextNum = count + 1;
+      codigoPatrimonial = `${clase}-${secuencial}-${String(nextNum).padStart(3, "0")}`;
     }
 
     const data: any = {
@@ -225,7 +217,7 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
       capacidadPasajeros: capacidadPasajeros ?? undefined,
       capacidadCargaKg: capacidadCargaKg ?? undefined,
       clasePatrimonial: clase,
-      consecutivo,
+      secuencial,
       codigoPatrimonial,
     };
 
