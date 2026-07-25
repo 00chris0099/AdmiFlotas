@@ -196,6 +196,25 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
       categoriaPatrimonial ? prisma.categoriaVehiculo.findFirst({ where: { codigo: categoriaPatrimonial } }) : Promise.resolve(null),
     ]);
 
+    const clase = rest.clasePatrimonial || "01";
+    const consecutivo = rest.consecutivo || "01";
+
+    // Auto-generate unique codigoPatrimonial if not provided
+    let codigoPatrimonial = rest.codigoPatrimonial;
+    if (!codigoPatrimonial) {
+      const lastVehicle = await prisma.vehiculo.findFirst({
+        where: { codigoPatrimonial: { startsWith: `${clase}-${consecutivo}-` } },
+        orderBy: { codigoPatrimonial: "desc" },
+        select: { codigoPatrimonial: true },
+      });
+      let nextNum = 1;
+      if (lastVehicle?.codigoPatrimonial) {
+        const parts = lastVehicle.codigoPatrimonial.split("-");
+        nextNum = parseInt(parts[2] || "0", 10) + 1;
+      }
+      codigoPatrimonial = `${clase}-${consecutivo}-${String(nextNum).padStart(3, "0")}`;
+    }
+
     const data: any = {
       ...rest,
       ...(marcaRecord && { marcaId: marcaRecord.id }),
@@ -205,9 +224,9 @@ router.post("/", requireRole("ADMINISTRADOR", "JEFE_PROCESO"), validate(createVe
       ...(categoriaRecord && { categoriaPatrimonialId: categoriaRecord.id }),
       capacidadPasajeros: capacidadPasajeros ?? undefined,
       capacidadCargaKg: capacidadCargaKg ?? undefined,
-      clasePatrimonial: rest.clasePatrimonial || "01",
-      secuencial: rest.secuencial || "001",
-      codigoPatrimonial: rest.codigoPatrimonial || `01-01-001`,
+      clasePatrimonial: clase,
+      consecutivo,
+      codigoPatrimonial,
     };
 
     const vehiculo = await prisma.vehiculo.create({
